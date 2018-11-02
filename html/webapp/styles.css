@@ -19,12 +19,12 @@ body {
                 0px 7px 10px 0px rgb(17,17,17),
                 inset 0px 1px 1px 0px rgba(250, 250, 250, .2),
                 inset 0px -12px 35px 0px rgba(0, 0, 0, .5);
-    width: 70px;
-    height: 70px;
+    width: 0px;
+    height: 0px;
     border: 0;
-    border-radius: 35px;
+    border-radius:0px;
     text-align: center;
-    line-height: 68px;
+    line-height:0px;
 }
 
 .superdev:active {

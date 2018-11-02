@@ -5,6 +5,7 @@
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 	<inherits name='Box2DLights' />
 	<inherits name='com.badlogic.gdx.physics.box2d.box2d-gwt' />
+	<inherits name='KyperBox' />
 
 	<inherits name='GameOffGame' />
 	<entry-point class='com.gameoff.game.client.HtmlLauncher' />

@@ -5,7 +5,7 @@
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 	<inherits name='Box2DLights' />
 	<inherits name='com.badlogic.gdx.physics.box2d.box2d-gwt' />
-
+	<inherits name='KyperBox' />
     <inherits name='com.gameoff.game.GdxDefinition' />
     
     <collapse-all-properties />

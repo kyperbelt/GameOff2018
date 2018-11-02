@@ -1,0 +1,237 @@
+
+game.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+HorrorGameTiles
+  rotate: false
+  xy: 2, 168
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+abomination_chase_down_0
+  rotate: false
+  xy: 465, 454
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_down_1
+  rotate: false
+  xy: 425, 392
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_left_0
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_left_1
+  rotate: false
+  xy: 167, 54
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_right_0
+  rotate: false
+  xy: 260, 274
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_right_1
+  rotate: false
+  xy: 294, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_up_0
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_chase_up_1
+  rotate: false
+  xy: 201, 54
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_still_down
+  rotate: false
+  xy: 260, 240
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_still_left
+  rotate: false
+  xy: 294, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_still_right
+  rotate: false
+  xy: 328, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+abomination_still_up
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+eyeball_still_down
+  rotate: false
+  xy: 260, 206
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+painting
+  rotate: false
+  xy: 465, 437
+  size: 24, 15
+  orig: 24, 15
+  offset: 0, 0
+  index: -1
+piano
+  rotate: false
+  xy: 294, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+pillar
+  rotate: false
+  xy: 260, 308
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 260, 374
+  size: 163, 50
+  orig: 163, 50
+  offset: 0, 0
+  index: -1
+play_down
+  rotate: false
+  xy: 2, 36
+  size: 163, 50
+  orig: 163, 50
+  offset: 0, 0
+  index: -1
+player_walk_down_0
+  rotate: false
+  xy: 328, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_down_1
+  rotate: false
+  xy: 362, 340
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_down_2
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_left_0
+  rotate: false
+  xy: 260, 172
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_left_1
+  rotate: false
+  xy: 294, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_left_2
+  rotate: false
+  xy: 328, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_right_0
+  rotate: false
+  xy: 362, 306
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_right_1
+  rotate: false
+  xy: 294, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_right_2
+  rotate: false
+  xy: 328, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_up_0
+  rotate: false
+  xy: 362, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_up_1
+  rotate: false
+  xy: 328, 204
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player_walk_up_2
+  rotate: false
+  xy: 362, 238
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+testtext
+  rotate: false
+  xy: 2, 426
+  size: 461, 60
+  orig: 461, 60
+  offset: 0, 0
+  index: -1
+title
+  rotate: false
+  xy: 2, 88
+  size: 238, 78
+  orig: 238, 78
+  offset: 0, 0
+  index: -1

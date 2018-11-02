@@ -46,7 +46,7 @@ project(":desktop") {
 
     dependencies {
         compile project(":core")
-		implementation 'com.github.kyperbelt.KyperBox:core:master-SNAPSHOT'
+		compile fileTree(dir: '../lib', include: '*.jar')
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
@@ -64,7 +64,7 @@ project(":android") {
 
     dependencies {
         compile project(":core")
-		implementation 'com.github.kyperbelt.KyperBox:core:master-SNAPSHOT'
+		compile fileTree(dir: '../lib', include: '*.jar')
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -89,7 +89,7 @@ project(":core") {
 
 
     dependencies {
-		implementation 'com.github.kyperbelt.KyperBox:core:master-SNAPSHOT'
+		compile fileTree(dir: '../lib', include: '*.jar')
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
@@ -105,7 +105,7 @@ project(":html") {
 
     dependencies {
         compile project(":core")
-		implementation 'com.github.kyperbelt.KyperBox:core:master-SNAPSHOT'
+		compile fileTree(dir: '../lib', include: '*.jar')
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"

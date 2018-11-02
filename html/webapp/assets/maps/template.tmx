@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2018.04.18" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="43">
+ <properties>
+  <property name="atlas" value="image/game.atlas"/>
+ </properties>
+ <objectgroup name="background"/>
+ <objectgroup name="playground"/>
+ <objectgroup name="foreground"/>
+ <objectgroup name="uiground"/>
+ <objectgroup name="preload" locked="1">
+  <object id="1" name="ScreenSize" type="Viewport" x="0" y="240" width="1280" height="720"/>
+ </objectgroup>
+</map>
