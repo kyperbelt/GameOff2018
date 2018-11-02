@@ -1,0 +1,27 @@
+
+game.png
+size: 1024,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+play
+  rotate: false
+  xy: 465, 12
+  size: 163, 50
+  orig: 163, 50
+  offset: 0, 0
+  index: -1
+play_down
+  rotate: false
+  xy: 630, 12
+  size: 163, 50
+  orig: 163, 50
+  offset: 0, 0
+  index: -1
+testtext
+  rotate: false
+  xy: 2, 2
+  size: 461, 60
+  orig: 461, 60
+  offset: 0, 0
+  index: -1
