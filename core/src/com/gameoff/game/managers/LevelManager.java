@@ -4,6 +4,7 @@ import com.gameoff.game.GameOffGame;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.objects.Player;
 import com.gameoff.game.systems.MoveSystem;
+import com.gameoff.game.systems.PlayerControlSystem;
 import com.kyperbox.GameState;
 import com.kyperbox.input.InputDefaults;
 import com.kyperbox.managers.StateManager;
@@ -18,6 +19,7 @@ public class LevelManager extends StateManager {
 	// layer systems we will use for playground layer
 	QuadTree quad;// collisionSystem
 	MoveSystem move;
+	PlayerControlSystem control = new PlayerControlSystem();
 	// YSortSystem ysort;
 
 	@Override
@@ -25,7 +27,9 @@ public class LevelManager extends StateManager {
 		GameLayer playground = state.getPlaygroundLayer();
 		quad = new QuadTree(GameOffGame.WIDTH, GameOffGame.HEIGHT);
 		move = new MoveSystem();
-
+		control = new PlayerControlSystem();
+		
+		playground.addLayerSystem(control);
 		playground.addLayerSystem(quad);
 		playground.addLayerSystem(move);
 	}
@@ -45,21 +49,7 @@ public class LevelManager extends StateManager {
 
 	@Override
 	public void update(GameState state, float delta) {
-		MoveControl move = player.getController(MoveControl.class);
-
-		move.setDirection(0, 0);
-		if (state.getInput().inputPressed(InputDefaults.MOVE_UP)) {
-			move.setYDir(1f);
-		}
-		if (state.getInput().inputPressed(InputDefaults.MOVE_DOWN)) {
-			move.setYDir(-1f);
-		}
-		if (state.getInput().inputPressed(InputDefaults.MOVE_LEFT)) {
-			move.setXDir(-1f);
-		}
-		if (state.getInput().inputPressed(InputDefaults.MOVE_RIGHT)) {
-			move.setXDir(1f);
-		}
+		
 	}
 
 }
