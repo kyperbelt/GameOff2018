@@ -8,6 +8,10 @@ import com.kyperbox.controllers.AnimationController;
 
 public class Player extends Basic {
 
+	public enum PlayerState {
+		Moving, Attacking
+	}
+
 	PlayerControl control;
 	public String state; // will probably change this to its own state to make it easy to have states
 							// such as "walking","attacking","damaged","dying", ect.
@@ -56,9 +60,14 @@ public class Player extends Basic {
 		super.update(delta);
 		AnimationController animation = getAnimation();
 		Vector2 vel = getVelocity();
-
-		animation.setPlaySpeed(1f);
-
+		// TODO: for now it doesnt update animations if player is flying to tell it
+		// apart from its grounded form . later we add some sort of shadow and gradually
+		// increase the depth
+		if (!getMove().isFlying())
+			animation.setPlaySpeed(1f);
+		else
+			animation.setPlaySpeed(0f);
+		// TODO: Refactor
 		if (vel.x != 0 || vel.y != 0) {
 			if (Math.abs(vel.x) >= Math.abs(vel.y)) {
 				if (vel.x > 0) {

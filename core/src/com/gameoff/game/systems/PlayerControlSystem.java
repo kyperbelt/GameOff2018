@@ -19,7 +19,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		public String right;
 		public String up;
 		public String down;
-		public String jump;
+		public String fly;
 		public String attack;
 		public String interact;
 
@@ -35,7 +35,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		p1.right = InputDefaults.MOVE_RIGHT;
 		p1.up = InputDefaults.MOVE_UP;
 		p1.down = InputDefaults.MOVE_DOWN;
-		p1.jump = InputDefaults.JUMP_BUTTON;
+		p1.fly = InputDefaults.JUMP_BUTTON;
 		p1.attack = InputDefaults.ACTION_BUTTON;
 
 		controls.add(p1);
@@ -61,6 +61,16 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 			if(maps!=null) {
 				
 				if(move!=null) {
+					
+					if(input.inputJustPressed(maps.fly)) {
+						if(move.isFlying()) {
+							move.setFlying(false);
+							o.setDepth(0);
+						}else {
+							move.setFlying(true);
+							o.setDepth(o.getBoundsRaw().height);
+						}
+					}
 					
 					float x = 0;
 					float y = 0;
