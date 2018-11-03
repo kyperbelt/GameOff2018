@@ -3,18 +3,35 @@ package com.gameoff.game.objects;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
+import com.gameoff.game.control.AttackControl;
+import com.gameoff.game.control.AttackControl.AttackListener;
+import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
+import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
+import com.kyperbox.umisc.StringUtils;
 
 public class Player extends Basic {
 
 	public enum PlayerState {
-		Moving, Attacking
+		Idling, Moving, Attacking
+	}
+
+	public enum Form {
+		Demon, Angel
+	}
+
+	public enum Direction {
+		Left, Right, Up, Down
 	}
 
 	PlayerControl control;
-	public String state; // will probably change this to its own state to make it easy to have states
-							// such as "walking","attacking","damaged","dying", ect.
+	AttackControl attack;
+	String animation;
+	Direction direction;
+	Form form;
+	PlayerState state;// will probably change this to its own state to make it easy to have states
+						// such as "walking","attacking","damaged","dying", ect.
 
 	public Player() {
 		// we set this control to the id of 0 which is corresponding of the
@@ -22,6 +39,83 @@ public class Player extends Basic {
 		// We can support more than one player but must add the playerControls to the
 		// PlayerControlSystem
 		control = new PlayerControl(0);
+		attack = new AttackControl(new AttackListener() {
+			@Override
+			public void onAttack() {
+
+				if (form != null) {
+					Projectile p = Projectile.get(); // get a pooled projectile
+					p.setVelocity(0, 0);
+					switch (direction) {
+					case Right:
+						p.setPosition(getX() + getWidth(), getY() + getHeight() * .5f + getDepth());
+						break;
+					case Left:
+						p.setPosition(getX(), getY() + getHeight() * .5f+ getDepth());
+						break;
+					case Up:
+						p.setPosition(getX()+getWidth()*.5f, getY() + getHeight()+ getDepth());
+						break;
+					case Down:
+						p.setPosition(getX()+getWidth()*.5f, getY()+ getDepth());
+						break;
+					default:
+						break;
+					}
+
+					getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
+
+					MoveControl pmove = p.getMove();
+					switch (direction) {
+					case Right:
+						pmove.setDirection(1f, 0);
+						break;
+					case Left:
+						pmove.setDirection(-1f, 0);
+						break;
+					case Up:
+						pmove.setDirection(0, 1f);
+						break;
+					case Down:
+						pmove.setDirection(0, -1f);
+						break;
+					default:
+						break;
+					}
+
+				}
+
+				if (KyperBoxGame.DEBUG_LOGGING)
+					System.out.println(StringUtils.format("Attacked in %s form", form.name()));
+			}
+		});
+
+	}
+
+	public void setDirection(Direction dir) {
+		this.direction = dir;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setCurrentForm(Form form) {
+		this.form = form;
+		if (KyperBoxGame.DEBUG_LOGGING)
+			System.out.println(StringUtils.format("%s form Initiated", form.name()));
+	}
+
+	public Form getCurrentForm() {
+		return form;
+	}
+
+	public void setPlayerState(PlayerState state) {
+		this.state = state;
+	}
+
+	public PlayerState getPlayerState() {
+		return state;
 	}
 
 	@Override
@@ -31,6 +125,7 @@ public class Player extends Basic {
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer
 		addController(control);
+		addController(attack);
 
 		// we can set the collision bounds of this object independent of its actual
 		// size.
@@ -53,6 +148,10 @@ public class Player extends Basic {
 		animation.addAnimation("up", "player_walk_up");
 		animation.addAnimation("left", "player_walk_left");
 		animation.addAnimation("right", "player_walk_right");
+
+		setCurrentForm(Form.Demon);
+		setPlayerState(PlayerState.Idling);
+		setDirection(Direction.Up);
 	}
 
 	@Override
@@ -72,14 +171,18 @@ public class Player extends Basic {
 			if (Math.abs(vel.x) >= Math.abs(vel.y)) {
 				if (vel.x > 0) {
 					setAnimation("right");
+					setDirection(Direction.Right);
 				} else {
 					setAnimation("left");
+					setDirection(Direction.Left);
 				}
 			} else {
 				if (vel.y > 0) {
 					setAnimation("up");
+					setDirection(Direction.Up);
 				} else {
 					setAnimation("down");
+					setDirection(Direction.Down);
 				}
 			}
 		} else {
@@ -88,9 +191,9 @@ public class Player extends Basic {
 	}
 
 	public void setAnimation(String animation) {
-		if (state == null || !state.equals(animation)) {
+		if (this.animation == null || !this.animation.equals(animation)) {
 			getAnimation().set(animation, PlayMode.LOOP);
-			state = animation;
+			this.animation = animation;
 		}
 	}
 }

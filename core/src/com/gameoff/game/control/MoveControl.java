@@ -1,5 +1,6 @@
 package com.gameoff.game.control;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.objects.GameObjectController;
 
@@ -68,11 +69,11 @@ public class MoveControl extends GameObjectController {
 	}
 
 	public void setXDir(float xDirection) {
-		this.xDirection = xDirection;
+		this.xDirection = MathUtils.clamp(xDirection, -1f, 1f);
 	}
 
 	public void setYDir(float yDirection) {
-		this.yDirection = yDirection;
+		this.yDirection = MathUtils.clamp(yDirection, -1f, 1f);
 	}
 
 	public void setDirection(float xDirection, float yDirection) {

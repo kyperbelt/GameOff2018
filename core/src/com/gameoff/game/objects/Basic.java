@@ -19,6 +19,7 @@ public class Basic extends GameObject {
 		animation = new AnimationController();
 		move = new MoveControl(200);
 		setApplyVelocity(false);
+
 	}
 	
 	/**
@@ -55,9 +56,18 @@ public class Basic extends GameObject {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
+
 		addController(collision);
 		addController(animation);
 		addController(move);
+	}
+
+	@Override
+	public void onRemove() {
+		super.onRemove();
+		removeController(collision);
+		removeController(move);
+		removeController(animation);
 	}
 
 }

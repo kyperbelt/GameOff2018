@@ -51,14 +51,16 @@ public class MoveSystem extends ControlSpecificSystem{
 			if(move != null) {
 				vel.x = move.getMoveSpeed() * move.getXDir();
 				vel.y = move.getMoveSpeed() * move.getYDir();
-				vel.nor().scl(move.getMoveSpeed());
+				vel.limit(move.getMoveSpeed());
 				
 				if(collision!=null) {
 					Array<CollisionData> coldata = collision.getCollisions(delta);
+					
 					for (int j = 0; j < coldata.size; j++) {
 						CollisionData cd = coldata.get(j);
 						GameObject target = cd.getTarget();
 						MoveControl target_move = target.getController(MoveControl.class);
+					
 						
 						if(!move.isPhysical() || (target_move!=null && !target_move.isPhysical()))
 							continue;

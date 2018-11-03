@@ -1,8 +1,10 @@
 package com.gameoff.game.systems;
 
 import com.badlogic.gdx.utils.Array;
+import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
+import com.gameoff.game.objects.Player.Form;
 import com.kyperbox.input.GameInput;
 import com.kyperbox.input.InputDefaults;
 import com.kyperbox.objects.GameObject;
@@ -48,6 +50,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 			GameObject o = objects.get(i);
 			PlayerControl control = o.getController(PlayerControl.class);
 			MoveControl move = o.getController(MoveControl.class);
+			AttackControl attack = o.getController(AttackControl.class);
 
 			int id = control.getId();
 			PlayerControls maps = null;
@@ -66,10 +69,17 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 						if(move.isFlying()) {
 							move.setFlying(false);
 							o.setDepth(0);
+							control.setForm(Form.Demon);
 						}else {
 							move.setFlying(true);
 							o.setDepth(o.getBoundsRaw().height);
+							control.setForm(Form.Angel);
 						}
+					}
+					
+					if(input.inputJustPressed(maps.attack)) {
+						if(attack!=null)
+							attack.attack();
 					}
 					
 					float x = 0;

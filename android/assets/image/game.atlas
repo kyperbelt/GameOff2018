@@ -102,6 +102,13 @@ eyeball_still_down
   orig: 32, 32
   offset: 0, 0
   index: -1
+noregion
+  rotate: false
+  xy: 294, 272
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 painting
   rotate: false
   xy: 465, 437
@@ -111,7 +118,7 @@ painting
   index: -1
 piano
   rotate: false
-  xy: 294, 272
+  xy: 328, 306
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -139,84 +146,84 @@ play_down
   index: -1
 player_walk_down_0
   rotate: false
-  xy: 328, 306
+  xy: 362, 340
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_down_1
   rotate: false
-  xy: 362, 340
+  xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_down_2
   rotate: false
-  xy: 104, 2
+  xy: 260, 172
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_0
   rotate: false
-  xy: 260, 172
+  xy: 294, 238
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_1
   rotate: false
-  xy: 294, 238
+  xy: 328, 272
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_2
   rotate: false
-  xy: 328, 272
+  xy: 362, 306
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_0
   rotate: false
-  xy: 362, 306
+  xy: 294, 204
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_1
   rotate: false
-  xy: 294, 204
+  xy: 328, 238
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_2
   rotate: false
-  xy: 328, 238
+  xy: 362, 272
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_0
   rotate: false
-  xy: 362, 272
+  xy: 328, 204
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_1
   rotate: false
-  xy: 328, 204
+  xy: 362, 238
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_2
   rotate: false
-  xy: 362, 238
+  xy: 362, 204
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
