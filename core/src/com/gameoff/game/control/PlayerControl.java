@@ -30,6 +30,13 @@ public class PlayerControl extends GameObjectController {
 			playerObject.setPlayerState(state);
 		}
 	}
+	
+	public PlayerState getState() {
+		if(playerObject != null) {
+			return playerObject.getPlayerState();
+		}
+		return PlayerState.Idling;
+	}
 
 	@Override
 	public void init(GameObject object) {

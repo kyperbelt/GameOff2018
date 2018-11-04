@@ -14,7 +14,7 @@ import com.kyperbox.umisc.StringUtils;
 public class Player extends Basic {
 
 	public enum PlayerState {
-		Idling, Moving, Attacking
+		Idling, Moving, Attacking, Damaged
 	}
 
 	public enum Form {
@@ -24,6 +24,9 @@ public class Player extends Basic {
 	public enum Direction {
 		Left, Right, Up, Down
 	}
+
+	float angelSpeed = 200;
+	float demonSpeed = 120;
 
 	PlayerControl control;
 	AttackControl attack;
@@ -51,13 +54,13 @@ public class Player extends Basic {
 						p.setPosition(getX() + getWidth(), getY() + getHeight() * .5f + getDepth());
 						break;
 					case Left:
-						p.setPosition(getX(), getY() + getHeight() * .5f+ getDepth());
+						p.setPosition(getX(), getY() + getHeight() * .5f + getDepth());
 						break;
 					case Up:
-						p.setPosition(getX()+getWidth()*.5f, getY() + getHeight()+ getDepth());
+						p.setPosition(getX() + getWidth() * .5f, getY() + getHeight() + getDepth());
 						break;
 					case Down:
-						p.setPosition(getX()+getWidth()*.5f, getY()+ getDepth());
+						p.setPosition(getX() + getWidth() * .5f, getY() + getDepth());
 						break;
 					default:
 						break;
@@ -102,6 +105,14 @@ public class Player extends Basic {
 
 	public void setCurrentForm(Form form) {
 		this.form = form;
+		switch (form) {
+		case Demon:
+			getMove().setMoveSpeed(demonSpeed);
+			break;
+		case Angel:
+			getMove().setMoveSpeed(angelSpeed);
+			break;
+		}
 		if (KyperBoxGame.DEBUG_LOGGING)
 			System.out.println(StringUtils.format("%s form Initiated", form.name()));
 	}
@@ -167,7 +178,7 @@ public class Player extends Basic {
 		else
 			animation.setPlaySpeed(0f);
 		// TODO: Refactor
-		if (vel.x != 0 || vel.y != 0) {
+		if (state == PlayerState.Moving && (vel.x != 0 || vel.y != 0)) {
 			if (Math.abs(vel.x) >= Math.abs(vel.y)) {
 				if (vel.x > 0) {
 					setAnimation("right");
@@ -185,7 +196,7 @@ public class Player extends Basic {
 					setDirection(Direction.Down);
 				}
 			}
-		} else {
+		} else if (state == PlayerState.Idling) {
 			animation.setPlaySpeed(0);
 		}
 	}

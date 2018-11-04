@@ -5,6 +5,7 @@ import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
 import com.gameoff.game.objects.Player.Form;
+import com.gameoff.game.objects.Player.PlayerState;
 import com.kyperbox.input.GameInput;
 import com.kyperbox.input.InputDefaults;
 import com.kyperbox.objects.GameObject;
@@ -12,7 +13,7 @@ import com.kyperbox.systems.ControlSpecificSystem;
 import com.kyperbox.umisc.StringUtils;
 
 public class PlayerControlSystem extends ControlSpecificSystem {
-	
+
 	final String MAPS_NOT_FOUND = "no control mappaings found for id:[ %s ]";
 
 	public static class PlayerControls {
@@ -60,40 +61,56 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 			} else {
 				getLayer().getState().error(StringUtils.format(MAPS_NOT_FOUND, id));
 			}
-			
-			if(maps!=null) {
-				
-				if(move!=null) {
-					
-					if(input.inputJustPressed(maps.fly)) {
-						if(move.isFlying()) {
-							move.setFlying(false);
-							o.setDepth(0);
-							control.setForm(Form.Demon);
-						}else {
-							move.setFlying(true);
-							o.setDepth(o.getBoundsRaw().height);
-							control.setForm(Form.Angel);
+
+			if (maps != null) {
+
+				if (control.getState() != PlayerState.Damaged) {
+
+					if (move != null) {
+
+						control.setState(PlayerState.Idling);
+						if (input.inputJustPressed(maps.fly)) {
+							if (move.isFlying()) {
+								move.setFlying(false);
+								o.setDepth(0);
+								control.setForm(Form.Demon);
+							} else {
+								move.setFlying(true);
+								o.setDepth(o.getBoundsRaw().height);
+								control.setForm(Form.Angel);
+							}
 						}
+
+						if (input.inputJustPressed(maps.attack)) {
+							if (attack != null) {
+								attack.resetCooldown();
+								attack.attack();
+								control.setState(PlayerState.Attacking);
+							}
+						}
+
+						if (input.inputPressed(maps.attack)) {
+							if (attack != null) {
+								attack.attack();
+								control.setState(PlayerState.Attacking);
+							}
+						}
+
+						float x = 0;
+						float y = 0;
+
+						x -= input.inputValue(maps.left);
+						x += input.inputValue(maps.right);
+
+						y += input.inputValue(maps.up);
+						y -= input.inputValue(maps.down);
+
+						if ((x != 0 || y!= 0 )&& control.getState() == PlayerState.Idling)
+							control.setState(PlayerState.Moving);
+						move.setDirection(x, y);
 					}
-					
-					if(input.inputJustPressed(maps.attack)) {
-						if(attack!=null)
-							attack.attack();
-					}
-					
-					float x = 0;
-					float y = 0;
-
-					x -= input.inputValue(maps.left);
-					x += input.inputValue(maps.right);
-
-					y += input.inputValue(maps.up);
-					y -= input.inputValue(maps.down);
-
-					move.setDirection(x, y);
 				}
-				
+
 			}
 		}
 

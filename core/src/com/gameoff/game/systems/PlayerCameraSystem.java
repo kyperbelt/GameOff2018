@@ -49,9 +49,9 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 
 		for (int i = 0; i < objects.size; i++) {
 			if(i == 0)
-				futurePos.set(objects.get(i).getPosition());
+				futurePos.set(objects.get(i).getCollisionCenter());
 			else {
-				futurePos.lerp(objects.get(i).getPosition(), .5f);
+				futurePos.lerp(objects.get(i).getCollisionCenter(), .5f);
 			}
 		}
 
@@ -66,7 +66,7 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 		if (campos.y + camera.getYOffset() < worldBounds.y) {
 			campos.y = worldBounds.y - camera.getYOffset();
 		} else if (campos.y - camera.getYOffset() > worldBounds.y + worldBounds.height) {
-			// campos.y = world_bounds.y + world_bounds.height + cam.getYOffset();
+			campos.y = worldBounds.y + worldBounds.height + camera.getYOffset();
 		}
 		camera.setPosition(campos.x, campos.y);
 

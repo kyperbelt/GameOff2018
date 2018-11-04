@@ -10,8 +10,8 @@ import com.kyperbox.input.KeyboardMapping;
 
 public class GameOffGame extends KyperBoxGame {
 
-	public static final int WIDTH = (int) (1280);
-	public static final int HEIGHT = (int) (720);
+	public static final int WIDTH = (int) (1280*.75f);
+	public static final int HEIGHT = (int) (720*.75f);
 
 	public GameOffGame() {
 		super(new FitViewport(WIDTH, HEIGHT));
