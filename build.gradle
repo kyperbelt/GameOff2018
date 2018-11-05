@@ -56,7 +56,7 @@ project(":desktop") {
         
     }
 }
-
+/*
 project(":android") {
     apply plugin: "android"
 
@@ -83,7 +83,7 @@ project(":android") {
         
     }
 }
-
+*/
 project(":core") {
     apply plugin: "java"
 
