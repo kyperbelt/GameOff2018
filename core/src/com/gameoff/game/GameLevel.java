@@ -18,6 +18,8 @@ public class GameLevel {
   public Room[][] m_rooms;
   private Random m_random;
   private long m_seed;
+  private int m_width;
+  private int m_height;
 
 
   public GameLevel(int width, int height, long seed)
@@ -25,6 +27,8 @@ public class GameLevel {
     m_random = new Random(seed);
     m_seed = seed;
     m_rooms = new Room[height][width];
+    m_width = width;
+    m_height = height;
 
     for (int w = 0; w < width; w++) 
     {
@@ -40,6 +44,59 @@ public class GameLevel {
     return m_random.nextInt(bounds);
   }
 
+  public int getNeighborCount(Room r)
+  {
+    int x = r.m_X;
+    int y = r.m_Y;
+    int cnt = 0;
+
+    x--;
+    if (x >= 0)
+    {
+      if (m_rooms[y][x].isEmpty() == false)
+        cnt++;
+    }
+    x += 2;
+    if (x < m_width)
+    {
+      if (m_rooms[y][x].isEmpty() == false)
+        cnt++;
+    }
+    x = r.m_X;
+    y--;
+    if (y >= 0)
+    {
+      if (m_rooms[y][x].isEmpty() == false)
+        cnt++;
+    }
+    y += 2;
+    if (y < m_width)
+    {
+      if (m_rooms[y][x].isEmpty() == false)
+        cnt++;
+    }
+    return cnt;
+  }
+
+  public Room getRandomRoom()
+  {
+    int x = nextInt(m_width);
+    int y = nextInt(m_height);
+    return m_rooms[y][x];
+  }
+
+  public Room getEmptyRoomWithNeighbors(int numNeighbors)
+  {
+    while (true)
+    {
+      Room r = getRandomRoom();
+      if (r.isEmpty())
+      {
+        if (getNeighborCount(r) == 1)
+          return r;
+      }
+    }
+  }
 
   public static GameLevel generateLevel(int difficulty, int numRooms, int width, int height)
   {
@@ -51,15 +108,19 @@ public class GameLevel {
     //and possible trap locations for location traps vs. room traps
 
     //Pick start room
-    //Room r = level.getRandomRoom();
+    Room r = level.getRandomRoom();
+    r.m_roomCode = 0; //0 is always start
+    numRooms--;
 
-    //Reduce room count by 1
+    for (int rc = 0; rc < numRooms; rc++)
+    {
+      r = level.getEmptyRoomWithNeighbors(1);
+      r.m_roomCode = 1; //todo - should be random here
+    }
 
-    //for remaining rooms loop and place room randomly, only keep room if borders exactly 1 room
-
+    //now have rooms in array
 
     // now iterate over all rooms and update doors
-
 
     // now place mini boss
 
@@ -92,6 +153,12 @@ public class GameLevel {
     {
       m_X = x;
       m_Y = y;
+    }
+
+    public boolean isEmpty()
+    {
+      if (m_roomCode < 0) return true;
+      return false;
     }
   }
 }
