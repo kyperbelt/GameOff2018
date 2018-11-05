@@ -13,10 +13,11 @@ public class Hazard extends Basic {
 
 	AttackControl attack;
 	
+	Array<CollisionData> cols;
+	
 	AttackListener hazardListener = new AttackListener() {
 		@Override
 		public void onAttack() {
-			Array<CollisionData> cols = getCollision().getCollisions();
 			for (int i = 0; i < cols.size; i++) {
 				GameObject target = cols.get(i).getTarget();
 				HealthControl health = target.getController(HealthControl.class);
@@ -61,7 +62,11 @@ public class Hazard extends Basic {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		attack.attack();
+
+		cols = getCollision().getCollisions();
+		if(cols.size > 0) {
+			attack.attack();
+		}
 	}
 
 	@Override

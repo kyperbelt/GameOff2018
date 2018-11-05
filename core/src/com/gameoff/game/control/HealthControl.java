@@ -79,12 +79,18 @@ public class HealthControl extends GameObjectController {
 	 * @param health
 	 */
 	public void setCurrenHealth(float health) {
+		boolean shouldDamage = false;
+		float lastHealth = this.health;
 		if (health < this.health) {
 			if(invulnerable)
 				return;
-			damage(this.health - health);
+			shouldDamage = true;
 		}
+		
 		this.health = MathUtils.clamp(health, 0, max);
+		
+		if(shouldDamage)
+			damage(lastHealth - health);
 	}
 
 	/**
