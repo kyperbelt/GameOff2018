@@ -1,5 +1,6 @@
 package com.gameoff.game;
 
+import com.gameoff.game.objects.Hazard;
 import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.Wall;
 import com.kyperbox.objects.GameObject;
@@ -29,6 +30,15 @@ public class ObjectFactory {
 				return new Wall();
 			}
 		});
+		
+		game.registerGameObject("Hazard", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new Hazard();
+			}
+		});
 	}
+	
+	
 
 }

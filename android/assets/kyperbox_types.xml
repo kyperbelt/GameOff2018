@@ -13,6 +13,7 @@
   <property name="markup" type="bool" default="false"/>
  </objecttype>
  <objecttype name="GameObject" color="#a0a0a4"/>
+ <objecttype name="Hazard" color="#ff007f"/>
  <objecttype name="Image" color="#ff00ff">
   <property name="image" type="string"/>
  </objecttype>

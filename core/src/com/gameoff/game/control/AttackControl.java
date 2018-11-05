@@ -9,15 +9,42 @@ public class AttackControl extends GameObjectController{
 	
 	float cooldown = .35f; //cooldown used to time out auto fire
 	float nelapsed = cooldown; //counts down instead of up- negative elapsed? lol
+	float damage = 1f;
+	float damageMultiplier = 1f;
+	
+	public AttackControl() {
+		this(null);
+	}
 	
 	public AttackControl(AttackListener attack) {
 		this(.35f,attack);
 	}
 	
 	public AttackControl(float cooldown,AttackListener attack) {
+		this(1f,cooldown,attack);
+	}
+	
+	public AttackControl(float damage,float cooldown,AttackListener attack) {
 		this.listener = attack;
 		this.cooldown = cooldown;
+		this.damage = damage;
 		resetCooldown();
+	}
+	
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+	
+	public float getDamage() {
+		return damage;
+	}
+	
+	public void setDamageMult(float mult) {
+		this.damageMultiplier = Math.max(0, mult);
+	}
+	
+	public float getDamageMult() {
+		return damageMultiplier;
 	}
 	
 	public void resetCooldown() {

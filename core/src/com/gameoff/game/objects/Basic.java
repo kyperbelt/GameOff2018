@@ -1,6 +1,8 @@
 package com.gameoff.game.objects;
 
 import com.badlogic.gdx.maps.MapProperties;
+import com.gameoff.game.control.HealthControl;
+import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.controllers.CollisionController;
@@ -9,6 +11,7 @@ import com.kyperbox.objects.GameObject;
 public class Basic extends GameObject {
 	
 	
+	private HealthControl health;
 	private CollisionController collision;
 	private AnimationController animation;
 	private MoveControl move;
@@ -17,6 +20,7 @@ public class Basic extends GameObject {
 	public Basic() {
 		collision = new CollisionController();
 		animation = new AnimationController();
+		health = new HealthControl(HealthGroup.Neutral,10f);
 		move = new MoveControl(200);
 		setApplyVelocity(false);
 
@@ -40,6 +44,10 @@ public class Basic extends GameObject {
 		return animation;
 	}
 	
+	public HealthControl getHealth() {
+		return health;
+	}
+	
 	/**
 	 * get the move controller
 	 * @return
@@ -60,6 +68,7 @@ public class Basic extends GameObject {
 		addController(collision);
 		addController(animation);
 		addController(move);
+		addController(health);
 	}
 
 	@Override
@@ -68,6 +77,7 @@ public class Basic extends GameObject {
 		removeController(collision);
 		removeController(move);
 		removeController(animation);
+		removeController(health);
 	}
 
 }

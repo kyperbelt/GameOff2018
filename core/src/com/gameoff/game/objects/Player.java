@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
+import com.gameoff.game.control.HealthControl.DamageListener;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
 import com.kyperbox.KyperBoxGame;
@@ -14,7 +15,7 @@ import com.kyperbox.umisc.StringUtils;
 public class Player extends Basic {
 
 	public enum PlayerState {
-		Idling, Moving, Dashing, Attacking, Damaged
+		Idling, Moving, Dashing, Attacking, Damaged, Dying
 	}
 
 	public enum Form {
@@ -125,6 +126,13 @@ public class Player extends Basic {
 		animation.addAnimation("walk_up", "player_walk_up");
 		animation.addAnimation("walk_left", "player_walk_left");
 		animation.addAnimation("walk_right", "player_walk_right");
+		
+		getHealth().setDamageListener(new DamageListener() {
+			@Override
+			public void damaged(float amount) {
+				System.out.println(StringUtils.format("%s damaged - amount[%s] - currentHealth[%s]", getName(),amount,getHealth().getCurrentHealth()));
+			}
+		});
 
 		setCurrentForm(Form.Demon);
 		setPlayerState(PlayerState.Idling);
