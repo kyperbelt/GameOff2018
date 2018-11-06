@@ -1,8 +1,6 @@
 package com.gameoff.game;
 
-import com.gameoff.game.objects.Hazard;
-import com.gameoff.game.objects.Player;
-import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.*;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.IGameObjectGetter;
 
@@ -28,6 +26,13 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new Wall();
+			}
+		});
+
+		game.registerGameObject("Pit", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new Pit();
 			}
 		});
 		

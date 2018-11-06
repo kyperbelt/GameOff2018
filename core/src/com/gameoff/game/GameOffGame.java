@@ -27,7 +27,8 @@ public class GameOffGame extends KyperBoxGame {
 		
 		//register game states (tmx maps with the template setup)
 		registerGameState("title", "testmenu.tmx",new TitleMenuManager());
-		registerGameState("level", "testlevel.tmx", new LevelManager());
+		//registerGameState("level", "testlevel.tmx", new LevelManager());
+		registerGameState("level", "room_1.tmx", new LevelManager());
 		
 		setGameState("title");
 		

@@ -173,6 +173,10 @@ public class Player extends Basic {
 		} else if (state == PlayerState.Idling) {
 			animation.setPlaySpeed(0);
 		}
+
+		//TODO: Question - would it make more sense to put door collisions here?
+		//Or in the door object- just thinking doors only work with Players.
+		
 	}
 
 	public void setAnimation(String animation) {

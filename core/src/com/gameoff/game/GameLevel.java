@@ -20,11 +20,13 @@ public class GameLevel {
   private long m_seed;
   private int m_width;
   private int m_height;
+  private static GameLevel m_currentLevel = null;
+  private Room m_currentRoom;
 
 
   public GameLevel(int width, int height, long seed)
   {
-    m_random = new Random(seed);
+    m_random = new Random(); //ignoring seed right now, random seed!
     m_seed = seed;
     m_rooms = new Room[height][width];
     m_width = width;
@@ -78,14 +80,29 @@ public class GameLevel {
     return cnt;
   }
 
-  public Room getRandomRoom()
+  public Room getRoom(int x, int y)
+  {
+    return m_rooms[x][y];
+  }
+
+  public Room getCurrentRoom()
+  {
+    return m_currentRoom;
+  }
+
+  public void moveRoom(int deltaX, int deltaY)
+  {
+    m_currentRoom = m_rooms[m_currentRoom.m_Y + deltaY][m_currentRoom.m_X+deltaX];
+  }
+
+  private Room getRandomRoom()
   {
     int x = nextInt(m_width);
     int y = nextInt(m_height);
     return m_rooms[y][x];
   }
 
-  public Room getEmptyRoomWithNeighbors(int numNeighbors)
+  private Room getEmptyRoomWithNeighbors(int numNeighbors)
   {
     while (true)
     {
@@ -96,6 +113,30 @@ public class GameLevel {
           return r;
       }
     }
+  }
+
+  //only returns valid rooms (not -1 room codes)
+  private Room getNeighborRoom(Room r, int deltaX, int deltaY)
+  {
+    int x = r.m_X += deltaX;
+    int y = r.m_Y += deltaY;
+    if ((x >= m_width) || (x < 0) || (y < 0) || (y >= m_height)) return null;
+    Room n = m_rooms[y][x];
+    if (n.m_roomCode >= 0) return n;
+    return null;
+  }
+
+  private void updateAllDoors(Room r, int doorCode)
+  {
+    if (getNeighborRoom(r,0,-1) != null) r.setDoor(0, doorCode);
+    if (getNeighborRoom(r,1,0) != null) r.setDoor(1, doorCode);
+    if (getNeighborRoom(r,0,1) != null) r.setDoor(2, doorCode);
+    if (getNeighborRoom(r,-1,0) != null) r.setDoor(3, doorCode);
+  }
+
+  private void updateDoor(Room r, int dir, int doorCode)
+  {
+    r.setDoor(dir, doorCode);
   }
 
   public static GameLevel generateLevel(int difficulty, int numRooms, int width, int height)
@@ -111,16 +152,28 @@ public class GameLevel {
     Room r = level.getRandomRoom();
     r.m_roomCode = 0; //0 is always start
     numRooms--;
+    level.m_currentRoom = r;
 
     for (int rc = 0; rc < numRooms; rc++)
     {
       r = level.getEmptyRoomWithNeighbors(1);
-      r.m_roomCode = 1; //todo - should be random here
+      r.m_roomCode = 1; //todo - should be random here - this is the room template
     }
 
     //now have rooms in array
 
     // now iterate over all rooms and update doors
+    for (int h = 0; h < height; h++) 
+    {
+      for (int w = 0; w < width; w++) 
+      {
+        Room room = level.m_rooms[h][w];
+        if (room.m_roomCode >= 0)
+        {
+          level.updateAllDoors(room,1); //1 is open doors
+        }
+      }
+    }
 
     // now place mini boss
 
@@ -141,24 +194,14 @@ public class GameLevel {
     return level;
   }
 
-
-  //Inner Class Room
-  public class Room {
-    int m_roomCode = -1;
-    int m_X = 0;
-    int m_Y = 0;
-    int[] doors = new int[]{0,0,0,0};
-
-    public Room(int x, int y)
-    {
-      m_X = x;
-      m_Y = y;
-    }
-
-    public boolean isEmpty()
-    {
-      if (m_roomCode < 0) return true;
-      return false;
-    }
+  public static void setCurrentLevel(GameLevel l)
+  {
+    m_currentLevel = l;
   }
+
+  public static GameLevel getCurrentLevel()
+  {
+    return m_currentLevel;
+  }
+
 }

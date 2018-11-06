@@ -6,238 +6,252 @@ filter: Nearest,Nearest
 repeat: none
 HorrorGameTiles
   rotate: false
-  xy: 2, 168
+  xy: 2, 185
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 abomination_chase_down_0
   rotate: false
-  xy: 465, 454
+  xy: 465, 471
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_down_1
   rotate: false
-  xy: 425, 392
+  xy: 425, 409
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_0
   rotate: false
-  xy: 2, 2
+  xy: 167, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_1
   rotate: false
-  xy: 167, 54
+  xy: 326, 357
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_0
   rotate: false
-  xy: 260, 274
+  xy: 68, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_1
   rotate: false
-  xy: 294, 340
+  xy: 260, 257
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_0
   rotate: false
-  xy: 36, 2
+  xy: 294, 323
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_1
   rotate: false
-  xy: 201, 54
+  xy: 201, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_down
   rotate: false
-  xy: 260, 240
+  xy: 360, 357
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_left
   rotate: false
-  xy: 294, 306
+  xy: 102, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_right
   rotate: false
-  xy: 328, 340
+  xy: 260, 223
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_up
   rotate: false
-  xy: 70, 2
+  xy: 294, 289
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+door_closed
+  rotate: false
+  xy: 260, 357
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+door_open
+  rotate: false
+  xy: 2, 19
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
 eyeball_still_down
   rotate: false
-  xy: 260, 206
+  xy: 328, 323
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 noregion
   rotate: false
-  xy: 294, 272
+  xy: 260, 189
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 painting
   rotate: false
-  xy: 465, 437
+  xy: 2, 2
   size: 24, 15
   orig: 24, 15
   offset: 0, 0
   index: -1
 piano
   rotate: false
-  xy: 328, 306
+  xy: 294, 255
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pillar
   rotate: false
-  xy: 260, 308
+  xy: 260, 291
   size: 32, 64
   orig: 32, 64
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 260, 374
+  xy: 260, 391
   size: 163, 50
   orig: 163, 50
   offset: 0, 0
   index: -1
 play_down
   rotate: false
-  xy: 2, 36
+  xy: 2, 53
   size: 163, 50
   orig: 163, 50
   offset: 0, 0
   index: -1
 player_walk_down_0
   rotate: false
-  xy: 362, 340
+  xy: 328, 289
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_down_1
   rotate: false
-  xy: 104, 2
+  xy: 294, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_down_2
   rotate: false
-  xy: 260, 172
+  xy: 328, 255
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_0
   rotate: false
-  xy: 294, 238
+  xy: 328, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_1
   rotate: false
-  xy: 328, 272
+  xy: 362, 323
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_2
   rotate: false
-  xy: 362, 306
+  xy: 362, 289
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_0
   rotate: false
-  xy: 294, 204
+  xy: 362, 255
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_1
   rotate: false
-  xy: 328, 238
+  xy: 362, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_2
   rotate: false
-  xy: 362, 272
+  xy: 394, 357
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_0
   rotate: false
-  xy: 328, 204
+  xy: 294, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_1
   rotate: false
-  xy: 362, 238
+  xy: 328, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_2
   rotate: false
-  xy: 362, 204
+  xy: 362, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 testtext
   rotate: false
-  xy: 2, 426
+  xy: 2, 443
   size: 461, 60
   orig: 461, 60
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 2, 88
+  xy: 2, 105
   size: 238, 78
   orig: 238, 78
   offset: 0, 0

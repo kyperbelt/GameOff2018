@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.kyperbox.GameState;
 import com.kyperbox.managers.StateManager;
 import com.kyperbox.umisc.BakedEffects;
+import com.gameoff.game.GameLevel;
 
 public class TitleMenuManager extends StateManager {
 
@@ -19,6 +20,8 @@ public class TitleMenuManager extends StateManager {
 		public void clicked(InputEvent event, float x, float y) {
 			Actor a = event.getListenerActor();
 			if (a == play) {
+				GameLevel l = GameLevel.generateLevel(1, 10, 6, 6);
+				GameLevel.setCurrentLevel(l); //set singleton
 				getState().getGame().setGameState("level");
 			}
 		};
