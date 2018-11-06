@@ -44,9 +44,9 @@ public class OutOfBoundsSystem extends ControlSpecificSystem {
 				if(prect.x+prect.width > bounds.x+bounds.width)
 					dx+=1;
 				if(prect.y < bounds.y)
-					dy-=1;
-				if(prect.y+prect.height > bounds.y+bounds.height)
 					dy+=1;
+				if(prect.y+prect.height > bounds.y+bounds.height)
+					dy-=1;
 				
 				GameLevel level = GameLevel.getCurrentLevel();
 				Room cur = level.getCurrentRoom();
