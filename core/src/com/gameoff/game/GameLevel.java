@@ -1,13 +1,4 @@
 package com.gameoff.game;
-/*
-import com.gameoff.game.objects.Player;
-import com.gameoff.game.objects.Wall;
-import com.kyperbox.objects.GameObject;
-import com.kyperbox.umisc.IGameObjectGetter;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-*/
-import com.badlogic.gdx.*;
-
 import java.util.Random;
 
 /**

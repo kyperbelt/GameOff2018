@@ -3,6 +3,7 @@ package com.gameoff.game.managers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
+import com.gameoff.game.systems.OutOfBoundsSystem;
 import com.gameoff.game.systems.PlayerCameraSystem;
 import com.gameoff.game.systems.PlayerControlSystem;
 import com.gameoff.game.systems.YSortSystem;
@@ -27,8 +28,9 @@ public class LevelManager extends StateManager {
 	PlayerControlSystem control;
 	PlayerCameraSystem camera;
 	DeathSystem death;
-  YSortSystem ysort;
-  int m_roomWidthPixels, m_roomHeightPixels;
+	YSortSystem ysort;
+	OutOfBoundsSystem bounds;
+	int m_roomWidthPixels, m_roomHeightPixels;
 
 	@Override
 	public void addLayerSystems(GameState state) {
@@ -53,6 +55,9 @@ public class LevelManager extends StateManager {
 		
 		ysort = new YSortSystem();
 		
+		//ssystem to detect when a player is out of bounds and then transition room
+		bounds = new OutOfBoundsSystem(0, 0, m_roomWidthPixels, m_roomHeightPixels);
+		
 		//add all the systems to the playground layer. If we want things like collision on a separate layer 
 		//then we must add systems(unique) to that layer as well. 
 		playground.addLayerSystem(control);
@@ -61,6 +66,7 @@ public class LevelManager extends StateManager {
 		playground.addLayerSystem(camera);
 		playground.addLayerSystem(death);
 		playground.addLayerSystem(ysort);
+		playground.addLayerSystem(bounds);
 	}
 
 	@Override
@@ -227,11 +233,13 @@ public class LevelManager extends StateManager {
 		HudMap mapHud = new HudMap(level);
 		mapHud.updateLevel(level);
 		mapHud.setRecommendedPosition(960,540);
-		flayer.addGameObject(mapHud,null);
+		flayer.addGameObject(mapHud,KyperBoxGame.NULL_PROPERTIES);
 	}
 
 	@Override
 	public void update(GameState state, float delta) {
+		
+		
 		
 	}
 

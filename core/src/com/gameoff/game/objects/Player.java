@@ -99,7 +99,7 @@ public class Player extends Basic {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
-
+		setSize(32, 32);
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer
 		addController(control);

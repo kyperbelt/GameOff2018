@@ -22,7 +22,7 @@ public class TitleMenuManager extends StateManager {
 			if (a == play) {
 				GameLevel l = GameLevel.generateLevel(1, 9, 6, 6);
 				GameLevel.setCurrentLevel(l); //set singleton
-				getState().getGame().setGameState("level");
+				getState().getGame().setGameState("room_"+l.getCurrentRoom().getCode());
 			}
 		};
 	};

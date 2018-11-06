@@ -19,6 +19,14 @@ public class Room {
     m_X = x;
     m_Y = y;
   }
+  
+  public int getX() {
+	  return m_X;
+  }
+  
+  public int getY() {
+	  return m_Y;
+  }
 
   public boolean isEmpty()
   {

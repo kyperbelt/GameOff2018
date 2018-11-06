@@ -67,6 +67,8 @@ public class Hazard extends Basic {
 		if(cols.size > 0) {
 			attack.attack();
 		}
+
+		cols = null;//null out because col data is pooled
 	}
 
 	@Override

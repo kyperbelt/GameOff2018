@@ -12,10 +12,20 @@ public class GameOffGame extends KyperBoxGame {
 
 	public static final int WIDTH = (int) (1280*.75f);
 	public static final int HEIGHT = (int) (720*.75f);
+	
+	private LevelManager levelmanager;
 
 	public GameOffGame() {
 		super(new FitViewport(WIDTH, HEIGHT));
 		
+	}
+	
+	/**
+	 * utility method to get the level manager. I think we will be using the same level manager for all the rooms anyways. 
+	 * @return
+	 */
+	public LevelManager getLevelManager() {
+		return levelmanager;
 	}
 
 	@Override
@@ -28,7 +38,12 @@ public class GameOffGame extends KyperBoxGame {
 		//register game states (tmx maps with the template setup)
 		registerGameState("title", "testmenu.tmx",new TitleMenuManager());
 		//registerGameState("level", "testlevel.tmx", new LevelManager());
-		registerGameState("level", "room_1.tmx", new LevelManager());
+		levelmanager = new LevelManager();
+		
+		
+		
+		registerGameState("room_0", "room_0.tmx", levelmanager);
+		registerGameState("room_1","room_1.tmx",levelmanager);
 		
 		setGameState("title");
 		
