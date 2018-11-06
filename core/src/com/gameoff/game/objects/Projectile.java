@@ -58,7 +58,7 @@ public class Projectile extends Basic {
 		return p;
 	}
 
-	public static void resetProjectTiles() {
+	public static void resetProjectiles() {
 		projectiles.freeAll(used);
 	}
 

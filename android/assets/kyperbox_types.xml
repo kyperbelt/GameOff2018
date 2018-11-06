@@ -100,5 +100,7 @@
   <property name="tile_layer" type="string"/>
  </objecttype>
  <objecttype name="Viewport" color="#0000ff"/>
- <objecttype name="Wall" color="#ff0000"/>
+ <objecttype name="Wall" color="#ff0000">
+  <property name="passable" type="bool" default="false"/>
+ </objecttype>
 </objecttypes>
