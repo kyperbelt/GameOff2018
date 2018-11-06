@@ -106,9 +106,10 @@ public class GameLevel {
     return m_rooms;
   }
 
-  public void moveRoom(int deltaX, int deltaY)
+  public Room moveRoom(int deltaX, int deltaY)
   {
     m_currentRoom = m_rooms[m_currentRoom.m_Y + deltaY][m_currentRoom.m_X+deltaX];
+    return m_currentRoom;
   }
 
   private Room getRandomRoom()
