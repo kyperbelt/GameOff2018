@@ -66,7 +66,7 @@ public class LevelManager extends StateManager {
 	@Override
 	public void dispose(GameState state) {
 		//reset all projectiles & melee attack pools
-		Projectile.resetProjectTiles();
+		Projectile.resetProjectiles();
 		MeleeAttack.resetMeleeAttacks();
 	}
 
