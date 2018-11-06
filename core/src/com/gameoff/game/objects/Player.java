@@ -8,6 +8,7 @@ import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
+import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.umisc.StringUtils;
@@ -115,11 +116,7 @@ public class Player extends Basic {
 		// is loaded in but later we can move this
 		// to a static method that loads it once per state load. Animations can be
 		// reused between objects to save on space
-		float framespeed = .15f;
-		getState().storeAnimation("player_walk_up", getState().createGameAnimation("player_walk_up", framespeed));
-		getState().storeAnimation("player_walk_down", getState().createGameAnimation("player_walk_down", framespeed));
-		getState().storeAnimation("player_walk_left", getState().createGameAnimation("player_walk_left", framespeed));
-		getState().storeAnimation("player_walk_right", getState().createGameAnimation("player_walk_right", framespeed));
+		
 
 		AnimationController animation = getAnimation();
 		animation.addAnimation("walk_down", "player_walk_down");
@@ -137,6 +134,14 @@ public class Player extends Basic {
 		setCurrentForm(Form.Demon);
 		setPlayerState(PlayerState.Idling);
 		setDirection(Direction.Up);
+	}
+	
+	public static void createPlayerAnimations(GameState state) {
+		float framespeed = .15f;
+		state.storeAnimation("player_walk_up", state.createGameAnimation("player_walk_up", framespeed));
+		state.storeAnimation("player_walk_down",state.createGameAnimation("player_walk_down", framespeed));
+		state.storeAnimation("player_walk_left",state.createGameAnimation("player_walk_left", framespeed));
+		state.storeAnimation("player_walk_right", state.createGameAnimation("player_walk_right", framespeed));
 	}
 
 	@Override
@@ -297,5 +302,9 @@ public class Player extends Basic {
 				
 			}
 		};
+	}
+	
+	@Override
+	public void onRemove() {
 	}
 }

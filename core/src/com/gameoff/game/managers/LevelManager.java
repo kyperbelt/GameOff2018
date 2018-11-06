@@ -10,6 +10,7 @@ import com.gameoff.game.systems.YSortSystem;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
 import com.kyperbox.GameState;
+import com.kyperbox.managers.Priority;
 import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.GameLayer;
 import com.kyperbox.systems.QuadTree;
@@ -34,6 +35,8 @@ public class LevelManager extends StateManager {
 
 	@Override
 	public void addLayerSystems(GameState state) {
+		
+		Player.createPlayerAnimations(state);
 		//get the playground layer from the state
 		GameLayer playground = state.getPlaygroundLayer();
 		
@@ -57,6 +60,7 @@ public class LevelManager extends StateManager {
 		
 		//ssystem to detect when a player is out of bounds and then transition room
 		bounds = new OutOfBoundsSystem(0, 0, m_roomWidthPixels, m_roomHeightPixels);
+		bounds.setPriority(Priority.LOW);
 		
 		//add all the systems to the playground layer. If we want things like collision on a separate layer 
 		//then we must add systems(unique) to that layer as well. 
@@ -79,6 +83,8 @@ public class LevelManager extends StateManager {
 	@Override
 	public void init(GameState state) {
 
+		
+		
 		//When this is called, TMX is loaded, objects created, etc.
 		//and this is called right before being shown.
 		GameLayer playground = state.getPlaygroundLayer();
