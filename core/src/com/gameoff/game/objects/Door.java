@@ -17,9 +17,15 @@ public class Door extends Basic {
     removeController(getHealth());
     //addController(attack);
     if (m_code == 1)
+    {
       setSprite("door_open");
+      getMove().setPhysical(false);
+    }
     else if (m_code == 2)
-      setSprite("door_close");
+    {
+      setSprite("door_closed");
+      getMove().setPhysical(true);
+    }
 
   }
 

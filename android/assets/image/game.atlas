@@ -116,6 +116,69 @@ eyeball_still_down
   orig: 32, 32
   offset: 0, 0
   index: -1
+map_door
+  rotate: false
+  xy: 499, 499
+  size: 4, 4
+  orig: 4, 4
+  offset: 0, 0
+  index: -1
+map_door0
+  rotate: false
+  xy: 242, 168
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_door1
+  rotate: false
+  xy: 465, 454
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_door2
+  rotate: false
+  xy: 167, 54
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_door3
+  rotate: false
+  xy: 136, 36
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_empty
+  rotate: false
+  xy: 425, 392
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_room
+  rotate: false
+  xy: 396, 340
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_room_current_icon
+  rotate: false
+  xy: 28, 2
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_start_icon
+  rotate: false
+  xy: 242, 151
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
 noregion
   rotate: false
   xy: 260, 189

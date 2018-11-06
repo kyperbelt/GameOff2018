@@ -12,6 +12,7 @@ public class Room {
   int m_X = 0;
   int m_Y = 0;
   int[] m_doors = new int[]{0,0,0,0};
+  boolean m_visited = false;
 
   public Room(int x, int y)
   {
@@ -25,6 +26,11 @@ public class Room {
     return false;
   }
 
+  public int getCode()
+  {
+    return m_roomCode;
+  }
+
   public int getDoor(int dir)
   {
     return m_doors[dir];
@@ -33,5 +39,15 @@ public class Room {
   public void setDoor(int dir, int doorCode)
   {
     m_doors[dir] = doorCode;
+  }
+
+  public boolean getVisited()
+  {
+    return m_visited;
+  }
+
+  public void setVisited(boolean v)
+  {
+    m_visited = v;
   }
 }

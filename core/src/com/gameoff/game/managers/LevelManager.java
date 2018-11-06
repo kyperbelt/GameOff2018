@@ -86,7 +86,7 @@ public class LevelManager extends StateManager {
 		Room r = level.getCurrentRoom();
 		//IGameObjectFactory factory = game.getObjectFactory();
 
-		//Place Doors
+		//Place Doors & Walls
 		//Not sure about collision box rotation/how that all works
 		//Might be smarter to play with origin for rotation, this
 		//is a bit hacky ;)
@@ -97,35 +97,125 @@ public class LevelManager extends StateManager {
 			//change below to getSize of sprite somehow
 			float dw = 64;
 			float dh = 32;
+
+			float x = m_roomWidthPixels/2 - dw/2;
+			float y = m_roomHeightPixels - dh;
+
 			if (dc > 0)
 			{
 				Door d = new Door(dc);
 				d.setName("Door" + dir);
-				playground.addGameObject(d,null);
-
 				d.setSize(dw,dh);
 				d.setRotation(rot);
-				float x = m_roomWidthPixels/2 - dw/2;
-				float y = m_roomHeightPixels - dh;
+				playground.addGameObject(d,null);
+
 				if (dir == 2) 
 				{
 					//down
+					
+					Wall t1 = new Wall();
+					t1.setSize(x,dh);
+					t1.setPosition(0,0);
+					playground.addGameObject(t1,null);
+
+					Wall t2 = new Wall();
+					t2.setSize(x,dh);
+					t2.setPosition(x+dw,0);
+					playground.addGameObject(t2,null);
+
+					//rotated 180
 					y = 0;
-					y = dh;
+
 				} else if (dir == 1)
 				{
 					//right door
-					y = m_roomHeightPixels/2 + dw/2;
+					y = m_roomHeightPixels/2 - dw/2;
 					x = m_roomWidthPixels - dh;
+					
+					Wall t1 = new Wall();
+					t1.setSize(dh,y);
+					t1.setPosition(x,0);
+					playground.addGameObject(t1,null);
+
+					Wall t2 = new Wall();
+					t2.setSize(dh,y);
+					t2.setPosition(x, y + dw);
+					playground.addGameObject(t2,null);
+
+					//adjust for rotation
+					x -= dh/2;
+					y += dw/4;
+
 				}	else if (dir == 3)
 				{
 					//left door
-					y = m_roomHeightPixels/2 + dw/2;
-					x = dh;
+					y = m_roomHeightPixels/2 - dw/2;
+					x = 0;
+
+					Wall t1 = new Wall();
+					t1.setSize(dh,y);
+					t1.setPosition(0,0);
+					playground.addGameObject(t1,null);
+
+					Wall t2 = new Wall();
+					t2.setSize(dh,y);
+					t2.setPosition(0, y + dw);
+					playground.addGameObject(t2,null);
+
+					//rotation adjustment
+					x -= dh/2;
+					y += dw/4;
+
+				} else
+				{
+					//top
+					Wall t1 = new Wall();
+					t1.setSize(x,dh);
+					t1.setPosition(0,y);
+					playground.addGameObject(t1,null);
+
+					Wall t2 = new Wall();
+					t2.setSize(x,dh);
+					t2.setPosition(x+dw,y);
+					playground.addGameObject(t2,null);
 				}			
 				d.setPosition(x,y);
+
+			} else
+			{
+				//just place full walls
+				if (dir == 2) 
+				{
+					Wall t1 = new Wall();
+					t1.setSize(m_roomWidthPixels,dh);
+					t1.setPosition(0,0);
+					playground.addGameObject(t1,null);
+				} else if (dir == 1)
+				{
+					//right door
+					Wall t1 = new Wall();
+					t1.setSize(dh,m_roomHeightPixels);
+					t1.setPosition(m_roomWidthPixels-dh,0);
+					playground.addGameObject(t1,null);
+
+				}	else if (dir == 3)
+				{
+					//left door
+					Wall t1 = new Wall();
+					t1.setSize(dh,m_roomHeightPixels);
+					t1.setPosition(0,0);
+					playground.addGameObject(t1,null);
+				} else
+				{
+					//top
+					Wall t1 = new Wall();
+					t1.setSize(m_roomWidthPixels,dh);
+					t1.setPosition(0,m_roomHeightPixels-dh);
+					playground.addGameObject(t1,null);
+				}		
 			}
 		}
+
 
 		//TODO: Spawn Enemies
 		//Place enemies based on TMX Spawn Objects?
@@ -133,6 +223,11 @@ public class LevelManager extends StateManager {
 		//TODO: Keys
 		//Place room keys and bosses based on Room date
 
+		GameLayer flayer = state.getForegroundLayer();
+		HudMap mapHud = new HudMap(level);
+		mapHud.updateLevel(level);
+		mapHud.setRecommendedPosition(960,540);
+		flayer.addGameObject(mapHud,null);
 	}
 
 	@Override

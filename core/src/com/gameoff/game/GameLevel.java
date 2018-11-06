@@ -6,6 +6,7 @@ import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.IGameObjectGetter;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 */
+import com.badlogic.gdx.*;
 
 import java.util.Random;
 
@@ -85,9 +86,24 @@ public class GameLevel {
     return m_rooms[x][y];
   }
 
+  public int getWidth()
+  {
+    return m_width;
+  }
+
+  public int getHeight()
+  {
+    return m_height;
+  }
+
   public Room getCurrentRoom()
   {
     return m_currentRoom;
+  }
+
+  public Room[][] getRooms()
+  {
+    return m_rooms;
   }
 
   public void moveRoom(int deltaX, int deltaY)
@@ -109,7 +125,8 @@ public class GameLevel {
       Room r = getRandomRoom();
       if (r.isEmpty())
       {
-        if (getNeighborCount(r) == 1)
+        int nc = getNeighborCount(r);
+        if ((nc > 0) && (nc <= numNeighbors))
           return r;
       }
     }
@@ -118,8 +135,8 @@ public class GameLevel {
   //only returns valid rooms (not -1 room codes)
   private Room getNeighborRoom(Room r, int deltaX, int deltaY)
   {
-    int x = r.m_X += deltaX;
-    int y = r.m_Y += deltaY;
+    int x = r.m_X + deltaX;
+    int y = r.m_Y + deltaY;
     if ((x >= m_width) || (x < 0) || (y < 0) || (y >= m_height)) return null;
     Room n = m_rooms[y][x];
     if (n.m_roomCode >= 0) return n;
@@ -139,10 +156,36 @@ public class GameLevel {
     r.setDoor(dir, doorCode);
   }
 
+  private void prune(int lx, int rx, int ty, int by)
+  {
+
+    int newWidth = rx - lx + 1;
+    int newHeight = by-ty + 1;
+
+    Room[][] newRooms = new Room[newHeight][newWidth];
+
+    int newY = 0;
+    for (int h = ty; h <= by; h++) 
+    {
+      int newX = 0;
+      for (int w = lx; w <= rx; w++) 
+      {
+        newRooms[newY][newX] = m_rooms[h][w];
+        newX++;
+      }
+      newY++;
+    }
+
+    m_rooms = newRooms;
+    m_width = newWidth;
+    m_height = newHeight;
+
+  }
+
   public static GameLevel generateLevel(int difficulty, int numRooms, int width, int height)
   {
     GameLevel level = new GameLevel(width, height, 50000);
-
+    numRooms += level.nextInt(5);
     //ROOM Template considerations
     //Maybe use map properties to define:
     //what trap types are compatible
@@ -156,24 +199,46 @@ public class GameLevel {
 
     for (int rc = 0; rc < numRooms; rc++)
     {
-      r = level.getEmptyRoomWithNeighbors(1);
+      int maxNeighbors = 1;
+      if (level.nextInt(100) > 85)
+      {
+        maxNeighbors = 2;
+      }
+      r = level.getEmptyRoomWithNeighbors(maxNeighbors);
       r.m_roomCode = 1; //todo - should be random here - this is the room template
     }
 
     //now have rooms in array
 
     // now iterate over all rooms and update doors
+    int lx = 100;
+    int rx = -1;
+    int ty = -1;
+    int by = -1;
+    int roomCount = 0;
+
     for (int h = 0; h < height; h++) 
     {
       for (int w = 0; w < width; w++) 
       {
         Room room = level.m_rooms[h][w];
-        if (room.m_roomCode >= 0)
+        if (room.isEmpty() == false)
         {
-          level.updateAllDoors(room,1); //1 is open doors
+          //update bounds
+          if (w < lx) lx = w;
+          if (rx < w) rx = w;
+          if (ty < 0) ty = h;
+          if (by < h) by = h;
+          level.updateAllDoors(room,1); //1 is open doors, 2 is closed doors
+          roomCount++;
         }
       }
     }
+
+    //now prune the array
+    level.prune(lx,rx,ty,by);
+    height = level.getHeight();
+    width = level.getWidth();
 
     // now place mini boss
 

@@ -12,6 +12,7 @@ public class Projectile extends Basic {
 			return new Projectile();
 		}
 	};
+	
 	private static Array<Projectile> used = new Array<Projectile>();
 
 	float lifetime = 2f;

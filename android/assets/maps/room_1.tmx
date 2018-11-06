@@ -36,10 +36,6 @@
   <object id="54" name="wall" type="Wall" x="303.667" y="607.666" width="32" height="224"/>
   <object id="55" name="wall" type="Wall" x="207.333" y="608.333" width="96" height="63.667"/>
   <object id="61" name="test_hazard" type="Hazard" x="544" y="704" width="64" height="32"/>
-  <object id="63" name="wall" type="Wall" x="3" y="1248" width="1920" height="32"/>
-  <object id="64" name="wall" type="Wall" x="-10" y="1" width="32" height="1272"/>
-  <object id="65" name="wall" type="Wall" x="-2" y="-27" width="1920" height="32"/>
-  <object id="66" name="wall" type="Wall" x="1900" y="3" width="32" height="1272"/>
   <object id="67" name="pit" type="Pit" x="775" y="963" width="242" height="150"/>
   <object id="68" name="pit" type="Pit" x="935" y="421" width="182" height="307"/>
  </objectgroup>
