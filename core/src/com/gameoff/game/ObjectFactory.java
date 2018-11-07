@@ -42,6 +42,14 @@ public class ObjectFactory {
 				return new Hazard();
 			}
 		});
+
+		game.registerGameObject("Image", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new BackgroundImage();
+			}
+		});
+
 	}
 	
 	

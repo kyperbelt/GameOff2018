@@ -7,7 +7,7 @@ public class AutoPacking {
 	
 	public static String input_folder = "../../input_assets";
 	public static String output_folder = "./";
-	public static int size  = 2048;
+	public static int size  = 4096;
 	public static String extension = ".atlas";
 	public static boolean strip_whitespace = true;
 	public static boolean use_index = false;

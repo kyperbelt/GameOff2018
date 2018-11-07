@@ -163,6 +163,8 @@ public class GameLevel {
       for (int w = lx; w <= rx; w++) 
       {
         newRooms[newY][newX] = m_rooms[h][w];
+        newRooms[newY][newX].m_X = newX;
+        newRooms[newY][newX].m_Y = newY;
         newX++;
       }
       newY++;
