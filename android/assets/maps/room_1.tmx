@@ -4,7 +4,7 @@
   <property name="atlas" value="image/game.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
- <tileset firstgid="37" source="../HorrorGameTiles.tsx"/>
+ <tileset firstgid="38" source="../HorrorGameTiles.tsx"/>
  <objectgroup name="background"/>
  <layer name="floor_tiles" width="90" height="50">
   <data encoding="base64">
@@ -22,12 +22,12 @@
     <property name="image" value="back1"/>
    </properties>
   </object>
-  <object id="49" name="floor_tiles" type="TilemapLayerObject" x="0" y="1248" width="32" height="32">
+  <object id="49" name="floor_tiles" type="TilemapLayerObject" x="0" y="1588" width="32" height="32">
    <properties>
     <property name="tile_layer" value="floor_tiles"/>
    </properties>
   </object>
-  <object id="51" name="wall_tiles" type="TilemapLayerObject" x="0" y="1248" width="32" height="32">
+  <object id="51" name="wall_tiles" type="TilemapLayerObject" x="0" y="1588" width="32" height="32">
    <properties>
     <property name="tile_layer" value="walls"/>
    </properties>

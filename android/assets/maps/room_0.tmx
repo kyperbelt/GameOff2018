@@ -22,12 +22,12 @@
     <property name="image" value="back1"/>
    </properties>
   </object>
-  <object id="49" name="floor_tiles" type="TilemapLayerObject" x="0" y="1248" width="32" height="32">
+  <object id="49" name="floor_tiles" type="TilemapLayerObject" x="0" y="1588" width="32" height="32">
    <properties>
     <property name="tile_layer" value="floor_tiles"/>
    </properties>
   </object>
-  <object id="51" name="wall_tiles" type="TilemapLayerObject" x="0" y="1248" width="32" height="32">
+  <object id="51" name="wall_tiles" type="TilemapLayerObject" x="0" y="1588" width="32" height="32">
    <properties>
     <property name="tile_layer" value="walls"/>
    </properties>
