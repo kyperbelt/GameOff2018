@@ -1,22 +1,28 @@
 package com.gameoff.game.managers;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.gameoff.game.GameLevel;
+import com.gameoff.game.Room;
+import com.gameoff.game.objects.Door;
+import com.gameoff.game.objects.HudMap;
+import com.gameoff.game.objects.MeleeAttack;
+import com.gameoff.game.objects.Player;
+import com.gameoff.game.objects.Projectile;
+import com.gameoff.game.objects.Wall;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
 import com.gameoff.game.systems.OutOfBoundsSystem;
 import com.gameoff.game.systems.PlayerCameraSystem;
 import com.gameoff.game.systems.PlayerControlSystem;
 import com.gameoff.game.systems.YSortSystem;
-import com.gameoff.game.GameLevel;
-import com.gameoff.game.Room;
 import com.kyperbox.GameState;
+import com.kyperbox.KyperBoxGame;
 import com.kyperbox.managers.Priority;
 import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.GameLayer;
+import com.kyperbox.systems.ParallaxMapper;
+import com.kyperbox.systems.ParallaxMapper.ParallaxData;
 import com.kyperbox.systems.QuadTree;
-import com.kyperbox.KyperBoxGame;
-import com.kyperbox.umisc.IGameObjectFactory;
-import com.gameoff.game.objects.*;
 
 public class LevelManager extends StateManager {
 
@@ -30,6 +36,7 @@ public class LevelManager extends StateManager {
 	PlayerCameraSystem camera;
 	DeathSystem death;
 	YSortSystem ysort;
+	ParallaxMapper paralax;
 	OutOfBoundsSystem bounds;
 	int m_roomWidthPixels, m_roomHeightPixels;
 
@@ -62,6 +69,8 @@ public class LevelManager extends StateManager {
 		bounds = new OutOfBoundsSystem(0, 0, m_roomWidthPixels, m_roomHeightPixels);
 		bounds.setPriority(Priority.LOW);
 		
+		
+		
 		//add all the systems to the playground layer. If we want things like collision on a separate layer 
 		//then we must add systems(unique) to that layer as well. 
 		playground.addLayerSystem(control);
@@ -71,6 +80,19 @@ public class LevelManager extends StateManager {
 		playground.addLayerSystem(death);
 		playground.addLayerSystem(ysort);
 		playground.addLayerSystem(bounds);
+		
+		//background
+		GameLayer background = state.getBackgroundLayer();
+		background.getCamera().setCentered();//center the camera of the background layer so it lines up with the playground layer
+		
+		//create a parallax mapper and set its camera layer as the playground layer
+		paralax = new ParallaxMapper(playground);
+		
+		//add a mapping for the Back object and set its scale 1,1 so that there is no scroll delay
+		paralax.addMapping("Back", 1f, 1f, true);
+		
+		//ad the mapper to the background layer
+		background.addLayerSystem(paralax);
 	}
 
 	@Override
