@@ -33,7 +33,7 @@ public class HudMap extends GameObject {
         Room r = rooms[y][x];
         int rc = r.getCode();
         BasicGameObject g = new BasicGameObject();
-        g.setPosition(x*ms,m_level.getHeight()*ms - y*ms);
+        g.setPosition(x*ms,(m_level.getHeight()-y)*ms);
         g.setSprite("map_empty");
         if (rc >= 0)
         { 
@@ -46,7 +46,7 @@ public class HudMap extends GameObject {
         if (currRoom == r)
         {
           BasicGameObject g2 = new BasicGameObject();
-          g2.setPosition(x*ms,m_level.getHeight()*ms - y*ms);
+          g2.setPosition(x*ms,(m_level.getHeight()-y)*ms);
           g2.setSprite("map_room_current_icon");
           g2.setSize(ms,ms);
           addChild(g2);
@@ -56,7 +56,7 @@ public class HudMap extends GameObject {
         {
           //start room
           BasicGameObject g2 = new BasicGameObject();
-          g2.setPosition(x*ms,m_level.getHeight()*ms - y*ms);
+          g2.setPosition(x*ms,(m_level.getHeight()-y)*ms);
           g2.setSprite("map_start_icon");
           g2.setSize(ms,ms);
           addChild(g2);
@@ -68,7 +68,7 @@ public class HudMap extends GameObject {
           if (r.getDoor(i) > 0)
           {
             BasicGameObject g2 = new BasicGameObject();
-            g2.setPosition(x*ms,m_level.getHeight()*ms - y*ms);
+            g2.setPosition(x*ms,(m_level.getHeight()-y)*ms);
             g2.setSprite("map_door"+i);
             g2.setSize(ms,ms);
             addChild(g2);

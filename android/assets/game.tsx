@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="461" tileheight="78" tilecount="32" columns="0">
+<tileset name="game" tilewidth="1940" tileheight="1104" tilecount="33" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -96,5 +96,8 @@
  </tile>
  <tile id="33">
   <image width="238" height="78" source="../../input_assets/game/title.png"/>
+ </tile>
+ <tile id="34">
+  <image width="1940" height="1104" source="../../input_assets/game/back1.png"/>
  </tile>
 </tileset>
