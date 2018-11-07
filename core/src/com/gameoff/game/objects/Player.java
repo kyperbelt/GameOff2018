@@ -56,6 +56,10 @@ public class Player extends Basic {
 		
 		setupBasicProjectile();
 		setUpBasicMelee();
+		
+		setCurrentForm(Form.Demon);
+		setPlayerState(PlayerState.Idling);
+		setDirection(Direction.Up);
 
 	}
 
@@ -131,9 +135,7 @@ public class Player extends Basic {
 			}
 		});
 
-		setCurrentForm(Form.Demon);
-		setPlayerState(PlayerState.Idling);
-		setDirection(Direction.Up);
+		
 	}
 	
 	public static void createPlayerAnimations(GameState state) {

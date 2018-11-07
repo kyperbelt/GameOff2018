@@ -45,6 +45,7 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 //		float heightscale = view.getWorldHeight() / view.getScreenHeight();
 //		float widthscale = view.getWorldWidth() / view.getScreenWidth();
 
+		
 		futurePos.set(camera.getPosition());
 
 		for (int i = 0; i < objects.size; i++) {
@@ -68,6 +69,8 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 		} else if (campos.y - camera.getYOffset() > worldBounds.y + worldBounds.height) {
 			campos.y = worldBounds.y + worldBounds.height + camera.getYOffset();
 		}
+		
+		if(objects.size > 0)
 		camera.setPosition(campos.x, campos.y);
 
 	}

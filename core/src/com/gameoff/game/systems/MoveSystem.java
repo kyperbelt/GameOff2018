@@ -62,10 +62,10 @@ public class MoveSystem extends ControlSpecificSystem{
 						MoveControl target_move = target.getController(MoveControl.class);
 					
 						
-						if(!move.isPhysical() || (target_move!=null && !target_move.isPhysical()))
+						if(!move.isPhysical() || (target_move==null || !target_move.isPhysical()))
 							continue;
 						
-						if(move.isFlying() && (target_move!=null && target_move.isPassable()))
+						if(move.isFlying() && (target_move==null || target_move.isPassable()))
 							continue;
 						Rectangle overlap = cd.getOverlapBox();
 						if (overlap.width < overlap.height) {
