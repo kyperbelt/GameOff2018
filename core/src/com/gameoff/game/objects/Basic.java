@@ -76,7 +76,7 @@ public class Basic extends GameObject {
 		super.onRemove();
 		removeController(collision);
 		removeController(move);
-		//removeController(animation);
+		removeController(animation);
 		removeController(health);
 	}
 
