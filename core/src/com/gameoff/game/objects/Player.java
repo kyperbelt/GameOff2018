@@ -303,8 +303,4 @@ public class Player extends Basic {
 			}
 		};
 	}
-	
-	@Override
-	public void onRemove() {
-	}
 }
