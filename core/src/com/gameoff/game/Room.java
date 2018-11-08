@@ -16,6 +16,21 @@ public class Room {
   boolean m_isBoss = false;
   boolean m_showMapDetails = false;
 
+  //means a key will be place in this room
+  public boolean m_hasKey = false;
+
+  //means upon first entry a trap will be randomly
+  //selected and placed in this room
+  public boolean m_hasTrap = false;
+
+  //means 1 or more special items will be placed in this
+  //these special items will be higher value
+  public boolean m_hasSpecial = false;
+
+  //will add some persistance classes
+  //to store what gets generated on room entry
+  //and persist state upon re-entry
+
   public Room(int x, int y)
   {
     m_X = x;
@@ -80,4 +95,5 @@ public class Room {
   {
     m_isBoss = true;
   }
+
 }

@@ -105,7 +105,7 @@ public class Player extends Basic {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
-		setSize(32,32);
+		setSize(108,90);
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer
 		addController(control);
@@ -115,7 +115,7 @@ public class Player extends Basic {
 		// size.
 		// collision bounds is what is actually used by the collisionSystem which is a
 		// QuadTree in our case
-		setCollisionBounds(getWidth() * .2f, 0, getWidth() * .6f, getHeight() * .8f);
+		setCollisionBounds(getWidth() * .2f, 0, getWidth() * .6f, getHeight() * .6f);
 
 		// this isnt the best way to do it since init gets called each time the object
 		// is loaded in but later we can move this

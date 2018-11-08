@@ -209,7 +209,7 @@ public class LevelManager extends StateManager {
 			System.out.println("LevelManager::init door[" + dir + "]="+dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
-			float dw = 64;
+			float dw = 160;;
 			float dh = 32;
 
 			float x = m_roomWidthPixels / 2 - dw / 2;
@@ -254,8 +254,8 @@ public class LevelManager extends StateManager {
 					playground.addGameObject(t2, null);
 
 					// adjust for rotation
-					x -= dh / 2;
-					y += dw / 4;
+					x -= (dw/2 - dh/2);
+					y += dw / 2;
 
 				} else if (dir == 3) {
 					// left door
@@ -273,8 +273,8 @@ public class LevelManager extends StateManager {
 					playground.addGameObject(t2, null);
 
 					// rotation adjustment
-					x -= dh / 2;
-					y += dw / 4;
+					x -= (dw/2 - dh/2);
+					y += dw / 2;
 
 				} else {
 					// top
