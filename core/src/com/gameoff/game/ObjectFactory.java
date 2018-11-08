@@ -18,7 +18,7 @@ public class ObjectFactory {
 		game.registerGameObject("Player", new IGameObjectGetter() {
 			@Override
 			public GameObject getGameObject() {
-				return new Player();
+				return new Player(0);
 			}
 		});
 		

@@ -135,7 +135,7 @@ public class LevelManager extends StateManager {
 		if (player == null) {
 			GameObject pspawn = playground.getGameObject("playerSpawn");
 
-			player = new Player();
+			player = new Player(0);
 			player.setName("player1");
 
 			float x = 0;
@@ -156,8 +156,9 @@ public class LevelManager extends StateManager {
 			//all player controllers, then let them be re-added as usual in init- that 
 			//didn't fix it. Finally just created new player and it works.
 			//Need to fix this, things like health/state need to be preserved.
-			player = new Player();
-			player.setName("player1");
+			//player = new Player();
+			//player.setName("player1");
+
 
 			float x = 0;
 			float y = 0;
@@ -188,9 +189,10 @@ public class LevelManager extends StateManager {
 
 		}
 
-		camera.setCameraCenteredOnObject(player);
-		playground.addGameObject(player, KyperBoxGame.NULL_PROPERTIES);
+		playground.getCamera().setPosition(player.getX(), player.getY());
 		playground.getCamera().update();
+		player.onRemove();
+		playground.addGameObject(player, KyperBoxGame.NULL_PROPERTIES);
 
 		KyperBoxGame game = state.getGame();
 		GameLevel level = GameLevel.getCurrentLevel();
