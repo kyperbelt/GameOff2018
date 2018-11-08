@@ -64,7 +64,7 @@ public class GameLevel {
         cnt++;
     }
     y += 2;
-    if (y < m_width)
+    if (y < m_height)
     {
       if (m_rooms[y][x].isEmpty() == false)
         cnt++;
@@ -124,6 +124,18 @@ public class GameLevel {
     }
   }
 
+  public Room getNeighborRoom(Room r, int dir)
+  {
+    if (dir == 0)
+      return getNeighborRoom(r,0,-1);
+    else if (dir == 1)
+      return getNeighborRoom(r,1,0);
+    else if (dir == 2)
+      return getNeighborRoom(r,0,1);
+
+    return getNeighborRoom(r,-1,0);
+  }
+
   //only returns valid rooms (not -1 room codes)
   private Room getNeighborRoom(Room r, int deltaX, int deltaY)
   {
@@ -174,6 +186,42 @@ public class GameLevel {
     m_width = newWidth;
     m_height = newHeight;
 
+  }
+
+  public void updateShowMapDetails()
+  {
+    //show details on all rooms that neightbor this one
+    m_currentRoom.setVisited(true);
+    m_currentRoom.setShowMapDetails();
+    Room r = getNeighborRoom(m_currentRoom,-1,0);
+    if (r != null) r.setShowMapDetails();
+    r = getNeighborRoom(m_currentRoom,1,0);
+    if (r != null) r.setShowMapDetails();
+    r = getNeighborRoom(m_currentRoom,0,1);
+    if (r != null) r.setShowMapDetails();
+    r = getNeighborRoom(m_currentRoom,0,-1);
+    if (r != null) r.setShowMapDetails();
+  }
+
+  public int getMapShowDir(Room r, int dir)
+  {
+    if (r.showMapDetails() == false) return 0;
+
+    int dc = r.getDoor(dir);
+    if (dc < 1) return dc;
+
+    //if visited show all dirs
+    if (r.getVisited()) return dc;
+
+    //otherwise get room this door opens to and see if it should show details
+    if (dir == 0)
+    {
+      Room n = getNeighborRoom(r,dir);
+      if (n.showMapDetails()) return dc;
+    }
+
+    return 0;
+    
   }
 
   public static GameLevel generateLevel(int difficulty, int numRooms, int width, int height)
@@ -234,10 +282,35 @@ public class GameLevel {
     height = level.getHeight();
     width = level.getWidth();
 
-    // now place mini boss
-
     // now place boss
+    int tryCnt = 0;
+    Room bossRoom = null;
 
+    while (true)
+    {
+      bossRoom = level.getRandomRoom();
+      if (bossRoom.getCode() > 0)
+      {
+        //if only 1 neighbor, accept it
+        int n = level.getNeighborCount(bossRoom);
+        if (n == 1)
+        {
+          break;
+        } else if (tryCnt > 100) {
+          break;
+        }
+
+      }
+      tryCnt++;
+    }
+
+    bossRoom.setIsBoss();
+    //TODO:
+    //We may decide only a few room templates make sense for the boss battle
+    //if so, change the room code here to one that's valid for a boss.
+
+    //set up map details to show
+    level.updateShowMapDetails();
 
     //place locked doors and keys
 
@@ -248,6 +321,7 @@ public class GameLevel {
     // NOW with all this, do we dynamically build a big TMX
     //OR there will be another chunk of code in LevelManager as it loads a room,
     // it does the rest.
+
 
 
     return level;

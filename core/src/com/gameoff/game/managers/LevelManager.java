@@ -3,12 +3,8 @@ package com.gameoff.game.managers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
-import com.gameoff.game.objects.Door;
-import com.gameoff.game.objects.HudMap;
-import com.gameoff.game.objects.MeleeAttack;
-import com.gameoff.game.objects.Player;
-import com.gameoff.game.objects.Projectile;
-import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.*;
+import com.kyperbox.systems.LayerSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
 import com.gameoff.game.systems.OutOfBoundsSystem;
@@ -23,6 +19,7 @@ import com.kyperbox.objects.GameLayer;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
+import com.badlogic.gdx.utils.Array;
 
 public class LevelManager extends StateManager {
 
@@ -65,6 +62,7 @@ public class LevelManager extends StateManager {
 	@Override
 	public void addLayerSystems(GameState state) {
 
+		System.out.println("LevelManager::addLayerSystems called: State=" + state.getName());
 		Player.createPlayerAnimations(state);
 		// get the playground layer from the state
 		GameLayer playground = state.getPlaygroundLayer();
@@ -129,6 +127,7 @@ public class LevelManager extends StateManager {
 	@Override
 	public void init(GameState state) {
 
+		System.out.println("LevelManager::init called. State=" + state.getName());
 		// When this is called, TMX is loaded, objects created, etc.
 		// and this is called right before being shown.
 		GameLayer playground = state.getPlaygroundLayer();
@@ -137,6 +136,7 @@ public class LevelManager extends StateManager {
 			GameObject pspawn = playground.getGameObject("playerSpawn");
 
 			player = new Player();
+			player.setName("player1");
 
 			float x = 0;
 			float y = 0;
@@ -149,6 +149,15 @@ public class LevelManager extends StateManager {
 			player.setPosition(x, y);
 
 		} else {
+
+			//Bug if we don't create new player where player no longer collides
+			//with walls or pits. I tried for an hour to figure why?
+			//Thought it was controllers needed to be removed and re-added...so I removed
+			//all player controllers, then let them be re-added as usual in init- that 
+			//didn't fix it. Finally just created new player and it works.
+			//Need to fix this, things like health/state need to be preserved.
+			player = new Player();
+			player.setName("player1");
 
 			float x = 0;
 			float y = 0;
@@ -176,18 +185,18 @@ public class LevelManager extends StateManager {
 				break;
 			}
 			player.setPosition(x, y);
-			
+
 		}
 
-		playground.getCamera().setPosition(player.getX(), player.getY());
-		playground.getCamera().update();
+		camera.setCameraCenteredOnObject(player);
 		playground.addGameObject(player, KyperBoxGame.NULL_PROPERTIES);
+		playground.getCamera().update();
 
 		KyperBoxGame game = state.getGame();
 		GameLevel level = GameLevel.getCurrentLevel();
 
 		Room r = level.getCurrentRoom();
-		// IGameObjectFactory factory = game.getObjectFactory();
+		System.out.println("LevelManager::init current room " + r.getX()+ ", " + r.getY());
 
 		// Place Doors & Walls
 		// Not sure about collision box rotation/how that all works
@@ -195,6 +204,7 @@ public class LevelManager extends StateManager {
 		// is a bit hacky ;)
 		for (int dir = 0; dir < 4; dir++) {
 			int dc = r.getDoor(dir);
+			System.out.println("LevelManager::init door[" + dir + "]="+dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
 			float dw = 64;

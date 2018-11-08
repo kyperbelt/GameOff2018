@@ -22,6 +22,8 @@ public class HudMap extends GameObject {
   public void updateLevel(GameLevel level)
   {
     m_level = level;
+    m_level.updateShowMapDetails(); //update what rooms to show etc. based on where you are
+
     int ms = m_roomSize;
     Room currRoom = m_level.getCurrentRoom();
     clearChildren();
@@ -37,7 +39,13 @@ public class HudMap extends GameObject {
         g.setSprite("map_empty");
         if (rc >= 0)
         { 
-          g.setSprite("map_room");
+          if (r.getVisited())
+          {
+            g.setSprite("map_room_visited");
+          } else if (r.showMapDetails())
+          {
+            g.setSprite("map_room");
+          }
         }
 
         g.setSize(ms,ms);
@@ -62,16 +70,29 @@ public class HudMap extends GameObject {
           addChild(g2);
         }
 
-        //add doors
-        for(int i = 0; i < 4; i++)
+        if(r.showMapDetails())
         {
-          if (r.getDoor(i) > 0)
+          if (r.getIsBoss())
           {
+            //Boss room
             BasicGameObject g2 = new BasicGameObject();
             g2.setPosition(x*ms,(m_level.getHeight()-y)*ms);
-            g2.setSprite("map_door"+i);
+            g2.setSprite("map_boss_icon");
             g2.setSize(ms,ms);
-            addChild(g2);
+            addChild(g2);         
+          }
+
+          //add doors
+          for(int i = 0; i < 4; i++)
+          {
+            if (m_level.getMapShowDir(r, i) > 0)
+            {
+              BasicGameObject g2 = new BasicGameObject();
+              g2.setPosition(x*ms,(m_level.getHeight()-y)*ms);
+              g2.setSprite("map_door"+i);
+              g2.setSize(ms,ms);
+              addChild(g2);
+            }
           }
         }
       }

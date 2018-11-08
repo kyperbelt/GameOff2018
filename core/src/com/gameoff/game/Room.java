@@ -13,6 +13,8 @@ public class Room {
   int m_Y = 0;
   int[] m_doors = new int[]{0,0,0,0};
   boolean m_visited = false;
+  boolean m_isBoss = false;
+  boolean m_showMapDetails = false;
 
   public Room(int x, int y)
   {
@@ -49,6 +51,16 @@ public class Room {
     m_doors[dir] = doorCode;
   }
 
+  public boolean showMapDetails()
+  {
+    return m_showMapDetails;
+  }
+
+  public void setShowMapDetails()
+  {
+    m_showMapDetails = true;
+  }
+
   public boolean getVisited()
   {
     return m_visited;
@@ -57,5 +69,15 @@ public class Room {
   public void setVisited(boolean v)
   {
     m_visited = v;
+  }
+
+  public boolean getIsBoss()
+  {
+    return m_isBoss;
+  }
+
+  public void setIsBoss()
+  {
+    m_isBoss = true;
   }
 }

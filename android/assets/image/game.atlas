@@ -6,329 +6,350 @@ filter: Nearest,Nearest
 repeat: none
 HorrorGameTiles
   rotate: false
-  xy: 2884, 1627
+  xy: 2, 122
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 abomination_chase_down_0
   rotate: false
-  xy: 630, 229
+  xy: 3512, 2007
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_down_1
   rotate: false
-  xy: 3049, 1593
+  xy: 2, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_0
   rotate: false
-  xy: 3142, 1753
+  xy: 167, 88
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_1
   rotate: false
-  xy: 3223, 1851
+  xy: 260, 236
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_0
   rotate: false
-  xy: 2, 53
+  xy: 351, 346
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_1
   rotate: false
-  xy: 68, 87
+  xy: 739, 385
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_0
   rotate: false
-  xy: 242, 133
+  xy: 2884, 1831
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_1
   rotate: false
-  xy: 308, 167
+  xy: 2950, 1865
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_down
   rotate: false
-  xy: 2884, 1475
+  xy: 3158, 1945
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_left
   rotate: false
-  xy: 2918, 1541
+  xy: 3546, 2007
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_right
   rotate: false
-  xy: 664, 229
+  xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_up
   rotate: false
-  xy: 3083, 1593
+  xy: 36, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 back1
   rotate: false
-  xy: 2, 263
+  xy: 2, 419
   size: 2880, 1620
   orig: 2880, 1620
   offset: 0, 0
   index: -1
 demon_test
   rotate: false
-  xy: 3142, 1787
-  size: 79, 96
-  orig: 79, 96
+  xy: 260, 270
+  size: 89, 108
+  orig: 89, 108
   offset: 0, 0
   index: -1
 door_closed
   rotate: false
-  xy: 2, 87
+  xy: 673, 385
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 door_open
   rotate: false
-  xy: 242, 167
+  xy: 2884, 1865
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 eyeball_still_down
   rotate: false
-  xy: 3142, 1719
+  xy: 201, 88
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+instructions_start
+  rotate: false
+  xy: 2, 380
+  size: 669, 37
+  orig: 669, 37
+  offset: 0, 0
+  index: -1
+map_boss_icon
+  rotate: false
+  xy: 167, 71
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
 map_door
   rotate: false
-  xy: 465, 205
+  xy: 3347, 1983
   size: 4, 4
   orig: 4, 4
   offset: 0, 0
   index: -1
 map_door0
   rotate: false
-  xy: 3049, 1576
+  xy: 3158, 1928
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door1
   rotate: false
-  xy: 3117, 1610
+  xy: 235, 105
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door2
   rotate: false
-  xy: 3223, 1800
+  xy: 328, 253
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door3
   rotate: false
-  xy: 3257, 1834
+  xy: 351, 295
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_empty
   rotate: false
-  xy: 3291, 1868
+  xy: 385, 329
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room
   rotate: false
-  xy: 2, 2
+  xy: 419, 363
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_current_icon
   rotate: false
-  xy: 36, 36
+  xy: 807, 402
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+map_room_visited
+  rotate: false
+  xy: 2884, 1780
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_start_icon
   rotate: false
-  xy: 70, 70
+  xy: 2918, 1814
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 noregion
   rotate: false
-  xy: 3176, 1753
+  xy: 260, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 painting
   rotate: false
-  xy: 630, 212
+  xy: 3512, 1990
   size: 24, 15
   orig: 24, 15
   offset: 0, 0
   index: -1
 piano
   rotate: false
-  xy: 3223, 1817
+  xy: 294, 236
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pillar
   rotate: false
-  xy: 2884, 1509
+  xy: 3124, 1913
   size: 32, 64
   orig: 32, 64
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 465, 211
+  xy: 3347, 1989
   size: 163, 50
   orig: 163, 50
   offset: 0, 0
   index: -1
 play_down
   rotate: false
-  xy: 2884, 1575
+  xy: 2, 70
   size: 163, 50
   orig: 163, 50
   offset: 0, 0
   index: -1
 player_walk_down_0
   rotate: false
-  xy: 3257, 1851
+  xy: 351, 312
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_down_1
   rotate: false
-  xy: 2, 19
+  xy: 385, 346
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_down_2
   rotate: false
-  xy: 36, 53
+  xy: 773, 385
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_0
   rotate: false
-  xy: 102, 87
+  xy: 2884, 1797
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_1
   rotate: false
-  xy: 276, 133
+  xy: 2918, 1831
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_2
   rotate: false
-  xy: 342, 167
+  xy: 2984, 1865
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_0
   rotate: false
-  xy: 2884, 1441
+  xy: 3192, 1945
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_1
   rotate: false
-  xy: 2918, 1507
+  xy: 3580, 2007
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_2
   rotate: false
-  xy: 2952, 1541
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_0
   rotate: false
-  xy: 698, 229
+  xy: 70, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_1
   rotate: false
-  xy: 3142, 1685
+  xy: 260, 168
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_2
   rotate: false
-  xy: 3176, 1719
+  xy: 294, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 testtext
   rotate: false
-  xy: 2, 201
+  xy: 2884, 1979
   size: 461, 60
   orig: 461, 60
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 2, 121
+  xy: 2884, 1899
   size: 238, 78
   orig: 238, 78
   offset: 0, 0
