@@ -8,6 +8,9 @@
  <objecttype name="BasicGameObject" color="#ff0000">
   <property name="sprite" type="string" default="NO_SPRITE_RENDERED"/>
  </objecttype>
+ <objecttype name="Collectible" color="#4ea693">
+  <property name="item_id" type="int" default="0"/>
+ </objecttype>
  <objecttype name="Font" color="#55ff00">
   <property name="font_file" type="string" default=""/>
   <property name="markup" type="bool" default="false"/>

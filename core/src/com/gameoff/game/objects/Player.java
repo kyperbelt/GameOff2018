@@ -3,6 +3,7 @@ package com.gameoff.game.objects;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
@@ -11,6 +12,8 @@ import com.gameoff.game.control.PlayerControl;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
+import com.kyperbox.controllers.CollisionController.CollisionData;
+import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.StringUtils;
 
 public class Player extends Basic {
@@ -184,6 +187,31 @@ public class Player extends Basic {
 
 		//TODO: Question - would it make more sense to put door collisions here?
 		//Or in the door object- just thinking doors only work with Players.
+		
+		Array<CollisionData> cols = getCollision().getCollisions();
+		for (int i = 0; i < cols.size; i++) {
+			CollisionData data = cols.get(i);
+			GameObject target = data.getTarget();
+			
+			if(target instanceof Collectible) {
+				Collectible c = (Collectible) target;
+				if(!c.isCollected()) {
+					
+					//do something with the id of the item collected
+					int itemID = c.getId();
+					
+					//collect code here
+					System.out.println(StringUtils.format("%s collected itemId[%s]", getName(),itemID));
+					
+					
+					
+					//collect the item so that it cannot be collected again
+					c.collect();
+					
+				}
+				
+			}
+		}
 		
 	}
 
