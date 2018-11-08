@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.MapProperties;
 public class Wall extends Basic {
 	
 	public Wall() {
-		
+		setName("wall");
 	}
 	
 	@Override

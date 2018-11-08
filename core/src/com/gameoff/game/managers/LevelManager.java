@@ -136,7 +136,7 @@ public class LevelManager extends StateManager {
 		if (player == null) {
 			GameObject pspawn = playground.getGameObject("playerSpawn");
 
-			player = new Player();
+			player = new Player(0);
 
 			float x = 0;
 			float y = 0;
@@ -181,6 +181,7 @@ public class LevelManager extends StateManager {
 
 		playground.getCamera().setPosition(player.getX(), player.getY());
 		playground.getCamera().update();
+		player.onRemove();
 		playground.addGameObject(player, KyperBoxGame.NULL_PROPERTIES);
 
 		KyperBoxGame game = state.getGame();

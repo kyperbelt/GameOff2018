@@ -77,7 +77,8 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 
 	@Override
 	public void added(GameObject object) {
-
+		futurePos.set(object.getCollisionCenter());
+		campos.set(futurePos);
 	}
 
 	@Override

@@ -46,13 +46,14 @@ public class Player extends Basic {
 	PlayerState state;// will probably change this to its own state to make it easy to have states
 						// such as "walking","attacking","damaged","dying", ect.
 
-	public Player() {
+	public Player(int id) {
 		// we set this control to the id of 0 which is corresponding of the
 		// PlayerControls in PlayerControlSystem
 		// We can support more than one player but must add the playerControls to the
 		// PlayerControlSystem
-		control = new PlayerControl(0);
+		control = new PlayerControl(id);
 		attack = new AttackControl(null);
+		setName("Player@"+id);
 		
 		setupBasicProjectile();
 		setUpBasicMelee();

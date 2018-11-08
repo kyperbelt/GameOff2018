@@ -76,6 +76,7 @@ public class OutOfBoundsSystem extends ControlSpecificSystem {
 						StringUtils.format("Player[%s] is out of bounds. Moving to new Room[%s]", control.getId(),
 								level.getCurrentRoom().getCode()));
 
+			
 				getLayer().getState().getGame().setGameState("room_" + level.getCurrentRoom().getCode());
 			}
 		}
