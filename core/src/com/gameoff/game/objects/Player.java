@@ -30,8 +30,8 @@ public class Player extends Basic {
 		Left, Right, Up, Down
 	}
 
-	float angelSpeed = 200;
-	float demonSpeed = 120;
+	float angelSpeed = 270;
+	float demonSpeed = 180;
 
 	PlayerControl control;
 	AttackControl attack;
@@ -108,7 +108,7 @@ public class Player extends Basic {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
-		setSize(108,90);
+		setSize(110,80);
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer
 		addController(control);
