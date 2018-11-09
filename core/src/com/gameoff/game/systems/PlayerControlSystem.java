@@ -71,12 +71,9 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 						control.setState(PlayerState.Idling);
 						if (input.inputJustPressed(maps.fly)) {
 							if (move.isFlying()) {
-								move.setFlying(false);
-								o.setDepth(0);
 								control.setForm(Form.Demon);
 							} else {
-								move.setFlying(true);
-								o.setDepth(o.getBoundsRaw().height);
+								
 								control.setForm(Form.Angel);
 							}
 						}

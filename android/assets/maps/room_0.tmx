@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="90" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="96">
+<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="90" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="98">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
- <tileset firstgid="38" source="../HorrorGameTiles.tsx"/>
+ <tileset firstgid="39" source="../HorrorGameTiles.tsx"/>
  <objectgroup id="1" name="background" locked="1">
   <object id="71" name="Back" type="ScrollingBackground" gid="36" x="0" y="1600" width="2880" height="1620">
    <properties>
@@ -24,7 +24,7 @@
   </data>
  </layer>
  <objectgroup id="4" name="playground">
-  <object id="84" name="instructions" type="BasicGameObject" gid="38" x="1110" y="1022" width="669" height="37">
+  <object id="84" name="instructions" type="BasicGameObject" gid="39" x="1110" y="1022" width="669" height="37">
    <properties>
     <property name="sprite" value="instructions_start"/>
    </properties>
@@ -55,6 +55,8 @@
   <object id="93" name="test_collectible" type="Collectible" x="2016" y="800" width="32" height="32"/>
   <object id="94" name="test_collectible" type="Collectible" x="1984" y="1056" width="32" height="32"/>
   <object id="95" name="test_collectible" type="Collectible" x="1824" y="1152" width="32" height="32"/>
+  <object id="96" name="test_enemy" type="SimpleEnemy" x="1024" y="800" width="64" height="64"/>
+  <object id="97" x="1216" y="1888"/>
  </objectgroup>
  <objectgroup id="5" name="foreground" locked="1"/>
  <objectgroup id="6" name="uiground" locked="1"/>

@@ -3,8 +3,13 @@ package com.gameoff.game.managers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
-import com.gameoff.game.objects.*;
-import com.kyperbox.systems.LayerSystem;
+import com.gameoff.game.objects.Door;
+import com.gameoff.game.objects.HudMap;
+import com.gameoff.game.objects.MeleeAttack;
+import com.gameoff.game.objects.Player;
+import com.gameoff.game.objects.Projectile;
+import com.gameoff.game.objects.Wall;
+import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
 import com.gameoff.game.systems.OutOfBoundsSystem;
@@ -19,7 +24,6 @@ import com.kyperbox.objects.GameLayer;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
-import com.badlogic.gdx.utils.Array;
 
 public class LevelManager extends StateManager {
 
@@ -42,6 +46,7 @@ public class LevelManager extends StateManager {
 	YSortSystem ysort;
 	ParallaxMapper paralax;
 	OutOfBoundsSystem bounds;
+	AiSystem ai;
 	int m_roomWidthPixels, m_roomHeightPixels;
 
 	/**
@@ -53,6 +58,7 @@ public class LevelManager extends StateManager {
 	 */
 	public void setEntryPoint(int entryPoint) {
 		this.entryPoint = entryPoint;
+		ai = new AiSystem();
 	}
 
 	public LevelManager() {
@@ -72,6 +78,10 @@ public class LevelManager extends StateManager {
 		m_roomWidthPixels = (int) (floor.getWidth() * floor.getTileWidth());
 		m_roomHeightPixels = (int) (floor.getHeight() * floor.getTileHeight());
 
+		// TODO: Re-use these systems so that we dont make new ones each room transition
+
+		// --
+
 		// set the size of this quad tree. Anything outside the bounds will not have
 		// collision detection
 		quad = new QuadTree(m_roomWidthPixels, m_roomHeightPixels);
@@ -90,6 +100,8 @@ public class LevelManager extends StateManager {
 		bounds = new OutOfBoundsSystem(0, 0, m_roomWidthPixels, m_roomHeightPixels);
 		bounds.setPriority(Priority.LOW);
 
+		ai.onRemove();
+
 		// add all the systems to the playground layer. If we want things like collision
 		// on a separate layer
 		// then we must add systems(unique) to that layer as well.
@@ -100,6 +112,7 @@ public class LevelManager extends StateManager {
 		playground.addLayerSystem(death);
 		playground.addLayerSystem(ysort);
 		playground.addLayerSystem(bounds);
+		playground.addLayerSystem(ai);
 
 		// background
 		GameLayer background = state.getBackgroundLayer();
@@ -150,19 +163,18 @@ public class LevelManager extends StateManager {
 
 		} else {
 
-			//Bug if we don't create new player where player no longer collides
-			//with walls or pits. I tried for an hour to figure why?
-			//Thought it was controllers needed to be removed and re-added...so I removed
-			//all player controllers, then let them be re-added as usual in init- that 
-			//didn't fix it. Finally just created new player and it works.
-			//Need to fix this, things like health/state need to be preserved.
-			//player = new Player();
-			//player.setName("player1");
-
+			// Bug if we don't create new player where player no longer collides
+			// with walls or pits. I tried for an hour to figure why?
+			// Thought it was controllers needed to be removed and re-added...so I removed
+			// all player controllers, then let them be re-added as usual in init- that
+			// didn't fix it. Finally just created new player and it works.
+			// Need to fix this, things like health/state need to be preserved.
+			// player = new Player();
+			// player.setName("player1");
 
 			float x = 0;
 			float y = 0;
-			
+
 			switch (entryPoint) {
 			case NORTH:
 				GameObject north = playground.getGameObject("north");
@@ -198,7 +210,7 @@ public class LevelManager extends StateManager {
 		GameLevel level = GameLevel.getCurrentLevel();
 
 		Room r = level.getCurrentRoom();
-		System.out.println("LevelManager::init current room " + r.getX()+ ", " + r.getY());
+		System.out.println("LevelManager::init current room " + r.getX() + ", " + r.getY());
 
 		// Place Doors & Walls
 		// Not sure about collision box rotation/how that all works
@@ -206,10 +218,11 @@ public class LevelManager extends StateManager {
 		// is a bit hacky ;)
 		for (int dir = 0; dir < 4; dir++) {
 			int dc = r.getDoor(dir);
-			System.out.println("LevelManager::init door[" + dir + "]="+dc);
+			System.out.println("LevelManager::init door[" + dir + "]=" + dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
-			float dw = 160;;
+			float dw = 160;
+			;
 			float dh = 32;
 
 			float x = m_roomWidthPixels / 2 - dw / 2;
@@ -254,7 +267,7 @@ public class LevelManager extends StateManager {
 					playground.addGameObject(t2, null);
 
 					// adjust for rotation
-					x -= (dw/2 - dh/2);
+					x -= (dw / 2 - dh / 2);
 					y += dw / 2;
 
 				} else if (dir == 3) {
@@ -273,7 +286,7 @@ public class LevelManager extends StateManager {
 					playground.addGameObject(t2, null);
 
 					// rotation adjustment
-					x -= (dw/2 - dh/2);
+					x -= (dw / 2 - dh / 2);
 					y += dw / 2;
 
 				} else {

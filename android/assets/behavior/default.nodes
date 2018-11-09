@@ -1,0 +1,55 @@
+{
+	"composite": {
+		"Sequence": {
+			"properties": {}
+		},
+		"Selector": {
+			"properties": {}
+		},
+		"RandomSequence": {
+			"properties": {}
+		},
+		"RandomSelector": {
+			"properties": {}
+		}
+
+	},
+	"supplement": {
+		"Invert": {
+			"properties": {}
+		},
+		"Success": {
+			"properties": {}
+		},
+		"Repeat": {
+			"properties": {
+				"count": {
+					"type": "int",
+					"value": "-1"
+				}
+			}
+		},
+		"RepeatUntilFail": {
+			"properties": {}
+		}
+	},
+	"leaf": {
+		"Test": {
+			"properties": {
+				"testText": {
+					"type": "string",
+					"value": "null"
+				}
+			}
+		},
+		"Wait": {
+			"properties": {
+				"time": {
+					"type": "int",
+					"value": "1"
+				}
+			}
+		}
+
+	}
+}
