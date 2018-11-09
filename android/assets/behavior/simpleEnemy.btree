@@ -1,0 +1,26 @@
+{ 
+    "Repeat" :{
+        "properties" : {
+            "count":{
+                "value":"-1",
+                "type":"int"
+            }
+        },
+        "children" : [
+{            "Sequence" :{
+                "properties" : {},
+                "children" : [
+{                    "Test" :{
+                        "properties" : {
+                            "testText":{
+                                "value":"this text comes from node editor",
+                                "type":"string"
+                            }
+                        },
+                        "children" : []
+                    }}
+                ]
+            }}
+        ]
+    }
+}

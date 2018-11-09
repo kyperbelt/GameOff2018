@@ -43,6 +43,7 @@ public class GameOffGame extends KyperBoxGame {
 		DEBUG_LOGGING = true;
 
 		ObjectFactory.createObjectGetters(this);
+		AiNodeFactory.createNodeDic(); //create the dictionary to load nodes from file
 
 		// register game states (tmx maps with the template setup)
 		registerGameState("title", "testmenu.tmx", new TitleMenuManager());

@@ -50,6 +50,13 @@ public class ObjectFactory {
 				return new Collectible();
 			}
 		});
+		
+		game.registerGameObject("SimpleEnemy", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new SimpleEnemy();
+			}
+		});
 
 	}
 	

@@ -32,14 +32,12 @@ public class Player extends DirectionEntity {
 
 	PlayerControl control;
 	AttackControl attack;
-	//attack listeners
+	// attack listeners
 	float basicProjectileCD = .35f;
 	AttackListener basicProjectile;
 	float basicMeleeCD = .75f;
 	AttackListener basicMelee;
-	
-	
-	
+
 	String animation;
 	Form form;
 	PlayerState state;// will probably change this to its own state to make it easy to have states
@@ -52,11 +50,11 @@ public class Player extends DirectionEntity {
 		// PlayerControlSystem
 		control = new PlayerControl(id);
 		attack = new AttackControl(null);
-		setName("Player@"+id);
-		
+		setName("Player@" + id);
+
 		setupBasicProjectile();
 		setUpBasicMelee();
-		
+
 		setCurrentForm(Form.Demon);
 		setPlayerState(PlayerState.Idling);
 		setDirection(Direction.Down);
@@ -67,11 +65,19 @@ public class Player extends DirectionEntity {
 		this.form = form;
 		switch (form) {
 		case Demon:
+
+			getMove().setFlying(false);
+			setDepth(0);
+			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(demonSpeed);
 			attack.setAttackListener(basicMelee);
 			attack.setCooldown(basicMeleeCD);
+
 			break;
 		case Angel:
+			getMove().setFlying(true);
+			setDepth(getBoundsRaw().height * .5f);
+			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(angelSpeed);
 			attack.setAttackListener(basicProjectile);
 			attack.setCooldown(basicProjectileCD);
@@ -96,7 +102,7 @@ public class Player extends DirectionEntity {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
-		setSize(108,90);
+		setSize(108, 90);
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer
 		addController(control);
@@ -112,29 +118,28 @@ public class Player extends DirectionEntity {
 		// is loaded in but later we can move this
 		// to a static method that loads it once per state load. Animations can be
 		// reused between objects to save on space
-		
 
 		AnimationController animation = getAnimation();
 		animation.addAnimation("walk_down", "player_walk_down");
 		animation.addAnimation("walk_up", "player_walk_up");
 		animation.addAnimation("walk_left", "player_walk_left");
 		animation.addAnimation("walk_right", "player_walk_right");
-		
+
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
 			public void damaged(float amount) {
-				System.out.println(StringUtils.format("%s damaged - amount[%s] - currentHealth[%s]", getName(),amount,getHealth().getCurrentHealth()));
+				System.out.println(StringUtils.format("%s damaged - amount[%s] - currentHealth[%s]", getName(), amount,
+						getHealth().getCurrentHealth()));
 			}
 		});
 
-		
 	}
-	
+
 	public static void createPlayerAnimations(GameState state) {
 		float framespeed = .15f;
 		state.storeAnimation("player_walk_up", state.createGameAnimation("player_walk_up", framespeed));
-		state.storeAnimation("player_walk_down",state.createGameAnimation("player_walk_down", framespeed));
-		state.storeAnimation("player_walk_left",state.createGameAnimation("player_walk_left", framespeed));
+		state.storeAnimation("player_walk_down", state.createGameAnimation("player_walk_down", framespeed));
+		state.storeAnimation("player_walk_left", state.createGameAnimation("player_walk_left", framespeed));
 		state.storeAnimation("player_walk_right", state.createGameAnimation("player_walk_right", framespeed));
 	}
 
@@ -173,34 +178,32 @@ public class Player extends DirectionEntity {
 			animation.setPlaySpeed(0);
 		}
 
-		//TODO: Question - would it make more sense to put door collisions here?
-		//Or in the door object- just thinking doors only work with Players.
-		
+		// TODO: Question - would it make more sense to put door collisions here?
+		// Or in the door object- just thinking doors only work with Players.
+
 		Array<CollisionData> cols = getCollision().getCollisions();
 		for (int i = 0; i < cols.size; i++) {
 			CollisionData data = cols.get(i);
 			GameObject target = data.getTarget();
-			
-			if(target instanceof Collectible) {
+
+			if (target instanceof Collectible) {
 				Collectible c = (Collectible) target;
-				if(!c.isCollected()) {
-					
-					//do something with the id of the item collected
+				if (!c.isCollected()) {
+
+					// do something with the id of the item collected
 					int itemID = c.getId();
-					
-					//collect code here
-					System.out.println(StringUtils.format("%s collected itemId[%s]", getName(),itemID));
-					
-					
-					
-					//collect the item so that it cannot be collected again
+
+					// collect code here
+					System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
+
+					// collect the item so that it cannot be collected again
 					c.collect();
-					
+
 				}
-				
+
 			}
 		}
-		
+
 	}
 
 	public void setAnimation(String animation) {
@@ -211,7 +214,7 @@ public class Player extends DirectionEntity {
 	}
 
 	// melee attack
-	
+
 	private void setupMelee(MeleeAttack melee) {
 		setMeleeBounds(melee);
 		setMeleePos(melee);
@@ -221,17 +224,17 @@ public class Player extends DirectionEntity {
 		switch (getDirection()) {
 		case Up:
 		case Down:
-			melee.setSize(getHeight() * 2f, getHeight()*.75f);
-			melee.setBounds(0, 0, getHeight() * 2f, getHeight()*.75f);
+			melee.setSize(getHeight() * 2f, getHeight() * .75f);
+			melee.setBounds(0, 0, getHeight() * 2f, getHeight() * .75f);
 			break;
 		case Left:
 		case Right:
-			melee.setSize(getHeight()*.75f, getHeight() * 2f);
-			melee.setBounds(0, 0, getHeight()*.75f, getHeight() * 2f);
+			melee.setSize(getHeight() * .75f, getHeight() * 2f);
+			melee.setBounds(0, 0, getHeight() * .75f, getHeight() * 2f);
 			break;
 		}
 	}
-	
+
 	private void setMeleePos(MeleeAttack melee) {
 		Vector2 center = getCollisionCenter();
 		switch (getDirection()) {
@@ -239,18 +242,18 @@ public class Player extends DirectionEntity {
 			melee.setPosition(center.x - melee.getWidth() * .5f, center.y + getBoundsRaw().height * .5f);
 			break;
 		case Down:
-			melee.setPosition(center.x - melee.getWidth() * .5f, getY()-melee.getHeight());
+			melee.setPosition(center.x - melee.getWidth() * .5f, getY()+getBoundsRaw().y - melee.getHeight());
 			break;
 		case Left:
-			melee.setPosition(getX()-melee.getWidth(), center.y - melee.getHeight() * .5f);
+			melee.setPosition(center.x - getBoundsRaw().width*.5f - melee.getWidth(), center.y - melee.getHeight() * .5f);
 			break;
 		case Right:
-			melee.setPosition(center.x + getBoundsRaw().width*.5f, center.y - melee.getHeight() * .5f);
+			melee.setPosition(center.x + getBoundsRaw().width * .5f, center.y - melee.getHeight() * .5f);
 			break;
 		}
 	}
-	
-	//attack listeners
+
+	// attack listeners
 	private void setupBasicProjectile() {
 
 		basicProjectile = new AttackListener() {
@@ -304,21 +307,20 @@ public class Player extends DirectionEntity {
 			}
 		};
 	}
-	
+
 	private void setUpBasicMelee() {
-		
+
 		basicMelee = new AttackListener() {
-			
+
 			@Override
 			public void onAttack() {
-				
-				
+
 				MeleeAttack m = MeleeAttack.get();
-				
+
 				setupMelee(m);
-				
+
 				getGameLayer().addGameObject(m, KyperBoxGame.NULL_PROPERTIES);
-				
+
 			}
 		};
 	}
