@@ -221,9 +221,8 @@ public class LevelManager extends StateManager {
 			System.out.println("LevelManager::init door[" + dir + "]=" + dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
-			float dw = 160;
-			;
-			float dh = 32;
+			float dw = 244;
+			float dh = 250;
 
 			float x = m_roomWidthPixels / 2 - dw / 2;
 			float y = m_roomHeightPixels - dh;

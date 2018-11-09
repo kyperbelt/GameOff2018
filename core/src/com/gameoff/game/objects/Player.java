@@ -27,9 +27,6 @@ public class Player extends DirectionEntity {
 		Demon, Angel
 	}
 
-	//public enum Direction {
-	//	Left, Right, Up, Down
-	//}
 
 	float angelSpeed = 270;
 	float demonSpeed = 180;
@@ -108,7 +105,7 @@ public class Player extends DirectionEntity {
 	public void init(MapProperties properties) {
 		super.init(properties);
 
-		setSize(108, 90);
+		setSize(60, 74);
 
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer

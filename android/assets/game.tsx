@@ -97,13 +97,13 @@
  <tile id="33">
   <image width="238" height="78" source="../../input_assets/game/title.png"/>
  </tile>
- <tile id="35">
-  <image width="2880" height="1620" source="../../input_assets/game/back1.png"/>
- </tile>
  <tile id="36">
   <image width="89" height="108" source="../../input_assets/game/demon_test.png"/>
  </tile>
  <tile id="37">
   <image width="669" height="37" source="../../input_assets/game/instructions_start.png"/>
+ </tile>
+ <tile id="38">
+  <image width="2880" height="1620" source="../../input_assets/game/back1.png"/>
  </tile>
 </tileset>
