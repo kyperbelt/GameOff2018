@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
+import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.HealthControl.DamageListener;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
@@ -16,7 +17,7 @@ import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.StringUtils;
 
-public class Player extends Basic {
+public class Player extends DirectionEntity {
 
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
@@ -24,10 +25,6 @@ public class Player extends Basic {
 
 	public enum Form {
 		Demon, Angel
-	}
-
-	public enum Direction {
-		Left, Right, Up, Down
 	}
 
 	float angelSpeed = 200;
@@ -44,7 +41,6 @@ public class Player extends Basic {
 	
 	
 	String animation;
-	Direction direction;
 	Form form;
 	PlayerState state;// will probably change this to its own state to make it easy to have states
 						// such as "walking","attacking","damaged","dying", ect.
@@ -63,16 +59,8 @@ public class Player extends Basic {
 		
 		setCurrentForm(Form.Demon);
 		setPlayerState(PlayerState.Idling);
-		setDirection(Direction.Up);
+		setDirection(Direction.Down);
 
-	}
-
-	public void setDirection(Direction dir) {
-		this.direction = dir;
-	}
-
-	public Direction getDirection() {
-		return direction;
 	}
 
 	public void setCurrentForm(Form form) {
@@ -230,7 +218,7 @@ public class Player extends Basic {
 	}
 
 	private void setMeleeBounds(MeleeAttack melee) {
-		switch (direction) {
+		switch (getDirection()) {
 		case Up:
 		case Down:
 			melee.setSize(getHeight() * 2f, getHeight()*.75f);
@@ -246,7 +234,7 @@ public class Player extends Basic {
 	
 	private void setMeleePos(MeleeAttack melee) {
 		Vector2 center = getCollisionCenter();
-		switch (direction) {
+		switch (getDirection()) {
 		case Up:
 			melee.setPosition(center.x - melee.getWidth() * .5f, center.y + getBoundsRaw().height * .5f);
 			break;
@@ -272,7 +260,7 @@ public class Player extends Basic {
 				if (form != null) {
 					Projectile p = Projectile.get(); // get a pooled projectile
 					p.setVelocity(0, 0);
-					switch (direction) {
+					switch (getDirection()) {
 					case Right:
 						p.setPosition(getX() + getWidth(), getY() + getHeight() * .5f + getDepth());
 						break;
@@ -292,7 +280,7 @@ public class Player extends Basic {
 					getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
 
 					MoveControl pmove = p.getMove();
-					switch (direction) {
+					switch (getDirection()) {
 					case Right:
 						pmove.setDirection(1f, 0);
 						break;
