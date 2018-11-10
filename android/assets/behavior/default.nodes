@@ -11,6 +11,9 @@
 		},
 		"RandomSelector": {
 			"properties": {}
+		},
+		"Parallel": {
+			"properties": {}
 		}
 
 	},
@@ -45,8 +48,24 @@
 		"Wait": {
 			"properties": {
 				"time": {
-					"type": "int",
+					"type": "float",
 					"value": "1"
+				}
+			}
+		},
+		"FindPlayerInRange":{
+			"properties":{
+				"range": {
+					"type": "float",
+					"value": "10"
+				}
+			}
+		},
+		"MoveToTarget":{
+			"properties":{
+				"target": {
+					"type": "string",
+					"value": "player"
 				}
 			}
 		}

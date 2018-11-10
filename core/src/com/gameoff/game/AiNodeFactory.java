@@ -1,7 +1,10 @@
 package com.gameoff.game;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.gameoff.game.behaviors.FindPlayerInRange;
+import com.gameoff.game.behaviors.MoveToTarget;
 import com.gameoff.game.behaviors.TestNode;
+import com.gameoff.game.behaviors.Wait;
 import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.BehaviorTree;
 import com.kyperbox.ai.InvertNode;
@@ -44,6 +47,13 @@ public class AiNodeFactory {
 			@Override
 			public BehaviorNode getNode(JsonValue properties) {
 				return new RandomSelectorNode();
+			}
+		});
+		
+		BehaviorTree.registerNode("Parallel", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				return new ParallelNode();
 			}
 		});
 		
@@ -91,5 +101,30 @@ public class AiNodeFactory {
 				return new TestNode(t);
 			}
 		});
+		
+		BehaviorTree.registerNode("Wait", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				float t = properties.getChild("time").asFloat();
+				return new Wait(t);
+			}
+		});
+		
+		BehaviorTree.registerNode("FindPlayerInRange", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				float range = properties.getChild("range").asFloat();
+				return new FindPlayerInRange(range);
+			}
+		});
+		
+		BehaviorTree.registerNode("MoveToTarget", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String target = properties.getChild("target").asString();
+				return new MoveToTarget(target);
+			}
+		});
+		
 	}
 }
