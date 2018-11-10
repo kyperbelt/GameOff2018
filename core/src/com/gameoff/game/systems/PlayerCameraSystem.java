@@ -1,6 +1,7 @@
 package com.gameoff.game.systems;
 
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -16,7 +17,7 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 	Viewport view;
 	LayerCamera camera;
 	Rectangle worldBounds;
-	float m_panFactor = 3.0f;
+	float m_panFactor = 2.0f;
 	boolean m_speedPan = false;
 
 	Vector2 campos;
@@ -41,46 +42,39 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 		view = getLayer().getState().getGame().getView();
 	}
 
-	public void setCameraCenteredOnObject(GameObject p)
-	{
+	public void setCameraCenteredOnObject(GameObject p) {
 		campos.set(p.getCollisionCenter());
 		futurePos.set(campos);
 		camera.setPosition(campos.x, campos.y);
 	}
 
-	public void setCameraPosition(float px, float py)
-	{
-		camera.setPosition(px,py);
+	public void setCameraPosition(float px, float py) {
+		camera.setPosition(px, py);
 		campos.set(camera.getPosition());
 	}
 
-	public void setPanSpeed(float spd)
-	{
+	public void setPanSpeed(float spd) {
 		m_panFactor = spd;
 		m_speedPan = true;
 	}
 
-
 	@Override
 	public void update(Array<GameObject> objects, float delta) {
 		// texel scale
-//		float heightscale = view.getWorldHeight() / view.getScreenHeight();
-//		float widthscale = view.getWorldWidth() / view.getScreenWidth();
+		float hs = view.getWorldHeight() / view.getScreenHeight();
+		float ws = view.getWorldWidth() / view.getScreenWidth();
 
 		futurePos.set(camera.getPosition());
 
 		for (int i = 0; i < objects.size; i++) {
-			if(i == 0)
-			{
+			if (i == 0) {
 				futurePos.set(objects.get(i).getCollisionCenter());
-			}
-			else 
-			{
+			} else {
 				futurePos.lerp(objects.get(i).getCollisionCenter(), .5f);
 			}
 		}
 
-		campos.lerp(futurePos, delta * m_panFactor);
+		campos.lerp(futurePos, .1f);
 
 		if (campos.x + camera.getXOffset() < worldBounds.x) {
 			campos.x = worldBounds.x - camera.getXOffset();
@@ -93,18 +87,23 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 		} else if (campos.y - camera.getYOffset() > worldBounds.y + worldBounds.height) {
 			campos.y = worldBounds.y + worldBounds.height + camera.getYOffset();
 		}
-		
-		if(objects.size > 0)
-		{
-			camera.setPosition(campos.x, campos.y);
-			if (m_speedPan)
-			{
-				if (Math.abs(campos.x - futurePos.x) + Math.abs(campos.y - futurePos.y) < 5)
-				{
-					m_panFactor = 3.0f;
-					m_speedPan = false;
-				}
+
+		if (objects.size > 0) {
+
+			if (futurePos.dst(campos) < 1.5f) {
+				camera.setPosition(MathUtils.round((futurePos.x / ws) * ws), MathUtils.round((futurePos.y / hs) * hs));
+			} else {
+				camera.setPosition(MathUtils.round((campos.x / ws) * ws), MathUtils.round((campos.y / hs) * hs));
 			}
+
+			// if (m_speedPan)
+			// {
+			// if (Math.abs(campos.x - futurePos.x) + Math.abs(campos.y - futurePos.y) < 5)
+			// {
+			// m_panFactor = 3.0f;
+			// m_speedPan = false;
+			// }
+			// }
 		}
 
 	}
