@@ -28,6 +28,7 @@ public class SimpleEnemy extends DirectionEntity {
 		context = new UserData(getClass().getSimpleName() + "_Context");
 		context.put(Context.SELF, this);
 		ai = new AiControl(context, getExampleAi());
+		getMove().setMoveSpeed(80);
 	}
 
 	@Override

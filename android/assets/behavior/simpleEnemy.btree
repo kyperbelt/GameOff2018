@@ -2,7 +2,7 @@
     "Repeat" :{
         "properties" : {
             "count":{
-                "value":"3",
+                "value":"-1",
                 "type":"int"
             }
         },
@@ -10,10 +10,25 @@
 {            "Sequence" :{
                 "properties" : {},
                 "children" : [
-{                    "Test" :{
+{                    "Success" :{
+                        "properties" : {},
+                        "children" : [
+{                            "FindPlayerInRange" :{
+                                "properties" : {
+                                    "range":{
+                                        "value":"600",
+                                        "type":"float"
+                                    }
+                                },
+                                "children" : []
+                            }}
+                        ]
+                    }},
+
+{                    "MoveToTarget" :{
                         "properties" : {
-                            "testText":{
-                                "value":"this text comes from node editor",
+                            "target":{
+                                "value":"player",
                                 "type":"string"
                             }
                         },
