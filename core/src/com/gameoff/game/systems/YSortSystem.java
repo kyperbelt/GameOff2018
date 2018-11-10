@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.gameoff.game.objects.Hazard;
+import com.gameoff.game.objects.*;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.objects.TilemapLayerObject;
 import com.kyperbox.systems.LayerSystem;
@@ -16,6 +16,10 @@ public class YSortSystem extends LayerSystem{
 		public int compare(Actor o1, Actor o2) {
 			if(o1 instanceof TilemapLayerObject|| o2 instanceof TilemapLayerObject)
 				return 0;
+			if (o1 instanceof BackgroundObject)
+				return -2;
+			else if (o2 instanceof BackgroundObject)
+				return 1;
 			if(o1 instanceof Hazard) {
 				return -1;
 			}else if(o2 instanceof Hazard) {

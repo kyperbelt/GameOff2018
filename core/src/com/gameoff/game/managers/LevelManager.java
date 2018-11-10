@@ -3,12 +3,7 @@ package com.gameoff.game.managers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
-import com.gameoff.game.objects.Door;
-import com.gameoff.game.objects.HudMap;
-import com.gameoff.game.objects.MeleeAttack;
-import com.gameoff.game.objects.Player;
-import com.gameoff.game.objects.Projectile;
-import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.*;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -20,8 +15,7 @@ import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.managers.Priority;
 import com.kyperbox.managers.StateManager;
-import com.kyperbox.objects.GameLayer;
-import com.kyperbox.objects.GameObject;
+import com.kyperbox.objects.*;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
 
@@ -122,9 +116,6 @@ public class LevelManager extends StateManager {
 		// create a parallax mapper and set its camera layer as the playground layer
 		paralax = new ParallaxMapper(playground);
 
-		// add a mapping for the Back object and set its scale 1,1 so that there is no
-		// scroll delay
-		paralax.addMapping("Back", 1f, 1f, true);
 
 		// ad the mapper to the background layer
 		background.addLayerSystem(paralax);
@@ -212,17 +203,60 @@ public class LevelManager extends StateManager {
 		Room r = level.getCurrentRoom();
 		System.out.println("LevelManager::init current room " + r.getX() + ", " + r.getY());
 
+		//GameLayer background = state.getBackgroundLayer();
+		float wallSize = 224;
+		//add wall images
+		BackgroundObject w1 = new BackgroundObject();
+		w1.setSize(m_roomWidthPixels,wallSize);
+		w1.setSprite("top_wall");
+		w1.setName("TopWall");
+		w1.setPosition(0,m_roomHeightPixels- wallSize);
+		//background.addGameObject(w1,null);
+		//paralax.addMapping("TopWall", 1f, 1f, true);
+		playground.addGameObject(w1,null);
+
+		w1 = new BackgroundObject();
+		w1.setSize(m_roomWidthPixels,wallSize);
+		w1.setSprite("top_wall");
+		w1.setName("BottomWall");
+		w1.setFlip(false, true);
+		w1.setPosition(0,0);
+		//background.addGameObject(w1,null);
+		//paralax.addMapping("BottomWall", 1f, 1f, true);
+		playground.addGameObject(w1,null);
+
+		w1 = new BackgroundObject();
+		w1.setSize(wallSize,m_roomHeightPixels - (wallSize*2));
+		w1.setSprite("left_wall");
+		w1.setName("LeftWall");
+		w1.setPosition(0,wallSize);
+		//background.addGameObject(w1,null);
+		//paralax.addMapping("LeftWall", 1f, 1f, true);
+		playground.addGameObject(w1,null);
+
+		w1 = new BackgroundObject();
+		w1.setSize(wallSize,m_roomHeightPixels - (wallSize*2));
+		w1.setSprite("left_wall");
+		w1.setName("RightWall");
+		w1.setPosition(m_roomWidthPixels-wallSize,wallSize);
+		w1.setFlip(true,false);
+		//background.addGameObject(w1,null);
+		//paralax.addMapping("RightWall", 1f, 1f, true);
+		playground.addGameObject(w1,null);
+
 		// Place Doors & Walls
 		// Not sure about collision box rotation/how that all works
 		// Might be smarter to play with origin for rotation, this
 		// is a bit hacky ;)
 		for (int dir = 0; dir < 4; dir++) {
+
+		
 			int dc = r.getDoor(dir);
 			System.out.println("LevelManager::init door[" + dir + "]=" + dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
-			float dw = 244;
-			float dh = 250;
+			float dw = 230;
+			float dh = 224;
 
 			float x = m_roomWidthPixels / 2 - dw / 2;
 			float y = m_roomHeightPixels - dh;

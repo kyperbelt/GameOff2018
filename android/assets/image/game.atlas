@@ -6,386 +6,407 @@ filter: Nearest,Nearest
 repeat: none
 HorrorGameTiles
   rotate: false
-  xy: 2884, 1519
-  size: 256, 256
-  orig: 256, 256
+  xy: 228, 1304
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 abomination_chase_down_0
   rotate: false
-  xy: 2, 2
+  xy: 3555, 2010
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_down_1
   rotate: false
-  xy: 36, 2
+  xy: 742, 1319
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_0
   rotate: false
-  xy: 70, 2
+  xy: 936, 1513
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_1
   rotate: false
-  xy: 104, 2
+  xy: 1247, 1784
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_0
   rotate: false
-  xy: 138, 2
+  xy: 413, 820
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_1
   rotate: false
-  xy: 172, 2
+  xy: 1007, 1577
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_0
   rotate: false
-  xy: 206, 2
+  xy: 1192, 1704
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_1
   rotate: false
-  xy: 240, 2
+  xy: 2884, 1857
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_down
   rotate: false
-  xy: 673, 392
+  xy: 3049, 1909
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_left
   rotate: false
-  xy: 3343, 1825
+  xy: 3512, 1971
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_right
   rotate: false
-  xy: 3777, 2014
+  xy: 228, 509
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_up
   rotate: false
-  xy: 432, 174
+  xy: 304, 601
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-back1
-  rotate: false
-  xy: 2, 426
-  size: 2880, 1620
-  orig: 2880, 1620
-  offset: 0, 0
-  index: -1
 door_closed
   rotate: false
-  xy: 3149, 1788
+  xy: 2, 146
   size: 192, 196
   orig: 192, 196
   offset: 0, 0
   index: -1
 door_open
   rotate: false
-  xy: 2884, 1321
+  xy: 493, 1106
   size: 192, 196
   orig: 192, 196
   offset: 0, 0
   index: -1
 door_open1
   rotate: false
-  xy: 2884, 1777
+  xy: 228, 1033
   size: 263, 269
   orig: 263, 269
   offset: 0, 0
   index: -1
 door_open2
   rotate: false
-  xy: 2, 116
+  xy: 742, 1547
   size: 263, 269
   orig: 263, 269
   offset: 0, 0
   index: -1
 eyeball_still_down
   rotate: false
-  xy: 499, 261
+  xy: 559, 1072
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+floor_tile_red
+  rotate: false
+  xy: 493, 1040
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+floor_tiles_a
+  rotate: false
+  xy: 742, 1353
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
 instructions_start
   rotate: false
-  xy: 2, 387
+  xy: 2884, 2005
   size: 669, 37
   orig: 669, 37
   offset: 0, 0
   index: -1
+left_wall
+  rotate: false
+  xy: 2, 344
+  size: 224, 1472
+  orig: 224, 1472
+  offset: 0, 0
+  index: -1
 map_boss_icon
   rotate: false
-  xy: 242, 99
+  xy: 196, 327
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door
   rotate: false
-  xy: 3142, 1771
+  xy: 187, 140
   size: 4, 4
   orig: 4, 4
   offset: 0, 0
   index: -1
 map_door0
   rotate: false
-  xy: 3777, 1997
+  xy: 2, 2
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door1
   rotate: false
-  xy: 432, 157
+  xy: 380, 710
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door2
   rotate: false
-  xy: 466, 191
+  xy: 721, 1287
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door3
   rotate: false
-  xy: 533, 278
+  xy: 1007, 1560
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_empty
   rotate: false
-  xy: 575, 336
+  xy: 1226, 1721
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room
   rotate: false
-  xy: 609, 370
+  xy: 2918, 1874
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_current_icon
   rotate: false
-  xy: 3562, 1877
+  xy: 3049, 1892
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_visited
   rotate: false
-  xy: 2884, 924
+  xy: 3083, 1926
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_start_icon
   rotate: false
-  xy: 2918, 958
+  xy: 3512, 1954
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 noregion
   rotate: false
-  xy: 575, 353
+  xy: 687, 1204
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 painting
   rotate: false
-  xy: 3112, 1502
+  xy: 460, 1016
   size: 24, 15
   orig: 24, 15
   offset: 0, 0
   index: -1
 piano
   rotate: false
-  xy: 3528, 1860
+  xy: 3589, 2010
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pillar
   rotate: false
-  xy: 3078, 1453
+  xy: 687, 1238
   size: 32, 64
   orig: 32, 64
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 3612, 1996
+  xy: 2884, 1891
   size: 163, 50
   orig: 163, 50
   offset: 0, 0
   index: -1
 play_down
   rotate: false
-  xy: 267, 156
+  xy: 3347, 1953
   size: 163, 50
   orig: 163, 50
   offset: 0, 0
   index: -1
 player_walk_down_0
   rotate: false
-  xy: 499, 295
+  xy: 228, 635
   size: 74, 90
   orig: 74, 90
   offset: 0, 0
   index: -1
 player_walk_down_1
   rotate: false
-  xy: 3528, 1894
+  xy: 228, 543
   size: 74, 90
   orig: 74, 90
   offset: 0, 0
   index: -1
 player_walk_down_2
   rotate: false
-  xy: 2884, 975
+  xy: 304, 635
   size: 74, 90
   orig: 74, 90
   offset: 0, 0
   index: -1
 player_walk_left_0
   rotate: false
-  xy: 2884, 941
+  xy: 776, 1319
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_1
   rotate: false
-  xy: 2960, 1033
+  xy: 936, 1479
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_left_2
   rotate: false
-  xy: 3078, 1419
+  xy: 970, 1513
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_0
   rotate: false
-  xy: 267, 122
+  xy: 1247, 1750
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_1
   rotate: false
-  xy: 707, 392
+  xy: 1281, 1784
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_right_2
   rotate: false
-  xy: 3343, 1791
+  xy: 413, 786
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_0
   rotate: false
-  xy: 3377, 1825
+  xy: 1041, 1577
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_1
   rotate: false
-  xy: 3811, 2014
+  xy: 1192, 1670
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_walk_up_2
   rotate: false
-  xy: 499, 227
+  xy: 2884, 1823
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 skull
   rotate: false
-  xy: 3343, 1859
+  xy: 228, 727
   size: 183, 125
   orig: 183, 125
   offset: 0, 0
   index: -1
 skull pile
   rotate: false
-  xy: 267, 208
+  xy: 228, 854
   size: 230, 177
   orig: 230, 177
   offset: 0, 0
   index: -1
 skull_break1
   rotate: false
-  xy: 2884, 1194
+  xy: 2, 19
   size: 183, 125
   orig: 183, 125
   offset: 0, 0
   index: -1
 skull_break2
   rotate: false
-  xy: 2884, 1067
+  xy: 1007, 1611
   size: 183, 125
   orig: 183, 125
   offset: 0, 0
   index: -1
 testtext
   rotate: false
-  xy: 3149, 1986
+  xy: 2884, 1943
   size: 461, 60
   orig: 461, 60
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 2, 36
+  xy: 1007, 1738
   size: 238, 78
   orig: 238, 78
+  offset: 0, 0
+  index: -1
+top_wall
+  rotate: false
+  xy: 2, 1818
+  size: 2880, 224
+  orig: 2880, 224
   offset: 0, 0
   index: -1

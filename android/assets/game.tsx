@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="2880" tileheight="1620" tilecount="35" columns="0">
+<tileset name="game" tilewidth="669" tileheight="90" tilecount="33" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -59,13 +59,13 @@
   <image width="32" height="64" source="../../input_assets/game/pillar.png"/>
  </tile>
  <tile id="20">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_down_0.png"/>
+  <image width="74" height="90" source="../../input_assets/game/player_walk_down_0.png"/>
  </tile>
  <tile id="21">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_down_1.png"/>
+  <image width="74" height="90" source="../../input_assets/game/player_walk_down_1.png"/>
  </tile>
  <tile id="22">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_down_2.png"/>
+  <image width="74" height="90" source="../../input_assets/game/player_walk_down_2.png"/>
  </tile>
  <tile id="23">
   <image width="32" height="32" source="../../input_assets/game/player_walk_left_0.png"/>
@@ -97,13 +97,7 @@
  <tile id="33">
   <image width="238" height="78" source="../../input_assets/game/title.png"/>
  </tile>
- <tile id="36">
-  <image width="89" height="108" source="../../input_assets/game/demon_test.png"/>
- </tile>
  <tile id="37">
   <image width="669" height="37" source="../../input_assets/game/instructions_start.png"/>
- </tile>
- <tile id="38">
-  <image width="2880" height="1620" source="../../input_assets/game/back1.png"/>
  </tile>
 </tileset>
