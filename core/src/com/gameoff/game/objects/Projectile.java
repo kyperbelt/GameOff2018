@@ -3,8 +3,9 @@ package com.gameoff.game.objects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.gameoff.game.control.HealthControl.HealthGroup;
 
-public class Projectile extends Basic {
+public class Projectile extends Attack {
 
 	private static Pool<Projectile> projectiles = new Pool<Projectile>() {
 		@Override
@@ -19,6 +20,9 @@ public class Projectile extends Basic {
 	float elapsed = 0;
 	float damage = 1f;
 	float speed = 300;
+	
+	
+	
 
 	@Override
 	public void init(MapProperties properties) {
@@ -52,8 +56,9 @@ public class Projectile extends Basic {
 		super.onRemove();
 	}
 
-	public static Projectile get() {
+	public static Projectile get(HealthGroup...damageGroup) {
 		Projectile p = projectiles.obtain();
+		p.setDamageGroup(damageGroup);
 		used.add(p);
 		return p;
 	}

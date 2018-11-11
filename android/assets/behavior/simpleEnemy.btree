@@ -7,32 +7,42 @@
             }
         },
         "children" : [
-{            "Sequence" :{
+{            "Selector" :{
                 "properties" : {},
                 "children" : [
-{                    "Success" :{
+{                    "CheckDamagedState" :{
+                        "properties" : {},
+                        "children" : []
+                    }},
+
+{                    "Sequence" :{
                         "properties" : {},
                         "children" : [
-{                            "FindPlayerInRange" :{
+{                            "Success" :{
+                                "properties" : {},
+                                "children" : [
+{                                    "FindPlayerInRange" :{
+                                        "properties" : {
+                                            "range":{
+                                                "value":"600",
+                                                "type":"float"
+                                            }
+                                        },
+                                        "children" : []
+                                    }}
+                                ]
+                            }},
+
+{                            "MoveToTarget" :{
                                 "properties" : {
-                                    "range":{
-                                        "value":"600",
-                                        "type":"float"
+                                    "target":{
+                                        "value":"player",
+                                        "type":"string"
                                     }
                                 },
                                 "children" : []
                             }}
                         ]
-                    }},
-
-{                    "MoveToTarget" :{
-                        "properties" : {
-                            "target":{
-                                "value":"player",
-                                "type":"string"
-                            }
-                        },
-                        "children" : []
                     }}
                 ]
             }}

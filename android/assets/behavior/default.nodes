@@ -68,6 +68,10 @@
 					"value": "player"
 				}
 			}
+		},
+		"CheckDamagedState":{
+			"properties":{ }
+			
 		}
 
 	}

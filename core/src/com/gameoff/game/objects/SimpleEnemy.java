@@ -2,17 +2,20 @@ package com.gameoff.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
 import com.gameoff.game.Context;
-import com.gameoff.game.behaviors.TestNode;
 import com.gameoff.game.control.AiControl;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
+import com.gameoff.game.control.HealthControl.DamageListener;
+import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.StateControl;
 import com.gameoff.game.control.StateControl.EntityState;
+import com.gameoff.game.control.StateControl.StateChangeListener;
 import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.BehaviorTree;
-import com.kyperbox.ai.RepeatNode;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.UserData;
 
@@ -23,12 +26,40 @@ public class SimpleEnemy extends DirectionEntity {
 	UserData context;
 	AiControl ai;
 
+	float damagedDuration = .2f;
+	float damagedElapsed = 0;
+	ShaderProgram damageShader;
+
+	DamageListener damageListener = new DamageListener() {
+
+		@Override
+		public void damaged(float amount) {
+			state.setState(EntityState.Damaged);
+			damagedElapsed = 0;
+		}
+	};
+
+	StateChangeListener stateListener = new StateChangeListener() {
+
+		@Override
+		public void stateChanged(EntityState last, EntityState newState) {
+			if (newState == EntityState.Damaged) {
+				getAnimation().setPlaySpeed(0f);
+			} else {
+				getAnimation().setPlaySpeed(1f);
+			}
+		}
+	};
+
 	public SimpleEnemy() {
 		state = new StateControl(EntityState.Moving);
 		context = new UserData(getClass().getSimpleName() + "_Context");
 		context.put(Context.SELF, this);
 		ai = new AiControl(context, getExampleAi());
 		getMove().setMoveSpeed(80);
+		getHealth().setHealthGroup(HealthGroup.Demon);
+		getHealth().setDamageListener(damageListener);
+		state.setStateChangeListener(stateListener);
 	}
 
 	@Override
@@ -37,6 +68,8 @@ public class SimpleEnemy extends DirectionEntity {
 		addController(state);
 		addController(ai);
 		createAnimations();
+
+		damageShader = getState().getShader("damageShader");
 
 		if (getWidth() == 0) {
 			setSize(32, 32);
@@ -68,6 +101,30 @@ public class SimpleEnemy extends DirectionEntity {
 		});
 
 		getDirectionControl().setDirection(Direction.Down);
+	}
+
+	@Override
+	public void update(float delta) {
+
+		if (state.getState() == EntityState.Damaged) {
+			if (damagedElapsed >= damagedDuration) {
+				state.setState(EntityState.Moving);
+			}
+			damagedElapsed+=delta;
+		}
+		super.update(delta);
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		if (state.getState() == EntityState.Damaged && damageShader!=null) {
+			ShaderProgram lastShader = batch.getShader();
+			batch.setShader(damageShader);
+			super.draw(batch, parentAlpha);
+			batch.setShader(lastShader);
+		} else {
+			super.draw(batch, parentAlpha);
+		}
 	}
 
 	@Override

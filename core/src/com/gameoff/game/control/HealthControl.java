@@ -57,7 +57,7 @@ public class HealthControl extends GameObjectController {
 		this.damage = damage;
 	}
 	
-	public void damage(float amount) {
+	private void damage(float amount) {
 		if(!invulnerable && amount > 0 && damage != null) {
 			damage.damaged(amount);
 		}

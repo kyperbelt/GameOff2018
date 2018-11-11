@@ -6,7 +6,7 @@ import com.kyperbox.objects.GameObjectController;
 public class StateControl extends GameObjectController{
 	
 	public enum EntityState{
-		Idling,Moving,Attacking,Dying,Hurting
+		Idling,Moving,Attacking,Dying,Damaged
 	}
 	
 	EntityState state;

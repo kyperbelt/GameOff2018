@@ -3,6 +3,7 @@ package com.gameoff.game.managers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
+import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.*;
 import com.gameoff.game.systems.AiSystem;
@@ -141,11 +142,11 @@ public class LevelManager extends StateManager {
 		
 		//add ZOrderControl to the TileLayerObjects
 		ZOrderControl floorZOrder = new ZOrderControl();
-		floorZOrder.setZOrder(100); //really high number so its always drawn on the bottom
+		floorZOrder.setZOrder(ZOrder.BACKGROUND); //really high number so its always drawn on the bottom
 		floor_tiles.addController(floorZOrder);
 		TilemapLayerObject wall_tiles = (TilemapLayerObject) playground.getGameObject("wall_tiles");
 		ZOrderControl wallZOrder = new ZOrderControl();
-		wallZOrder.setZOrder(10);
+		wallZOrder.setZOrder(ZOrder.PLAYER+1);
 		wall_tiles.addController(wallZOrder);
 		if (player == null) {
 			GameObject pspawn = playground.getGameObject("playerSpawn");

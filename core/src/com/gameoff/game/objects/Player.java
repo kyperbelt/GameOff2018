@@ -8,6 +8,7 @@ import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.HealthControl.DamageListener;
+import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
 import com.kyperbox.GameState;
@@ -60,6 +61,8 @@ public class Player extends DirectionEntity {
 		setCurrentForm(Form.Demon);
 		setPlayerState(PlayerState.Idling);
 		setDirection(Direction.Down);
+		
+		getHealth().setHealthGroup(HealthGroup.Player);
 		
 		//getZOrder().setZOrder(3);
 
@@ -321,7 +324,7 @@ public class Player extends DirectionEntity {
 			@Override
 			public void onAttack() {
 
-				MeleeAttack m = MeleeAttack.get();
+				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral);
 
 				setupMelee(m);
 

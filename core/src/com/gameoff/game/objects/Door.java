@@ -3,6 +3,7 @@ package com.gameoff.game.objects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.GameOffGame;
+import com.gameoff.game.ZOrder;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
 
@@ -12,7 +13,7 @@ public class Door extends Basic {
   public Door(int doorCode) {
     getMove().setPassable(false);
     m_code = doorCode;
-    getZOrder().setZOrder(3);//set the zorder after the player so it renders under it
+    getZOrder().setZOrder(ZOrder.PLAYER+2);//set the zorder after the player so it renders under it
   }
 
   @Override
@@ -45,7 +46,7 @@ public class Door extends Basic {
 			CollisionData d = cols.get(i);
 			GameObject target = d.getTarget();
 			if(target instanceof Player) {
-				GameOffGame.log(this.getClass().getSimpleName(), "Example of player colliding with door.");
+				//GameOffGame.log(this.getClass().getSimpleName(), "Example of player colliding with door.");
 			}
 		}
 	  }

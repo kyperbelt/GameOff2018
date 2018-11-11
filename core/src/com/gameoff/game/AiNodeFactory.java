@@ -1,6 +1,7 @@
 package com.gameoff.game;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.gameoff.game.behaviors.CheckDamageState;
 import com.gameoff.game.behaviors.FindPlayerInRange;
 import com.gameoff.game.behaviors.MoveToTarget;
 import com.gameoff.game.behaviors.TestNode;
@@ -123,6 +124,13 @@ public class AiNodeFactory {
 			public BehaviorNode getNode(JsonValue properties) {
 				String target = properties.getChild("target").asString();
 				return new MoveToTarget(target);
+			}
+		});
+		
+		BehaviorTree.registerNode("CheckDamagedState", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				return new CheckDamageState();
 			}
 		});
 		

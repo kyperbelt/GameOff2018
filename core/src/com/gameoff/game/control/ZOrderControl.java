@@ -1,18 +1,19 @@
 package com.gameoff.game.control;
 
+import com.gameoff.game.ZOrder;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.objects.GameObjectController;
 
 /**
  * used to to control the order objects are drawn in the world. If two objects
- * have the same zorder number then ysorting will be used. Default zorder is 2;
+ * have the same zorder number then ysorting will be used. Default zorder is {@link com.gameoff.game.ZOrder ZOrder.Player}};
  * 
  * @author john
  *
  */
 public class ZOrderControl extends GameObjectController {
 
-	int zOrder = 2;
+	int zOrder = ZOrder.PLAYER;
 
 	/**
 	 * set the zOrder to render the object in. Lower number means it will be drawn
