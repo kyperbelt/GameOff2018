@@ -12,6 +12,7 @@ public class Door extends Basic {
   public Door(int doorCode) {
     getMove().setPassable(false);
     m_code = doorCode;
+    getZOrder().setZOrder(3);//set the zorder after the player so it renders under it
   }
 
   @Override

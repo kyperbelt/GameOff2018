@@ -39,6 +39,7 @@ public class Hazard extends Basic {
 		this.damageGroup = damageGroup;
 		getMove().setPhysical(false);
 		attack = new AttackControl(1f,1f,hazardListener);
+		getZOrder().setZOrder(3); //under default zorder of 2
 	}
 	
 	public Hazard() {

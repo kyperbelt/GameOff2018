@@ -3,6 +3,7 @@ package com.gameoff.game.managers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
+import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.*;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
@@ -135,7 +136,17 @@ public class LevelManager extends StateManager {
 		// When this is called, TMX is loaded, objects created, etc.
 		// and this is called right before being shown.
 		GameLayer playground = state.getPlaygroundLayer();
-
+		
+		TilemapLayerObject floor_tiles = (TilemapLayerObject) playground.getGameObject("floor_tiles");
+		
+		//add ZOrderControl to the TileLayerObjects
+		ZOrderControl floorZOrder = new ZOrderControl();
+		floorZOrder.setZOrder(100); //really high number so its always drawn on the bottom
+		floor_tiles.addController(floorZOrder);
+		TilemapLayerObject wall_tiles = (TilemapLayerObject) playground.getGameObject("wall_tiles");
+		ZOrderControl wallZOrder = new ZOrderControl();
+		wallZOrder.setZOrder(10);
+		wall_tiles.addController(wallZOrder);
 		if (player == null) {
 			GameObject pspawn = playground.getGameObject("playerSpawn");
 

@@ -42,8 +42,8 @@ public class FindPlayerInRange extends BehaviorNode{
 		self = getContext().get(Context.SELF, GameObject.class);
 		cc = self.getController(CollisionController.class);
 		
-		if(KyperBoxGame.DEBUG_LOGGING)
-			System.out.println(StringUtils.format("[%s]:Finding Players in Range", self.getName()));
+		// if(KyperBoxGame.DEBUG_LOGGING)
+		// System.out.println(StringUtils.format("[%s]:Finding Players in Range", self.getName()));
 		
 	}
 	

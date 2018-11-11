@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
+import com.gameoff.game.control.ZOrderControl;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.controllers.CollisionController;
 import com.kyperbox.objects.GameObject;
@@ -15,6 +16,7 @@ public class Basic extends GameObject {
 	private CollisionController collision;
 	private AnimationController animation;
 	private MoveControl move;
+	private ZOrderControl zorder;
 	
 	
 	public Basic() {
@@ -22,8 +24,13 @@ public class Basic extends GameObject {
 		animation = new AnimationController();
 		health = new HealthControl(HealthGroup.Neutral,10f);
 		move = new MoveControl(200);
+		zorder = new ZOrderControl();
 		setApplyVelocity(false);
 
+	}
+	
+	public ZOrderControl getZOrder() {
+		return zorder;
 	}
 	
 	/**
@@ -69,6 +76,7 @@ public class Basic extends GameObject {
 		addController(animation);
 		addController(move);
 		addController(health);
+		addController(zorder);
 	}
 
 	@Override
@@ -78,6 +86,7 @@ public class Basic extends GameObject {
 		removeController(move);
 		removeController(animation);
 		removeController(health);
+		removeController(zorder);
 	}
 
 }

@@ -2,6 +2,8 @@ package com.gameoff.game.behaviors;
 
 import com.badlogic.gdx.math.Vector2;
 import com.gameoff.game.Context;
+import com.gameoff.game.control.DirectionControl;
+import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.MoveControl;
 import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.NodeState;
@@ -20,6 +22,7 @@ public class MoveToTarget extends BehaviorNode {
 	GameObject self;
 	MoveControl move;
 	CollisionController cc;
+	DirectionControl direction;
 
 	String targetName;
 	GameObject target;
@@ -33,6 +36,7 @@ public class MoveToTarget extends BehaviorNode {
 		super.init();
 		self = getContext().get(Context.SELF, GameObject.class);
 		move = self.getController(MoveControl.class);
+		direction = self.getController(DirectionControl.class);
 
 		target = getContext().get(targetName, GameObject.class);
 	}
@@ -58,6 +62,22 @@ public class MoveToTarget extends BehaviorNode {
 				dy /= length;
 				
 				state = NodeState.Success;
+			}
+			
+			if(direction!=null) {
+				if(Math.abs(dx) >= Math.abs(dy)) {
+					if(dx < 0) {
+						direction.setDirection(Direction.Left);
+					}else if(dx > 0) {
+						direction.setDirection(Direction.Right);
+					}
+				}else {
+					if(dy < 0) {
+						direction.setDirection(Direction.Down);
+					}else if(dy > 0) {
+						direction.setDirection(Direction.Up);
+					}
+				}
 			}
 			
 			move.setDirection(dx, dy);

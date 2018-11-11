@@ -60,6 +60,8 @@ public class Player extends DirectionEntity {
 		setCurrentForm(Form.Demon);
 		setPlayerState(PlayerState.Idling);
 		setDirection(Direction.Down);
+		
+		//getZOrder().setZOrder(3);
 
 	}
 
