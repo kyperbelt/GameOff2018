@@ -56,6 +56,11 @@ public class YSortSystem extends LayerSystem{
 				return -1;
 			else if (o2 instanceof BackgroundObject)
 				return 1;
+
+			if (o1 instanceof ForegroundObject)
+				return 1;
+			else if (o2 instanceof ForegroundObject)
+				return -1;
 			
 			if(o1 instanceof TilemapLayerObject) {
 				return -1;

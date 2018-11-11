@@ -266,8 +266,11 @@ public class LevelManager extends StateManager {
 			System.out.println("LevelManager::init door[" + dir + "]=" + dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
-			float dw = 230;
+			float dw = 219;
 			float dh = 224;
+			float topOff = 32;
+			float topSize = dh-topOff;
+			float doorBorder = 36;
 
 			float x = m_roomWidthPixels / 2 - dw / 2;
 			float y = m_roomHeightPixels - dh;
@@ -279,17 +282,24 @@ public class LevelManager extends StateManager {
 				d.setRotation(rot);
 				playground.addGameObject(d, null);
 
+				ForegroundObject o = new ForegroundObject();
+				o.setSprite("door_over");
+				o.setName("DoorOver" + dir);
+				o.setSize(dw, dh);
+				o.setRotation(rot);
+				playground.addGameObject(o, null);
+
 				if (dir == 2) {
 					// down
 
 					Wall t1 = new Wall();
-					t1.setSize(x, dh);
+					t1.setSize(x+doorBorder, dh);
 					t1.setPosition(0, 0);
 					playground.addGameObject(t1, null);
 
 					Wall t2 = new Wall();
-					t2.setSize(x, dh);
-					t2.setPosition(x + dw, 0);
+					t2.setSize(x+doorBorder, dh);
+					t2.setPosition(x + dw - doorBorder, 0);
 					playground.addGameObject(t2, null);
 
 					// rotated 180
@@ -301,18 +311,18 @@ public class LevelManager extends StateManager {
 					x = m_roomWidthPixels - dh;
 
 					Wall t1 = new Wall();
-					t1.setSize(dh, y);
+					t1.setSize(dh, y+doorBorder);
 					t1.setPosition(x, 0);
 					playground.addGameObject(t1, null);
 
 					Wall t2 = new Wall();
-					t2.setSize(dh, y);
-					t2.setPosition(x, y + dw);
+					t2.setSize(dh, y + doorBorder);
+					t2.setPosition(x, y + dw-doorBorder);
 					playground.addGameObject(t2, null);
 
 					// adjust for rotation
 					x -= (dw / 2 - dh / 2);
-					y += dw / 2;
+					//y += dw / 2;
 
 				} else if (dir == 3) {
 					// left door
@@ -320,32 +330,34 @@ public class LevelManager extends StateManager {
 					x = 0;
 
 					Wall t1 = new Wall();
-					t1.setSize(dh, y);
+					t1.setSize(dh, y + doorBorder);
 					t1.setPosition(0, 0);
 					playground.addGameObject(t1, null);
 
 					Wall t2 = new Wall();
-					t2.setSize(dh, y);
-					t2.setPosition(0, y + dw);
+					t2.setSize(dh, y + doorBorder);
+					t2.setPosition(0, y + dw - doorBorder);
 					playground.addGameObject(t2, null);
 
 					// rotation adjustment
 					x -= (dw / 2 - dh / 2);
-					y += dw / 2;
+					//y += dw / 2;
 
 				} else {
 					// top
 					Wall t1 = new Wall();
-					t1.setSize(x, dh);
-					t1.setPosition(0, y);
+					t1.setSize(x + doorBorder, topSize);
+					t1.setPosition(0, y+topOff);
 					playground.addGameObject(t1, null);
 
 					Wall t2 = new Wall();
-					t2.setSize(x, dh);
-					t2.setPosition(x + dw, y);
+					t2.setSize(x+ doorBorder, topSize);
+					t2.setPosition(x + dw - doorBorder, y+topOff);
 					playground.addGameObject(t2, null);
 				}
+
 				d.setPosition(x, y);
+				o.setPosition(x, y);
 
 			} else {
 				// just place full walls
@@ -370,8 +382,8 @@ public class LevelManager extends StateManager {
 				} else {
 					// top
 					Wall t1 = new Wall();
-					t1.setSize(m_roomWidthPixels, dh);
-					t1.setPosition(0, m_roomHeightPixels - dh);
+					t1.setSize(m_roomWidthPixels, topSize);
+					t1.setPosition(0, m_roomHeightPixels - topSize);
 					playground.addGameObject(t1, null);
 				}
 			}

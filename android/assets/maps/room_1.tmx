@@ -31,10 +31,10 @@
   <object id="67" name="pit" type="Pit" x="775" y="963" width="242" height="150"/>
   <object id="68" name="pit" type="Pit" x="935" y="421" width="182" height="307"/>
   <object id="74" name="playerSpawn" type="BasicGameObject" x="1445.77" y="779.342" width="32" height="32" rotation="90"/>
-  <object id="75" name="east" type="BasicGameObject" x="2533.77" y="779.342" width="32" height="96"/>
-  <object id="76" name="west" type="BasicGameObject" x="357.766" y="779.342" width="32" height="96"/>
-  <object id="77" name="north" type="BasicGameObject" x="1390.69" y="306.799" width="96" height="32"/>
-  <object id="78" name="south" type="BasicGameObject" x="1389.51" y="1266.74" width="96" height="32"/>
+  <object id="75" name="east" type="BasicGameObject" x="2722" y="912" width="32" height="96"/>
+  <object id="76" name="west" type="BasicGameObject" x="112" y="912" width="32" height="96"/>
+  <object id="77" name="north" type="BasicGameObject" x="1396" y="128" width="96" height="32"/>
+  <object id="78" name="south" type="BasicGameObject" x="1396" y="1792" width="96" height="32"/>
   <object id="79" name="pit" type="Pit" x="1829" y="743" width="150" height="339"/>
   <object id="80" name="test_hazard" type="Hazard" x="1652" y="1012" width="64" height="32"/>
   <object id="81" name="test_hazard" type="Hazard" x="2112" y="618" width="64" height="32"/>
