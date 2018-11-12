@@ -1,0 +1,58 @@
+{ 
+    "Sequence" :{
+        "properties" : {},
+        "children" : [
+{            "Test" :{
+                "properties" : {
+                    "testText":{
+                        "value":"trigger is going to wait 3 secs and spawn an object and then remove itself",
+                        "type":"string"
+                    }
+                },
+                "children" : []
+            }},
+
+{            "Wait" :{
+                "properties" : {
+                    "time":{
+                        "value":"3",
+                        "type":"float"
+                    }
+                },
+                "children" : []
+            }},
+
+{            "SpawnObject" :{
+                "properties" : {
+                    "objectType":{
+                        "value":"SimpleEnemy",
+                        "type":"string"
+                    },
+                    "layerName":{
+                        "value":"playground",
+                        "type":"string"
+                    },
+                    "x":{
+                        "value":"800",
+                        "type":"float"
+                    },
+                    "y":{
+                        "value":"600",
+                        "type":"float"
+                    }
+                },
+                "children" : []
+            }},
+
+{            "RemoveObject" :{
+                "properties" : {
+                    "contextName":{
+                        "value":"self",
+                        "type":"string"
+                    }
+                },
+                "children" : []
+            }}
+        ]
+    }
+}

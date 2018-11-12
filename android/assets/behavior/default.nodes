@@ -72,6 +72,53 @@
 		"CheckDamagedState":{
 			"properties":{ }
 			
+		},
+		"SetContextObject":{
+			"properties":{
+				"objectName":{
+					"type" : "string",
+					"value" : "null"
+				},
+				"layerName":{
+					"type" : "string",
+					"value" : "null"
+				},
+				"contextName":{
+					"type" : "string",
+					"value" : "null"
+				}
+			}
+			
+		},
+		"RemoveObject":{
+			"properties":{ 
+				"contextName":{
+					"type": "string",
+					"value": "self"
+				}
+			}
+			
+		},
+		"SpawnObject":{
+			"properties":{
+				"objectType":{
+					"type":"string",
+					"value":"BasicGameObject"
+				},
+				"layerName":{
+					"type":"string",
+					"value":"playground"
+				},
+				"x":{
+					"type":"float",
+					"value":"0"
+				},
+				"y":{
+					"type":"float",
+					"value":"0"
+				}
+			 }
+			
 		}
 
 	}

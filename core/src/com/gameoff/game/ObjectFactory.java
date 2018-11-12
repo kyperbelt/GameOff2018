@@ -57,6 +57,13 @@ public class ObjectFactory {
 				return new SimpleEnemy();
 			}
 		});
+		
+		game.registerGameObject("Trigger", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new Trigger();
+			}
+		});
 
 	}
 	

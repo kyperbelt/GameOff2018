@@ -28,7 +28,7 @@ public class DeathSystem extends ControlSpecificSystem {
 			//if the object is dead then remove it
 			if(health.isDead()) {
 				if(KyperBoxGame.DEBUG_LOGGING)
-					System.out.println(StringUtils.format("[%s] was considered dead and removed", o.getName()));
+					System.out.println(StringUtils.format("[%s] was considered dead and removed", o.getName()==null?"null":o.getName()));
 				o.remove();
 			}
 		}

@@ -103,6 +103,10 @@
  <objecttype name="TilemapLayerObject" color="#ff0000">
   <property name="tile_layer" type="string"/>
  </objecttype>
+ <objecttype name="Trigger" color="#55007f">
+  <property name="persistent" type="bool" default="false"/>
+  <property name="triggerBehavior" type="string" default="NULL"/>
+ </objecttype>
  <objecttype name="Viewport" color="#0000ff"/>
  <objecttype name="Wall" color="#ff0000">
   <property name="passable" type="bool" default="false"/>

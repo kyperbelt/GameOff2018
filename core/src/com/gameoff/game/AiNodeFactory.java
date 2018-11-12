@@ -4,6 +4,9 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.gameoff.game.behaviors.CheckDamageState;
 import com.gameoff.game.behaviors.FindPlayerInRange;
 import com.gameoff.game.behaviors.MoveToTarget;
+import com.gameoff.game.behaviors.RemoveObject;
+import com.gameoff.game.behaviors.SetContextObject;
+import com.gameoff.game.behaviors.SpawnObject;
 import com.gameoff.game.behaviors.TestNode;
 import com.gameoff.game.behaviors.Wait;
 import com.kyperbox.ai.BehaviorNode;
@@ -131,6 +134,36 @@ public class AiNodeFactory {
 			@Override
 			public BehaviorNode getNode(JsonValue properties) {
 				return new CheckDamageState();
+			}
+		});
+		
+		BehaviorTree.registerNode("SetContextObject", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String name = properties.getChild("objectName").asString();
+				String layer = properties.getChild("layerName").asString();
+				String context = properties.getChild("contextName").asString();
+				return new SetContextObject(name,layer,context);
+			}
+		});
+		
+		
+		BehaviorTree.registerNode("RemoveObject", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String contextName = properties.getChild("contextName").asString();
+				return new RemoveObject(contextName);
+			}
+		});
+		
+		BehaviorTree.registerNode("SpawnObject", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String objectType = properties.getChild("objectType").asString();
+				String layerName = properties.getChild("layerName").asString();
+				float x = properties.getChild("x").asFloat();
+				float y = properties.getChild("y").asFloat();
+				return new SpawnObject(objectType, layerName, x, y);
 			}
 		});
 		

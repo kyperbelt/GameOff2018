@@ -13,6 +13,7 @@ import com.kyperbox.input.InputDefaults;
 import com.kyperbox.input.KeyboardMapping;
 import com.kyperbox.objects.GameLayer;
 import com.kyperbox.objects.GameObject;
+import com.kyperbox.umisc.IGameObjectFactory;
 import com.kyperbox.umisc.StringUtils;
 
 public class GameOffGame extends KyperBoxGame {
@@ -25,6 +26,10 @@ public class GameOffGame extends KyperBoxGame {
 	public GameOffGame() {
 		super(new FitViewport(WIDTH, HEIGHT));
 
+	}
+	
+	public IGameObjectFactory getFactory() {
+		return getObjectFactory();
 	}
 
 	/**
