@@ -13,10 +13,26 @@ import com.gameoff.game.ZOrder;
 public class Door extends Basic {
   int m_code = 0;
 
+  // 0 = no door, 1 = open, 2 = closed, 3 = closed and locked
   public Door(int doorCode) {
     getMove().setPassable(false);
     m_code = doorCode;
     getZOrder().setZOrder(ZOrder.DOORS);
+  }
+
+  private void doDoorState(boolean open)
+  {
+    if (open)
+    {
+      getMove().setPhysical(false);
+      getAnimation().set("door_open", PlayMode.NORMAL);
+    } else
+    {
+      getMove().setPhysical(true);
+      getAnimation().set("door_open", PlayMode.REVERSED);
+      getAnimation().setPlaySpeed(1f);
+    }
+    getAnimation().setPlaySpeed(1f);
   }
 
   @Override
@@ -24,22 +40,20 @@ public class Door extends Basic {
     super.init(properties);
     removeController(getHealth());
 
-
     AnimationController animation = getAnimation();
     animation.addAnimation("door_open", "door_open");
 
-    //TEMP alwasy locked
-    if (m_code == 1)
+    if (m_code == 1) 
     {
       setSprite("door_open_3");
       getMove().setPhysical(false);
-      open();
+      doDoorState(true);
     }
-    else if (m_code == 2)
+    else
     {
       setSprite("door_open_0");
       getMove().setPhysical(true);
-      close();
+      doDoorState(false);
     }
     getAnimation().setPlaySpeed(2f);
 
@@ -56,7 +70,7 @@ public class Door extends Basic {
 			CollisionData d = cols.get(i);
 			GameObject target = d.getTarget();
 			if(target instanceof Player) {
-				GameOffGame.log(this.getClass().getSimpleName(), "Example of player colliding with door.");
+				//GameOffGame.log(this.getClass().getSimpleName(), "Example of player colliding with door.");
 			}
 		}
 	  }
@@ -68,19 +82,25 @@ public class Door extends Basic {
     state.storeAnimation("door_close", state.createGameAnimation("door_close", framespeed));
   }
 
+  public void unlock()
+  {
+    if (m_code == 3) 
+    {
+      m_code = 2;
+    }
+  }
+
   public void open()
   {
-    getMove().setPhysical(false);
-    getAnimation().set("door_open", PlayMode.NORMAL);
-    getAnimation().setPlaySpeed(1f);
+    if (m_code < 2) return;
+    doDoorState(true);
     m_code = 1;
   }
 
   public void close()
   {
-    getMove().setPhysical(true);
-    getAnimation().set("door_open", PlayMode.REVERSED);
-    getAnimation().setPlaySpeed(1f);
+    if (m_code > 1) return;
+    doDoorState(false);
     m_code = 2;
   }
 

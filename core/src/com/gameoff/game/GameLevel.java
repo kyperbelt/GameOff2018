@@ -271,7 +271,7 @@ public class GameLevel {
           if (rx < w) rx = w;
           if (ty < 0) ty = h;
           if (by < h) by = h;
-          level.updateAllDoors(room,1); //1 is open doors, 2 is closed doors
+          level.updateAllDoors(room,1); //1 is open doors, 2 is closed doors, 3 = locked
           roomCount++;
         }
       }
