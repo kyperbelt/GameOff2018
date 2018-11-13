@@ -1,25 +1,8 @@
 package com.gameoff.game;
 
 import com.badlogic.gdx.utils.JsonValue;
-import com.gameoff.game.behaviors.CheckDamageState;
-import com.gameoff.game.behaviors.FindPlayerInRange;
-import com.gameoff.game.behaviors.MoveToTarget;
-import com.gameoff.game.behaviors.RemoveObject;
-import com.gameoff.game.behaviors.SetContextObject;
-import com.gameoff.game.behaviors.SpawnObject;
-import com.gameoff.game.behaviors.TestNode;
-import com.gameoff.game.behaviors.Wait;
-import com.kyperbox.ai.BehaviorNode;
-import com.kyperbox.ai.BehaviorTree;
-import com.kyperbox.ai.InvertNode;
-import com.kyperbox.ai.NodeGetter;
-import com.kyperbox.ai.RandomSelectorNode;
-import com.kyperbox.ai.RandomSequenceNode;
-import com.kyperbox.ai.RepeatNode;
-import com.kyperbox.ai.RepeatUntilFailNode;
-import com.kyperbox.ai.SelectorNode;
-import com.kyperbox.ai.SequenceNode;
-import com.kyperbox.ai.SuccessNode;
+import com.gameoff.game.behaviors.*;
+import com.kyperbox.ai.*;
 
 public class AiNodeFactory {
 
@@ -164,6 +147,15 @@ public class AiNodeFactory {
 				float x = properties.getChild("x").asFloat();
 				float y = properties.getChild("y").asFloat();
 				return new SpawnObject(objectType, layerName, x, y);
+			}
+		});
+
+		BehaviorTree.registerNode("UpdateDoor", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String doorName = properties.getChild("doorName").asString();
+				boolean closeDoor = properties.getChild("closeDoor").asBoolean();
+				return new UpdateDoor(doorName, closeDoor);
 			}
 		});
 		

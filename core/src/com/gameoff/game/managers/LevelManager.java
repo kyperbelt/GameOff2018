@@ -66,6 +66,7 @@ public class LevelManager extends StateManager {
 
 		System.out.println("LevelManager::addLayerSystems called: State=" + state.getName());
 		Player.createPlayerAnimations(state);
+		Door.createDoorAnimations(state);
 		// get the playground layer from the state
 		GameLayer playground = state.getPlaygroundLayer();
 

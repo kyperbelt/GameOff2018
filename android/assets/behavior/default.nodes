@@ -99,6 +99,18 @@
 			}
 			
 		},
+		"UpdateDoor":{
+			"properties":{ 
+				"doorName":{
+					"type": "string",
+					"value": "All"
+				},
+				"closeDoor":{
+					"type": "boolean",
+					"value": "false"
+				}
+			}
+		},
 		"SpawnObject":{
 			"properties":{
 				"objectType":{
