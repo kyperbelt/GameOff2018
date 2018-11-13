@@ -79,7 +79,7 @@ public class Door extends Basic {
   public static void createDoorAnimations(GameState state) {
     float framespeed = .2f;
     state.storeAnimation("door_open", state.createGameAnimation("door_open", framespeed));
-    state.storeAnimation("door_close", state.createGameAnimation("door_close", framespeed));
+   // state.storeAnimation("door_close", state.createGameAnimation("door_close", framespeed));
   }
 
   public void unlock()

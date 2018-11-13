@@ -1,5 +1,6 @@
 package com.gameoff.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
+import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
@@ -15,10 +17,32 @@ import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.controllers.CollisionController.CollisionData;
+import com.kyperbox.objects.BasicGameObject;
 import com.kyperbox.objects.GameObject;
+import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.StringUtils;
 
 public class Player extends DirectionEntity {
+
+	public static int WIDTH = 96;
+	public static int HEIGHT = 128;
+
+	// animation literals
+	public static String ANGEL = "aform";
+	public static String DEMON = "dform";
+
+	public static String WALKDOWN = "walk_down";
+	public static String WALKUP = "walk_up";
+	public static String LEGS = "legs";
+	public static String SIDE = "side";
+
+	public static String ANGELWALKDOWN = ANGEL + "_" + WALKDOWN;
+
+	public static String DEMONWALKDOWN = DEMON + "_" + WALKDOWN;
+	public static String DEMONWALKUP = DEMON + "_" + WALKUP;
+	public static String DEMONWALKSIDE = DEMON+"_walk_"+SIDE;
+	public static String DFORMLEGS = DEMON + "_" + LEGS;
+	public static String DFORMLEGSSIDE = DFORMLEGS+SIDE;
 
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
@@ -27,11 +51,15 @@ public class Player extends DirectionEntity {
 	public enum Form {
 		Demon, Angel
 	}
+	
+	float baseDepth = HEIGHT *.1f; //base depth of torso
 
+	// demonlegs
+	BasicGameObject dlegs;
+	AnimationController dlegsAnim;
 
 	float angelSpeed = 270;
 	float demonSpeed = 180;
-
 
 	PlayerControl control;
 	AttackControl attack;
@@ -59,10 +87,16 @@ public class Player extends DirectionEntity {
 		setUpBasicMelee();
 
 		setCurrentForm(Form.Demon);
-		setPlayerState(PlayerState.Idling);
 		setDirection(Direction.Down);
-		
+
 		getHealth().setHealthGroup(HealthGroup.Player);
+
+		dlegs = new BasicGameObject();
+		dlegs.setName(DEMON + LEGS + id);
+		dlegsAnim = new AnimationController();
+
+		setPreDrawChildren(true);
+		setTransform(true);
 
 	}
 
@@ -72,7 +106,7 @@ public class Player extends DirectionEntity {
 		case Demon:
 
 			getMove().setFlying(false);
-			setDepth(0);
+			setDepth(baseDepth);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(demonSpeed);
 			attack.setAttackListener(basicMelee);
@@ -81,7 +115,7 @@ public class Player extends DirectionEntity {
 			break;
 		case Angel:
 			getMove().setFlying(true);
-			setDepth(getBoundsRaw().height * .5f);
+			setDepth(baseDepth+getBoundsRaw().height * .5f);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(angelSpeed);
 			attack.setAttackListener(basicProjectile);
@@ -97,7 +131,23 @@ public class Player extends DirectionEntity {
 	}
 
 	public void setPlayerState(PlayerState state) {
-		this.state = state;
+
+		if (this.state != state) {
+
+			switch (state) {
+			case Moving:
+				dlegsAnim.setPlaySpeed(1f);
+				break;
+			case Idling:
+				dlegsAnim.setPlaySpeed(0f);
+				break;
+			default:
+				break;
+			}
+
+			this.state = state;
+
+		}
 	}
 
 	public PlayerState getPlayerState() {
@@ -108,7 +158,17 @@ public class Player extends DirectionEntity {
 	public void init(MapProperties properties) {
 		super.init(properties);
 
-		setSize(60, 74);
+		createLegAnimations(getState());
+
+		dlegs.addController(dlegsAnim);
+		dlegs.setSize(WIDTH*.8f, HEIGHT * .4f);
+		dlegs.setPosition(WIDTH*.1f, 0);
+		addChild(dlegs);
+		dlegsAnim.setAnimation(DFORMLEGS, PlayMode.LOOP);
+		setSize(WIDTH, HEIGHT*.7f);
+		
+
+		setPlayerState(PlayerState.Idling);
 
 		// we must add a controller in the init method since all controlers get removed
 		// from objects when the objects are removed from the gamestate/gamelayer
@@ -127,10 +187,9 @@ public class Player extends DirectionEntity {
 		// reused between objects to save on space
 
 		AnimationController animation = getAnimation();
-		animation.addAnimation("walk_down", "player_walk_down");
-		animation.addAnimation("walk_up", "player_walk_up");
-		animation.addAnimation("walk_left", "player_walk_left");
-		animation.addAnimation("walk_right", "player_walk_right");
+		animation.addAnimation(DEMONWALKDOWN, DEMONWALKDOWN);
+		animation.addAnimation(DEMONWALKUP, DEMONWALKUP);
+		animation.addAnimation(DEMONWALKSIDE, DEMONWALKSIDE);
 
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
@@ -140,10 +199,75 @@ public class Player extends DirectionEntity {
 			}
 		});
 
+		getDirectionControl().setDirectionListener(new DirectionChangeListener() {
+			@Override
+			public void directionChanged(Direction lastDirection, Direction newDirection) {
+				
+				System.out.println("currentState = "+state.name()+" newdir="+newDirection.name());
+				if(state == PlayerState.Moving) {
+					
+					switch(newDirection) {
+					case Down:
+						getAnimation().set(DEMONWALKDOWN);
+						//System.out.println("going down");
+						dlegsAnim.setAnimation(DFORMLEGS,PlayMode.LOOP);
+						dlegs.setFlip(false, false);
+						break;
+					case Up:
+						getAnimation().set(DEMONWALKUP);
+						//System.out.println("going up");
+						dlegsAnim.setAnimation(DFORMLEGS,PlayMode.LOOP);
+						dlegs.setFlip(true,false);
+						break;
+					case Left:
+						
+						getAnimation().set(DEMONWALKSIDE);
+						
+						setFlip(false,false);
+						dlegs.setFlip(false,false);
+						dlegsAnim.setAnimation(DFORMLEGSSIDE,PlayMode.LOOP);
+						break;
+					case Right:
+						getAnimation().set(DEMONWALKSIDE);
+						
+						setFlip(true,false);
+						dlegs.setFlip(true,false);
+						dlegsAnim.setAnimation(DFORMLEGSSIDE,PlayMode.LOOP);
+						break;
+					}
+					
+					
+				}
+				
+			}
+		});
+
+	}
+
+	private void createLegAnimations(GameState state) {
+		float speed = .14f;
+		Animation<KyperSprite> anim = state.getAnimation(DFORMLEGS);
+		if (anim == null)
+			state.storeAnimation(DFORMLEGS, state.createGameAnimation(DFORMLEGS, speed));
+		anim = state.getAnimation(DFORMLEGSSIDE);
+		if (anim == null)
+			state.storeAnimation(DFORMLEGSSIDE, state.createGameAnimation(DFORMLEGSSIDE, speed));
 	}
 
 	public static void createPlayerAnimations(GameState state) {
 		float framespeed = .15f;
+		Animation<KyperSprite> anim = state.getAnimation(DEMONWALKDOWN);
+		if (anim == null) {
+			state.storeAnimation(DEMONWALKDOWN, state.createGameAnimation(DEMONWALKDOWN, framespeed));
+		}
+		anim = state.getAnimation(DEMONWALKUP);
+		if (anim == null) {
+			state.storeAnimation(DEMONWALKUP, state.createGameAnimation(DEMONWALKUP, framespeed));
+		}
+		anim = state.getAnimation(DEMONWALKSIDE);
+		if (anim == null) {
+			state.storeAnimation(DEMONWALKSIDE, state.createGameAnimation(DEMONWALKSIDE, framespeed));
+		}
 		state.storeAnimation("player_walk_up", state.createGameAnimation("player_walk_up", framespeed));
 		state.storeAnimation("player_walk_down", state.createGameAnimation("player_walk_down", framespeed));
 		state.storeAnimation("player_walk_left", state.createGameAnimation("player_walk_left", framespeed));
@@ -162,28 +286,6 @@ public class Player extends DirectionEntity {
 			animation.setPlaySpeed(1f);
 		else
 			animation.setPlaySpeed(0f);
-		// TODO: Refactor
-		if (state == PlayerState.Moving && (vel.x != 0 || vel.y != 0)) {
-			if (Math.abs(vel.x) >= Math.abs(vel.y)) {
-				if (vel.x > 0) {
-					setAnimation("walk_right");
-					setDirection(Direction.Right);
-				} else {
-					setAnimation("walk_left");
-					setDirection(Direction.Left);
-				}
-			} else {
-				if (vel.y > 0) {
-					setAnimation("walk_up");
-					setDirection(Direction.Up);
-				} else {
-					setAnimation("walk_down");
-					setDirection(Direction.Down);
-				}
-			}
-		} else if (state == PlayerState.Idling) {
-			animation.setPlaySpeed(0);
-		}
 
 		// TODO: Question - would it make more sense to put door collisions here?
 		// Or in the door object- just thinking doors only work with Players.
@@ -249,10 +351,11 @@ public class Player extends DirectionEntity {
 			melee.setPosition(center.x - melee.getWidth() * .5f, center.y + getBoundsRaw().height * .5f);
 			break;
 		case Down:
-			melee.setPosition(center.x - melee.getWidth() * .5f, getY()+getBoundsRaw().y - melee.getHeight());
+			melee.setPosition(center.x - melee.getWidth() * .5f, getY() + getBoundsRaw().y - melee.getHeight());
 			break;
 		case Left:
-			melee.setPosition(center.x - getBoundsRaw().width*.5f - melee.getWidth(), center.y - melee.getHeight() * .5f);
+			melee.setPosition(center.x - getBoundsRaw().width * .5f - melee.getWidth(),
+					center.y - melee.getHeight() * .5f);
 			break;
 		case Right:
 			melee.setPosition(center.x + getBoundsRaw().width * .5f, center.y - melee.getHeight() * .5f);
@@ -322,7 +425,7 @@ public class Player extends DirectionEntity {
 			@Override
 			public void onAttack() {
 
-				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral);
+				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral);
 
 				setupMelee(m);
 
