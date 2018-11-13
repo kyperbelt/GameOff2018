@@ -8,6 +8,7 @@ import com.kyperbox.objects.GameObject;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.kyperbox.GameState;
 import com.kyperbox.controllers.AnimationController;
+import com.gameoff.game.ZOrder;
 
 public class Door extends Basic {
   int m_code = 0;
@@ -15,7 +16,7 @@ public class Door extends Basic {
   public Door(int doorCode) {
     getMove().setPassable(false);
     m_code = doorCode;
-    getZOrder().setZOrder(3);//set the zorder after the player so it renders under it
+    getZOrder().setZOrder(ZOrder.DOORS);
   }
 
   @Override

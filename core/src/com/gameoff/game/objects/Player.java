@@ -63,8 +63,6 @@ public class Player extends DirectionEntity {
 		setDirection(Direction.Down);
 		
 		getHealth().setHealthGroup(HealthGroup.Player);
-		
-		//getZOrder().setZOrder(3);
 
 	}
 
