@@ -543,14 +543,14 @@ skull pile
   orig: 230, 177
   offset: 0, 0
   index: -1
-skull_break1
+skull_break_0
   rotate: false
   xy: 1184, 1695
   size: 183, 125
   orig: 183, 125
   offset: 0, 0
   index: -1
-skull_break2
+skull_break_1
   rotate: false
   xy: 3116, 1882
   size: 183, 125

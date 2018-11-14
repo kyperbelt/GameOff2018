@@ -1,6 +1,7 @@
 package com.gameoff.game.objects;
 
 import com.badlogic.gdx.maps.MapProperties;
+import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
@@ -25,6 +26,7 @@ public class Basic extends GameObject {
 		health = new HealthControl(HealthGroup.Neutral,10f);
 		move = new MoveControl(200);
 		zorder = new ZOrderControl();
+		zorder.setZOrder(ZOrder.PLAYER);
 		setApplyVelocity(false);
 
 	}

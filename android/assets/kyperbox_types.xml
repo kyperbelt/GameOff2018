@@ -11,6 +11,12 @@
  <objecttype name="Collectible" color="#4ea693">
   <property name="item_id" type="int" default="0"/>
  </objecttype>
+ <objecttype name="Destructible" color="#550000">
+  <property name="DestroyAnimation" type="string"/>
+  <property name="health" type="float" default="10"/>
+  <property name="itemDrop" type="int" default="10"/>
+  <property name="sprite" type="string" default="noregion"/>
+ </objecttype>
  <objecttype name="Font" color="#55ff00">
   <property name="font_file" type="string" default=""/>
   <property name="markup" type="bool" default="false"/>
