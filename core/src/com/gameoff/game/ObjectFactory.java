@@ -1,6 +1,7 @@
 package com.gameoff.game;
 
 import com.gameoff.game.objects.*;
+import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.IGameObjectGetter;
 

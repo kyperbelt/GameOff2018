@@ -92,6 +92,8 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 								attack.attack();
 								control.setState(PlayerState.Attacking);
 							}
+						}else if(control.getState()==PlayerState.Attacking) {
+							control.setState(PlayerState.Idling);
 						}
 						
 
