@@ -68,14 +68,22 @@ public class Door extends Basic {
 	  super.update(delta);
 	  
 	  Array<CollisionData> cols = getCollision().getCollisions();
-	  if(m_code == 1 && cols.size > 0) {
+	  if(m_code == 3 && cols.size > 0) {
 		  for (int i = 0; i < cols.size; i++) {
 			CollisionData d = cols.get(i);
 			GameObject target = d.getTarget();
 			if(target instanceof Player) {
-				//GameOffGame.log(this.getClass().getSimpleName(), "Example of player colliding with door.");
-			}
-		}
+				if (m_code == 3)
+         {        
+            Player p = (Player)target;
+            if (p.useKey())
+            {
+              unlock();
+              open();
+            }
+         }
+        }
+		  }
 	  }
 	}
 

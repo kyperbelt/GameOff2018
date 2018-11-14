@@ -44,6 +44,8 @@ public class Player extends DirectionEntity {
 	public static String DFORMLEGS = DEMON + "_" + LEGS;
 	public static String DFORMLEGSSIDE = DFORMLEGS+SIDE;
 
+	public int m_numKeys = 0;
+
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
 	}
@@ -301,9 +303,15 @@ public class Player extends DirectionEntity {
 
 					// do something with the id of the item collected
 					int itemID = c.getId();
+					if (itemID == Collectible.KEY)
+					{
+						m_numKeys++;
+						System.out.println("Keys + 1");
 
-					// collect code here
+					}
+
 					System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
+
 
 					// collect the item so that it cannot be collected again
 					c.collect();
@@ -416,6 +424,16 @@ public class Player extends DirectionEntity {
 					System.out.println(StringUtils.format("Attacked in %s form", form.name()));
 			}
 		};
+	}
+
+	public boolean useKey()
+	{
+		if (m_numKeys > 0)
+		{
+			m_numKeys--;
+			return true;
+		}
+		return false;
 	}
 
 	private void setUpBasicMelee() {

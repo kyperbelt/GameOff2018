@@ -39,7 +39,7 @@ public class Collectible extends Basic {
 		this.id = id;
 		switch (id) {
 		case KEY:
-			setSprite("noregion");
+			setSprite("key");
 			break;
 		case SOUL:
 			setSprite("noregion");
