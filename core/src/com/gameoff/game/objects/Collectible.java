@@ -1,8 +1,10 @@
 package com.gameoff.game.objects;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.kyperbox.umisc.KyperSprite;
 
 public class Collectible extends Basic {
 
@@ -39,7 +41,10 @@ public class Collectible extends Basic {
 		this.id = id;
 		switch (id) {
 		case KEY:
-			setSprite("noregion");
+			
+			Sprite sprite = getState().getGameSprite("key");
+			setSize(sprite.getWidth(), sprite.getHeight());
+			setSprite("key");
 			break;
 		case SOUL:
 			setSprite("noregion");
