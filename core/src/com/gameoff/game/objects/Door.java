@@ -12,12 +12,15 @@ import com.gameoff.game.ZOrder;
 
 public class Door extends Basic {
   int m_code = 0;
+  String m_aName = "do";
 
   // 0 = no door, 1 = open, 2 = closed, 3 = closed and locked
-  public Door(int doorCode) {
+  public Door(int doorCode, GameState state) {
     getMove().setPassable(false);
     m_code = doorCode;
     getZOrder().setZOrder(ZOrder.DOORS);
+    m_aName = m_aName + doorCode;
+    state.storeAnimation(m_aName, state.createGameAnimation("door_open", 0.2f));
   }
 
   private void doDoorState(boolean open)
@@ -41,7 +44,7 @@ public class Door extends Basic {
     removeController(getHealth());
 
     AnimationController animation = getAnimation();
-    animation.addAnimation("door_open", "door_open");
+    animation.addAnimation("door_open", m_aName);
 
     if (m_code == 1) 
     {
@@ -75,12 +78,6 @@ public class Door extends Basic {
 		}
 	  }
 	}
-
-  public static void createDoorAnimations(GameState state) {
-    float framespeed = .2f;
-    state.storeAnimation("door_open", state.createGameAnimation("door_open", framespeed));
-   // state.storeAnimation("door_close", state.createGameAnimation("door_close", framespeed));
-  }
 
   public void unlock()
   {

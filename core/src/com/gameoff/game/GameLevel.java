@@ -124,6 +124,30 @@ public class GameLevel {
     }
   }
 
+  private Room getRoomWithNeighbors(int numNeighbors, int maxTries, boolean onFailReturn)
+  {
+    Room r = null;
+    int tryCnt = 0;
+    while (true)
+    {
+      r = getRandomRoom();
+      if (r.getCode() > 0)
+      {
+        //if only 1 neighbor, accept it
+        int n = getNeighborCount(r);
+        if (n == numNeighbors)
+        {
+          break;
+        } else if (tryCnt > maxTries) {
+          if (onFailReturn) return r;
+          return null;
+        }
+      }
+      tryCnt++;
+    }
+    return r;
+  }
+
   public Room getNeighborRoom(Room r, int dir)
   {
     if (dir == 0)
@@ -283,46 +307,56 @@ public class GameLevel {
     width = level.getWidth();
 
     // now place boss
-    int tryCnt = 0;
-    Room bossRoom = null;
-
-    while (true)
-    {
-      bossRoom = level.getRandomRoom();
-      if (bossRoom.getCode() > 0)
-      {
-        //if only 1 neighbor, accept it
-        int n = level.getNeighborCount(bossRoom);
-        if (n == 1)
-        {
-          break;
-        } else if (tryCnt > 100) {
-          break;
-        }
-
-      }
-      tryCnt++;
-    }
-
+    Room bossRoom = level.getRoomWithNeighbors(1,200, true);
     bossRoom.setIsBoss();
-    //TODO:
+
+    //TODO: parameterize as well, so can tweak difficulty with parameters easily
+
     //We may decide only a few room templates make sense for the boss battle
     //if so, change the room code here to one that's valid for a boss.
 
-    //set up map details to show
-    level.updateShowMapDetails();
+
 
     //place locked doors and keys
+    //locked doors only on leaf rooms
+    //place between 1 and 2 randomly
+    //keys not in leaf rooms, place same number keys as locked rooms
+    // if not boss room, place special item in locked room, and trap
+    // now place boss
 
-    //identify rooms with special items
+    int numDoorsLocked = level.nextInt(10);
 
-    //identify rooms with traps
+    if (numDoorsLocked > 7) 
+      numDoorsLocked = 2;
+    else
+      numDoorsLocked = 1;
 
-    // NOW with all this, do we dynamically build a big TMX
-    //OR there will be another chunk of code in LevelManager as it loads a room,
-    // it does the rest.
+    for (int lc = 0; lc < numDoorsLocked; lc++)
+    {
+      Room lockRoom = level.getRoomWithNeighbors(1,150,false);
+      if (lockRoom != null)
+      {
+        //as room only has one neighbor
+        //we find that neighbor and lock the door facing
+        //this room
+        for (int d = 0; d < 4; d++)
+        {
+          if (lockRoom.getDoor(d) > 0)
+          {
+            Room nr = level.getNeighborRoom(lockRoom, d);
+            d += 2;
+            if (d > 3) d -= 4;
+            nr.setDoor(d,3); // 3 is locked!
+            break;
+          }
+        }
+      }
+    }
 
+    //identify 2 to 3 other rooms with traps, use %
 
+    //set up map details to show
+    level.updateShowMapDetails();
 
     return level;
   }

@@ -66,7 +66,7 @@ public class LevelManager extends StateManager {
 
 		System.out.println("LevelManager::addLayerSystems called: State=" + state.getName());
 		Player.createPlayerAnimations(state);
-		Door.createDoorAnimations(state);
+
 		// get the playground layer from the state
 		GameLayer playground = state.getPlaygroundLayer();
 
@@ -278,7 +278,7 @@ public class LevelManager extends StateManager {
 			float y = m_roomHeightPixels - dh;
 
 			if (dc > 0) {
-				Door d = new Door(dc);
+				Door d = new Door(dc, state);
 				d.setName("Door" + dir);
 				d.setSize(dw, dh);
 				d.setRotation(rot);
