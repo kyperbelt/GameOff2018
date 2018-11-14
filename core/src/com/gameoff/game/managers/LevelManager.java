@@ -220,10 +220,13 @@ public class LevelManager extends StateManager {
 		float wallSize = 224;
 		//add wall images
 		BackgroundObject w1 = new BackgroundObject();
+		ZOrderControl zorder = new ZOrderControl();
+		zorder.setZOrder(ZOrder.BACKGROUND);
 		w1.setSize(m_roomWidthPixels,wallSize);
 		w1.setSprite("top_wall");
 		w1.setName("TopWall");
 		w1.setPosition(0,m_roomHeightPixels- wallSize);
+		w1.addController(zorder);
 		//background.addGameObject(w1,null);
 		//paralax.addMapping("TopWall", 1f, 1f, true);
 		playground.addGameObject(w1,null);
@@ -234,6 +237,7 @@ public class LevelManager extends StateManager {
 		w1.setName("BottomWall");
 		w1.setFlip(false, true);
 		w1.setPosition(0,0);
+		w1.addController(zorder);
 		//background.addGameObject(w1,null);
 		//paralax.addMapping("BottomWall", 1f, 1f, true);
 		playground.addGameObject(w1,null);
@@ -243,6 +247,7 @@ public class LevelManager extends StateManager {
 		w1.setSprite("left_wall");
 		w1.setName("LeftWall");
 		w1.setPosition(0,wallSize);
+		w1.addController(zorder);
 		//background.addGameObject(w1,null);
 		//paralax.addMapping("LeftWall", 1f, 1f, true);
 		playground.addGameObject(w1,null);
@@ -253,6 +258,7 @@ public class LevelManager extends StateManager {
 		w1.setName("RightWall");
 		w1.setPosition(m_roomWidthPixels-wallSize,wallSize);
 		w1.setFlip(true,false);
+		w1.addController(zorder);
 		//background.addGameObject(w1,null);
 		//paralax.addMapping("RightWall", 1f, 1f, true);
 		playground.addGameObject(w1,null);

@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.BackgroundObject;
 import com.kyperbox.objects.GameObject;
@@ -12,6 +13,8 @@ import com.kyperbox.systems.LayerSystem;
 
 public class YSortSystem extends LayerSystem {
 
+	ZOrderControl defaultZOrder;
+	
 	public Comparator<Actor> ysort = new Comparator<Actor>() {
 		@Override
 		public int compare(Actor o1, Actor o2) {
@@ -22,6 +25,10 @@ public class YSortSystem extends LayerSystem {
 
 				ZOrderControl z1 = go1.getController(ZOrderControl.class);
 				ZOrderControl z2 = go2.getController(ZOrderControl.class);
+				
+				z1  = z1 == null ? defaultZOrder : z1;
+				z2  = z2 == null ? defaultZOrder : z2;
+				
 
 				if (z1 != null && z2 != null) {
 
@@ -34,20 +41,11 @@ public class YSortSystem extends LayerSystem {
 					}
 
 				} else {
-
-					if (o1 instanceof BackgroundObject || o1 instanceof TilemapLayerObject)
-						return -1;
-					else if (o2 instanceof BackgroundObject || o1 instanceof TilemapLayerObject)
-						return 1;
-					else
-						return 0;
-
+					return Float.compare(o2.getY(), o1.getY());
 					// if (o1 instanceof ForegroundObject)
 					// return 1;
 					// else if (o2 instanceof ForegroundObject)
 					// return -1;
-
-					
 
 				}
 
@@ -65,13 +63,14 @@ public class YSortSystem extends LayerSystem {
 			// return 1;
 			// }
 
-			return 0;
+			return Float.compare(o2.getY(), o1.getY());
 		}
 	};
 
 	@Override
 	public void init(MapProperties properties) {
-
+		defaultZOrder = new ZOrderControl();
+		defaultZOrder.setZOrder(ZOrder.FLOOR_TEXT);
 	}
 
 	@Override

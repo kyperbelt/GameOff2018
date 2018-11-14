@@ -1,6 +1,13 @@
 package com.gameoff.game;
 
-import com.gameoff.game.objects.*;
+import com.gameoff.game.objects.Collectible;
+import com.gameoff.game.objects.Hazard;
+import com.gameoff.game.objects.Pit;
+import com.gameoff.game.objects.Player;
+import com.gameoff.game.objects.Trigger;
+import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.destructible.Destructible;
+import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.IGameObjectGetter;
 
@@ -62,6 +69,13 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new Trigger();
+			}
+		});
+		
+		game.registerGameObject("Destructible", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new Destructible();
 			}
 		});
 

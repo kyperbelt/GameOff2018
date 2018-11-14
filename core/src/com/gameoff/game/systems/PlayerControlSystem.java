@@ -79,6 +79,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 								control.setForm(Form.Angel);
 							}
 						}
+						
 
 						if (input.inputJustPressed(maps.attack)) {
 							if (attack != null) {
@@ -86,14 +87,15 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 								attack.attack();
 								control.setState(PlayerState.Attacking);
 							}
-						}
-
-						if (input.inputPressed(maps.attack)) {
+						} else if (input.inputPressed(maps.attack)) {
 							if (attack != null) {
 								attack.attack();
 								control.setState(PlayerState.Attacking);
 							}
+						}else if(control.getState()==PlayerState.Attacking) {
+							control.setState(PlayerState.Idling);
 						}
+						
 
 						float x = 0;
 						float y = 0;
@@ -131,6 +133,8 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 						}
 
 					}
+
+					/// -----
 				}
 
 			}

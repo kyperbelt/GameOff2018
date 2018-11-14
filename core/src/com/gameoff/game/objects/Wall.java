@@ -1,11 +1,13 @@
 package com.gameoff.game.objects;
 
 import com.badlogic.gdx.maps.MapProperties;
+import com.gameoff.game.ZOrder;
 
 public class Wall extends Basic {
 	
 	public Wall() {
 		setName("wall");
+		setZIndex(ZOrder.BACKGROUND);
 	}
 	
 	@Override

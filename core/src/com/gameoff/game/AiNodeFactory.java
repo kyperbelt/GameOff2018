@@ -159,5 +159,12 @@ public class AiNodeFactory {
 			}
 		});
 		
+		BehaviorTree.registerNode("StopMovement", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				return new StopMovement();
+			}
+		});
+		
 	}
 }

@@ -16,6 +16,7 @@ import com.gameoff.game.control.PlayerControl;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
+import com.kyperbox.controllers.AnimationController.AnimationListener;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.BasicGameObject;
 import com.kyperbox.objects.GameObject;
@@ -24,25 +25,32 @@ import com.kyperbox.umisc.StringUtils;
 
 public class Player extends DirectionEntity {
 
-	public static int WIDTH = 96;
-	public static int HEIGHT = 128;
+	public static float WIDTH = 144 * .75f;
+	public static float HEIGHT = 160 * .75f;
 
 	// animation literals
-	public static String ANGEL = "aform";
-	public static String DEMON = "dform";
+	public static final String SEP = "_";
+	public static final String ANGEL = "aform";
+	public static final String DEMON = "dform";
 
-	public static String WALKDOWN = "walk_down";
-	public static String WALKUP = "walk_up";
-	public static String LEGS = "legs";
-	public static String SIDE = "side";
+	public static final String WALKDOWN = "walk_down";
+	public static final String WALKUP = "walk_up";
 
-	public static String ANGELWALKDOWN = ANGEL + "_" + WALKDOWN;
+	public static final String ATTACKUP = "attack_up";
+	public static final String ATTACKDOWN = "attack_down";
+	public static final String ATTACKSIDE = "attack_side";
 
-	public static String DEMONWALKDOWN = DEMON + "_" + WALKDOWN;
-	public static String DEMONWALKUP = DEMON + "_" + WALKUP;
-	public static String DEMONWALKSIDE = DEMON+"_walk_"+SIDE;
-	public static String DFORMLEGS = DEMON + "_" + LEGS;
-	public static String DFORMLEGSSIDE = DFORMLEGS+SIDE;
+	public static final String LEGS = "legs";
+	public static final String SIDE = "side";
+
+	public static final String ANGELWALKDOWN = ANGEL + SEP + WALKDOWN;
+
+	public static final String DEMONWALKDOWN = DEMON + SEP + WALKDOWN;
+	public static final String DEMONWALKUP = DEMON + SEP + WALKUP;
+	public static final String DEMONWALKSIDE = DEMON + "_walk_" + SIDE;
+	public static final String DEMONLEGS = DEMON + SEP + LEGS;
+	public static final String DEMONLEGSSIDE = DEMONLEGS + SIDE;
+	public static final String DEMONATTACKSIDE = DEMON + SEP + ATTACKSIDE;
 
 	public int m_numKeys = 0;
 
@@ -53,8 +61,8 @@ public class Player extends DirectionEntity {
 	public enum Form {
 		Demon, Angel
 	}
-	
-	float baseDepth = HEIGHT *.1f; //base depth of torso
+
+	float baseDepth = HEIGHT * .13f; // base depth of torso
 
 	// demonlegs
 	BasicGameObject dlegs;
@@ -70,6 +78,34 @@ public class Player extends DirectionEntity {
 	AttackListener basicProjectile;
 	float basicMeleeCD = .75f;
 	AttackListener basicMelee;
+
+	AnimationListener attackAnimationListener = new AnimationListener() {
+		@Override
+		public void finished(String animation, int times) {
+			if (times >= 1) {
+				getAnimation().setListener(null);
+
+				switch (getDirection()) {
+				case Down:
+					getAnimation().setAnimation(DEMONWALKDOWN);
+					break;
+				case Up:
+					getAnimation().setAnimation(DEMONWALKUP);
+					break;
+				case Left:
+				case Right:
+					getAnimation().setAnimation(DEMONWALKSIDE);
+					break;
+
+				default:
+					break;
+				}
+
+				System.out.println("times=" + times);
+				setPlayerState(PlayerState.Idling);
+			}
+		}
+	};
 
 	String animation;
 	Form form;
@@ -117,7 +153,7 @@ public class Player extends DirectionEntity {
 			break;
 		case Angel:
 			getMove().setFlying(true);
-			setDepth(baseDepth+getBoundsRaw().height * .5f);
+			setDepth(baseDepth + getBoundsRaw().height * .5f);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(angelSpeed);
 			attack.setAttackListener(basicProjectile);
@@ -163,12 +199,11 @@ public class Player extends DirectionEntity {
 		createLegAnimations(getState());
 
 		dlegs.addController(dlegsAnim);
-		dlegs.setSize(WIDTH*.8f, HEIGHT * .4f);
-		dlegs.setPosition(WIDTH*.1f, 0);
+		dlegs.setSize(WIDTH * .8f, HEIGHT * .4f);
+		dlegs.setPosition(WIDTH * .1f, 0);
 		addChild(dlegs);
-		dlegsAnim.setAnimation(DFORMLEGS, PlayMode.LOOP);
-		setSize(WIDTH, HEIGHT*.7f);
-		
+		dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
+		setSize(WIDTH, HEIGHT * .7f);
 
 		setPlayerState(PlayerState.Idling);
 
@@ -192,6 +227,7 @@ public class Player extends DirectionEntity {
 		animation.addAnimation(DEMONWALKDOWN, DEMONWALKDOWN);
 		animation.addAnimation(DEMONWALKUP, DEMONWALKUP);
 		animation.addAnimation(DEMONWALKSIDE, DEMONWALKSIDE);
+		animation.addAnimation(DEMONATTACKSIDE, DEMONATTACKSIDE);
 
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
@@ -204,43 +240,42 @@ public class Player extends DirectionEntity {
 		getDirectionControl().setDirectionListener(new DirectionChangeListener() {
 			@Override
 			public void directionChanged(Direction lastDirection, Direction newDirection) {
-				
-				System.out.println("currentState = "+state.name()+" newdir="+newDirection.name());
-				if(state == PlayerState.Moving) {
-					
-					switch(newDirection) {
+
+				System.out.println("currentState = " + state.name() + " newdir=" + newDirection.name());
+				if (state == PlayerState.Moving) {
+
+					switch (newDirection) {
 					case Down:
 						getAnimation().set(DEMONWALKDOWN);
-						//System.out.println("going down");
-						dlegsAnim.setAnimation(DFORMLEGS,PlayMode.LOOP);
+						// System.out.println("going down");
+						dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
 						dlegs.setFlip(false, false);
 						break;
 					case Up:
 						getAnimation().set(DEMONWALKUP);
-						//System.out.println("going up");
-						dlegsAnim.setAnimation(DFORMLEGS,PlayMode.LOOP);
-						dlegs.setFlip(true,false);
+						// System.out.println("going up");
+						dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
+						dlegs.setFlip(true, false);
 						break;
 					case Left:
-						
+
 						getAnimation().set(DEMONWALKSIDE);
-						
-						setFlip(false,false);
-						dlegs.setFlip(false,false);
-						dlegsAnim.setAnimation(DFORMLEGSSIDE,PlayMode.LOOP);
+
+						setFlip(false, false);
+						dlegs.setFlip(false, false);
+						dlegsAnim.setAnimation(DEMONLEGSSIDE, PlayMode.LOOP);
 						break;
 					case Right:
 						getAnimation().set(DEMONWALKSIDE);
-						
-						setFlip(true,false);
-						dlegs.setFlip(true,false);
-						dlegsAnim.setAnimation(DFORMLEGSSIDE,PlayMode.LOOP);
+
+						setFlip(true, false);
+						dlegs.setFlip(true, false);
+						dlegsAnim.setAnimation(DEMONLEGSSIDE, PlayMode.LOOP);
 						break;
 					}
-					
-					
+
 				}
-				
+
 			}
 		});
 
@@ -248,12 +283,12 @@ public class Player extends DirectionEntity {
 
 	private void createLegAnimations(GameState state) {
 		float speed = .14f;
-		Animation<KyperSprite> anim = state.getAnimation(DFORMLEGS);
+		Animation<KyperSprite> anim = state.getAnimation(DEMONLEGS);
 		if (anim == null)
-			state.storeAnimation(DFORMLEGS, state.createGameAnimation(DFORMLEGS, speed));
-		anim = state.getAnimation(DFORMLEGSSIDE);
+			state.storeAnimation(DEMONLEGS, state.createGameAnimation(DEMONLEGS, speed));
+		anim = state.getAnimation(DEMONLEGSSIDE);
 		if (anim == null)
-			state.storeAnimation(DFORMLEGSSIDE, state.createGameAnimation(DFORMLEGSSIDE, speed));
+			state.storeAnimation(DEMONLEGSSIDE, state.createGameAnimation(DEMONLEGSSIDE, speed));
 	}
 
 	public static void createPlayerAnimations(GameState state) {
@@ -270,10 +305,11 @@ public class Player extends DirectionEntity {
 		if (anim == null) {
 			state.storeAnimation(DEMONWALKSIDE, state.createGameAnimation(DEMONWALKSIDE, framespeed));
 		}
-		state.storeAnimation("player_walk_up", state.createGameAnimation("player_walk_up", framespeed));
-		state.storeAnimation("player_walk_down", state.createGameAnimation("player_walk_down", framespeed));
-		state.storeAnimation("player_walk_left", state.createGameAnimation("player_walk_left", framespeed));
-		state.storeAnimation("player_walk_right", state.createGameAnimation("player_walk_right", framespeed));
+
+		anim = state.getAnimation(DEMONATTACKSIDE);
+		if (anim == null) {
+			state.storeAnimation(DEMONATTACKSIDE, state.createGameAnimation(DEMONATTACKSIDE, framespeed));
+		}
 	}
 
 	@Override
@@ -442,6 +478,25 @@ public class Player extends DirectionEntity {
 
 			@Override
 			public void onAttack() {
+
+				switch (getDirection()) {
+				case Down:
+					//TODO: Add down attack animation
+					setPlayerState(PlayerState.Idling);
+					break;
+				case Up:
+					//TODO: Add up attack animation
+					setPlayerState(PlayerState.Idling);
+					break;
+				case Left:
+				case Right:
+					getAnimation().set(DEMONATTACKSIDE);
+					getAnimation().setListener(attackAnimationListener);
+					break;
+
+				default:
+					break;
+				}
 
 				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral);
 
