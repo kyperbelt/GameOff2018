@@ -61,6 +61,17 @@ public class LevelManager extends StateManager {
 		setEntryPoint(NORTH);
 	}
 
+	public void randomPlaceObject(GameObject o, GameLayer layer, GameLevel level)
+	{
+		o.setPosition(m_roomWidthPixels/2, m_roomHeightPixels/2);
+		//while (true)
+		//{
+			float w = o.getWidth();
+			float h = o.getHeight();
+			//int x = level.nextInt(m_roomWidthPixels - )
+		//}
+	}
+
 	@Override
 	public void addLayerSystems(GameState state) {
 
@@ -400,9 +411,22 @@ public class LevelManager extends StateManager {
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
 
-		// TODO: Keys
-		// Place room keys and bosses based on Room date
+		// Keys
+		if (r.getHasKey())
+		{
+			//should place a key
+			Collectible c = new Collectible();
+			c.init(KyperBoxGame.NULL_PROPERTIES);
+			c.setId(Collectible.KEY);
+			randomPlaceObject(c, playground, level);
+			playground.addGameObject(c, KyperBoxGame.NULL_PROPERTIES);
+		}
 
+
+		//Place bosses based on Room data
+
+
+		//Place HUD
 		GameLayer flayer = state.getForegroundLayer();
 		HudMap mapHud = new HudMap(level);
 		mapHud.updateLevel(level);

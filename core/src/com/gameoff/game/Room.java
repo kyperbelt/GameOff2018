@@ -96,4 +96,24 @@ public class Room {
     m_isBoss = true;
   }
 
+  public void setHasKey()
+  {
+    m_hasKey = true;
+  }
+
+  public boolean getHasKey()
+  {
+    return m_hasKey;
+  }
+
+  public void setHasSpecial()
+  {
+    m_hasSpecial = true;
+  }
+
+  public boolean getHasSpecial()
+  {
+    return m_hasSpecial;
+  }
+
 }

@@ -148,6 +148,30 @@ public class GameLevel {
     return r;
   }
 
+  private Room getRandomNonLeafRoom(int maxTries, boolean onFailReturn)
+  {
+    Room r = null;
+    int tryCnt = 0;
+    while (true)
+    {
+      r = getRandomRoom();
+      if (r.getCode() > 0)
+      {
+        //if more than 1 neighbor
+        int n = getNeighborCount(r);
+        if (n > 1)
+        {
+          break;
+        } else if (tryCnt > maxTries) {
+          if (onFailReturn) return r;
+          return null;
+        }
+      }
+      tryCnt++;
+    }
+    return r;
+  }
+
   public Room getNeighborRoom(Room r, int dir)
   {
     if (dir == 0)
@@ -331,11 +355,21 @@ public class GameLevel {
     else
       numDoorsLocked = 1;
 
+    int actualDoorsLocked = 0;
+
     for (int lc = 0; lc < numDoorsLocked; lc++)
     {
       Room lockRoom = level.getRoomWithNeighbors(1,150,false);
       if (lockRoom != null)
       {
+
+        //Randomly place special/valuable
+        //items in this room as it's locked
+        if ((level.nextInt(10) > 2) && (lockRoom.getIsBoss() == false))
+        {
+          lockRoom.setHasSpecial();
+        }
+
         //as room only has one neighbor
         //we find that neighbor and lock the door facing
         //this room
@@ -347,10 +381,28 @@ public class GameLevel {
             d += 2;
             if (d > 3) d -= 4;
             nr.setDoor(d,3); // 3 is locked!
+            actualDoorsLocked++;
             break;
           }
         }
       }
+    }
+
+    //now place right number of keys
+    int actualKeysPlaced = 0;
+    for (int nk = 0; nk < actualDoorsLocked; nk++)
+    {
+      Room keyRoom = level.getRandomNonLeafRoom(150, false);
+      if (keyRoom != null)
+      {
+        actualKeysPlaced++;
+        keyRoom.setHasKey();
+      }
+    }
+
+    if (actualKeysPlaced < actualDoorsLocked)
+    {
+      level.m_currentRoom.setHasKey();
     }
 
     //identify 2 to 3 other rooms with traps, use %

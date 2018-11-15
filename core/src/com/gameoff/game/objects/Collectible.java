@@ -28,7 +28,10 @@ public class Collectible extends Basic {
 		addAction(Actions.sequence(Actions.moveBy(0, bobAmount * .5f, bobTime * .5f), Actions.repeat(-1,
 				Actions.sequence(Actions.moveBy(0, -bobAmount, bobTime), Actions.moveBy(0, bobAmount, bobTime)))));
 
-		setId(properties.get("item_id", id, Integer.class));
+		if (properties != null)
+		{
+			setId(properties.get("item_id", id, Integer.class));
+		}
 	}
 
 	@Override
