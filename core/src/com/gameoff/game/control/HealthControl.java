@@ -7,7 +7,7 @@ import com.kyperbox.objects.GameObjectController;
 public class HealthControl extends GameObjectController {
 
 	public enum HealthGroup {
-		Player, Angel, Demon, Neutral
+		Player, Angel, Demon, Neutral ,Projectile,Melee
 	}
 
 	float health = 10; // current health

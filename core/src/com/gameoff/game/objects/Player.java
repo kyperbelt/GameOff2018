@@ -25,10 +25,10 @@ import com.kyperbox.umisc.StringUtils;
 
 public class Player extends DirectionEntity {
 
-	public static float WIDTH = 144 * .75f;
-	public static float HEIGHT = 160 * .75f;
+	public static float WIDTH = 144 * .5f;
+	public static float HEIGHT = 160 * .5f;
 
-	// animation literals
+	// animation literals start -->
 	public static final String SEP = "_";
 	public static final String ANGEL = "aform";
 	public static final String DEMON = "dform";
@@ -44,6 +44,13 @@ public class Player extends DirectionEntity {
 	public static final String SIDE = "side";
 
 	public static final String ANGELWALKDOWN = ANGEL + SEP + WALKDOWN;
+	public static final String ANGELWALKUP = ANGEL + SEP + WALKUP;
+	public static final String ANGELWALKSIDE = ANGEL + "_walk_" + SIDE;
+	public static final String ANGELLEGS = ANGEL + SEP + LEGS;
+	public static final String ANGELLEGSSIDE = ANGELLEGS + SIDE;
+	public static final String ANGELATTACKSIDE = ANGEL+SEP+ATTACKSIDE;
+	public static final String ANGELATTACKUP = ANGEL+SEP+ATTACKUP;
+	public static final String ANGELATTACKDOWN = ANGEL+SEP+ATTACKDOWN;
 
 	public static final String DEMONWALKDOWN = DEMON + SEP + WALKDOWN;
 	public static final String DEMONWALKUP = DEMON + SEP + WALKUP;
@@ -51,6 +58,14 @@ public class Player extends DirectionEntity {
 	public static final String DEMONLEGS = DEMON + SEP + LEGS;
 	public static final String DEMONLEGSSIDE = DEMONLEGS + SIDE;
 	public static final String DEMONATTACKSIDE = DEMON + SEP + ATTACKSIDE;
+	public static final String DEMONATTACKUP = DEMON+SEP+ATTACKUP;
+	public static final String DEMONATTACKDOWN = DEMON+SEP+ATTACKDOWN;
+	
+	//-projectiles
+	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
+	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
+	
+	//--animation literals end <--
 
 	public int m_numKeys = 0;
 
@@ -84,22 +99,7 @@ public class Player extends DirectionEntity {
 		public void finished(String animation, int times) {
 			if (times >= 1) {
 				getAnimation().setListener(null);
-
-				switch (getDirection()) {
-				case Down:
-					getAnimation().setAnimation(DEMONWALKDOWN);
-					break;
-				case Up:
-					getAnimation().setAnimation(DEMONWALKUP);
-					break;
-				case Left:
-				case Right:
-					getAnimation().setAnimation(DEMONWALKSIDE);
-					break;
-
-				default:
-					break;
-				}
+				setWalkAnimation(getDirection(), getCurrentForm());
 
 				System.out.println("times=" + times);
 				setPlayerState(PlayerState.Idling);
@@ -123,17 +123,17 @@ public class Player extends DirectionEntity {
 
 		setupBasicProjectile();
 		setUpBasicMelee();
+		
+		dlegs = new BasicGameObject();
+		dlegs.setName(DEMON + LEGS + id);
+		dlegsAnim = new AnimationController();
 
 		setCurrentForm(Form.Demon);
 		setDirection(Direction.Down);
 
 		getHealth().setHealthGroup(HealthGroup.Player);
 
-		dlegs = new BasicGameObject();
-		dlegs.setName(DEMON + LEGS + id);
-		dlegsAnim = new AnimationController();
 
-		setPreDrawChildren(true);
 		setTransform(true);
 
 	}
@@ -149,17 +149,25 @@ public class Player extends DirectionEntity {
 			getMove().setMoveSpeed(demonSpeed);
 			attack.setAttackListener(basicMelee);
 			attack.setCooldown(basicMeleeCD);
-
+			dlegs.setVisible(true);
+			dlegs.setDepth(0);
+			setPreDrawChildren(true);
 			break;
 		case Angel:
 			getMove().setFlying(true);
+			///float depthDiff = (baseDepth + getBoundsRaw().height * .5f)-baseDepth;
 			setDepth(baseDepth + getBoundsRaw().height * .5f);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(angelSpeed);
 			attack.setAttackListener(basicProjectile);
 			attack.setCooldown(basicProjectileCD);
+			dlegs.setDepth(getHeight()*.20f);
+			dlegs.setVisible(false);
+			setPreDrawChildren(false);
 			break;
 		}
+		
+		setWalkAnimation(getDirection(), form);
 		if (KyperBoxGame.DEBUG_LOGGING)
 			System.out.println(StringUtils.format("%s form Initiated", form.name()));
 	}
@@ -190,6 +198,69 @@ public class Player extends DirectionEntity {
 
 	public PlayerState getPlayerState() {
 		return state;
+	}
+	
+	private void setWalkAnimation(Direction dir ,Form form) {
+		if(getGameLayer() == null)
+			return;
+		if (form == Form.Demon) {
+			switch (dir) {
+			case Down:
+				getAnimation().setAnimation(DEMONWALKDOWN);
+				dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
+				dlegs.setFlip(false, false);
+				break;
+			case Up:
+				getAnimation().setAnimation(DEMONWALKUP);
+				dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
+				dlegs.setFlip(true, false);
+				break;
+			case Left:
+				getAnimation().setAnimation(DEMONWALKSIDE);
+				setFlip(false, false);
+				dlegs.setFlip(false, false);
+				dlegsAnim.setAnimation(DEMONLEGSSIDE, PlayMode.LOOP);
+				break;
+			case Right:
+				getAnimation().setAnimation(DEMONWALKSIDE);
+				setFlip(true, false);
+				dlegs.setFlip(true, false);
+				dlegsAnim.setAnimation(DEMONLEGSSIDE, PlayMode.LOOP);
+				break;
+
+			default:
+				break;
+			}
+		} else if (form == Form.Angel) {
+
+			switch (dir) {
+			case Down:
+				getAnimation().setAnimation(ANGELWALKDOWN);
+				dlegsAnim.setAnimation(ANGELLEGS, PlayMode.LOOP);
+				dlegs.setFlip(false, false);
+				break;
+			case Up:
+				getAnimation().setAnimation(ANGELWALKUP);
+				dlegsAnim.setAnimation(ANGELLEGS, PlayMode.LOOP);
+				dlegs.setFlip(true, false);
+				break;
+			case Left:
+				getAnimation().setAnimation(ANGELWALKSIDE);
+				setFlip(false, false);
+				dlegs.setFlip(false, false);
+				dlegsAnim.setAnimation(ANGELLEGSSIDE, PlayMode.LOOP);
+				break;
+			case Right:
+				getAnimation().setAnimation(ANGELWALKSIDE);
+				setFlip(true, false);
+				dlegs.setFlip(true, false);
+				dlegsAnim.setAnimation(ANGELLEGSSIDE, PlayMode.LOOP);
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -228,6 +299,15 @@ public class Player extends DirectionEntity {
 		animation.addAnimation(DEMONWALKUP, DEMONWALKUP);
 		animation.addAnimation(DEMONWALKSIDE, DEMONWALKSIDE);
 		animation.addAnimation(DEMONATTACKSIDE, DEMONATTACKSIDE);
+		animation.addAnimation(DEMONATTACKDOWN, DEMONATTACKDOWN);
+		animation.addAnimation(DEMONATTACKUP, DEMONATTACKUP);
+		//--
+		animation.addAnimation(ANGELWALKDOWN, ANGELWALKDOWN);
+		animation.addAnimation(ANGELWALKUP, ANGELWALKUP);
+		animation.addAnimation(ANGELWALKSIDE, ANGELWALKSIDE);
+		animation.addAnimation(ANGELATTACKSIDE, ANGELATTACKSIDE);
+		animation.addAnimation(ANGELATTACKDOWN, ANGELATTACKDOWN);
+		animation.addAnimation(ANGELATTACKUP, ANGELATTACKUP);
 
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
@@ -244,35 +324,7 @@ public class Player extends DirectionEntity {
 				System.out.println("currentState = " + state.name() + " newdir=" + newDirection.name());
 				if (state == PlayerState.Moving) {
 
-					switch (newDirection) {
-					case Down:
-						getAnimation().set(DEMONWALKDOWN);
-						// System.out.println("going down");
-						dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
-						dlegs.setFlip(false, false);
-						break;
-					case Up:
-						getAnimation().set(DEMONWALKUP);
-						// System.out.println("going up");
-						dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
-						dlegs.setFlip(true, false);
-						break;
-					case Left:
-
-						getAnimation().set(DEMONWALKSIDE);
-
-						setFlip(false, false);
-						dlegs.setFlip(false, false);
-						dlegsAnim.setAnimation(DEMONLEGSSIDE, PlayMode.LOOP);
-						break;
-					case Right:
-						getAnimation().set(DEMONWALKSIDE);
-
-						setFlip(true, false);
-						dlegs.setFlip(true, false);
-						dlegsAnim.setAnimation(DEMONLEGSSIDE, PlayMode.LOOP);
-						break;
-					}
+					setWalkAnimation(newDirection, getCurrentForm());
 
 				}
 
@@ -289,10 +341,18 @@ public class Player extends DirectionEntity {
 		anim = state.getAnimation(DEMONLEGSSIDE);
 		if (anim == null)
 			state.storeAnimation(DEMONLEGSSIDE, state.createGameAnimation(DEMONLEGSSIDE, speed));
+		anim = state.getAnimation(ANGELLEGS);
+		if(anim == null)
+			state.storeAnimation(ANGELLEGS, state.createGameAnimation(ANGELLEGS, speed));
+		anim = state.getAnimation(ANGELLEGSSIDE);
+		if(anim == null)
+			state.storeAnimation(ANGELLEGSSIDE, state.createGameAnimation(ANGELLEGSSIDE, speed));
 	}
 
 	public static void createPlayerAnimations(GameState state) {
 		float framespeed = .15f;
+		
+		//demon animations
 		Animation<KyperSprite> anim = state.getAnimation(DEMONWALKDOWN);
 		if (anim == null) {
 			state.storeAnimation(DEMONWALKDOWN, state.createGameAnimation(DEMONWALKDOWN, framespeed));
@@ -310,20 +370,66 @@ public class Player extends DirectionEntity {
 		if (anim == null) {
 			state.storeAnimation(DEMONATTACKSIDE, state.createGameAnimation(DEMONATTACKSIDE, framespeed));
 		}
+		
+		anim = state.getAnimation(DEMONATTACKUP);
+		if(anim == null)
+			state.storeAnimation(DEMONATTACKUP,state.createGameAnimation(DEMONATTACKUP, framespeed));
+
+		anim = state.getAnimation(DEMONATTACKDOWN);
+		if(anim == null)
+			state.storeAnimation(DEMONATTACKDOWN, state.createGameAnimation(DEMONATTACKDOWN, framespeed));
+		
+		//angel animations
+		
+		anim = state.getAnimation(ANGELWALKDOWN);
+		if(anim == null)
+			state.storeAnimation(ANGELWALKDOWN, state.createGameAnimation(ANGELWALKDOWN, framespeed));
+
+		anim = state.getAnimation(ANGELWALKUP);
+		if(anim == null)
+			state.storeAnimation(ANGELWALKUP, state.createGameAnimation(ANGELWALKUP, framespeed));
+
+		anim = state.getAnimation(ANGELWALKSIDE);
+		if(anim == null)
+			state.storeAnimation(ANGELWALKSIDE, state.createGameAnimation(ANGELWALKSIDE, framespeed));
+
+		anim = state.getAnimation(ANGELATTACKSIDE);
+		if(anim == null)
+			state.storeAnimation(ANGELATTACKSIDE, state.createGameAnimation(ANGELATTACKSIDE, framespeed));
+
+		anim = state.getAnimation(ANGELATTACKUP);
+		if(anim == null)
+			state.storeAnimation(ANGELATTACKUP, state.createGameAnimation(ANGELATTACKUP, framespeed));
+
+		anim = state.getAnimation(ANGELATTACKDOWN);
+		if(anim == null)
+			state.storeAnimation(ANGELATTACKDOWN, state.createGameAnimation(ANGELATTACKDOWN, framespeed));
+		
+		//--player projectiles 
+		anim = state.getAnimation(HALOPROJECTILEV);
+		if(anim == null)
+			state.storeAnimation(HALOPROJECTILEV, state.createGameAnimation(HALOPROJECTILEV, .08f));
+		
+		
+		anim = state.getAnimation(HALOPROJECTILEH);
+		if(anim == null)
+			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .08f));
+		
+		
 	}
 
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		AnimationController animation = getAnimation();
-		Vector2 vel = getVelocity();
-		// TODO: for now it doesnt update animations if player is flying to tell it
-		// apart from its grounded form . later we add some sort of shadow and gradually
-		// increase the depth
-		if (!getMove().isFlying())
-			animation.setPlaySpeed(1f);
-		else
-			animation.setPlaySpeed(0f);
+//		AnimationController animation = getAnimation();
+//		Vector2 vel = getVelocity();
+//		// TODO: for now it doesnt update animations if player is flying to tell it
+//		// apart from its grounded form . later we add some sort of shadow and gradually
+//		// increase the depth
+//		if (!getMove().isFlying())
+//			animation.setPlaySpeed(1f);
+//		else
+//			animation.setPlaySpeed(0f);
 
 		// TODO: Question - would it make more sense to put door collisions here?
 		// Or in the door object- just thinking doors only work with Players.
@@ -339,15 +445,13 @@ public class Player extends DirectionEntity {
 
 					// do something with the id of the item collected
 					int itemID = c.getId();
-					if (itemID == Collectible.KEY)
-					{
+					if (itemID == Collectible.KEY) {
 						m_numKeys++;
 						System.out.println("Keys + 1");
 
 					}
 
 					System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
-
 
 					// collect the item so that it cannot be collected again
 					c.collect();
@@ -414,21 +518,50 @@ public class Player extends DirectionEntity {
 			@Override
 			public void onAttack() {
 
+				switch (getDirection()) {
+				case Down:
+					// TODO: Add down attack animation
+					getAnimation().set(ANGELATTACKDOWN);
+					getAnimation().setListener(attackAnimationListener);
+					break;
+				case Up:
+					// TODO: Add up attack animation
+					getAnimation().set(ANGELATTACKUP);
+					getAnimation().setListener(attackAnimationListener);
+					break;
+				case Left:
+				case Right:
+					getAnimation().set(ANGELATTACKSIDE);
+					getAnimation().setListener(attackAnimationListener);
+					break;
+
+				default:
+					break;
+				}
+				
 				if (form != null) {
-					Projectile p = Projectile.get(); // get a pooled projectile
+					Projectile p = Projectile.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral); // get a pooled projectile
 					p.setVelocity(0, 0);
 					switch (getDirection()) {
 					case Right:
 						p.setPosition(getX() + getWidth(), getY() + getHeight() * .5f + getDepth());
+						p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
+						p.setFlip(true, false);
 						break;
 					case Left:
 						p.setPosition(getX(), getY() + getHeight() * .5f + getDepth());
+						p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
+						p.setFlip(false, false);
 						break;
 					case Up:
-						p.setPosition(getX() + getWidth() * .5f, getY() + getHeight() + getDepth());
+						p.setPosition(getX() + getWidth() * .5f - (p.getWidth()*.5f), getY() + getHeight() + getDepth());
+						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
+						p.setFlip(false, true);
 						break;
 					case Down:
-						p.setPosition(getX() + getWidth() * .5f, getY() + getDepth());
+						p.setPosition(getX() + getWidth() * .5f -(p.getWidth() *.5f), getY() + getDepth());
+						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
+						p.setFlip(false, false);
 						break;
 					default:
 						break;
@@ -462,10 +595,8 @@ public class Player extends DirectionEntity {
 		};
 	}
 
-	public boolean useKey()
-	{
-		if (m_numKeys > 0)
-		{
+	public boolean useKey() {
+		if (m_numKeys > 0) {
 			m_numKeys--;
 			return true;
 		}
@@ -481,12 +612,14 @@ public class Player extends DirectionEntity {
 
 				switch (getDirection()) {
 				case Down:
-					//TODO: Add down attack animation
-					setPlayerState(PlayerState.Idling);
+					// TODO: Add down attack animation
+					getAnimation().set(DEMONATTACKDOWN);
+					getAnimation().setListener(attackAnimationListener);
 					break;
 				case Up:
-					//TODO: Add up attack animation
-					setPlayerState(PlayerState.Idling);
+					// TODO: Add up attack animation
+					getAnimation().set(DEMONATTACKUP);
+					getAnimation().setListener(attackAnimationListener);
 					break;
 				case Left:
 				case Right:
