@@ -64,10 +64,11 @@ public class LevelManager extends StateManager {
 	public void randomPlaceObject(GameObject o, GameLayer layer, GameLevel level)
 	{
 		o.setPosition(m_roomWidthPixels/2, m_roomHeightPixels/2);
+		o.setBounds(0, 0, o.getWidth(), o.getHeight());
 		//while (true)
 		//{
-			float w = o.getWidth();
-			float h = o.getHeight();
+		//	float w = o.getWidth();
+		//	float h = o.getHeight();
 			//int x = level.nextInt(m_roomWidthPixels - )
 		//}
 	}
@@ -418,8 +419,8 @@ public class LevelManager extends StateManager {
 			Collectible c = new Collectible();
 			c.init(KyperBoxGame.NULL_PROPERTIES);
 			c.setId(Collectible.KEY);
-			randomPlaceObject(c, playground, level);
 			playground.addGameObject(c, KyperBoxGame.NULL_PROPERTIES);
+			randomPlaceObject(c, playground, level);
 		}
 
 
