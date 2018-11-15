@@ -11,6 +11,7 @@ import com.gameoff.game.managers.LevelManager;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.systems.ControlSpecificSystem;
 import com.kyperbox.umisc.StringUtils;
+import com.kyperbox.GameState;
 
 /**
  * System to check if a player is out of bounds(has left the map bounds through
@@ -68,6 +69,10 @@ public class OutOfBoundsSystem extends ControlSpecificSystem {
 
 				GameLevel level = GameLevel.getCurrentLevel();
 				Room cur = level.getCurrentRoom();
+				GameState state = getLayer().getState();
+				LevelManager lm = (LevelManager)(state.getManager());
+				lm.saveRoomState(state, cur);
+
 				System.out.println(StringUtils.format("currentRoom:(x[%s] y[%s]) | new dx[%s] dy[%s]", cur.getX(),
 						cur.getY(), dx, dy));
 				level.moveRoom(dx, dy);
@@ -76,8 +81,7 @@ public class OutOfBoundsSystem extends ControlSpecificSystem {
 						StringUtils.format("Player[%s] is out of bounds. Moving to new Room[%s]", control.getId(),
 								level.getCurrentRoom().getCode()));
 
-			
-				getLayer().getState().getGame().setGameState("room_" + level.getCurrentRoom().getCode());
+				state.getGame().setGameState("room_" + level.getCurrentRoom().getCode());
 			}
 		}
 	}

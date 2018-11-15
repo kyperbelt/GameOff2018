@@ -410,6 +410,28 @@ public class LevelManager extends StateManager {
 		flayer.addGameObject(mapHud, KyperBoxGame.NULL_PROPERTIES);
 	}
 
+	public void saveRoomState(GameState state, Room r)
+	{
+
+		//Save Door state
+		for (int i = 0; i < 4; i++)
+		{
+			Door d = (Door) state.getPlaygroundLayer().getGameObject("Door" + i);
+			if (d != null)
+			{
+				r.setDoor(i, d.getCode());
+			}
+		}
+
+		//Collectible state?
+
+		//Enemy state?
+
+		//Traps state?
+
+
+	}
+
 	@Override
 	public void update(GameState state, float delta) {
 

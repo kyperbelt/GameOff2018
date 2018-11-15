@@ -109,4 +109,9 @@ public class Door extends Basic {
     m_code = 2;
   }
 
+  public int getCode()
+  {
+    return m_code;
+  }
+
 }
