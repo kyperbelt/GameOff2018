@@ -499,64 +499,80 @@ public class Player extends DirectionEntity {
 			}
 		}
 
-		MoveControl move = getMove();
-		float cxd = move.getXDir();
-		if (lastXDir != cxd)
+		//Handle robe physics
+		if (this.form == form.Angel)
 		{
-			if (cxd == 0)
+			MoveControl move = getMove();
+			float cxd = move.getXDir();
+			if (lastXDir != cxd)
 			{
-				legsOffsetXTarget = 0;
-				legsDeltaX = -lastXDir * 0.1f;
-				legsDeltaXFactor = 0.05f;
-			} else
-			{
-				legsOffsetXTarget = -5 * cxd;
-				legsDeltaX = -cxd * 0.2f;
-				legsDeltaXFactor = 0.05f;
-			}
-			legsBounceX = false;
-			lastXDir = cxd;
-		}
-
-		legsOffsetX += legsDeltaX;
-		if (legsOffsetXTarget >= 0)
-		{
-			if (legsOffsetX > legsOffsetXTarget)
-			{
-				if (legsBounceX == false)
+				if (cxd == 0)
 				{
-					legsBounceX = true;
-					legsOffsetXTarget -= 2;
-					if (legsOffsetXTarget < 2) legsOffsetXTarget = 2;
-				}
-				legsDeltaX -= legsDeltaXFactor;
-			} else
-			{
-				legsBounceX = false;
-				legsDeltaX += legsDeltaXFactor;
-			}
-		} else if (legsOffsetXTarget < 0)
-		{
-			if (legsOffsetX < legsOffsetXTarget)
-			{
-				if (legsBounceX == false)
+					legsOffsetXTarget = 0;
+					legsDeltaX = -lastXDir * 0.1f;
+					legsDeltaXFactor = 0.05f;
+				} else
 				{
-					legsBounceX = true;
-					legsOffsetXTarget += 2;
-					if (legsOffsetXTarget > -2) legsOffsetXTarget = -2;
+					legsOffsetXTarget = -5 * cxd;
+					legsDeltaX = -cxd * 0.2f;
+					legsDeltaXFactor = 0.05f;
 				}
-				legsDeltaX += legsDeltaXFactor;
-			} else
-			{
 				legsBounceX = false;
-				legsDeltaX -= legsDeltaXFactor;
+				lastXDir = cxd;
 			}
-		}
-		if (legsDeltaX < - 0.2f) legsDeltaX = -0.2f;
-		if (legsDeltaX > 0.2f) legsDeltaX = 0.2f;
 
-		dlegs.setPosition(legsX + legsOffsetX, legsY + legsOffsetY);
-		playerShadow.setPosition(20 + shadowOffset + legsOffsetX, legsOffsetY - 3);
+			legsOffsetX += legsDeltaX;
+			if (legsOffsetXTarget >= 0)
+			{
+				if (legsOffsetX > legsOffsetXTarget)
+				{
+					if (legsBounceX == false)
+					{
+						legsBounceX = true;
+						legsOffsetXTarget -= 1;
+						if (legsOffsetXTarget < 1)
+						{
+							legsOffsetXTarget = 1;
+							legsOffsetX = legsOffsetXTarget;
+							legsDeltaXFactor = 0;
+							legsDeltaX = 0;
+						}
+					}
+					legsDeltaX -= legsDeltaXFactor;
+				} else
+				{
+					legsBounceX = false;
+					legsDeltaX += legsDeltaXFactor;
+				}
+			} else if (legsOffsetXTarget < 0)
+			{
+				if (legsOffsetX < legsOffsetXTarget)
+				{
+					if (legsBounceX == false)
+					{
+						legsBounceX = true;
+						legsOffsetXTarget += 1;
+						if (legsOffsetXTarget > -1)
+						{
+							legsOffsetXTarget = -1;
+							legsOffsetX = legsOffsetXTarget;
+							legsDeltaXFactor = 0;
+							legsDeltaX = 0;
+						}
+					}
+					legsDeltaX += legsDeltaXFactor;
+				} else
+				{
+					legsBounceX = false;
+					legsDeltaX -= legsDeltaXFactor;
+				}
+			}
+			if (legsDeltaX < - 0.3f) legsDeltaX = -0.3f;
+			if (legsDeltaX > 0.3f) legsDeltaX = 0.3f;
+
+			dlegs.setPosition(legsX + legsOffsetX, legsY + legsOffsetY);
+			playerShadow.setPosition(20 + shadowOffset + legsOffsetX, legsOffsetY - 3);
+		}
 	}
 
 	public void setAnimation(String animation) {
