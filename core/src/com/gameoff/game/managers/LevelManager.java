@@ -382,6 +382,21 @@ public class LevelManager extends StateManager {
 
 				d.setPosition(x, y);
 				o.setPosition(x, y);
+				if (d.getKeyHole() != null)
+				{
+					d.getKeyHole().setRotation(rot);
+					d.getKeyHole().setPosition(x,y);
+
+					d.getDoorMat().setRotation(rot);
+					if (dir == 0)
+						d.getDoorMat().setPosition(x+30,y-5);
+					else if (dir == 2)
+						d.getDoorMat().setPosition(x+30,y+dh);
+					else if (dir == 1)
+						d.getDoorMat().setPosition(x-84,y+110);
+					else if (dir == 3)
+						d.getDoorMat().setPosition(x+144,y+110);
+				}
 
 			} else {
 				// just place full walls

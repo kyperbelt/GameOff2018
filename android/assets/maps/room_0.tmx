@@ -37,7 +37,7 @@
   <object id="76" name="west" type="BasicGameObject" x="112" y="912" width="32" height="96"/>
   <object id="77" name="north" type="BasicGameObject" x="1396" y="128" width="96" height="32"/>
   <object id="78" name="south" type="BasicGameObject" x="1396" y="1792" width="96" height="32"/>
-  <object id="85" name="test_collectible" type="Collectible" x="2800" y="768" width="32" height="32"/>
+  <object id="85" name="test_collectible" type="Collectible" x="3000" y="768" width="32" height="32"/>
   <object id="104" name="test_enemy" type="SimpleEnemy" x="1312" y="352" width="64" height="64"/>
   <object id="105" name="test_enemy" type="SimpleEnemy" x="1440" y="288" width="64" height="64"/>
   <object id="106" name="test_enemy" type="SimpleEnemy" x="1728" y="640" width="64" height="64"/>
