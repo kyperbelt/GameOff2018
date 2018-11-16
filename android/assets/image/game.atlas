@@ -699,9 +699,9 @@ instructions_start
   index: -1
 key
   rotate: false
-  xy: 670, 762
-  size: 65, 26
-  orig: 65, 26
+  xy: 670, 767
+  size: 52, 21
+  orig: 52, 21
   offset: 0, 0
   index: -1
 key_hole
