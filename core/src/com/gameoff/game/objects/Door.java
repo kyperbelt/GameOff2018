@@ -100,7 +100,7 @@ public class Door extends Basic {
     {
       m_code = 2;
       m_keyHole.clearActions();
-      m_keyHole.addAction(Actions.fadeOut(0.5f));
+      m_keyHole.addAction(Actions.sequence(Actions.sequence(Actions.fadeOut(0.5f), Actions.removeActor())));
       m_doorMat.remove();
       m_doorMat = null;
     }

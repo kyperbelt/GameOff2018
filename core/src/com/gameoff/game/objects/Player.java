@@ -85,6 +85,19 @@ public class Player extends DirectionEntity {
 
 	BasicGameObject playerShadow;
 	float shadowOffset = 0;
+	float legsOffsetX = 0;
+	float legsOffsetY = 0;
+	float legsDeltaX = 0;
+	float legsDeltaXFactor = 0.1f;
+	boolean legsBounceX = false;
+	float legsDeltaY = 0;
+	float legsOffsetXTarget = 0;
+	float legsOffsetYTarget = 0;
+	float legsX = 0;
+	float legsY = 0;
+	
+	float lastXDir = 0;
+	float lastYDir = 0;
 
 	float angelSpeed = 270;
 	float demonSpeed = 180;
@@ -289,7 +302,11 @@ public class Player extends DirectionEntity {
 		createLegAnimations(getState());
 		dlegs.addController(dlegsAnim);
 		dlegs.setSize(WIDTH * .8f, HEIGHT * .4f);
-		dlegs.setPosition(WIDTH * .1f, 0);
+		legsX = WIDTH * .1f;
+		legsY = 0;
+
+		dlegs.setPosition(legsX, legsY);
+
 		addChild(dlegs);
 		dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
 		setSize(WIDTH, HEIGHT * .7f);
@@ -482,6 +499,64 @@ public class Player extends DirectionEntity {
 			}
 		}
 
+		MoveControl move = getMove();
+		float cxd = move.getXDir();
+		if (lastXDir != cxd)
+		{
+			if (cxd == 0)
+			{
+				legsOffsetXTarget = 0;
+				legsDeltaX = -lastXDir * 0.1f;
+				legsDeltaXFactor = 0.05f;
+			} else
+			{
+				legsOffsetXTarget = -5 * cxd;
+				legsDeltaX = -cxd * 0.2f;
+				legsDeltaXFactor = 0.05f;
+			}
+			legsBounceX = false;
+			lastXDir = cxd;
+		}
+
+		legsOffsetX += legsDeltaX;
+		if (legsOffsetXTarget >= 0)
+		{
+			if (legsOffsetX > legsOffsetXTarget)
+			{
+				if (legsBounceX == false)
+				{
+					legsBounceX = true;
+					legsOffsetXTarget -= 2;
+					if (legsOffsetXTarget < 2) legsOffsetXTarget = 2;
+				}
+				legsDeltaX -= legsDeltaXFactor;
+			} else
+			{
+				legsBounceX = false;
+				legsDeltaX += legsDeltaXFactor;
+			}
+		} else if (legsOffsetXTarget < 0)
+		{
+			if (legsOffsetX < legsOffsetXTarget)
+			{
+				if (legsBounceX == false)
+				{
+					legsBounceX = true;
+					legsOffsetXTarget += 2;
+					if (legsOffsetXTarget > -2) legsOffsetXTarget = -2;
+				}
+				legsDeltaX += legsDeltaXFactor;
+			} else
+			{
+				legsBounceX = false;
+				legsDeltaX -= legsDeltaXFactor;
+			}
+		}
+		if (legsDeltaX < - 0.2f) legsDeltaX = -0.2f;
+		if (legsDeltaX > 0.2f) legsDeltaX = 0.2f;
+
+		dlegs.setPosition(legsX + legsOffsetX, legsY + legsOffsetY);
+		playerShadow.setPosition(20 + shadowOffset + legsOffsetX, legsOffsetY - 3);
 	}
 
 	public void setAnimation(String animation) {
