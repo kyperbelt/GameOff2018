@@ -3,16 +3,21 @@ package com.gameoff.game.objects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.GameOffGame;
+import com.gameoff.game.control.*;
+import com.gameoff.game.objects.DoorMat;
 import com.kyperbox.controllers.CollisionController.CollisionData;
-import com.kyperbox.objects.GameObject;
+import com.kyperbox.objects.*;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.kyperbox.GameState;
 import com.kyperbox.controllers.AnimationController;
 import com.gameoff.game.ZOrder;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Door extends Basic {
   int m_code = 0;
   String m_aName = "do";
+  BasicGameObject m_keyHole = null;
+  DoorMat m_doorMat = null;
 
   // 0 = no door, 1 = open, 2 = closed, 3 = closed and locked
   public Door(int doorCode, GameState state) {
@@ -38,6 +43,16 @@ public class Door extends Basic {
     getAnimation().setPlaySpeed(1f);
   }
 
+  public BasicGameObject getKeyHole()
+  {
+    return m_keyHole;
+  }
+
+  public DoorMat getDoorMat()
+  {
+    return m_doorMat;
+  }
+
   @Override
   public void init(MapProperties properties) {
     super.init(properties);
@@ -57,41 +72,33 @@ public class Door extends Basic {
       setSprite("door_open_0");
       getMove().setPhysical(true);
       doDoorState(false);
+
+      if (m_code == 3)
+      {
+        m_keyHole = new BasicGameObject();
+        m_keyHole.setSprite("key_hole");
+        Sprite sprite = getState().getGameSprite("key_hole");
+        m_keyHole.setSize(sprite.getWidth(), sprite.getHeight());
+        m_keyHole.setPosition(getX(), getY());
+        ZOrderControl zorder = new ZOrderControl();
+        zorder.setZOrder(ZOrder.KEYHOLE);
+        m_keyHole.addController(zorder);
+        this.getGameLayer().addGameObject(m_keyHole, null);
+
+        m_doorMat = new DoorMat(this);
+        this.getGameLayer().addGameObject(m_doorMat, null);
+      }
     }
     getAnimation().setPlaySpeed(2f);
-
   }
-  
-  @Override
-	public void update(float delta) {
-	  
-	  super.update(delta);
-	  
-	  Array<CollisionData> cols = getCollision().getCollisions();
-	  if(m_code == 3 && cols.size > 0) {
-		  for (int i = 0; i < cols.size; i++) {
-			CollisionData d = cols.get(i);
-			GameObject target = d.getTarget();
-			if(target instanceof Player) {
-				if (m_code == 3)
-         {        
-            Player p = (Player)target;
-            if (p.useKey())
-            {
-              unlock();
-              open();
-            }
-         }
-        }
-		  }
-	  }
-	}
 
   public void unlock()
   {
     if (m_code == 3) 
     {
       m_code = 2;
+      m_keyHole.remove();
+      m_keyHole = null;
     }
   }
 
