@@ -1,5 +1,6 @@
 package com.gameoff.game.managers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
@@ -32,6 +33,7 @@ public class LevelManager extends StateManager {
 
 	// test player for now
 	Player player;
+	int overlayKeyAmount; //amount of keys that are shown to the overlay
 
 	// layer systems we will use for playground layer
 	QuadTree quad;// collisionSystem
@@ -44,6 +46,8 @@ public class LevelManager extends StateManager {
 	OutOfBoundsSystem bounds;
 	AiSystem ai;
 	int m_roomWidthPixels, m_roomHeightPixels;
+	
+	OverlayManager overlayManager;
 
 	/**
 	 * set the entry point into new room
@@ -433,6 +437,18 @@ public class LevelManager extends StateManager {
 		mapHud.updateLevel(level);
 		mapHud.setRecommendedPosition(960, 540);
 		flayer.addGameObject(mapHud, KyperBoxGame.NULL_PROPERTIES);
+		
+		//push overlay
+		overlayManager = (OverlayManager) state.getGame().getState("gameOverlay").getManager();
+		state.getGame().pushGameState("gameOverlay");
+		overlayKeyAmount = player.m_numKeys;
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				overlayManager.setKeyLabelText(":"+overlayKeyAmount);
+			}
+		});
+		
 	}
 
 	public void saveRoomState(GameState state, Room r)
@@ -459,7 +475,10 @@ public class LevelManager extends StateManager {
 
 	@Override
 	public void update(GameState state, float delta) {
-
+		if(overlayKeyAmount!=player.m_numKeys) {
+			overlayKeyAmount = player.m_numKeys;
+			overlayManager.updateKeys(overlayKeyAmount);
+		}
 	}
 
 }
