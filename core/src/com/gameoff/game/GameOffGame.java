@@ -3,6 +3,7 @@ package com.gameoff.game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gameoff.game.managers.LevelManager;
+import com.gameoff.game.managers.OverlayManager;
 import com.gameoff.game.managers.TitleMenuManager;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
@@ -57,6 +58,7 @@ public class GameOffGame extends KyperBoxGame {
 
 		registerGameState("room_0", "room_0.tmx", levelmanager);
 		registerGameState("room_1", "room_1.tmx", levelmanager);
+		registerGameState("gameOverlay","gameOverlay.tmx",new OverlayManager());
 
 		setGameState("title");
 
