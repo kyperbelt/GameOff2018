@@ -92,6 +92,10 @@ public class HealthControl extends GameObjectController {
 		if(shouldDamage)
 			damage(lastHealth - health);
 	}
+	
+	public float getHealthPercentage() {
+		return getCurrentHealth() / getMaxHealth();
+	}
 
 	/**
 	 * get the current health of the control

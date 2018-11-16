@@ -4,6 +4,7 @@ import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.Hazard;
 import com.gameoff.game.objects.Pit;
 import com.gameoff.game.objects.Player;
+import com.gameoff.game.objects.ProgressTexture;
 import com.gameoff.game.objects.Trigger;
 import com.gameoff.game.objects.Wall;
 import com.gameoff.game.objects.destructible.Destructible;
@@ -76,6 +77,13 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new Destructible();
+			}
+		});
+		
+		game.registerGameObject("ProgressTexture", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new ProgressTexture();
 			}
 		});
 		
