@@ -68,6 +68,7 @@
   <property name="step_size" type="float" default="0.01"/>
   <property name="vertical" type="bool" default="false"/>
  </objecttype>
+ <objecttype name="ProgressTexture" color="#ff00ff"/>
  <objecttype name="ScrollingBackground" color="#ff0000">
   <property name="absolute" type="bool" default="false"/>
   <property name="image" type="string"/>
