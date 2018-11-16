@@ -720,7 +720,7 @@ left_wall
   index: -1
 map_boss_icon
   rotate: false
-  xy: 3502, 1988
+  xy: 223, 121
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
@@ -734,63 +734,63 @@ map_door
   index: -1
 map_door0
   rotate: false
-  xy: 223, 121
+  xy: 294, 5
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door1
   rotate: false
-  xy: 294, 5
+  xy: 3338, 1908
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door2
   rotate: false
-  xy: 3338, 1908
+  xy: 3262, 1816
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door3
   rotate: false
-  xy: 3262, 1816
+  xy: 3484, 1872
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_empty
   rotate: false
-  xy: 3484, 1872
+  xy: 3993, 1935
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room
   rotate: false
-  xy: 3993, 1935
+  xy: 4069, 2027
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_current_icon
   rotate: false
-  xy: 4069, 2027
+  xy: 3922, 1840
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_visited
   rotate: false
-  xy: 3922, 1840
+  xy: 587, 420
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_start_icon
   rotate: false
-  xy: 587, 420
+  xy: 520, 256
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
@@ -835,6 +835,13 @@ play_down
   xy: 1205, 1766
   size: 163, 50
   orig: 163, 50
+  offset: 0, 0
+  index: -1
+player_shadow
+  rotate: false
+  xy: 3502, 1983
+  size: 30, 20
+  orig: 30, 20
   offset: 0, 0
   index: -1
 player_walk_down_0

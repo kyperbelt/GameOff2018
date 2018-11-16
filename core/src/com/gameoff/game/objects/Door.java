@@ -12,6 +12,8 @@ import com.kyperbox.GameState;
 import com.kyperbox.controllers.AnimationController;
 import com.gameoff.game.ZOrder;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.kyperbox.umisc.KyperSprite;
 
 public class Door extends Basic {
   int m_code = 0;
@@ -97,8 +99,10 @@ public class Door extends Basic {
     if (m_code == 3) 
     {
       m_code = 2;
-      m_keyHole.remove();
-      m_keyHole = null;
+      m_keyHole.clearActions();
+      m_keyHole.addAction(Actions.fadeOut(0.5f));
+      m_doorMat.remove();
+      m_doorMat = null;
     }
   }
 

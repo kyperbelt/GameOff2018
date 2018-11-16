@@ -83,6 +83,9 @@ public class Player extends DirectionEntity {
 	BasicGameObject dlegs;
 	AnimationController dlegsAnim;
 
+	BasicGameObject playerShadow;
+	float shadowOffset = 0;
+
 	float angelSpeed = 270;
 	float demonSpeed = 180;
 
@@ -128,6 +131,10 @@ public class Player extends DirectionEntity {
 		dlegs.setName(DEMON + LEGS + id);
 		dlegsAnim = new AnimationController();
 
+		playerShadow = new BasicGameObject();
+		playerShadow.setSprite("player_shadow");
+
+
 		setCurrentForm(Form.Demon);
 		setDirection(Direction.Down);
 
@@ -152,6 +159,7 @@ public class Player extends DirectionEntity {
 			dlegs.setVisible(true);
 			dlegs.setDepth(0);
 			setPreDrawChildren(true);
+			playerShadow.setVisible(false);
 			break;
 		case Angel:
 			getMove().setFlying(true);
@@ -162,8 +170,9 @@ public class Player extends DirectionEntity {
 			attack.setAttackListener(basicProjectile);
 			attack.setCooldown(basicProjectileCD);
 			dlegs.setDepth(getHeight()*.20f);
-			dlegs.setVisible(false);
-			setPreDrawChildren(false);
+			dlegs.setVisible(true);
+			setPreDrawChildren(true);
+			playerShadow.setVisible(true);
 			break;
 		}
 		
@@ -238,28 +247,33 @@ public class Player extends DirectionEntity {
 				getAnimation().setAnimation(ANGELWALKDOWN);
 				dlegsAnim.setAnimation(ANGELLEGS, PlayMode.LOOP);
 				dlegs.setFlip(false, false);
+				shadowOffset = 2;
 				break;
 			case Up:
 				getAnimation().setAnimation(ANGELWALKUP);
 				dlegsAnim.setAnimation(ANGELLEGS, PlayMode.LOOP);
 				dlegs.setFlip(true, false);
+				shadowOffset = 0;
 				break;
 			case Left:
 				getAnimation().setAnimation(ANGELWALKSIDE);
 				setFlip(false, false);
 				dlegs.setFlip(false, false);
 				dlegsAnim.setAnimation(ANGELLEGSSIDE, PlayMode.LOOP);
+				shadowOffset = 4;
 				break;
 			case Right:
 				getAnimation().setAnimation(ANGELWALKSIDE);
 				setFlip(true, false);
 				dlegs.setFlip(true, false);
 				dlegsAnim.setAnimation(ANGELLEGSSIDE, PlayMode.LOOP);
+				shadowOffset = -5;
 				break;
 
 			default:
 				break;
 			}
+			playerShadow.setPosition(20+shadowOffset, -3);
 		}
 	}
 
@@ -267,14 +281,21 @@ public class Player extends DirectionEntity {
 	public void init(MapProperties properties) {
 		super.init(properties);
 
-		createLegAnimations(getState());
+		playerShadow.setVisible(false);
+		playerShadow.setPosition(20, -3);
+		addChild(playerShadow);
+		playerShadow.setSize(30,20);
 
+		createLegAnimations(getState());
 		dlegs.addController(dlegsAnim);
 		dlegs.setSize(WIDTH * .8f, HEIGHT * .4f);
 		dlegs.setPosition(WIDTH * .1f, 0);
 		addChild(dlegs);
 		dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
 		setSize(WIDTH, HEIGHT * .7f);
+
+
+
 
 		setPlayerState(PlayerState.Idling);
 
