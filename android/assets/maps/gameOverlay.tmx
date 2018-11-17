@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="54">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="56">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
- <objectgroup name="background" locked="1"/>
- <objectgroup name="playground" locked="1"/>
- <objectgroup name="foreground" locked="1"/>
- <objectgroup name="uiground">
+ <objectgroup id="1" name="background" locked="1"/>
+ <objectgroup id="2" name="playground" locked="1"/>
+ <objectgroup id="3" name="foreground" locked="1"/>
+ <objectgroup id="4" name="uiground">
   <object id="51" name="key" type="Image" gid="40" x="18.9274" y="467.081" width="43.0237" height="24.5706" rotation="334.603">
    <properties>
     <property name="image" value="key"/>
@@ -19,8 +19,9 @@
     <property name="text" value="X"/>
    </properties>
   </object>
+  <object id="54" name="progress" type="ProgressTexture" x="832" y="832" width="96" height="96"/>
  </objectgroup>
- <objectgroup name="preload" locked="1">
+ <objectgroup id="5" name="preload" locked="1">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>
   <object id="44" x="-256" y="288" width="96" height="32">
    <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
@@ -41,6 +42,11 @@
    <properties>
     <property name="font_file" value="KVF32.fnt"/>
     <property name="markup" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="55" name="progress" type="Shader" x="-640" y="352" width="32" height="32">
+   <properties>
+    <property name="shader_name" value="progress"/>
    </properties>
   </object>
  </objectgroup>

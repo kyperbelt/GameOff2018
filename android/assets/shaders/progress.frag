@@ -15,9 +15,5 @@ void main() {
 	vec2 position = gl_FragCoord.xy;
 
 
-	if(v_texCoords.y < progress){
-		texColor.a = 0f;
-	}
-
 	gl_FragColor = v_color * texColor;
 }
