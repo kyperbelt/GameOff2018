@@ -201,6 +201,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 			dlegs.setDepth(0);
 			//setPreDrawChildren(true);
 			playerShadow.setVisible(false);
+			float legsOffsetXTarget = 0;
+			float legsOffsetX = 0;
+			dlegs.setPosition(legsX, legsY);
 			break;
 		case Angel:
 			getMove().setFlying(true);
