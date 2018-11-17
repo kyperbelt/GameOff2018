@@ -512,6 +512,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 				setCurrentForm(targetForm);
 				transformTime = 0.75f;
 			}
+			getMove().setDirection(0, 0);
 			return;
 		}
 //		AnimationController animation = getAnimation();
