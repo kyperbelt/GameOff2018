@@ -44,11 +44,11 @@ public class Projectile extends Attack {
 		setName("projectile");
 		getMove().setMoveSpeed(speed);
 		getMove().setPhysical(false);
-		setSprite("noregion");
-		setSize(16, 16);
+		//setSprite("noregion");
+		//setSize(49, 7);
 		// must set the bounds of this object since it will have no bounds to begin with
 		// since it is created dynamically. Therefore causing it to not collide
-		setBounds(0, 0, getWidth(), getHeight());
+		//setBounds(0, 0, getWidth(), getHeight());
 		elapsed = 0;
 		attacked.clear();
 	}
