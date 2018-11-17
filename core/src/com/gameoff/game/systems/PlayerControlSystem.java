@@ -52,6 +52,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		for (int i = 0; i < objects.size; i++) {
 			GameObject o = objects.get(i);
 			PlayerControl control = o.getController(PlayerControl.class);
+
 			MoveControl move = o.getController(MoveControl.class);
 			AttackControl attack = o.getController(AttackControl.class);
 			DirectionControl direction = o.getController(DirectionControl.class);
@@ -64,6 +65,9 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 			} else {
 				getLayer().getState().error(StringUtils.format(MAPS_NOT_FOUND, id));
 			}
+
+			//Can't move or do anything while transforming
+			if (control.isTransforming()) return;
 
 			if (maps != null) {
 
@@ -111,6 +115,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 						else if (x == 0 && y == 0) {
 							control.setState(PlayerState.Idling);
 						}
+						
 						move.setDirection(x, y);
 
 						if (direction != null && control.getState() != PlayerState.Attacking) {

@@ -23,7 +23,7 @@ import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.StringUtils;
 
-public class Player extends DirectionEntity {
+public class Player extends DirectionEntity implements AnimationListener {
 
 	public static float WIDTH = 144 * .5f;
 	public static float HEIGHT = 160 * .5f;
@@ -60,11 +60,13 @@ public class Player extends DirectionEntity {
 	public static final String DEMONATTACKSIDE = DEMON + SEP + ATTACKSIDE;
 	public static final String DEMONATTACKUP = DEMON+SEP+ATTACKUP;
 	public static final String DEMONATTACKDOWN = DEMON+SEP+ATTACKDOWN;
+	public static final String TRANSFORM = "transform";
 	
 	//-projectiles
 	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
 	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
 	
+	Form targetForm;
 	//--animation literals end <--
 
 	public int m_numKeys = 0;
@@ -82,6 +84,8 @@ public class Player extends DirectionEntity {
 	// demonlegs
 	BasicGameObject dlegs;
 	AnimationController dlegsAnim;
+	BasicGameObject transformSprite;
+	AnimationController transformAnim;
 
 	BasicGameObject playerShadow;
 	float shadowOffset = 0;
@@ -109,6 +113,9 @@ public class Player extends DirectionEntity {
 	AttackListener basicProjectile;
 	float basicMeleeCD = .75f;
 	AttackListener basicMelee;
+
+	float transformTime = 0;
+	boolean transforming = false;
 
 	AnimationListener attackAnimationListener = new AnimationListener() {
 		@Override
@@ -147,6 +154,12 @@ public class Player extends DirectionEntity {
 		playerShadow = new BasicGameObject();
 		playerShadow.setSprite("player_shadow");
 
+		transformSprite = new BasicGameObject();
+		transformSprite.setName("transform");
+		transformAnim = new AnimationController();
+		transformAnim.setListener(this);
+		transformSprite.setVisible(false);
+
 
 		setCurrentForm(Form.Demon);
 		setDirection(Direction.Down);
@@ -156,6 +169,21 @@ public class Player extends DirectionEntity {
 
 		setTransform(true);
 
+	}
+
+	public void transformTo(Form form)
+	{
+		transformSprite.setVisible(true);
+		transformAnim.setAnimation(TRANSFORM, PlayMode.NORMAL);
+		transformAnim.setPlayMode(PlayMode.NORMAL);
+		setPreDrawChildren(false);
+		transforming = true;
+		transformTime = 0.25f;
+		targetForm = form;
+		control.setState(PlayerState.Idling);
+		getMove().setDirection(0,0);
+		getMove().setMoveSpeed(0);
+		setVelocity(0,0);
 	}
 
 	public void setCurrentForm(Form form) {
@@ -171,7 +199,7 @@ public class Player extends DirectionEntity {
 			attack.setCooldown(basicMeleeCD);
 			dlegs.setVisible(true);
 			dlegs.setDepth(0);
-			setPreDrawChildren(true);
+			//setPreDrawChildren(true);
 			playerShadow.setVisible(false);
 			break;
 		case Angel:
@@ -184,7 +212,7 @@ public class Player extends DirectionEntity {
 			attack.setCooldown(basicProjectileCD);
 			dlegs.setDepth(getHeight()*.20f);
 			dlegs.setVisible(true);
-			setPreDrawChildren(true);
+			//setPreDrawChildren(true);
 			playerShadow.setVisible(true);
 			break;
 		}
@@ -312,6 +340,12 @@ public class Player extends DirectionEntity {
 		setSize(WIDTH, HEIGHT * .7f);
 
 
+		createTransformAnimations(getState());
+		transformSprite.addController(transformAnim);
+		transformSprite.setPosition(-135,-65);
+		addChild(transformSprite);
+		transformSprite.setSize(400,225);
+		transformSprite.setVisible(false);
 
 
 		setPlayerState(PlayerState.Idling);
@@ -387,6 +421,15 @@ public class Player extends DirectionEntity {
 			state.storeAnimation(ANGELLEGSSIDE, state.createGameAnimation(ANGELLEGSSIDE, speed));
 	}
 
+	private void createTransformAnimations(GameState state)
+	{
+		Animation<KyperSprite> anim = state.getAnimation(TRANSFORM);
+		if (anim == null) {
+			state.storeAnimation(TRANSFORM, state.createGameAnimation(TRANSFORM, 0.05f));
+		}
+	}
+		
+
 	public static void createPlayerAnimations(GameState state) {
 		float framespeed = .15f;
 		
@@ -453,12 +496,21 @@ public class Player extends DirectionEntity {
 		if(anim == null)
 			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .08f));
 		
-		
 	}
 
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		if (transforming)
+		{
+			transformTime -= delta;
+			if (transformTime < 0)
+			{
+				setCurrentForm(targetForm);
+				transformTime = 0.75f;
+			}
+			return;
+		}
 //		AnimationController animation = getAnimation();
 //		Vector2 vel = getVelocity();
 //		// TODO: for now it doesnt update animations if player is flying to tell it
@@ -751,5 +803,26 @@ public class Player extends DirectionEntity {
 
 			}
 		};
+	}
+
+	public boolean isTransforming()
+	{
+		return transforming;
+	}
+
+	//animation listener
+	public void finished(String name, int playTime)
+	{
+		if (name == TRANSFORM)
+		{
+			if (transforming == false) return;
+			transformSprite.setVisible(false);
+			setPreDrawChildren(true);
+			transforming = false;
+			transformTime = 0;
+			getMove().setDirection(0,0);
+			setVelocity(0,0);
+			//System.out.println("Finished");
+		}
 	}
 }

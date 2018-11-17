@@ -20,9 +20,18 @@ public class PlayerControl extends GameObjectController {
 	}
 
 	public void setForm(Form form) {
-		if (playerObject != null) {
-			playerObject.setCurrentForm(form);
+		if (playerObject.isTransforming() == false)
+		{
+			if (playerObject != null) {
+				playerObject.transformTo(form);
+				//playerObject.setCurrentForm(form);
+			}
 		}
+	}
+
+	public boolean isTransforming()
+	{
+		return playerObject.isTransforming();
 	}
 	
 	public void setState(PlayerState state) {
