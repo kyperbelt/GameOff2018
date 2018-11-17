@@ -65,6 +65,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	//-projectiles
 	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
 	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
+
+	public float projectileSpeed = 600;
 	
 	Form targetForm;
 	//--animation literals end <--
@@ -492,12 +494,12 @@ public class Player extends DirectionEntity implements AnimationListener {
 		//--player projectiles 
 		anim = state.getAnimation(HALOPROJECTILEV);
 		if(anim == null)
-			state.storeAnimation(HALOPROJECTILEV, state.createGameAnimation(HALOPROJECTILEV, .08f));
+			state.storeAnimation(HALOPROJECTILEV, state.createGameAnimation(HALOPROJECTILEV, .0333f));
 		
 		
 		anim = state.getAnimation(HALOPROJECTILEH);
 		if(anim == null)
-			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .08f));
+			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .0333f));
 		
 	}
 
@@ -712,32 +714,44 @@ public class Player extends DirectionEntity implements AnimationListener {
 					p.setVelocity(0, 0);
 					switch (getDirection()) {
 					case Right:
-						p.setPosition(getX() + getWidth(), getY() + getHeight() * .5f + getDepth());
+						p.setPosition(getX() + getWidth() * 0.3f, getY() + getHeight() * .75f + getDepth());
 						p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
-						p.setFlip(true, false);
+						p.setFlip(false, false);
+						p.setSize(63, 9);
+						p.setBounds(getWidth()*0.3f, getHeight()*0.25f, getWidth()*0.3f, getHeight()*0.5f);
 						break;
 					case Left:
-						p.setPosition(getX(), getY() + getHeight() * .5f + getDepth());
+						p.setPosition(getX() + getWidth() * 0.1f, getY() + getHeight() * .75f + getDepth());
 						p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
-						p.setFlip(false, false);
+						p.setFlip(true, false);
+						p.setSize(63, 9);
+						p.setBounds(getWidth()*0.3f, getHeight()*0.25f, getWidth()*0.3f, getHeight()*0.5f);
 						break;
 					case Up:
-						p.setPosition(getX() + getWidth() * .5f - (p.getWidth()*.5f), getY() + getHeight() + getDepth());
-						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
-						p.setFlip(false, true);
-						break;
-					case Down:
-						p.setPosition(getX() + getWidth() * .5f -(p.getWidth() *.5f), getY() + getDepth());
+						p.setSize(52, 46);
+						p.setPosition(getX() + getWidth() * .5f - (p.getWidth()*.5f), getY() + getHeight() + getDepth() - p.getHeight());
 						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
 						p.setFlip(false, false);
+						p.setBounds(getWidth()*0.2f, getHeight()*0.3f, getWidth()*0.6f, getHeight()*0.4f);
+						break;
+					case Down:
+						p.setSize(52, 46);
+						p.setPosition(getX() + getWidth() * .5f -(p.getWidth() *.5f), getY() + getDepth() + p.getHeight());
+						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
+						p.setFlip(false, true);
+						p.setBounds(getWidth()*0.2f, getHeight()*0.3f, getWidth()*0.6f, getHeight()*0.4f);
 						break;
 					default:
 						break;
 					}
-
+					
 					getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
-
+					
 					MoveControl pmove = p.getMove();
+
+					pmove.setMoveSpeed(projectileSpeed);
+
+
 					switch (getDirection()) {
 					case Right:
 						pmove.setDirection(1f, 0);
