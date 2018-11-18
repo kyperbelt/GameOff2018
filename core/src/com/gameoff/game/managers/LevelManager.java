@@ -7,6 +7,7 @@ import com.gameoff.game.Room;
 import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.*;
+import com.gameoff.game.objects.enemies.*;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -430,6 +431,10 @@ public class LevelManager extends StateManager {
 
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
+		WormEnemy enemy = new WormEnemy(1);
+		playground.addGameObject(enemy, KyperBoxGame.NULL_PROPERTIES);
+		enemy.init(KyperBoxGame.NULL_PROPERTIES);
+		randomPlaceObject(enemy, playground, level);
 
 		// Keys
 		if (r.getHasKey())
@@ -463,6 +468,8 @@ public class LevelManager extends StateManager {
 				overlayManager.setKeyLabelText(":"+overlayKeyAmount);
 			}
 		});
+
+		player.updateToCurrentForm();
 		
 	}
 

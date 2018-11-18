@@ -227,6 +227,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 			System.out.println(StringUtils.format("%s form Initiated", form.name()));
 	}
 
+	public void updateToCurrentForm()
+	{
+		setCurrentForm(this.form);
+	}
+
 	public Form getCurrentForm() {
 		return form;
 	}
