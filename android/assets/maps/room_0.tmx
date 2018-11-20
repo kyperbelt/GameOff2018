@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="169">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="173">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
  </properties>
@@ -166,18 +166,22 @@
   </object>
   <object id="163" name="SpikerA" type="Spiker" gid="42" x="1084" y="377" width="180" height="86"/>
   <object id="164" name="SpikerA" type="Spiker" gid="42" x="1082" y="495" width="180" height="86"/>
-  <object id="165" name="SpikeWallA" type="BasicGameObject" gid="46" x="1665" y="647" width="64" height="260">
+  <object id="167" name="SpikeWallB" type="SpikeWall" gid="45" x="1468" y="451" width="260" height="64"/>
+  <object id="169" name="SpikeWallA" type="SpikeWall" gid="46" x="1665" y="681" width="64" height="260">
    <properties>
-    <property name="sprite" value="spikewall_e"/>
+    <property name="direction" type="int" value="1"/>
    </properties>
   </object>
-  <object id="166" name="Wall" type="Wall" x="1675" y="412" width="50" height="216"/>
-  <object id="167" name="SpikeWallB" type="BasicGameObject" gid="45" x="1465" y="420" width="260" height="64">
+  <object id="170" name="SpikeWallW" type="SpikeWall" gid="44" x="1280" y="733" width="64" height="260">
    <properties>
-    <property name="sprite" value="spikewall_n"/>
+    <property name="direction" type="int" value="3"/>
    </properties>
   </object>
-  <object id="168" name="Wall" type="Wall" x="1474" y="363" width="245" height="40"/>
+  <object id="172" name="SpikeWall" type="SpikeWall" gid="43" x="1466" y="839" width="260" height="64">
+   <properties>
+    <property name="direction" type="int" value="2"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="foreground" locked="1"/>
  <objectgroup name="uiground" locked="1"/>

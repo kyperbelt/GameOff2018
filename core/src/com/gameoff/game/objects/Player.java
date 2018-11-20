@@ -22,6 +22,8 @@ import com.kyperbox.objects.BasicGameObject;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.StringUtils;
+import com.gameoff.game.ZOrder;
+import com.gameoff.game.control.ZOrderControl;
 
 public class Player extends DirectionEntity implements AnimationListener {
 
@@ -85,6 +87,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 	// demonlegs
 	BasicGameObject dlegs;
+	ZOrderControl legsZOrder;
 	AnimationController dlegsAnim;
 	BasicGameObject transformSprite;
 	AnimationController transformAnim;
@@ -152,6 +155,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 		dlegs = new BasicGameObject();
 		dlegs.setName(DEMON + LEGS + id);
 		dlegsAnim = new AnimationController();
+		legsZOrder = new ZOrderControl();
+		legsZOrder.setZOrder(ZOrder.PLAYER);
 
 		playerShadow = new BasicGameObject();
 		playerShadow.setSprite("player_shadow");
@@ -339,6 +344,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 		createLegAnimations(getState());
 		dlegs.addController(dlegsAnim);
+		dlegs.addController(legsZOrder);
 		dlegs.setSize(WIDTH * .8f, HEIGHT * .4f);
 		legsX = WIDTH * .1f;
 		legsY = 0;
