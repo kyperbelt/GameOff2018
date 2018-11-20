@@ -13,6 +13,7 @@ public class Wall extends Basic {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
+    removeController(getHealth());
     if (properties == null)
     {
       getMove().setPassable(false);

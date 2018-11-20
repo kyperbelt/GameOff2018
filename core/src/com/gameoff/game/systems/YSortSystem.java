@@ -8,6 +8,9 @@ import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.BackgroundObject;
 import com.kyperbox.objects.GameObject;
+import com.gameoff.game.objects.Basic;
+import com.gameoff.game.objects.Player;
+import com.gameoff.game.objects.Spiker;
 import com.kyperbox.objects.TilemapLayerObject;
 import com.kyperbox.systems.LayerSystem;
 
@@ -18,7 +21,6 @@ public class YSortSystem extends LayerSystem {
 	public Comparator<Actor> ysort = new Comparator<Actor>() {
 		@Override
 		public int compare(Actor o1, Actor o2) {
-
 			if (o1 instanceof GameObject && o2 instanceof GameObject) {
 				GameObject go1 = (GameObject) o1;
 				GameObject go2 = (GameObject) o2;
@@ -28,7 +30,6 @@ public class YSortSystem extends LayerSystem {
 				
 				z1  = z1 == null ? defaultZOrder : z1;
 				z2  = z2 == null ? defaultZOrder : z2;
-				
 
 				if (z1 != null && z2 != null) {
 
@@ -37,33 +38,55 @@ public class YSortSystem extends LayerSystem {
 					} else if (z1.getZOrder() < z2.getZOrder()) {
 						return 1;
 					}else {
-						return Float.compare(o2.getY(), o1.getY());
+						//System.out.println("GOT HERE!");
+						float y2 = o2.getY();
+						if (o2 instanceof Basic)
+						{
+							Basic b2 = (Basic)o2;
+							y2 += b2.getYOffset();
+						}
+
+						float y1 = o1.getY();
+						if (o1 instanceof Basic)
+						{
+							Basic b1 = (Basic)o1;
+							y1 += b1.getYOffset();
+						}
+						return Float.compare(y2, y1);
 					}
 
 				} else {
-					return Float.compare(o2.getY(), o1.getY());
-					// if (o1 instanceof ForegroundObject)
-					// return 1;
-					// else if (o2 instanceof ForegroundObject)
-					// return -1;
-
+						float y2 = o2.getY();
+						if (o2 instanceof Basic)
+						{
+							Basic b2 = (Basic)o2;
+							y2 += b2.getYOffset();
+						}
+						float y1 = o1.getY();
+						if (o1 instanceof Basic)
+						{
+							Basic b1 = (Basic)o1;
+							y1 += b1.getYOffset();
+						}
+						return Float.compare(y2, y1);
 				}
 
 			}
 
-			// if(o1 instanceof TilemapLayerObject|| o2 instanceof TilemapLayerObject)
-			// return 0;
-			// if (o1 instanceof BackgroundObject)
-			// return -1;
-			// else if (o2 instanceof BackgroundObject)
-			// return 1;
-			// if(o1 instanceof Hazard) {
-			// return -1;
-			// }else if(o2 instanceof Hazard) {
-			// return 1;
-			// }
+			float y2 = o2.getY();
+			if (o2 instanceof Basic)
+			{
+				Basic b2 = (Basic)o2;
+				y2 += b2.getYOffset();
+			}
+			float y1 = o1.getY();
+			if (o1 instanceof Basic)
+			{
+				Basic b1 = (Basic)o1;
+				y1 += b1.getYOffset();
+			}
 
-			return Float.compare(o2.getY(), o1.getY());
+			return Float.compare(y2, y1);
 		}
 	};
 
