@@ -723,34 +723,37 @@ public class Player extends DirectionEntity implements AnimationListener {
 				if (form != null) {
 					Projectile p = Projectile.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral); // get a pooled projectile
 					p.setVelocity(0, 0);
+					float w = p.getWidth();
+					float h = p.getHeight();
 					switch (getDirection()) {
+
 					case Right:
 						p.setPosition(getX() + getWidth() * 0.3f, getY() + getHeight() * .75f + getDepth());
 						p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
 						p.setFlip(false, false);
 						p.setSize(63, 9);
-						p.setBounds(getWidth()*0.3f, getHeight()*0.25f, getWidth()*0.3f, getHeight()*0.5f);
+						p.setBounds(w*0.3f, h*0.15f, w*0.3f, h*0.6f);
 						break;
 					case Left:
 						p.setPosition(getX() + getWidth() * 0.1f, getY() + getHeight() * .75f + getDepth());
 						p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
 						p.setFlip(true, false);
 						p.setSize(63, 9);
-						p.setBounds(getWidth()*0.3f, getHeight()*0.25f, getWidth()*0.3f, getHeight()*0.5f);
+						p.setBounds(w*0.5f, h*0.15f, w*0.3f, h*0.6f);
 						break;
 					case Up:
 						p.setSize(52, 46);
 						p.setPosition(getX() + getWidth() * .5f - (p.getWidth()*.5f), getY() + getHeight() + getDepth() - p.getHeight());
 						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
 						p.setFlip(false, false);
-						p.setBounds(getWidth()*0.2f, getHeight()*0.3f, getWidth()*0.6f, getHeight()*0.4f);
+						p.setBounds(w*0.2f, h*0.3f, w*0.6f, h*0.4f);
 						break;
 					case Down:
 						p.setSize(52, 46);
 						p.setPosition(getX() + getWidth() * .5f -(p.getWidth() *.5f), getY() + getDepth() + p.getHeight());
 						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
 						p.setFlip(false, true);
-						p.setBounds(getWidth()*0.2f, getHeight()*0.3f, getWidth()*0.6f, getHeight()*0.4f);
+						p.setBounds(w*0.2f, h*0.3f, w*0.6f, h*0.4f);
 						break;
 					default:
 						break;
