@@ -21,6 +21,7 @@ import com.kyperbox.ai.BehaviorTree;
 import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.UserData;
+import java.util.Random;
 
 public class WormEnemy extends DirectionEntity {
 
@@ -29,6 +30,7 @@ public class WormEnemy extends DirectionEntity {
   UserData context;
   AiControl ai;
   int m_id = 0;
+  Random m_random = new Random();
 
   float damagedDuration = .2f;
   float damagedElapsed = 0;
@@ -57,7 +59,7 @@ public class WormEnemy extends DirectionEntity {
     }
   };
 
-  public WormEnemy(int id) {
+  public WormEnemy() {
     state = new StateControl(EntityState.Moving);
     context = new UserData(getClass().getSimpleName() + "_Context");
     context.put(Context.SELF, this);
@@ -66,7 +68,7 @@ public class WormEnemy extends DirectionEntity {
     getHealth().setHealthGroup(HealthGroup.Demon);
     getHealth().setDamageListener(damageListener);
     state.setStateChangeListener(stateListener);
-    m_id = id;
+    m_id = m_random.nextInt(99999999);
   }
 
   @Override

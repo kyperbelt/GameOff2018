@@ -22,6 +22,7 @@ import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.*;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
+import java.util.Random;
 
 public class LevelManager extends StateManager {
 
@@ -29,6 +30,8 @@ public class LevelManager extends StateManager {
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
+
+	private Random m_random = new Random();
 
 	private int entryPoint;
 
@@ -431,7 +434,7 @@ public class LevelManager extends StateManager {
 
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
-		WormEnemy enemy = new WormEnemy(1);
+		WormEnemy enemy = new WormEnemy();
 		playground.addGameObject(enemy, KyperBoxGame.NULL_PROPERTIES);
 		enemy.init(KyperBoxGame.NULL_PROPERTIES);
 		randomPlaceObject(enemy, playground, level);

@@ -54,6 +54,7 @@ public class Spiker extends Basic {
     attack = new AttackControl(1f,1f,hazardListener);
     getZOrder().setZOrder(ZOrder.PLAYER);
     setYOffset(40);
+    m_id = m_random.nextInt(9999999);
   }
   
   public Spiker() {
