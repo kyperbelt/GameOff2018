@@ -87,6 +87,7 @@ public class ScorpionEnemy extends DirectionEntity {
     super.init(properties);
     addController(state);
     addController(ai);
+    getMove().setFlying(true);
 
     shadowAnim = new AnimationController();
     shadow.addController(shadowAnim);
