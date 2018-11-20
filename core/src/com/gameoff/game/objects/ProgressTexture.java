@@ -40,6 +40,7 @@ public class ProgressTexture extends GameObject {
 			
 			batch.setShader(progressShader);
 			progressShader.setUniformf("u_progress", progress);
+			progressShader.setUniformf("u_height",getHeight());
 		
 			super.draw(batch, parentAlpha);
 			batch.setShader(ps);
