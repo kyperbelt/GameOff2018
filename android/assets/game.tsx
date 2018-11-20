@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="669" tileheight="125" tilecount="36" columns="0">
+<tileset name="game" tilewidth="669" tileheight="260" tilecount="40" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -108,5 +108,17 @@
  </tile>
  <tile id="41">
   <image width="180" height="86" source="../../input_assets/game/spiker_redA_0.png"/>
+ </tile>
+ <tile id="42">
+  <image width="260" height="64" source="../../input_assets/game/spikewall_s.png"/>
+ </tile>
+ <tile id="43">
+  <image width="64" height="260" source="../../input_assets/game/spikewall_w.png"/>
+ </tile>
+ <tile id="44">
+  <image width="260" height="64" source="../../input_assets/game/spikewall_n.png"/>
+ </tile>
+ <tile id="45">
+  <image width="64" height="260" source="../../input_assets/game/spikewall_e.png"/>
  </tile>
 </tileset>
