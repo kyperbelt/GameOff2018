@@ -18,6 +18,7 @@ public class Basic extends GameObject {
 	private AnimationController animation;
 	private MoveControl move;
 	private ZOrderControl zorder;
+	private float m_yOffset = 0;
 	
 	
 	public Basic() {
@@ -29,6 +30,16 @@ public class Basic extends GameObject {
 		zorder.setZOrder(ZOrder.PLAYER);
 		setApplyVelocity(false);
 
+	}
+
+	public void setYOffset(float yo)
+	{
+		m_yOffset = yo;
+	}
+
+	public float getYOffset()
+	{
+		return m_yOffset;
 	}
 	
 	public ZOrderControl getZOrder() {

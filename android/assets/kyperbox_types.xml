@@ -84,6 +84,10 @@
   <property name="sprite" type="string"/>
  </objecttype>
  <objecttype name="SimpleEnemy" color="#aa5500"/>
+ <objecttype name="Spiker" color="#a4182d"/>
+ <objecttype name="SpikeWall" color="#a0a0a4">
+  <property name="direction" type="int" default="0"/>
+ </objecttype>
  <objecttype name="Table" color="#ff00ff">
   <property name="background" type="string"/>
   <property name="children" type="string"/>

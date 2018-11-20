@@ -99,13 +99,24 @@ public class Destructible extends Basic {
 	public void init(MapProperties properties) {
 		super.init(properties);
 		removeController(getAnimation());
-		removeController(getMove());
+		//removeController(getMove());
+		getMove().setPassable(false);
+		float boundX = 0;
+		float boundY = 0;
+
 		if (properties != null) {
 			setHealth(properties.get("health", getHealth().getCurrentHealth(), Float.class));
 			drop = properties.get("itemDrop", drop, Integer.class);
 			setSprite(properties.get("sprite", sprite, String.class));
 			destroyAnimation = properties.get("DestroyAnimation", destroyAnimation, String.class);
+			boundX = properties.get("boundX", 0f, Float.class);
+			boundY = properties.get("boundY", 0f, Float.class);
+			float xadj = boundX*getWidth()/2f;
+			float yadj = boundY*getHeight()/2f;
+			setBounds(xadj,yadj,getWidth()-xadj*2, getHeight()-yadj*2);
 		}
+
+
 
 		if (destroyAnimation != null && !destroyAnimation.isEmpty()) {
 

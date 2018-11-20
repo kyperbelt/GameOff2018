@@ -7,6 +7,8 @@ import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.ProgressTexture;
 import com.gameoff.game.objects.Trigger;
 import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.Spiker;
+import com.gameoff.game.objects.SpikeWall;
 import com.gameoff.game.objects.destructible.Destructible;
 import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.kyperbox.objects.GameObject;
@@ -84,6 +86,20 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new ProgressTexture();
+			}
+		});
+
+		game.registerGameObject("Spiker", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new Spiker();
+			}
+		});
+
+		game.registerGameObject("SpikeWall", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new SpikeWall();
 			}
 		});
 		

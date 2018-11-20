@@ -7,6 +7,7 @@ import com.gameoff.game.Room;
 import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.*;
+import com.gameoff.game.objects.enemies.*;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -21,6 +22,7 @@ import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.*;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
+import java.util.Random;
 
 public class LevelManager extends StateManager {
 
@@ -28,6 +30,8 @@ public class LevelManager extends StateManager {
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
+
+	private Random m_random = new Random();
 
 	private int entryPoint;
 
@@ -430,6 +434,16 @@ public class LevelManager extends StateManager {
 
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
+		WormEnemy enemy = new WormEnemy();
+		playground.addGameObject(enemy, KyperBoxGame.NULL_PROPERTIES);
+		enemy.init(KyperBoxGame.NULL_PROPERTIES);
+		randomPlaceObject(enemy, playground, level);
+
+		ScorpionEnemy enemy2 = new ScorpionEnemy();
+		playground.addGameObject(enemy2, KyperBoxGame.NULL_PROPERTIES);
+		enemy2.init(KyperBoxGame.NULL_PROPERTIES);
+		randomPlaceObject(enemy2, playground, level);
+		enemy2.setPosition(enemy2.getX()+150,enemy2.getY());
 
 		// Keys
 		if (r.getHasKey())
@@ -463,6 +477,8 @@ public class LevelManager extends StateManager {
 				overlayManager.setKeyLabelText(":"+overlayKeyAmount);
 			}
 		});
+
+		player.updateToCurrentForm();
 		
 	}
 

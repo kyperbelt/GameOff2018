@@ -37,19 +37,23 @@
 		}
 	},
 	"leaf": {
-		"Test": {
-			"properties": {
-				"testText": {
-					"type": "string",
-					"value": "null"
-				}
-			}
-		},
 		"Wait": {
 			"properties": {
 				"time": {
 					"type": "float",
 					"value": "1"
+				}
+			}
+		},
+		"WaitRandom": {
+			"properties": {
+				"timeMin": {
+					"type": "float",
+					"value": "1"
+				},
+				"timeMax": {
+					"type": "float",
+					"value": "3"
 				}
 			}
 		},

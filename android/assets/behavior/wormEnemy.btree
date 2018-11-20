@@ -1,0 +1,61 @@
+{ 
+    "Repeat" :{
+        "properties" : {
+            "count":{
+                "value":"-1",
+                "type":"int"
+            }
+        },
+        "children" : [
+{            "Selector" :{
+                "properties" : {},
+                "children" : [
+{                    "Sequence" :{
+                        "properties" : {},
+                        "children" : [
+{                            "Invert" :{
+                                "properties" : {},
+                                "children" : [
+{                                    "CheckDamagedState" :{
+                                        "properties" : {},
+                                        "children" : []
+                                    }}
+                                ]
+                            }},
+
+{                            "Success" :{
+                                "properties" : {},
+                                "children" : [
+{                                    "FindPlayerInRange" :{
+                                        "properties" : {
+                                            "range":{
+                                                "value":"600",
+                                                "type":"float"
+                                            }
+                                        },
+                                        "children" : []
+                                    }}
+                                ]
+                            }},
+
+{                            "MoveToTarget" :{
+                                "properties" : {
+                                    "target":{
+                                        "value":"player",
+                                        "type":"string"
+                                    }
+                                },
+                                "children" : []
+                            }}
+                        ]
+                    }},
+
+{                    "StopMovement" :{
+                        "properties" : {},
+                        "children" : []
+                    }}
+                ]
+            }}
+        ]
+    }
+}
