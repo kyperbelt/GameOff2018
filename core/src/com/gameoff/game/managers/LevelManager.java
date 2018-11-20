@@ -439,6 +439,12 @@ public class LevelManager extends StateManager {
 		enemy.init(KyperBoxGame.NULL_PROPERTIES);
 		randomPlaceObject(enemy, playground, level);
 
+		ScorpionEnemy enemy2 = new ScorpionEnemy();
+		playground.addGameObject(enemy2, KyperBoxGame.NULL_PROPERTIES);
+		enemy2.init(KyperBoxGame.NULL_PROPERTIES);
+		randomPlaceObject(enemy2, playground, level);
+		enemy2.setPosition(enemy2.getX()+150,enemy2.getY());
+
 		// Keys
 		if (r.getHasKey())
 		{

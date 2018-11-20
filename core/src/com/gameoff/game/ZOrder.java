@@ -18,6 +18,7 @@ public class ZOrder {
 	// FOREGROUND +1 or FOREGROUND-1 ect.
 	public static final int FOREGROUND = 10;// foreground layer
 	public static final int PLAYER = 30; // player layer
+  public static final int SHADOW = 35;
 
   public static final int KEYHOLE = 48;
 	public static final int DOORS = 50;
