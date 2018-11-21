@@ -28,7 +28,7 @@ public class Fire extends Basic {
   Random m_random = new Random();
 
   float m_lifeTime = 9999999;
-  float m_maxLife = 0;
+  float m_maxLife = 999999;
   boolean m_spread = false;
   float m_spawnTime = 2.0f;
   float m_spawnSpeed = 2.0f;
@@ -37,6 +37,7 @@ public class Fire extends Basic {
   boolean m_randomPositioning = true;
   float m_decay = 0.1f;
   int m_maxSpawn = 8;
+  int m_originalMaxSpawn = 8;
 
   AttackListener hazardListener = new AttackListener() {
     @Override
@@ -85,6 +86,7 @@ public class Fire extends Basic {
   public void setMaxSpawn(int max)
   {
     m_maxSpawn = max;
+    m_originalMaxSpawn = max;
   }
 
   public void setSpread(boolean spread)
@@ -156,13 +158,15 @@ public class Fire extends Basic {
   {
     //0 to 3 for now
     Fire f = new Fire();
+
     f.setLife(m_maxLife-m_decay);
-    f.setSpawnSpeed(m_spawnSpeed);
     f.setSpread(true);
     f.setDecay(m_decay);
-    f.setMaxSpawn(m_maxSpawn);
+    f.setMaxSpawn(m_originalMaxSpawn);
     f.setDirectionBitFlags(m_directionsBitFlags);
     f.setSpawnStyle(m_spawnStyle);
+    f.setRandomPositioning(m_randomPositioning);
+    f.setSpawnSpeed(m_spawnSpeed);
 
     float f1 = m_random.nextFloat()*20f;
     float f2 = m_random.nextFloat()*20f;
@@ -276,6 +280,7 @@ public class Fire extends Basic {
   }
 
   private void createAnimations() {
+    
     String fireAnimationName = "fire" + m_id;
     Animation<KyperSprite> spikeA = getState().getAnimation(fireAnimationName);
     if (spikeA == null) {

@@ -26,7 +26,7 @@ public class Lava extends Basic {
   Random m_random = new Random();
 
   float m_lifeTime = 9999999;
-  float m_maxLife = 0;
+  float m_maxLife = 999999;
   boolean m_spread = false;
   float m_spawnTime = 2.0f;
   float m_spawnSpeed = 2.0f;
@@ -35,6 +35,7 @@ public class Lava extends Basic {
   boolean m_randomPositioning = true;
   float m_decay = 0.1f;
   int m_maxSpawn = 8;
+  int m_originalMaxSpawn = 8;
 
   AttackListener hazardListener = new AttackListener() {
     @Override
@@ -74,6 +75,7 @@ public class Lava extends Basic {
   public void setMaxSpawn(int max)
   {
     m_maxSpawn = max;
+    m_originalMaxSpawn = max;
   }
 
   public void setSpread(boolean spread)
@@ -134,14 +136,17 @@ public class Lava extends Basic {
     removeController(getHealth());
 
     addController(attack);
-    setSprite("lava_0");
+    setSprite("lavatile_0");
     getAnimation().set("lava", PlayMode.LOOP_PINGPONG);
     getAnimation().setPlaySpeed(1.0f + m_random.nextFloat());
     setBounds(5,5,54,54);
+    removeController(getMove());
   }
 
   public void spawnFire(int dir)
   {
+    if ((m_maxLife - m_decay) < 1) return;
+
     //0 to 3 for now
     Lava f = new Lava();
 
@@ -164,7 +169,7 @@ public class Lava extends Basic {
     f.setSpawnSpeed(m_spawnSpeed);
     f.setSpread(true);
     f.setDecay(m_decay);
-    f.setMaxSpawn(m_maxSpawn);
+    f.setMaxSpawn(m_originalMaxSpawn);
     f.setDirectionBitFlags(m_directionsBitFlags);
     f.setSpawnStyle(m_spawnStyle);
 
@@ -172,7 +177,7 @@ public class Lava extends Basic {
     f.getCollision().getCollisions(f,0.005f);
     f.getCollision().getCollisions(f,0.005f);
     removeFireIfNotValid(f);
-    
+    f.setVisible(true);
   }
 
   private void removeFireIfNotValid(Lava f)
@@ -236,7 +241,6 @@ public class Lava extends Basic {
             {
               for (int dd = 0; dd < 4; dd++)
               {
-                System.out.println("LAVA " + m_id + " : Spawn direction: " + dd);
                 spawnFire(dd);
               }
             } else if (m_spawnStyle == 2)

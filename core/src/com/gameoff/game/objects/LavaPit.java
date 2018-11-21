@@ -179,19 +179,19 @@ public class LavaPit extends Basic {
         m_state = 20;
         m_stateTime = 0;
         //spawn some lava all around
-        for (int xx = -1; xx < 2; xx++)
+        for (int xx = -2; xx < 3; xx++)
         {
-          for (int yy = -1; yy < 2; yy++)
+          for (int yy = -2; yy < 3; yy++)
           {
             Lava l = new Lava();
-            l.setLife(15);
-            l.setSpawnSpeed(2.0f);
+            l.setLife(30);
+            l.setSpawnSpeed(3.0f);
+            l.setDecay(8);
             l.setSpread(true);
             l.setMaxSpawn(1);
             l.setSpawnStyle(1);
             l.setPosition(getX() + getWidth()/2 -32 + xx*64, getY() - getHeight()/2 + 48 + yy*64);
             getGameLayer().addGameObject(l,null);
-            l.setBounds(0,0,getWidth(),getHeight());
           }
         }
         setVisible(false);
