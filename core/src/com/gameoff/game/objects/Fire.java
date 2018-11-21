@@ -26,7 +26,9 @@ public class Fire extends Basic {
   float m_lifeTime = 9999999;
   float m_maxLife = 0;
   boolean m_spread = false;
-  float m_spawnTime = 4.0f;
+  float m_spawnTime = 2.0f;
+  float m_spawnSpeed = 2.0f;
+  int m_spawnStyle = 1;  //0 is slower and random, 1 is spreads out fast
 
   AttackListener hazardListener = new AttackListener() {
     @Override
@@ -58,20 +60,33 @@ public class Fire extends Basic {
   
   public Fire() {
     this(HealthGroup.Angel,HealthGroup.Player,HealthGroup.Demon,HealthGroup.Neutral);
-    //setSpread(true);
-    //setLife(13f);
+    setSize(64,88);
+    setBounds(5,15,getWidth()-10,10);
+    setSpawnSpeed(1f);
+    setSpread(true);
+    setLife(3f);
   }
 
   public void setSpread(boolean spread)
   {
     m_spread = spread;
-    m_spawnTime = 3f + m_random.nextFloat()*5f;
   }
 
   public void setLife(float tm)
   {
     m_lifeTime = tm;
     m_maxLife = tm;
+  }
+
+  public void setSpawnSpeed(float sp)
+  {
+    m_spawnSpeed = sp;
+    m_spawnTime = m_spawnSpeed + m_random.nextFloat()*m_spawnSpeed;
+  }
+
+  public void setSpawnStyle(int style)
+  {
+    m_spawnStyle = style;
   }
 
   @Override
@@ -88,27 +103,59 @@ public class Fire extends Basic {
     getAnimation().setPlaySpeed(1.0f + m_random.nextFloat());
     setBounds(5,15,getWidth()-10,10);
   }
-  
+
   public void spawnFire(int dir)
   {
     //0 to 3 for now
     Fire f = new Fire();
     f.setLife(m_maxLife);
+    f.setSpawnSpeed(m_spawnSpeed);
     f.setSpread(true);
-    getGameLayer().addGameObject(f,null);
-    f.setSize(64,88);
+
     if (dir == 0)
     {
-      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() - 30 - m_random.nextFloat()*25f);
+      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() - 40 - m_random.nextFloat()*25f);
     } else if (dir == 2)
     {
-      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() + 30 + m_random.nextFloat()*25f);
+      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() + 40 + m_random.nextFloat()*25f);
     } else if (dir == 1)
     {
-      f.setPosition(getX() + 32 + m_random.nextFloat()*32f, getY() - 10 + m_random.nextFloat()*20f);
+      f.setPosition(getX() + 64 + m_random.nextFloat()*16f, getY() - 10 + m_random.nextFloat()*20f);
     } else
     {
-      f.setPosition(getX() - 32 - m_random.nextFloat()*32f, getY() - 10 + m_random.nextFloat()*20f);
+      f.setPosition(getX() - 64 - m_random.nextFloat()*16f, getY() - 10 + m_random.nextFloat()*20f);
+    }
+    getGameLayer().addGameObject(f,null);
+    f.getCollision().getCollisions(f,0.005f);
+    f.getCollision().getCollisions(f,0.005f);
+    removeFireIfNotValid(f);
+  }
+
+  private void removeFireIfNotValid(Fire f)
+  {
+    Array<CollisionData> c = f.getCollision().getCollisions();
+    for (int i = 0; i < c.size; i++) {
+			CollisionData data = c.get(i);
+			GameObject target = data.getTarget();
+      if (target instanceof Player)
+        return;
+
+      if (target instanceof Fire)
+      {
+        f.remove();
+        return;
+      }
+
+			if (target instanceof Basic) {
+				Basic b = (Basic) target;
+        if (b.getMove() != null)
+        {
+          if (b.getMove().isPhysical())
+          {
+            f.remove();
+          }
+        }
+			}
     }
   }
   
@@ -131,8 +178,14 @@ public class Fire extends Basic {
       {
         if (m_spawnTime < 0)
         {
-          m_spawnTime = 5f + m_random.nextFloat()*5f;
-          spawnFire(m_random.nextInt(4));
+          m_spawnTime = m_spawnSpeed + m_random.nextFloat()*m_spawnSpeed;
+          if (m_spawnStyle == 0)
+            spawnFire(m_random.nextInt(4));
+          else
+          {
+            for (int dd = 0; dd < 4; dd++)
+              spawnFire(dd);
+          }
         }
       }
 
