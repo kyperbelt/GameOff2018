@@ -17,6 +17,7 @@
   <property name="itemDrop" type="int" default="10"/>
   <property name="sprite" type="string" default="noregion"/>
  </objecttype>
+ <objecttype name="Fire" color="#a40f36"/>
  <objecttype name="Font" color="#55ff00">
   <property name="font_file" type="string" default=""/>
   <property name="markup" type="bool" default="false"/>
