@@ -138,7 +138,7 @@ public class WormEnemy extends DirectionEntity {
   }
 
   private BehaviorNode getExampleAi() {
-    return BehaviorTree.generateRoot(Gdx.files.internal("behavior/simpleEnemy.btree"));
+    return BehaviorTree.generateRoot(Gdx.files.internal("behavior/wormPingpong.btree"));
   }
 
   private void createAnimations() {

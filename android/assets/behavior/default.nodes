@@ -146,6 +146,29 @@
 		},
 		"StopMovement":{
 			"properties":{}
+		},
+		"CheckAxisMovement":{
+			"properties":{
+				"axis":{
+					"type":"string",
+					"value":"vertical"
+				},
+				"check":{
+					"type":"float",
+					"value":"0.01f"
+				}
+			}
+		},
+		"InvertAxisMovement":{
+			"properties":{
+				"axis":{
+					"type":"string",
+					"value":"vertical"
+				}
+			}
+		},
+		"SetRandomDirection":{
+			"properties":{}
 		}
 
 	}

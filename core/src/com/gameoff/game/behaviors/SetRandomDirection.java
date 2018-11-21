@@ -42,53 +42,53 @@ public class SetRandomDirection extends BehaviorNode {
 
   @Override
   public NodeState update(float delta) {
-    super.update(delta);
 
     NodeState state = NodeState.Success;
 
-    int v = MathUtils.random(8);
+    int v = MathUtils.random(4);
 
     if (v == 0)
     {
-      //up
-      direction.setDirection(Direction.Up);
-      move.setDirection(0, -1);
-    } else if (v == 1)
-    {
-      //up and right
-      direction.setDirection(Direction.Right);
-      move.setDirection(1, -1);
-    } else if (v == 2)
-    {
-      //right
-      direction.setDirection(Direction.Right);
-      move.setDirection(1, 0);
-    } else if (v == 3)
-    {
-      //right and down
+      //up right
       direction.setDirection(Direction.Right);
       move.setDirection(1, 1);
-    } else if (v == 4)
+    } else if (v == 1)
     {
-      //down
-      direction.setDirection(Direction.Down);
-      move.setDirection(0, 1);
-    } else if (v == 5)
-    {
-      //down and left
+      //up left
       direction.setDirection(Direction.Left);
       move.setDirection(-1, 1);
-    } else if (v == 6)
+    } else if (v == 2)
     {
-      //left
-      direction.setDirection(Direction.Left);
-      move.setDirection(-1, 0);
-    } else if (v == 7)
+      //down right
+      direction.setDirection(Direction.Right);
+      move.setDirection(1, -1);
+    } else if (v == 3)
     {
-      //up and left
+      //rdown left
       direction.setDirection(Direction.Left);
       move.setDirection(-1, -1);
-    }
+    } 
+//    else if (v == 4)
+//    {
+//      //down
+//      direction.setDirection(Direction.Down);
+//      move.setDirection(0, 1);
+//    } else if (v == 5)
+//    {
+//      //down and left
+//      direction.setDirection(Direction.Left);
+//      move.setDirection(-1, 1);
+//    } else if (v == 6)
+//    {
+//      //left
+//      direction.setDirection(Direction.Left);
+//      move.setDirection(-1, 0);
+//    } else if (v == 7)
+//    {
+//      //up and left
+//      direction.setDirection(Direction.Left);
+//      move.setDirection(-1, -1);
+//    }
 
       //Vector2 position = self.getCollisionCenter();
       //Vector2 destination = target.getCollisionCenter();
