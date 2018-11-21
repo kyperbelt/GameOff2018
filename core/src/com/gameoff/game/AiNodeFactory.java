@@ -1,8 +1,30 @@
 package com.gameoff.game;
 
 import com.badlogic.gdx.utils.JsonValue;
-import com.gameoff.game.behaviors.*;
-import com.kyperbox.ai.*;
+import com.gameoff.game.behaviors.CheckAxisMovement;
+import com.gameoff.game.behaviors.CheckDamageState;
+import com.gameoff.game.behaviors.FindPlayerInRange;
+import com.gameoff.game.behaviors.InvertAxisMovement;
+import com.gameoff.game.behaviors.MoveToTarget;
+import com.gameoff.game.behaviors.RemoveObject;
+import com.gameoff.game.behaviors.SetContextObject;
+import com.gameoff.game.behaviors.SetRandomDirection;
+import com.gameoff.game.behaviors.SpawnObject;
+import com.gameoff.game.behaviors.StopMovement;
+import com.gameoff.game.behaviors.TestNode;
+import com.gameoff.game.behaviors.UpdateDoor;
+import com.gameoff.game.behaviors.Wait;
+import com.kyperbox.ai.BehaviorNode;
+import com.kyperbox.ai.BehaviorTree;
+import com.kyperbox.ai.InvertNode;
+import com.kyperbox.ai.NodeGetter;
+import com.kyperbox.ai.RandomSelectorNode;
+import com.kyperbox.ai.RandomSequenceNode;
+import com.kyperbox.ai.RepeatNode;
+import com.kyperbox.ai.RepeatUntilFailNode;
+import com.kyperbox.ai.SelectorNode;
+import com.kyperbox.ai.SequenceNode;
+import com.kyperbox.ai.SuccessNode;
 
 public class AiNodeFactory {
 
@@ -146,7 +168,19 @@ public class AiNodeFactory {
 				String layerName = properties.getChild("layerName").asString();
 				float x = properties.getChild("x").asFloat();
 				float y = properties.getChild("y").asFloat();
-				return new SpawnObject(objectType, layerName, x, y);
+				return new SpawnObject(objectType, layerName,null, x, y);
+			}
+		});
+		
+		BehaviorTree.registerNode("SpawnObjectRelative", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String objectType = properties.getChild("objectType").asString();
+				String layerName = properties.getChild("layerName").asString();
+				String relativeObject = properties.getChild("relativeObject").asString();
+				float x = properties.getChild("x").asFloat();
+				float y = properties.getChild("y").asFloat();
+				return new SpawnObject(objectType, layerName,relativeObject, x, y);
 			}
 		});
 
@@ -163,6 +197,34 @@ public class AiNodeFactory {
 			@Override
 			public BehaviorNode getNode(JsonValue properties) {
 				return new StopMovement();
+			}
+		});
+		
+		BehaviorTree.registerNode("CheckAxisMovement", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String axis = properties.getChild("axis").asString();
+				float check = properties.getChild("check").asFloat();
+				return new CheckAxisMovement(axis,check);
+			}
+		});
+		
+		BehaviorTree.registerNode("InvertAxisMovement", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String axis = properties.getChild("axis").asString();
+				return new InvertAxisMovement(axis);
+			}
+		});
+		
+		BehaviorTree.registerNode("SetRandomDirection", new NodeGetter() {
+			
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+
+				
+				
+				return new SetRandomDirection();
 			}
 		});
 		

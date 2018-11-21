@@ -17,7 +17,7 @@
   </data>
  </layer>
  <objectgroup name="playground">
-  <object id="84" name="instructions" type="BasicGameObject" gid="49" x="1110" y="1022" width="669" height="37">
+  <object id="84" name="instructions" type="BasicGameObject" gid="48" x="1110" y="1022" width="669" height="37">
    <properties>
     <property name="sprite" value="instructions_start"/>
    </properties>
@@ -120,7 +120,7 @@
    </properties>
   </object>
   <object id="178" name="Fire" type="Fire" gid="47" x="1231" y="533" width="64" height="88"/>
-  <object id="187" name="LavaTrap" type="LavaBurst" gid="48" x="1832" y="705" width="247" height="103"/>
+  <object id="187" name="LavaTrap" type="LavaBurst" gid="48" x="1832" y="703" width="247" height="103"/>
  </objectgroup>
  <objectgroup name="foreground" locked="1"/>
  <objectgroup name="uiground" locked="1"/>

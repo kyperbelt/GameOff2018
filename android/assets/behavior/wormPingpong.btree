@@ -1,0 +1,84 @@
+{ 
+    "Sequence" :{
+        "properties" : {},
+        "children" : [
+{            "SetRandomDirection" :{
+                "properties" : {},
+                "children" : []
+            }},
+
+{            "Repeat" :{
+                "properties" : {
+                    "count":{
+                        "value":"-1",
+                        "type":"int"
+                    }
+                },
+                "children" : [
+{                    "Sequence" :{
+                        "properties" : {},
+                        "children" : [
+{                            "Selector" :{
+                                "properties" : {},
+                                "children" : [
+{                                    "CheckAxisMovement" :{
+                                        "properties" : {
+                                            "axis":{
+                                                "value":"vertical",
+                                                "type":"string"
+                                            },
+                                            "check":{
+                                                "value":"0.01f",
+                                                "type":"float"
+                                            }
+                                        },
+                                        "children" : []
+                                    }},
+
+{                                    "InvertAxisMovement" :{
+                                        "properties" : {
+                                            "axis":{
+                                                "value":"vertical",
+                                                "type":"string"
+                                            }
+                                        },
+                                        "children" : []
+                                    }}
+                                ]
+                            }},
+
+{                            "Selector" :{
+                                "properties" : {},
+                                "children" : [
+{                                    "CheckAxisMovement" :{
+                                        "properties" : {
+                                            "axis":{
+                                                "value":"horizontal",
+                                                "type":"string"
+                                            },
+                                            "check":{
+                                                "value":"0.01f",
+                                                "type":"float"
+                                            }
+                                        },
+                                        "children" : []
+                                    }},
+
+{                                    "InvertAxisMovement" :{
+                                        "properties" : {
+                                            "axis":{
+                                                "value":"horizontal",
+                                                "type":"string"
+                                            }
+                                        },
+                                        "children" : []
+                                    }}
+                                ]
+                            }}
+                        ]
+                    }}
+                ]
+            }}
+        ]
+    }
+}
