@@ -2,30 +2,54 @@
     "Sequence" :{
         "properties" : {},
         "children" : [
-{            "Test" :{
+{            "SetContextObject" :{
                 "properties" : {
-                    "testText":{
-                        "value":"test 1",
+                    "objectName":{
+                        "value":"instructions",
+                        "type":"string"
+                    },
+                    "layerName":{
+                        "value":"playground",
+                        "type":"string"
+                    },
+                    "contextName":{
+                        "value":"spawn",
                         "type":"string"
                     }
                 },
                 "children" : []
             }},
 
-{            "Test" :{
+{            "SpawnObjectRelative" :{
                 "properties" : {
-                    "testText":{
-                        "value":"test 2",
+                    "objectType":{
+                        "value":"Fire",
                         "type":"string"
+                    },
+                    "layerName":{
+                        "value":"playground",
+                        "type":"string"
+                    },
+                    "relativeObject":{
+                        "value":"spawn",
+                        "type":"string"
+                    },
+                    "x":{
+                        "value":"10",
+                        "type":"float"
+                    },
+                    "y":{
+                        "value":"10",
+                        "type":"float"
                     }
                 },
                 "children" : []
             }},
 
-{            "Test" :{
+{            "RemoveObject" :{
                 "properties" : {
-                    "testText":{
-                        "value":"test 3",
+                    "contextName":{
+                        "value":"self",
                         "type":"string"
                     }
                 },

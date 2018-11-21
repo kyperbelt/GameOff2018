@@ -169,6 +169,30 @@
 		},
 		"SetRandomDirection":{
 			"properties":{}
+		},
+		"SpawnObjectRelative":{
+			"properties":{
+				"objectType":{
+					"type":"string",
+					"value":"BasicGameObject"
+				},
+				"layerName":{
+					"type":"string",
+					"value":"playground"
+				},
+				"relativeObject":{
+					"type":"string",
+					"value":"self"
+				},
+				"x":{
+					"type":"float",
+					"value":"0"
+				},
+				"y":{
+					"type":"float",
+					"value":"0"
+				}
+			 }
 		}
 
 	}

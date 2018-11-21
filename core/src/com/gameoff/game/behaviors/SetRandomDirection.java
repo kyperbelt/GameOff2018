@@ -1,5 +1,7 @@
 package com.gameoff.game.behaviors;
 
+import java.util.Random;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.gameoff.game.Context;
 import com.gameoff.game.control.DirectionControl;
@@ -23,6 +25,7 @@ public class SetRandomDirection extends BehaviorNode {
   MoveControl move;
   CollisionController cc;
   DirectionControl direction;
+  Random random = new Random();
 
   //String targetName;
   //GameObject target;
@@ -45,7 +48,7 @@ public class SetRandomDirection extends BehaviorNode {
 
     NodeState state = NodeState.Success;
 
-    int v = MathUtils.random(4);
+    int v = random.nextInt(4);
 
     if (v == 0)
     {

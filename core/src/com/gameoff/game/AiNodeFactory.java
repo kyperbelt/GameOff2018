@@ -168,7 +168,19 @@ public class AiNodeFactory {
 				String layerName = properties.getChild("layerName").asString();
 				float x = properties.getChild("x").asFloat();
 				float y = properties.getChild("y").asFloat();
-				return new SpawnObject(objectType, layerName, x, y);
+				return new SpawnObject(objectType, layerName,null, x, y);
+			}
+		});
+		
+		BehaviorTree.registerNode("SpawnObjectRelative", new NodeGetter() {
+			@Override
+			public BehaviorNode getNode(JsonValue properties) {
+				String objectType = properties.getChild("objectType").asString();
+				String layerName = properties.getChild("layerName").asString();
+				String relativeObject = properties.getChild("relativeObject").asString();
+				float x = properties.getChild("x").asFloat();
+				float y = properties.getChild("y").asFloat();
+				return new SpawnObject(objectType, layerName,relativeObject, x, y);
 			}
 		});
 

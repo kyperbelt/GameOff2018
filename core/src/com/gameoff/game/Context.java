@@ -11,5 +11,6 @@ public class Context {
 	public static final String SELF = "self";
 	public static final String TARGET = "target";
 	public static final String PLAYER = "player";
+	public static final String SPAWN = "spawn";
 
 }
