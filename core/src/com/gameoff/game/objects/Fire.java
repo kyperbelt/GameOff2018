@@ -23,6 +23,10 @@ public class Fire extends Basic {
   Array<CollisionData> cols;
   int m_id = 1;
   Random m_random = new Random();
+  float m_lifeTime = 9999999;
+  float m_maxLife = 0;
+  boolean m_spread = false;
+  float m_spawnTime = 4.0f;
 
   AttackListener hazardListener = new AttackListener() {
     @Override
@@ -54,6 +58,20 @@ public class Fire extends Basic {
   
   public Fire() {
     this(HealthGroup.Angel,HealthGroup.Player,HealthGroup.Demon,HealthGroup.Neutral);
+    //setSpread(true);
+    //setLife(13f);
+  }
+
+  public void setSpread(boolean spread)
+  {
+    m_spread = spread;
+    m_spawnTime = 3f + m_random.nextFloat()*5f;
+  }
+
+  public void setLife(float tm)
+  {
+    m_lifeTime = tm;
+    m_maxLife = tm;
   }
 
   @Override
@@ -71,6 +89,28 @@ public class Fire extends Basic {
     setBounds(5,15,getWidth()-10,10);
   }
   
+  public void spawnFire(int dir)
+  {
+    //0 to 3 for now
+    Fire f = new Fire();
+    f.setLife(m_maxLife);
+    f.setSpread(true);
+    getGameLayer().addGameObject(f,null);
+    f.setSize(64,88);
+    if (dir == 0)
+    {
+      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() - 30 - m_random.nextFloat()*25f);
+    } else if (dir == 2)
+    {
+      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() + 30 + m_random.nextFloat()*25f);
+    } else if (dir == 1)
+    {
+      f.setPosition(getX() + 32 + m_random.nextFloat()*32f, getY() - 10 + m_random.nextFloat()*20f);
+    } else
+    {
+      f.setPosition(getX() - 32 - m_random.nextFloat()*32f, getY() - 10 + m_random.nextFloat()*20f);
+    }
+  }
   
   @Override
   public void update(float delta) {
@@ -78,6 +118,24 @@ public class Fire extends Basic {
     cols = getCollision().getCollisions();
     if(cols.size > 0) {
         attack.attack();
+    }
+
+    if (m_spread)
+    {
+      m_lifeTime -= delta;
+      m_spawnTime -= delta;
+      if (m_lifeTime < 0)
+      {
+        remove();
+      } else
+      {
+        if (m_spawnTime < 0)
+        {
+          m_spawnTime = 5f + m_random.nextFloat()*5f;
+          spawnFire(m_random.nextInt(4));
+        }
+      }
+
     }
     cols = null; //null out because col data is pooled
   }
