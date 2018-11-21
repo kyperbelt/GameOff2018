@@ -58,10 +58,10 @@ public class UpdateDoor extends BehaviorNode {
         }
       }
 
-      return setState(NodeState.Success);
+      return NodeState.Success;
     }
     
-    return setState(NodeState.Failure);
+    return NodeState.Failure;
   }
 
 }

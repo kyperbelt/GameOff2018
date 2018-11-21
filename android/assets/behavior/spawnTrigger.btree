@@ -5,49 +5,27 @@
 {            "Test" :{
                 "properties" : {
                     "testText":{
-                        "value":"trigger is going to wait 3 secs and spawn an object and then remove itself",
+                        "value":"test 1",
                         "type":"string"
                     }
                 },
                 "children" : []
             }},
 
-{            "Wait" :{
+{            "Test" :{
                 "properties" : {
-                    "time":{
-                        "value":"3",
-                        "type":"float"
+                    "testText":{
+                        "value":"test 2",
+                        "type":"string"
                     }
                 },
                 "children" : []
             }},
 
-{            "SpawnObject" :{
+{            "Test" :{
                 "properties" : {
-                    "objectType":{
-                        "value":"SimpleEnemy",
-                        "type":"string"
-                    },
-                    "layerName":{
-                        "value":"playground",
-                        "type":"string"
-                    },
-                    "x":{
-                        "value":"800",
-                        "type":"float"
-                    },
-                    "y":{
-                        "value":"600",
-                        "type":"float"
-                    }
-                },
-                "children" : []
-            }},
-
-{            "RemoveObject" :{
-                "properties" : {
-                    "contextName":{
-                        "value":"self",
+                    "testText":{
+                        "value":"test 3",
                         "type":"string"
                     }
                 },

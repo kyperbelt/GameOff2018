@@ -409,7 +409,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			@Override
 			public void directionChanged(Direction lastDirection, Direction newDirection) {
 
-				System.out.println("currentState = " + state.name() + " newdir=" + newDirection.name());
+				//System.out.println("currentState = " + state.name() + " newdir=" + newDirection.name());
 				if (state == PlayerState.Moving) {
 
 					setWalkAnimation(newDirection, getCurrentForm());

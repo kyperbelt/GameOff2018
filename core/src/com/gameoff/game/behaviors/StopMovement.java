@@ -34,10 +34,10 @@ public class StopMovement extends BehaviorNode{
 	
 		if(move!=null) {
 			move.setDirection(0, 0);
-			return setState(NodeState.Success);
+			return NodeState.Success;
 		}
 
-		return setState(NodeState.Failure);
+		return NodeState.Failure;
 	}
 	
 	

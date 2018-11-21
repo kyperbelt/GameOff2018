@@ -62,7 +62,7 @@ public class SetContextObject extends BehaviorNode {
 				if(o!=null) {
 					
 					getContext().put(contextName, o);
-					return setState(NodeState.Success);
+					return NodeState.Success;
 					
 				}else {
 					if(GameOffGame.DEBUG_LOGGING)
@@ -80,7 +80,7 @@ public class SetContextObject extends BehaviorNode {
 			
 		}
 		
-		return setState(NodeState.Failure);
+		return NodeState.Failure;
 	}
 
 }

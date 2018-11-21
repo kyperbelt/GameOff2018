@@ -37,6 +37,14 @@
 		}
 	},
 	"leaf": {
+		"Test":{
+			"properties":{
+				"testText":{
+					"type":"string",
+					"value":"null"
+				}
+			}
+		},
 		"Wait": {
 			"properties": {
 				"time": {

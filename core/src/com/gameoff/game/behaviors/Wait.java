@@ -26,11 +26,11 @@ public class Wait extends BehaviorNode{
 		elapsed+=delta;
 		
 		if(elapsed >= time) {
-			return setState(NodeState.Success);
+			return NodeState.Success;
 		}
 		
 		System.out.println(StringUtils.format("waiting elapsed=%s time=%s", elapsed,time));
-		return setState(NodeState.Running);
+		return NodeState.Running;
 	}
 
 }

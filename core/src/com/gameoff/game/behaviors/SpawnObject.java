@@ -70,13 +70,13 @@ public class SpawnObject extends BehaviorNode{
 				
 				layer.addGameObject(o, game.NULL_PROPERTIES);
 				
-				return setState(NodeState.Success);
+				return NodeState.Success;
 			}
 			
 		}
 		
 		
-		return setState(NodeState.Failure);
+		return NodeState.Failure;
 	}
 	
 	

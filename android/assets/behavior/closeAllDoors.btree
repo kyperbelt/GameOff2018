@@ -1,8 +1,8 @@
 { 
     "Sequence" :{
         "properties" : {},
-        "children" : [
-{            "UpdateDoor" :{
+        "children" : {
+            "UpdateDoor" :{
                 "properties" : {
                     "doorName":{
                         "value":"All",
@@ -13,18 +13,18 @@
                         "type":"string"
                     }
                 },
-                "children" : []
-            }},
+                "children" : {}
+            },
 
-{            "RemoveObject" :{
+            "RemoveObject" :{
                 "properties" : {
                     "contextName":{
                         "value":"self",
                         "type":"string"
                     }
                 },
-                "children" : []
-            }}
-        ]
+                "children" : {}
+            }
+        }
     }
 }

@@ -32,10 +32,10 @@ public class RemoveObject extends BehaviorNode{
 		
 		if(object!=null) {
 			object.remove();
-			return setState(NodeState.Success);
+			return NodeState.Success;
 		}
 		
-		return setState(NodeState.Failure);
+		return NodeState.Failure;
 	}
 
 }

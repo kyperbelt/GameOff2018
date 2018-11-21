@@ -83,7 +83,7 @@ public class MoveToTarget extends BehaviorNode {
 			move.setDirection(dx, dy);
 		}
 
-		return setState(state);
+		return state;
 	}
 
 }

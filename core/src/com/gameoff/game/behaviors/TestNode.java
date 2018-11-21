@@ -20,9 +20,9 @@ public class TestNode extends BehaviorNode{
 	
 	@Override
 	public NodeState update(float delta) {
-		super.update(delta);
+		//super.update(delta);
 		System.out.println(testText);
-		return setState(NodeState.Success);
+		return NodeState.Success;
 		
 	}
 

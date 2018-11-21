@@ -93,11 +93,11 @@ public class FindPlayerInRange extends BehaviorNode{
 			
 			getContext().put(Context.PLAYER, nearestPlayer);
 			if(nearestPlayer != null)
-				return setState(NodeState.Success);
+				return NodeState.Success;
 			
 		}
 		
-		return setState(NodeState.Failure);
+		return NodeState.Failure;
 	}
 
 }

@@ -29,10 +29,10 @@ public class CheckDamageState extends BehaviorNode{
 		
 		if(state!=null) {
 			if(state.getState() == EntityState.Damaged)
-				return setState(NodeState.Success);
+				return NodeState.Success;
 		}
 	
-		return setState(NodeState.Failure);
+		return NodeState.Failure;
 	}
 	
 }

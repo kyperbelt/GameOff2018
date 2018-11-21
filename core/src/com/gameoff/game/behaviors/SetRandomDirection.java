@@ -1,6 +1,6 @@
 package com.gameoff.game.behaviors;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.MathUtils;
 import com.gameoff.game.Context;
 import com.gameoff.game.control.DirectionControl;
 import com.gameoff.game.control.DirectionControl.Direction;
@@ -9,7 +9,6 @@ import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.NodeState;
 import com.kyperbox.controllers.CollisionController;
 import com.kyperbox.objects.GameObject;
-import java.util.Random;
 
 /**
  * moves to the target with the given name in the context. It will fail if no
@@ -24,7 +23,6 @@ public class SetRandomDirection extends BehaviorNode {
   MoveControl move;
   CollisionController cc;
   DirectionControl direction;
-  Random m_random = new Random();
 
   //String targetName;
   //GameObject target;
@@ -48,7 +46,7 @@ public class SetRandomDirection extends BehaviorNode {
 
     NodeState state = NodeState.Success;
 
-    int v = m_random.nextInt(8);
+    int v = MathUtils.random(8);
 
     if (v == 0)
     {
@@ -95,7 +93,7 @@ public class SetRandomDirection extends BehaviorNode {
       //Vector2 position = self.getCollisionCenter();
       //Vector2 destination = target.getCollisionCenter();
 
-    return setState(state);
+    return state;
   }
 
 }

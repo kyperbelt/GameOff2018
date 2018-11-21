@@ -27,9 +27,9 @@ public class ParallelNode extends CompositeNode{
 		
 		
 		if(finished)
-			return setState(NodeState.Success);
+			return NodeState.Success;
 		
-		return setState(NodeState.Running);
+		return NodeState.Running;
 	}
 
 }
