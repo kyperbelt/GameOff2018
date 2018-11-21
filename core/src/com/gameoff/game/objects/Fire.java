@@ -29,6 +29,7 @@ public class Fire extends Basic {
   float m_spawnTime = 2.0f;
   float m_spawnSpeed = 2.0f;
   int m_spawnStyle = 1;  //0 is slower and random, 1 is spreads out fast
+  float m_decay = 0.1f;
 
   AttackListener hazardListener = new AttackListener() {
     @Override
@@ -64,7 +65,7 @@ public class Fire extends Basic {
     setBounds(5,15,getWidth()-10,10);
     setSpawnSpeed(1f);
     setSpread(true);
-    setLife(3f);
+    setLife(5f);
   }
 
   public void setSpread(boolean spread)
@@ -89,6 +90,11 @@ public class Fire extends Basic {
     m_spawnStyle = style;
   }
 
+  public void setDecay(float decay)
+  {
+    m_decay = decay;
+  }
+
   @Override
   public void init(MapProperties properties) {
     super.init(properties);
@@ -109,7 +115,7 @@ public class Fire extends Basic {
   {
     //0 to 3 for now
     Fire f = new Fire();
-    f.setLife(m_maxLife);
+    f.setLife(m_maxLife-m_decay);
     f.setSpawnSpeed(m_spawnSpeed);
     f.setSpread(true);
 
@@ -145,25 +151,23 @@ public class Fire extends Basic {
     for (int i = 0; i < c.size; i++) {
 			CollisionData data = c.get(i);
 			GameObject target = data.getTarget();
-      if (target instanceof Player)
-        return;
-
-      if (target instanceof Fire)
+      if (!(target instanceof Player))
       {
-        f.remove();
-        return;
-      }
-
-			if (target instanceof Basic) {
-				Basic b = (Basic) target;
-        if (b.getMove() != null)
+        if (target instanceof Fire)
         {
-          if (b.getMove().isPhysical())
+          f.remove();
+          return;
+        } else if (target instanceof Basic) {
+          Basic b = (Basic) target;
+          if (b.getMove() != null)
           {
-            f.remove();
+            if (b.getMove().isPhysical())
+            {
+              f.remove();
+            }
           }
         }
-			}
+      }
     }
   }
   
