@@ -18,6 +18,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import java.util.Random;
 
 public class Fire extends Basic {
+	
+	
 
   AttackControl attack;
   Array<CollisionData> cols;
@@ -109,6 +111,7 @@ public class Fire extends Basic {
     getAnimation().set("fire", PlayMode.LOOP);
     getAnimation().setPlaySpeed(1.0f + m_random.nextFloat());
     setBounds(5,15,getWidth()-10,10);
+    removeController(getMove());
   }
 
   public void spawnFire(int dir)
