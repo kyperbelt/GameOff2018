@@ -9,6 +9,7 @@ import com.gameoff.game.objects.Trigger;
 import com.gameoff.game.objects.Wall;
 import com.gameoff.game.objects.Spiker;
 import com.gameoff.game.objects.SpikeWall;
+import com.gameoff.game.objects.Fire;
 import com.gameoff.game.objects.destructible.Destructible;
 import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.kyperbox.objects.GameObject;
@@ -100,6 +101,13 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new SpikeWall();
+			}
+		});
+
+		game.registerGameObject("Fire", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new Fire();
 			}
 		});
 		
