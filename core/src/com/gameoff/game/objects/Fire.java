@@ -97,6 +97,7 @@ public class Fire extends Basic {
     // Fire does not have health so we remove the health control so that systems
     // that interact with the health control do not affect it
     removeController(getHealth());
+
     addController(attack);
     setSprite("fire_0");
     getAnimation().set("fire", PlayMode.LOOP);
@@ -112,23 +113,30 @@ public class Fire extends Basic {
     f.setSpawnSpeed(m_spawnSpeed);
     f.setSpread(true);
 
+    float f1 = m_random.nextFloat()*10f;
+    float f2 = m_random.nextFloat()*10f;
+    
+
     if (dir == 0)
     {
-      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() - 40 - m_random.nextFloat()*25f);
+      f.setPosition(getX() - 10 + f1, getY() - 50 - f2);
     } else if (dir == 2)
     {
-      f.setPosition(getX() - 10 + m_random.nextFloat()*20f, getY() + 40 + m_random.nextFloat()*25f);
+      f.setPosition(getX() - 10 + f1, getY() + 50 + f2);
     } else if (dir == 1)
     {
-      f.setPosition(getX() + 64 + m_random.nextFloat()*16f, getY() - 10 + m_random.nextFloat()*20f);
+      f.setPosition(getX() + 64 + f1, getY() - 10 + f1);
     } else
     {
-      f.setPosition(getX() - 64 - m_random.nextFloat()*16f, getY() - 10 + m_random.nextFloat()*20f);
+      f.setPosition(getX() - 64 - f1, getY() - 10 + f1);
     }
     getGameLayer().addGameObject(f,null);
+    f.setBounds(5,0,f.getWidth()-10,64);
     f.getCollision().getCollisions(f,0.005f);
     f.getCollision().getCollisions(f,0.005f);
     removeFireIfNotValid(f);
+    f.setBounds(5,15,f.getWidth()-10,10);
+    
   }
 
   private void removeFireIfNotValid(Fire f)
