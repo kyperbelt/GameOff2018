@@ -35,6 +35,7 @@ public class WormEnemy extends DirectionEntity {
   float damagedDuration = .2f;
   float damagedElapsed = 0;
   ShaderProgram damageShader;
+  private int m_masterID = 0;
   
   Action shake = BakedEffects.shake(.5f, 10,false,false);
 
@@ -64,11 +65,12 @@ public class WormEnemy extends DirectionEntity {
     context = new UserData(getClass().getSimpleName() + "_Context");
     context.put(Context.SELF, this);
     ai = new AiControl(context, getExampleAi());
-    getMove().setMoveSpeed(80);
+    getMove().setMoveSpeed(250);
     getHealth().setHealthGroup(HealthGroup.Demon);
     getHealth().setDamageListener(damageListener);
     state.setStateChangeListener(stateListener);
-    m_id = m_random.nextInt(99999999);
+    m_id = m_masterID;
+    m_masterID++;
   }
 
   @Override

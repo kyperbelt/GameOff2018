@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.HealthControl;
+import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.kyperbox.controllers.CollisionController.CollisionData;
@@ -36,6 +37,7 @@ public class Lava extends Basic {
   float m_decay = 0.1f;
   int m_maxSpawn = 8;
   int m_originalMaxSpawn = 8;
+  float m_rotate;
 
   AttackListener hazardListener = new AttackListener() {
     @Override
@@ -44,9 +46,13 @@ public class Lava extends Basic {
         GameObject target = cols.get(i).getTarget();
         HealthControl health = target.getController(HealthControl.class);
         if(health!=null) {
-          for (int j = 0; j < damageGroup.length; j++) {
-            if(damageGroup[j] == health.getHealthGroup()) {
-              health.changeCurrentHealth(-attack.getDamage()*attack.getDamageMult());
+          MoveControl move = target.getController(MoveControl.class);
+          if ((move != null) && (move.isFlying() == false))
+          {
+            for (int j = 0; j < damageGroup.length; j++) {
+              if(damageGroup[j] == health.getHealthGroup()) {
+                health.changeCurrentHealth(-attack.getDamage()*attack.getDamageMult());
+              }
             }
           }
         }
@@ -64,12 +70,14 @@ public class Lava extends Basic {
     setYOffset(0);
     masterID++;
     m_id = masterID;
+    m_rotate = m_random.nextInt(4)*90;
   }
   
   public Lava() {
     this(HealthGroup.Angel,HealthGroup.Player,HealthGroup.Demon,HealthGroup.Neutral);
     setSize(64,64);
     setBounds(0,0,64,64);
+    setRotation(m_rotate);
   }
 
   public void setMaxSpawn(int max)
