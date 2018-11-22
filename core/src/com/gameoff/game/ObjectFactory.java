@@ -1,16 +1,17 @@
 package com.gameoff.game;
 
 import com.gameoff.game.objects.Collectible;
+import com.gameoff.game.objects.Fire;
 import com.gameoff.game.objects.Hazard;
+import com.gameoff.game.objects.HealthBauble;
+import com.gameoff.game.objects.LavaPit;
 import com.gameoff.game.objects.Pit;
 import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.ProgressTexture;
+import com.gameoff.game.objects.SpikeWall;
+import com.gameoff.game.objects.Spiker;
 import com.gameoff.game.objects.Trigger;
 import com.gameoff.game.objects.Wall;
-import com.gameoff.game.objects.Spiker;
-import com.gameoff.game.objects.SpikeWall;
-import com.gameoff.game.objects.Fire;
-import com.gameoff.game.objects.LavaPit;
 import com.gameoff.game.objects.destructible.Destructible;
 import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.kyperbox.objects.GameObject;
@@ -116,6 +117,13 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new LavaPit();
+			}
+		});
+		
+		game.registerGameObject("HealthBauble", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new HealthBauble();
 			}
 		});
 	}

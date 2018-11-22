@@ -24,6 +24,7 @@
  </objecttype>
  <objecttype name="GameObject" color="#a0a0a4"/>
  <objecttype name="Hazard" color="#ff007f"/>
+ <objecttype name="HealthBauble" color="#89a812"/>
  <objecttype name="Image" color="#ff00ff">
   <property name="image" type="string"/>
  </objecttype>
