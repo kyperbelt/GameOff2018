@@ -6,7 +6,6 @@ varying vec4 v_color;
 varying vec2 v_texCoords;
 uniform sampler2D u_texture;
 uniform float u_progress;
-uniform float u_height;
 
 void main() {
 
@@ -14,10 +13,12 @@ void main() {
 
 
 	
-	float p = (gl_Position.y + v_texCoords.y) / u_height;
+	float p = v_texCoords.y;
 	
-	if(p > u_progress){
-		texColor.a = 0f;
+	if(p >  u_progress){
+		texColor.a = 1.0 * texColor.a;
+	}else{
+		texColor.a = 0.0;
 	}
 	
 

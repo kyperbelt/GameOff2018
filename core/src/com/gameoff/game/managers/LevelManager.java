@@ -1,13 +1,26 @@
 package com.gameoff.game.managers;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Room;
 import com.gameoff.game.ZOrder;
+import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.ZOrderControl;
-import com.gameoff.game.objects.*;
-import com.gameoff.game.objects.enemies.*;
+import com.gameoff.game.objects.BackgroundObject;
+import com.gameoff.game.objects.Collectible;
+import com.gameoff.game.objects.Door;
+import com.gameoff.game.objects.ForegroundObject;
+import com.gameoff.game.objects.HudMap;
+import com.gameoff.game.objects.MeleeAttack;
+import com.gameoff.game.objects.Player;
+import com.gameoff.game.objects.ProgressTexture;
+import com.gameoff.game.objects.Projectile;
+import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.enemies.ScorpionEnemy;
+import com.gameoff.game.objects.enemies.WormEnemy;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -19,10 +32,11 @@ import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.managers.Priority;
 import com.kyperbox.managers.StateManager;
-import com.kyperbox.objects.*;
+import com.kyperbox.objects.GameLayer;
+import com.kyperbox.objects.GameObject;
+import com.kyperbox.objects.TilemapLayerObject;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
-import java.util.Random;
 
 public class LevelManager extends StateManager {
 
@@ -509,6 +523,13 @@ public class LevelManager extends StateManager {
 		if(overlayKeyAmount!=player.m_numKeys) {
 			overlayKeyAmount = player.m_numKeys;
 			overlayManager.updateKeys(overlayKeyAmount);
+		}
+		
+		HealthControl health = player.getHealth();
+		ProgressTexture hp = overlayManager.getHealth();
+		if(hp!=null) {
+			if(hp.getProgress() != health.getHealthPercentage())
+				overlayManager.updateHealth(health.getHealthPercentage());
 		}
 	}
 

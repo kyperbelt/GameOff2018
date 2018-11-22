@@ -2,13 +2,16 @@ package com.gameoff.game.managers;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.gameoff.game.objects.ProgressTexture;
 import com.kyperbox.GameState;
 import com.kyperbox.managers.StateManager;
 
 public class OverlayManager extends StateManager{
 
-	Image keyIcon;
-	Label keyLabel;
+	private Image keyIcon;
+	private Label keyLabel;
+	
+	private ProgressTexture health;
 	
 	@Override
 	public void addLayerSystems(GameState state) {
@@ -19,6 +22,7 @@ public class OverlayManager extends StateManager{
 	public void init(GameState state) {
 		keyIcon = (Image) state.getUiLayer().getActor("key");
 		keyLabel = (Label) state.getUiLayer().getActor("keyLabel");
+		health = (ProgressTexture) state.getUiLayer().getActor("health");
 	}
 
 	@Override
@@ -38,6 +42,15 @@ public class OverlayManager extends StateManager{
 	
 	public void updateKeys(int keys) {
 		setKeyLabelText(":"+keys);
+	}
+	
+	public void updateHealth(float progress) {
+		if(health!=null)
+			health.setProgress(progress);
+	}
+	
+	public ProgressTexture getHealth() {
+		return health;
 	}
 	
 }
