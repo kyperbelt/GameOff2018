@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.gameoff.game.Context;
 import com.gameoff.game.control.AiControl;
+import com.gameoff.game.control.AttackControl;
+import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
@@ -66,6 +68,85 @@ public class CherubEnemy extends DirectionEntity {
       }
     }
   };
+
+  AttackControl attack;
+  //Array<CollisionData> cols;
+  
+  /*
+  AttackListener attackListener = new AttackListener() {
+    @Override
+    public void onAttack() {
+      getAnimation().set("attack");
+      getAnimation().setListener(attackAnimationListener);
+        
+      Projectile p = Projectile.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral); // get a pooled projectile
+      p.setVelocity(0, 0);
+      float w = p.getWidth();
+      float h = p.getHeight();
+      switch (getDirection()) {
+
+      case Right:
+        p.setPosition(getX() + getWidth() * 0.3f, getY() + getHeight() * .75f + getDepth());
+        p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
+        p.setFlip(false, false);
+        p.setSize(63, 9);
+        p.setBounds(w*0.3f, h*0.15f, w*0.3f, h*0.6f);
+        break;
+      case Left:
+        p.setPosition(getX() + getWidth() * 0.1f, getY() + getHeight() * .75f + getDepth());
+        p.getAnimation().setAnimation(HALOPROJECTILEH, PlayMode.NORMAL);
+        p.setFlip(true, false);
+        p.setSize(63, 9);
+        p.setBounds(w*0.5f, h*0.15f, w*0.3f, h*0.6f);
+        break;
+      case Up:
+        p.setSize(52, 46);
+        p.setPosition(getX() + getWidth() * .5f - (p.getWidth()*.5f), getY() + getHeight() + getDepth() - p.getHeight());
+        p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
+        p.setFlip(false, false);
+        p.setBounds(w*0.2f, h*0.3f, w*0.6f, h*0.4f);
+        break;
+      case Down:
+        p.setSize(52, 46);
+        p.setPosition(getX() + getWidth() * .5f -(p.getWidth() *.5f), getY() + getDepth() + p.getHeight());
+        p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
+        p.setFlip(false, true);
+        p.setBounds(w*0.2f, h*0.3f, w*0.6f, h*0.4f);
+        break;
+      default:
+        break;
+          
+          getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
+          
+          MoveControl pmove = p.getMove();
+
+          pmove.setMoveSpeed(projectileSpeed);
+
+
+          switch (getDirection()) {
+          case Right:
+            pmove.setDirection(1f, 0);
+            break;
+          case Left:
+            pmove.setDirection(-1f, 0);
+            break;
+          case Up:
+            pmove.setDirection(0, 1f);
+            break;
+          case Down:
+            pmove.setDirection(0, -1f);
+            break;
+          default:
+            break;
+          }
+
+        }
+
+        if (KyperBoxGame.DEBUG_LOGGING)
+          System.out.println(StringUtils.format("Cherub Attacked");
+    }
+  };
+  */
 
   public CherubEnemy() {
     state = new StateControl(EntityState.Moving);
@@ -182,6 +263,16 @@ public class CherubEnemy extends DirectionEntity {
       getState().storeAnimation(moveAnimation, getState().createGameAnimation("cherub", .15f));
     }
     getAnimation().addAnimation("move", moveAnimation);
+
+    String attackAnimation1 = "cherubattack" + m_id;
+
+   moveRight = getState().getAnimation(attackAnimation1);
+
+    if (moveRight == null) {
+      getState().storeAnimation(attackAnimation1, getState().createGameAnimation("cherubattack", .25f));
+    }
+
+    getAnimation().addAnimation("attack", attackAnimation1);
 
 
     String wingAnimation = "cherubwings" + m_id;

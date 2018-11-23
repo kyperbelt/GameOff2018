@@ -16,6 +16,7 @@ import com.kyperbox.umisc.KyperSprite;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import java.util.Random;
+import com.gameoff.game.GameLevel;
 
 public class Fire extends Basic {
 	
@@ -200,12 +201,13 @@ public class Fire extends Basic {
 
   private void removeFireIfNotValid(Fire f)
   {
-    if ((f.getX() < 200) || (f.getX() > 2610) || (f.getY() < 200) || (f.getY() > 1650))
+    GameLevel level = GameLevel.getCurrentLevel();
+    if ((f.getX() < 200) || (f.getX() > (level.getRoomWidth() - 270)) || (f.getY() < 210) || (f.getY() > (level.getRoomHeight()-224)))
     {
       f.remove();
       return;
-
     }
+
     Array<CollisionData> c = f.getCollision().getCollisions();
     for (int i = 0; i < c.size; i++) {
 			CollisionData data = c.get(i);

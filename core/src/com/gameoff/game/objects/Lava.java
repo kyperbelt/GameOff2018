@@ -17,6 +17,7 @@ import com.kyperbox.umisc.KyperSprite;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import java.util.Random;
+import com.gameoff.game.GameLevel;
 
 public class Lava extends Basic {
 
@@ -190,7 +191,8 @@ public class Lava extends Basic {
 
   private void removeFireIfNotValid(Lava f)
   {
-    if ((f.getX() < 200) || (f.getX() > 2610) || (f.getY() < 200) || (f.getY() > 1650))
+    GameLevel level = GameLevel.getCurrentLevel();
+    if ((f.getX() < 200) || (f.getX() > (level.getRoomWidth() - 270)) || (f.getY() < 210) || (f.getY() > (level.getRoomHeight()-224)))
     {
       f.remove();
       return;

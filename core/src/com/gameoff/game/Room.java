@@ -15,6 +15,7 @@ public class Room {
   boolean m_visited = false;
   boolean m_isBoss = false;
   boolean m_showMapDetails = false;
+  public int roomWidthPixels, roomHeightPixels;
 
   //means a key will be place in this room
   public boolean m_hasKey = false;

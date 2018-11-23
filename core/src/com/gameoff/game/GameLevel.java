@@ -15,7 +15,6 @@ public class GameLevel {
   private static GameLevel m_currentLevel = null;
   private Room m_currentRoom;
 
-
   public GameLevel(int width, int height, long seed)
   {
     m_random = new Random(); //ignoring seed right now, random seed!
@@ -31,6 +30,16 @@ public class GameLevel {
         m_rooms[h][w] = new Room(w,h);
       }
     }
+  }
+
+  public int getRoomWidth()
+  {
+    return m_currentRoom.roomWidthPixels;
+  }
+
+  public int getRoomHeight()
+  {
+    return m_currentRoom.roomHeightPixels;
   }
 
   public int nextInt(int bounds)

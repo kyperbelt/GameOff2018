@@ -64,7 +64,8 @@ public class LevelManager extends StateManager {
 	ParallaxMapper paralax;
 	OutOfBoundsSystem bounds;
 	AiSystem ai;
-	int m_roomWidthPixels, m_roomHeightPixels;
+	
+	public int m_roomWidthPixels, m_roomHeightPixels;
 	
 	OverlayManager overlayManager;
 
@@ -247,9 +248,11 @@ public class LevelManager extends StateManager {
 
 		KyperBoxGame game = state.getGame();
 		GameLevel level = GameLevel.getCurrentLevel();
-
 		Room r = level.getCurrentRoom();
 		System.out.println("LevelManager::init current room " + r.getX() + ", " + r.getY());
+
+		r.roomWidthPixels = m_roomWidthPixels;
+		r.roomHeightPixels = m_roomHeightPixels;
 
 		//GameLayer background = state.getBackgroundLayer();
 		float wallSize = 224;
