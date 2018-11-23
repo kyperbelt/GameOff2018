@@ -34,70 +34,70 @@ abomination_chase_down_1
   index: -1
 abomination_chase_left_0
   rotate: false
-  xy: 3491, 996
+  xy: 3966, 1638
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_left_1
   rotate: false
-  xy: 2098, 982
+  xy: 3900, 1506
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_0
   rotate: false
-  xy: 1705, 881
+  xy: 1194, 673
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_right_1
   rotate: false
-  xy: 3966, 1638
+  xy: 1705, 831
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_0
   rotate: false
-  xy: 3900, 1506
+  xy: 3966, 1604
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_chase_up_1
   rotate: false
-  xy: 1194, 673
+  xy: 3900, 1472
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_down
   rotate: false
-  xy: 3491, 962
+  xy: 3966, 1570
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_left
   rotate: false
-  xy: 2098, 948
+  xy: 481, 8
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_right
   rotate: false
-  xy: 1705, 847
+  xy: 3934, 1506
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 abomination_still_up
   rotate: false
-  xy: 3966, 1604
+  xy: 3934, 1472
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -748,7 +748,7 @@ door_over
   index: -1
 eyeball_still_down
   rotate: false
-  xy: 3900, 1472
+  xy: 3522, 992
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1042,49 +1042,49 @@ map_door2
   index: -1
 map_door3
   rotate: false
-  xy: 696, 777
+  xy: 3327, 1930
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_empty
   rotate: false
-  xy: 3327, 1930
+  xy: 3142, 1803
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room
   rotate: false
-  xy: 3142, 1803
+  xy: 2593, 1369
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_current_icon
   rotate: false
-  xy: 2593, 1369
+  xy: 3529, 1992
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_visited
   rotate: false
-  xy: 3529, 1992
+  xy: 606, 550
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_start_icon
   rotate: false
-  xy: 606, 550
+  xy: 3509, 1904
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 noregion
   rotate: false
-  xy: 3966, 1570
+  xy: 3556, 992
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1098,7 +1098,7 @@ painting
   index: -1
 piano
   rotate: false
-  xy: 481, 8
+  xy: 1648, 725
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1126,7 +1126,7 @@ play_down
   index: -1
 player_shadow
   rotate: false
-  xy: 1705, 825
+  xy: 696, 772
   size: 30, 20
   orig: 30, 20
   offset: 0, 0
@@ -1248,6 +1248,34 @@ skull_break_1
   xy: 1952, 1016
   size: 183, 125
   orig: 183, 125
+  offset: 0, 0
+  index: -1
+soul_0
+  rotate: false
+  xy: 3491, 980
+  size: 29, 48
+  orig: 29, 48
+  offset: 0, 0
+  index: -1
+soul_1
+  rotate: false
+  xy: 2098, 966
+  size: 29, 48
+  orig: 29, 48
+  offset: 0, 0
+  index: -1
+soul_2
+  rotate: false
+  xy: 1705, 865
+  size: 29, 48
+  orig: 29, 48
+  offset: 0, 0
+  index: -1
+soul_3
+  rotate: false
+  xy: 1736, 865
+  size: 29, 48
+  orig: 29, 48
   offset: 0, 0
   index: -1
 spiker_redA_0
