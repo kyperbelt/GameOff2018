@@ -43,6 +43,7 @@ public class CherubEnemy extends DirectionEntity {
   Action shake = BakedEffects.shake(.5f, 10,false,false);
 
   BasicGameObject wings;
+  BasicGameObject shadow;
   AnimationController wingsAnim;
 
   DamageListener damageListener=new DamageListener(){
@@ -78,7 +79,11 @@ public class CherubEnemy extends DirectionEntity {
     m_id = m_masterID;
     m_masterID++;
     wings =  new BasicGameObject();
+    shadow = new BasicGameObject();
+    shadow.setSprite("player_shadow");
+    shadow.setSize(40,24);
     setPreDrawChildren(true);
+
   }
 
   @Override
@@ -91,6 +96,7 @@ public class CherubEnemy extends DirectionEntity {
 
     createAnimations();
     getMove().setFlying(true);
+    addChild(shadow);
 
     damageShader = getState().getShader("damageShader");
 
@@ -114,12 +120,14 @@ public class CherubEnemy extends DirectionEntity {
             wingsAnim.set("move", PlayMode.LOOP_PINGPONG);
             setFlip(true,false);
             wings.setFlip(true,false);
+            shadow.setPosition(27,-20);
             break;
           case Right:
             getAnimation().set("move", PlayMode.LOOP_PINGPONG);
             wingsAnim.set("move", PlayMode.LOOP_PINGPONG);
             setFlip(false,false);
             wings.setFlip(false,false);
+            shadow.setPosition(43,-20);
             break;
           }
         }
@@ -127,6 +135,7 @@ public class CherubEnemy extends DirectionEntity {
     });
 
     getDirectionControl().setDirection(Direction.Right);
+    shadow.setPosition(43,-15);
   }
 
   @Override
