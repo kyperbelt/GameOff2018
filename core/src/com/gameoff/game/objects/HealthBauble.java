@@ -1,8 +1,8 @@
 package com.gameoff.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.math.Interpolation;
 import com.kyperbox.GameState;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.objects.BasicGameObject;
@@ -17,6 +17,16 @@ public class HealthBauble extends GameObject{
 	AnimationController healthAnim;
 	BasicGameObject back;
 	
+	float startProgress;
+	float currentProgress;
+	
+	Interpolation tween = Interpolation.linear;
+	float time = .5f;
+	float elapsed = 0;
+	
+	
+	boolean tweening;
+	
 	public HealthBauble() {
 		overlay = new BasicGameObject();
 		overlayAnim = new AnimationController();
@@ -26,11 +36,14 @@ public class HealthBauble extends GameObject{
 	}
 	
 	public void setProgress(float progress) {
-		health.setProgress(progress);
+		currentProgress = progress;
+		startProgress = health.getProgress();
+		tweening = true;
+		elapsed = 0;
 	}
 	
 	public float getProgress() {
-		return health.getProgress();
+		return currentProgress;
 	}
 	
 	@Override
@@ -72,5 +85,15 @@ public class HealthBauble extends GameObject{
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		
+		if(tweening) {
+			elapsed+=delta;
+			float t = elapsed / time;
+			float p = tween.apply(startProgress, currentProgress, t);
+			health.setProgress(p);
+			if(elapsed >= time) {
+				tweening = false;
+			}
+		}
 	}
 }
