@@ -723,6 +723,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 				if (form != null) {
 					Projectile p = Projectile.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral); // get a pooled projectile
 					p.setVelocity(0, 0);
+					p.setRotation(0);
 					float w = 0;
 					float h =0;
 					
