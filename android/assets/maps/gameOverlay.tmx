@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="56">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="57">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
  </properties>
@@ -19,7 +19,7 @@
     <property name="text" value="X"/>
    </properties>
   </object>
-  <object id="54" name="health" type="ProgressTexture" x="18.5115" y="808.43" width="128" height="128"/>
+  <object id="56" name="health" type="HealthBauble" gid="49" x="-75.8024" y="960" width="384" height="224"/>
  </objectgroup>
  <objectgroup id="5" name="preload" locked="1">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>

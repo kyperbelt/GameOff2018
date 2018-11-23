@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.gameoff.game.objects.HealthBauble;
 import com.gameoff.game.objects.ProgressTexture;
 import com.kyperbox.GameState;
 import com.kyperbox.controllers.AnimationController;
@@ -14,7 +15,8 @@ public class OverlayManager extends StateManager{
 	private Image keyIcon;
 	private Label keyLabel;
 	
-	private ProgressTexture health;
+	
+	private HealthBauble health;
 	
 	@Override
 	public void addLayerSystems(GameState state) {
@@ -25,17 +27,9 @@ public class OverlayManager extends StateManager{
 	public void init(GameState state) {
 		keyIcon = (Image) state.getUiLayer().getActor("key");
 		keyLabel = (Label) state.getUiLayer().getActor("keyLabel");
-		health = (ProgressTexture) state.getUiLayer().getActor("health");
+		health = (HealthBauble) state.getUiLayer().getActor("health");
 		
-		AnimationController healthAnim = new AnimationController();
 		
-		Animation a = state.getAnimation("circle");
-		if(a == null) {
-			state.storeAnimation("circle", state.createGameAnimation("circle", .33f)); 
-		}
-		
-		healthAnim.setAnimation("circle", PlayMode.LOOP);
-		health.addController(healthAnim);
 	}
 
 	@Override
@@ -62,7 +56,7 @@ public class OverlayManager extends StateManager{
 			health.setProgress(progress);
 	}
 	
-	public ProgressTexture getHealth() {
+	public HealthBauble getHealth() {
 		return health;
 	}
 	

@@ -13,10 +13,10 @@ import com.gameoff.game.objects.BackgroundObject;
 import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.Door;
 import com.gameoff.game.objects.ForegroundObject;
+import com.gameoff.game.objects.HealthBauble;
 import com.gameoff.game.objects.HudMap;
 import com.gameoff.game.objects.MeleeAttack;
 import com.gameoff.game.objects.Player;
-import com.gameoff.game.objects.ProgressTexture;
 import com.gameoff.game.objects.Projectile;
 import com.gameoff.game.objects.Wall;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
@@ -533,7 +533,7 @@ public class LevelManager extends StateManager {
 		}
 		
 		HealthControl health = player.getHealth();
-		ProgressTexture hp = overlayManager.getHealth();
+		HealthBauble hp = overlayManager.getHealth();
 		if(hp!=null) {
 			if(hp.getProgress() != health.getHealthPercentage())
 				overlayManager.updateHealth(health.getHealthPercentage());

@@ -44,7 +44,6 @@ public class ProgressTexture extends GameObject {
 		progressShader = getState().getShader("progress");
 		setProgress(this.progress);
 		// setSize(128, 128);
-		setSprite("circle_0");
 	}
 	
 	private void setupShader() {
