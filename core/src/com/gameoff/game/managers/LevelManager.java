@@ -21,6 +21,7 @@ import com.gameoff.game.objects.Projectile;
 import com.gameoff.game.objects.Wall;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
 import com.gameoff.game.objects.enemies.WormEnemy;
+import com.gameoff.game.objects.enemies.CherubEnemy;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -458,6 +459,12 @@ public class LevelManager extends StateManager {
 		enemy2.init(KyperBoxGame.NULL_PROPERTIES);
 		randomPlaceObject(enemy2, playground, level);
 		enemy2.setPosition(enemy2.getX()+150,enemy2.getY());
+
+		CherubEnemy enemy3 = new CherubEnemy();
+		playground.addGameObject(enemy3, KyperBoxGame.NULL_PROPERTIES);
+		enemy3.init(KyperBoxGame.NULL_PROPERTIES);
+		randomPlaceObject(enemy3, playground, level);
+		enemy3.setPosition(enemy3.getX()-250,enemy3.getY());
 
 		// Keys
 		if (r.getHasKey())
