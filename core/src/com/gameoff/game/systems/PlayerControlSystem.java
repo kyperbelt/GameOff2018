@@ -1,6 +1,7 @@
 package com.gameoff.game.systems;
 
 import com.badlogic.gdx.utils.Array;
+import com.gameoff.game.Inputs;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.DirectionControl;
 import com.gameoff.game.control.MoveControl;
@@ -24,9 +25,10 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		public String right;
 		public String up;
 		public String down;
-		public String fly;
+		public String transform;
 		public String attack;
 		public String interact;
+		public String dash;
 
 	}
 
@@ -36,12 +38,14 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		super(PlayerControl.class);
 		controls = new Array<PlayerControlSystem.PlayerControls>();
 		PlayerControls p1 = new PlayerControls();
-		p1.left = InputDefaults.MOVE_LEFT;
-		p1.right = InputDefaults.MOVE_RIGHT;
-		p1.up = InputDefaults.MOVE_UP;
-		p1.down = InputDefaults.MOVE_DOWN;
-		p1.fly = InputDefaults.JUMP_BUTTON;
-		p1.attack = InputDefaults.ACTION_BUTTON;
+		p1.left = Inputs.LEFT;
+		p1.right = Inputs.RIGHT;
+		p1.up = Inputs.UP;
+		p1.down = Inputs.DOWN;
+		p1.transform = Inputs.TRANSFORM;
+		p1.attack = Inputs.ATTACK;
+		p1.interact = Inputs.INTERACT;
+		p1.dash = Inputs.DASH;
 
 		controls.add(p1);
 	}
@@ -75,7 +79,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 
 					if (move != null) {
 
-						if (input.inputJustPressed(maps.fly)) {
+						if (input.inputJustPressed(maps.transform)) {
 							if (move.isFlying()) {
 								control.setForm(Form.Demon);
 							} else {

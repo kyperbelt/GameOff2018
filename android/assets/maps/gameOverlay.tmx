@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="57">
+<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="57">
  <properties>
-  <property name="atlas" value="image/game.atlas"/>
+  <property name="atlas" value="image/overlay.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
  <objectgroup id="1" name="background" locked="1"/>

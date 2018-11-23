@@ -1,6 +1,11 @@
 package com.gameoff.game;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gameoff.game.managers.LevelManager;
 import com.gameoff.game.managers.OverlayManager;
@@ -10,8 +15,11 @@ import com.kyperbox.KyperBoxGame;
 import com.kyperbox.console.CommandRunnable;
 import com.kyperbox.console.ConsoleCommand;
 import com.kyperbox.console.DevConsole;
-import com.kyperbox.input.InputDefaults;
+import com.kyperbox.input.ControllerMapping;
+import com.kyperbox.input.ControllerMaps;
+import com.kyperbox.input.ICWrapper;
 import com.kyperbox.input.KeyboardMapping;
+import com.kyperbox.input.KyperController;
 import com.kyperbox.objects.GameLayer;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.IGameObjectFactory;
@@ -23,7 +31,13 @@ public class GameOffGame extends KyperBoxGame {
 	public static final int HEIGHT = (int) (720 * .75f);
 
 	private LevelManager levelmanager;
-
+	
+	public ICWrapper controller; //controller wrapper - we will only allow 1 controller for now
+	
+	//this are the controller mappings that we will create - they are just mapped to a controller but 
+	//can also be mapped to different inputs/ this can allows to allow players to rebind their controls
+	public ControllerMapping interact,attack,transform,moveleft,moveright,moveup,movedown,dash;
+	
 	public GameOffGame() {
 		super(new FitViewport(WIDTH, HEIGHT));
 
@@ -62,12 +76,17 @@ public class GameOffGame extends KyperBoxGame {
 		setGameState("title");
 
 		// setup input
-		getInput().addInputMapping(InputDefaults.MOVE_UP, new KeyboardMapping(Keys.UP));
-		getInput().addInputMapping(InputDefaults.MOVE_DOWN, new KeyboardMapping(Keys.DOWN));
-		getInput().addInputMapping(InputDefaults.MOVE_LEFT, new KeyboardMapping(Keys.LEFT));
-		getInput().addInputMapping(InputDefaults.MOVE_RIGHT, new KeyboardMapping(Keys.RIGHT));
-		getInput().addInputMapping(InputDefaults.JUMP_BUTTON, new KeyboardMapping(Keys.SPACE));
-		getInput().addInputMapping(InputDefaults.ACTION_BUTTON, new KeyboardMapping(Keys.F));
+		Inputs.registerInputs(getInput());
+		getInput().addInputMapping(Inputs.UP, new KeyboardMapping(Keys.UP));
+		getInput().addInputMapping(Inputs.DOWN, new KeyboardMapping(Keys.DOWN));
+		getInput().addInputMapping(Inputs.LEFT, new KeyboardMapping(Keys.LEFT));
+		getInput().addInputMapping(Inputs.RIGHT, new KeyboardMapping(Keys.RIGHT));
+		getInput().addInputMapping(Inputs.TRANSFORM, new KeyboardMapping(Keys.SPACE));
+		getInput().addInputMapping(Inputs.ATTACK, new KeyboardMapping(Keys.F));
+		
+		
+		//controller support
+		controllerSupport();
 
 		// console commands
 		getDevConsole().addCommand(new ConsoleCommand("spawn", 2,
@@ -124,6 +143,145 @@ public class GameOffGame extends KyperBoxGame {
 						return true;
 					}
 				}));
+	}
+	
+	
+	public void controllerSupport() {
+		
+		
+		if (Controllers.getControllers().size > 0) {
+			System.out.println("Controllers found:"+Controllers.getControllers().size);
+			for (int i = 0; i < Controllers.getControllers().size; i++) {
+				Controller c = Controllers.getControllers().get(i);
+				if (c != null) {
+					controller = new KyperController(c ,GamePadMapper.getMapsForController(c));
+				}
+			}
+
+			getInput().addInputMapping(Inputs.ATTACK,
+					attack = new ControllerMapping(controller, ControllerMaps.BUTTON_A));
+			getInput().addInputMapping(Inputs.TRANSFORM,
+					transform = new ControllerMapping(controller, ControllerMaps.BUTTON_X));
+			getInput().addInputMapping(Inputs.INTERACT,
+					interact = new ControllerMapping(controller, ControllerMaps.BUTTON_B));
+
+
+			getInput().addInputMapping(Inputs.UP,
+					moveup = new ControllerMapping(controller, ControllerMaps.DPAD_UP));
+			getInput().addInputMapping(Inputs.DOWN,
+					movedown = new ControllerMapping(controller, ControllerMaps.DPAD_DOWN));
+			getInput().addInputMapping(Inputs.LEFT,
+					moveleft = new ControllerMapping(controller, ControllerMaps.DPAD_LEFT));
+			getInput().addInputMapping(Inputs.RIGHT,
+					moveright = new ControllerMapping(controller, ControllerMaps.DPAD_RIGHT));
+			
+
+		}
+		
+		Controllers.addListener(new ControllerListener() {
+
+			@Override
+			public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public void disconnected(Controller controller) {
+				log("controllers", StringUtils.format("%s disconnected", controller.getName()));
+				if (GameOffGame.this.controller != null) {
+					if (GameOffGame.this.controller.getController() == controller) {
+						GameOffGame.this.controller.remove();
+						GameOffGame.this.controller = null;
+						
+						
+						attack.removeMapping();
+						transform.removeMapping();
+						interact.removeMapping();
+						
+						moveup.removeMapping();
+						movedown.removeMapping();
+						moveleft.removeMapping();
+						moveright.removeMapping();
+						
+						attack = null;
+						transform = null;
+						interact = null;
+						
+						moveup = null;
+						movedown = null;
+						moveleft = null;
+						moveright = null;
+					}
+
+				}
+
+			}
+
+			@Override
+			public void connected(Controller controller) {
+				log("controllers", StringUtils.format("%s connected", controller.getName()));
+
+				if (GameOffGame.this.controller == null) {
+					GameOffGame.this.controller = new KyperController(controller,GamePadMapper.getMapsForController(controller));
+
+					getInput().addInputMapping(Inputs.ATTACK,
+							attack = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.BUTTON_A));
+					getInput().addInputMapping(Inputs.TRANSFORM,
+							transform = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.BUTTON_X));
+					getInput().addInputMapping(Inputs.INTERACT,
+							interact = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.BUTTON_B));
+
+
+					getInput().addInputMapping(Inputs.UP,
+							moveup = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.DPAD_UP));
+					getInput().addInputMapping(Inputs.DOWN,
+							movedown = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.DPAD_DOWN));
+					getInput().addInputMapping(Inputs.LEFT,
+							moveleft = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.DPAD_LEFT));
+					getInput().addInputMapping(Inputs.RIGHT,
+							moveright = new ControllerMapping(GameOffGame.this.controller, ControllerMaps.DPAD_RIGHT));
+
+				}
+
+			}
+
+			@Override
+			public boolean buttonUp(Controller controller, int buttonCode) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean buttonDown(Controller controller, int buttonCode) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean axisMoved(Controller controller, int axisCode, float value) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 	}
 
 }

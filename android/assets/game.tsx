@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.0" name="game" tilewidth="669" tileheight="260" tilecount="43" columns="0">
+<tileset name="game" tilewidth="669" tileheight="260" tilecount="34" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -66,33 +66,6 @@
  </tile>
  <tile id="22">
   <image width="74" height="90" source="../../input_assets/game/player_walk_down_2.png"/>
- </tile>
- <tile id="23">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_left_0.png"/>
- </tile>
- <tile id="24">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_left_1.png"/>
- </tile>
- <tile id="25">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_left_2.png"/>
- </tile>
- <tile id="26">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_right_0.png"/>
- </tile>
- <tile id="27">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_right_1.png"/>
- </tile>
- <tile id="28">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_right_2.png"/>
- </tile>
- <tile id="29">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_up_0.png"/>
- </tile>
- <tile id="30">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_up_1.png"/>
- </tile>
- <tile id="31">
-  <image width="32" height="32" source="../../input_assets/game/player_walk_up_2.png"/>
  </tile>
  <tile id="33">
   <image width="238" height="78" source="../../input_assets/game/title.png"/>
