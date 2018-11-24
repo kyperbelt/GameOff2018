@@ -16,6 +16,8 @@ public class GamePadMapper {
 			return BluetoothWirelessController.getMappings();
 		if (XBoxController.isXBoxController(c))
 			return XBoxController.getMappings();
+		if(BitdoNes.is8BitdoNesController(c))
+			return BitdoNes.getMappings();
 		KyperBoxGame.error(KyperControllerMapper.class.getSimpleName(),
 				StringUtils.format("mappings for [%s] not found.", c.getName()));
 		return BluetoothWirelessController.getMappings();
@@ -148,8 +150,8 @@ public class GamePadMapper {
 		public static final int R3 = 9;
 		public static final int L2_TRIGGER = 4; // -1 to 1
 		public static final int R2_TRIGGER = 5; // -1 to -1;
-		public static final int ANALOG_LEFT_X = 1; //
-		public static final int ANALOG_LEFT_Y = 0;
+		public static final int ANALOG_LEFT_X = 0; //
+		public static final int ANALOG_LEFT_Y = 1;
 		public static final int ANALOG_RIGHT_X = 3;
 		public static final int ANALOG_RIGHT_Y = 2;
 		public static final int EXTRA_1 = 10;
@@ -221,6 +223,60 @@ public class GamePadMapper {
 		public static KyperControllerMapper getMappings() {
 			if (KyperBoxGame.DEBUG_LOGGING) {
 				KyperBoxGame.log("ControllerMappings", "Bluetooth Wireless Controller Mappings");
+			}
+			KyperControllerMapper mappings = new KyperControllerMapper();
+			mappings.button_a = BUTTON_A;
+			mappings.button_b = BUTTON_B;
+			mappings.button_x = BUTTON_X;
+			mappings.button_y = BUTTON_Y;
+			mappings.left_1 = L1;
+			mappings.right_1 = R1;
+			mappings.select = SELECT;
+			mappings.start = START;
+			mappings.left_3 = L3;
+			mappings.right_3 = R3;
+			mappings.left2_trigger = L2_TRIGGER;
+			mappings.right2_trigger = R2_TRIGGER;
+			mappings.analog_left_x = ANALOG_LEFT_X;
+			mappings.analog_left_y = ANALOG_LEFT_Y;
+			mappings.analog_right_x = ANALOG_RIGHT_X;
+			mappings.analog_right_y = ANALOG_RIGHT_Y;
+			mappings.dpad = DPAD;
+			mappings.axis_trigger = false;
+			mappings.extra1 = EXTRA1;
+			return mappings;
+		}
+	}
+	
+	public static class BitdoNes{
+		
+		public static final int BUTTON_A = 0;
+		public static final int BUTTON_B = 1;
+		public static final int BUTTON_X = 3;
+		public static final int BUTTON_Y = 4;
+		public static final int DPAD = 0;
+		public static final int L1 = 6;
+		public static final int R1 = 7;
+		public static final int SELECT = 10;
+		public static final int START = 11;
+		public static final int L3 = 13;
+		public static final int R3 = 14;
+		public static final int L2_TRIGGER = 8;
+		public static final int R2_TRIGGER = 9;
+		public static final int ANALOG_LEFT_X = 0; //
+		public static final int ANALOG_LEFT_Y = 1;
+		public static final int ANALOG_RIGHT_X = 2;
+		public static final int ANALOG_RIGHT_Y = 5;
+		public static final int EXTRA1 = 2;
+
+		public static boolean is8BitdoNesController(Controller controller) {
+			return controller.getName().toLowerCase().contains("8bitdo")
+					&& controller.getName().toLowerCase().contains("nes");
+		}
+
+		public static KyperControllerMapper getMappings() {
+			if (KyperBoxGame.DEBUG_LOGGING) {
+				KyperBoxGame.log("ControllerMappings", "8Bitdo NES30 Pro Mappings");
 			}
 			KyperControllerMapper mappings = new KyperControllerMapper();
 			mappings.button_a = BUTTON_A;
