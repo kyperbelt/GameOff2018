@@ -107,12 +107,13 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 
 						float x = 0;
 						float y = 0;
+						float threshold = .2f;
 
-						x -= input.inputValue(maps.left);
-						x += input.inputValue(maps.right);
+						x -= input.inputValue(maps.left) < threshold ? 0f:input.inputValue(maps.left) ;
+						x += input.inputValue(maps.right) < threshold ? 0f:input.inputValue(maps.right) ;
 
-						y += input.inputValue(maps.up);
-						y -= input.inputValue(maps.down);
+						y += input.inputValue(maps.up) < threshold ? 0f:input.inputValue(maps.up) ;
+						y -= input.inputValue(maps.down) < threshold ? 0f:input.inputValue(maps.down) ;
 
 						if ((x != 0 || y != 0) && control.getState() == PlayerState.Idling)
 							control.setState(PlayerState.Moving);
