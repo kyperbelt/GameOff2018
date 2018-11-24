@@ -7,6 +7,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.gameoff.game.managers.GameOverManager;
 import com.gameoff.game.managers.LevelManager;
 import com.gameoff.game.managers.OverlayManager;
 import com.gameoff.game.managers.TitleMenuManager;
@@ -72,6 +73,7 @@ public class GameOffGame extends KyperBoxGame {
 		registerGameState("room_0", "room_0.tmx", levelmanager);
 		registerGameState("room_1", "room_1.tmx", levelmanager);
 		registerGameState("gameOverlay","gameOverlay.tmx",new OverlayManager());
+		registerGameState("gameover","gameover.tmx",new GameOverManager());
 
 		setGameState("title");
 

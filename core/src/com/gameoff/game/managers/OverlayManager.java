@@ -1,17 +1,16 @@
 package com.gameoff.game.managers;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.gameoff.game.objects.HealthBauble;
-import com.gameoff.game.objects.ProgressTexture;
 import com.kyperbox.GameState;
-import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.managers.StateManager;
 
 public class OverlayManager extends StateManager{
 
+	private float fadeinTime = .8f;
+	
 	private Image keyIcon;
 	private Label keyLabel;
 	
@@ -28,8 +27,24 @@ public class OverlayManager extends StateManager{
 		keyIcon = (Image) state.getUiLayer().getActor("key");
 		keyLabel = (Label) state.getUiLayer().getActor("keyLabel");
 		health = (HealthBauble) state.getUiLayer().getActor("health");
+		health.setAlpha(.7f);
 		
 		
+	}
+	
+	public void fadeIn() {
+		GameState state = getState();
+		state.getColor().a = 0f;
+		state.clearActions();
+		
+		state.addAction(Actions.fadeIn(fadeinTime));
+	}
+	
+	public void fadeOut() {
+		GameState state = getState();
+		state.clearActions();
+		
+		state.addAction(Actions.fadeOut(fadeinTime));
 	}
 
 	@Override
@@ -47,8 +62,13 @@ public class OverlayManager extends StateManager{
 			keyLabel.setText(text);
 	}
 	
-	public void updateKeys(int keys) {
+	public void updateKeys(int keys,boolean pulse) {
 		setKeyLabelText(":"+keys);
+		if(pulse) {
+			keyIcon.clearActions();
+			keyIcon.setScale(1f);
+			keyIcon.addAction(Actions.sequence( Actions.scaleTo(1.5f, 1.5f,.25f),Actions.scaleTo(1f, 1f,.25f)));
+		}
 	}
 	
 	public void updateHealth(float progress) {

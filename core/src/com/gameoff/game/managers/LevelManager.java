@@ -68,6 +68,7 @@ public class LevelManager extends StateManager {
 	public int m_roomWidthPixels, m_roomHeightPixels;
 	
 	OverlayManager overlayManager;
+	boolean died = false;
 
 	/**
 	 * set the entry point into new room
@@ -170,6 +171,9 @@ public class LevelManager extends StateManager {
 	@Override
 	public void init(GameState state) {
 
+		
+		died = false;
+		
 		System.out.println("LevelManager::init called. State=" + state.getName());
 		// When this is called, TMX is loaded, objects created, etc.
 		// and this is called right before being shown.
@@ -494,11 +498,13 @@ public class LevelManager extends StateManager {
 		//push overlay
 		overlayManager = (OverlayManager) state.getGame().getState("gameOverlay").getManager();
 		state.getGame().pushGameState("gameOverlay");
+		overlayManager.fadeIn();
 		overlayKeyAmount = player.m_numKeys;
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run() {
 				overlayManager.setKeyLabelText(":"+overlayKeyAmount);
+				overlayManager.getHealth().setProgress(player.getHealth().getHealthPercentage(), false);
 			}
 		});
 
@@ -531,8 +537,9 @@ public class LevelManager extends StateManager {
 	@Override
 	public void update(GameState state, float delta) {
 		if(overlayKeyAmount!=player.m_numKeys) {
+			boolean pulse = player.m_numKeys > overlayKeyAmount;
 			overlayKeyAmount = player.m_numKeys;
-			overlayManager.updateKeys(overlayKeyAmount);
+			overlayManager.updateKeys(overlayKeyAmount,pulse);
 		}
 		
 		HealthControl health = player.getHealth();
@@ -540,6 +547,15 @@ public class LevelManager extends StateManager {
 		if(hp!=null) {
 			if(hp.getProgress() != health.getHealthPercentage())
 				overlayManager.updateHealth(health.getHealthPercentage());
+		}
+		
+		if(health.shouldDie() && !died) {
+			overlayManager.fadeOut();
+			died = true;
+		}
+		
+		if(player.isRemoved()) {
+			getState().getGame().setGameState("gameover");
 		}
 	}
 

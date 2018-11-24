@@ -1,29 +1,35 @@
 package com.gameoff.game.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gameoff.game.GameOffGame;
+import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
+import com.gameoff.game.control.HealthControl.DeathListener;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
+import com.gameoff.game.control.ZOrderControl;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.controllers.AnimationController.AnimationListener;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.BasicGameObject;
+import com.kyperbox.objects.GameLayer.LayerCamera;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.StringUtils;
-import com.gameoff.game.ZOrder;
-import com.gameoff.game.control.ZOrderControl;
 
 public class Player extends DirectionEntity implements AnimationListener {
 
@@ -50,9 +56,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public static final String ANGELWALKSIDE = ANGEL + "_walk_" + SIDE;
 	public static final String ANGELLEGS = ANGEL + SEP + LEGS;
 	public static final String ANGELLEGSSIDE = ANGELLEGS + SIDE;
-	public static final String ANGELATTACKSIDE = ANGEL+SEP+ATTACKSIDE;
-	public static final String ANGELATTACKUP = ANGEL+SEP+ATTACKUP;
-	public static final String ANGELATTACKDOWN = ANGEL+SEP+ATTACKDOWN;
+	public static final String ANGELATTACKSIDE = ANGEL + SEP + ATTACKSIDE;
+	public static final String ANGELATTACKUP = ANGEL + SEP + ATTACKUP;
+	public static final String ANGELATTACKDOWN = ANGEL + SEP + ATTACKDOWN;
 
 	public static final String DEMONWALKDOWN = DEMON + SEP + WALKDOWN;
 	public static final String DEMONWALKUP = DEMON + SEP + WALKUP;
@@ -60,18 +66,24 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public static final String DEMONLEGS = DEMON + SEP + LEGS;
 	public static final String DEMONLEGSSIDE = DEMONLEGS + SIDE;
 	public static final String DEMONATTACKSIDE = DEMON + SEP + ATTACKSIDE;
-	public static final String DEMONATTACKUP = DEMON+SEP+ATTACKUP;
-	public static final String DEMONATTACKDOWN = DEMON+SEP+ATTACKDOWN;
+	public static final String DEMONATTACKUP = DEMON + SEP + ATTACKUP;
+	public static final String DEMONATTACKDOWN = DEMON + SEP + ATTACKDOWN;
 	public static final String TRANSFORM = "transform";
-	
-	//-projectiles
+
+	// -projectiles
 	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
 	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
 
+	// deathstuff
+	private BasicGameObject square;
+	private boolean dying = false;
+	private float deathTime = 2f;
+	private float deathElapsed = 0;
+
 	public float projectileSpeed = 600;
-	
+
 	Form targetForm;
-	//--animation literals end <--
+	// --animation literals end <--
 
 	public int m_numKeys = 0;
 
@@ -104,7 +116,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	float legsOffsetYTarget = 0;
 	float legsX = 0;
 	float legsY = 0;
-	
+
 	float lastXDir = 0;
 	float lastYDir = 0;
 
@@ -151,7 +163,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 		setupBasicProjectile();
 		setUpBasicMelee();
-		
+
 		dlegs = new BasicGameObject();
 		dlegs.setName(DEMON + LEGS + id);
 		dlegsAnim = new AnimationController();
@@ -167,19 +179,18 @@ public class Player extends DirectionEntity implements AnimationListener {
 		transformAnim.setListener(this);
 		transformSprite.setVisible(false);
 
-
 		setCurrentForm(Form.Demon);
 		setDirection(Direction.Down);
 
 		getHealth().setHealthGroup(HealthGroup.Player);
 
+		square = new BasicGameObject();
 
 		setTransform(true);
 
 	}
 
-	public void transformTo(Form form)
-	{
+	public void transformTo(Form form) {
 		transformSprite.setVisible(true);
 		transformAnim.setAnimation(TRANSFORM, PlayMode.NORMAL);
 		transformAnim.setPlayMode(PlayMode.NORMAL);
@@ -188,9 +199,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 		transformTime = 0.25f;
 		targetForm = form;
 		control.setState(PlayerState.Idling);
-		getMove().setDirection(0,0);
+		getMove().setDirection(0, 0);
 		getMove().setMoveSpeed(0);
-		setVelocity(0,0);
+		setVelocity(0, 0);
 	}
 
 	public void setCurrentForm(Form form) {
@@ -206,7 +217,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			attack.setCooldown(basicMeleeCD);
 			dlegs.setVisible(true);
 			dlegs.setDepth(0);
-			//setPreDrawChildren(true);
+			// setPreDrawChildren(true);
 			playerShadow.setVisible(false);
 			float legsOffsetXTarget = 0;
 			float legsOffsetX = 0;
@@ -214,26 +225,25 @@ public class Player extends DirectionEntity implements AnimationListener {
 			break;
 		case Angel:
 			getMove().setFlying(true);
-			///float depthDiff = (baseDepth + getBoundsRaw().height * .5f)-baseDepth;
+			/// float depthDiff = (baseDepth + getBoundsRaw().height * .5f)-baseDepth;
 			setDepth(baseDepth + getBoundsRaw().height * .5f);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
 			getMove().setMoveSpeed(angelSpeed);
 			attack.setAttackListener(basicProjectile);
 			attack.setCooldown(basicProjectileCD);
-			dlegs.setDepth(getHeight()*.20f);
+			dlegs.setDepth(getHeight() * .20f);
 			dlegs.setVisible(true);
-			//setPreDrawChildren(true);
+			// setPreDrawChildren(true);
 			playerShadow.setVisible(true);
 			break;
 		}
-		
+
 		setWalkAnimation(getDirection(), form);
 		if (KyperBoxGame.DEBUG_LOGGING)
 			System.out.println(StringUtils.format("%s form Initiated", form.name()));
 	}
 
-	public void updateToCurrentForm()
-	{
+	public void updateToCurrentForm() {
 		setCurrentForm(this.form);
 	}
 
@@ -264,9 +274,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public PlayerState getPlayerState() {
 		return state;
 	}
-	
-	private void setWalkAnimation(Direction dir ,Form form) {
-		if(getGameLayer() == null)
+
+	private void setWalkAnimation(Direction dir, Form form) {
+		if (getGameLayer() == null)
 			return;
 		if (form == Form.Demon) {
 			switch (dir) {
@@ -329,7 +339,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			default:
 				break;
 			}
-			playerShadow.setPosition(20+shadowOffset, -3);
+			playerShadow.setPosition(20 + shadowOffset, -3);
 		}
 	}
 
@@ -340,7 +350,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 		playerShadow.setVisible(false);
 		playerShadow.setPosition(20, -3);
 		addChild(playerShadow);
-		playerShadow.setSize(30,20);
+		playerShadow.setSize(30, 20);
 
 		createLegAnimations(getState());
 		dlegs.addController(dlegsAnim);
@@ -355,14 +365,12 @@ public class Player extends DirectionEntity implements AnimationListener {
 		dlegsAnim.setAnimation(DEMONLEGS, PlayMode.LOOP);
 		setSize(WIDTH, HEIGHT * .7f);
 
-
 		createTransformAnimations(getState());
 		transformSprite.addController(transformAnim);
-		transformSprite.setPosition(-135,-65);
+		transformSprite.setPosition(-135, -65);
 		addChild(transformSprite);
-		transformSprite.setSize(400,225);
+		transformSprite.setSize(400, 225);
 		transformSprite.setVisible(false);
-
 
 		setPlayerState(PlayerState.Idling);
 
@@ -389,7 +397,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 		animation.addAnimation(DEMONATTACKSIDE, DEMONATTACKSIDE);
 		animation.addAnimation(DEMONATTACKDOWN, DEMONATTACKDOWN);
 		animation.addAnimation(DEMONATTACKUP, DEMONATTACKUP);
-		//--
+		// --
 		animation.addAnimation(ANGELWALKDOWN, ANGELWALKDOWN);
 		animation.addAnimation(ANGELWALKUP, ANGELWALKUP);
 		animation.addAnimation(ANGELWALKSIDE, ANGELWALKSIDE);
@@ -405,11 +413,32 @@ public class Player extends DirectionEntity implements AnimationListener {
 			}
 		});
 
+		getHealth().setDeathListener(new DeathListener() {
+			@Override
+			public boolean die(float delta) {
+				if (!dying) {
+					dying = true;
+					deathElapsed = 0;
+					setPlayerState(PlayerState.Dying);
+					getGameLayer().addGameObject(square, GameOffGame.NULL_PROPERTIES);
+					square.clearActions();
+					square.addAction(Actions.fadeIn(deathTime * .5f));
+					getZOrder().setZOrder(ZOrder.FOREGROUND - 10);
+					getMove().setDirection(0, 0);
+					setVelocity(0, 0);
+					setPlayerState(PlayerState.Dying);
+					//getHealth().setInvulnerable(true);
+				}
+				return deathElapsed >= deathTime;
+			}
+		});
+
 		getDirectionControl().setDirectionListener(new DirectionChangeListener() {
 			@Override
 			public void directionChanged(Direction lastDirection, Direction newDirection) {
 
-				//System.out.println("currentState = " + state.name() + " newdir=" + newDirection.name());
+				// System.out.println("currentState = " + state.name() + " newdir=" +
+				// newDirection.name());
 				if (state == PlayerState.Moving) {
 
 					setWalkAnimation(newDirection, getCurrentForm());
@@ -418,6 +447,16 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 			}
 		});
+
+		Viewport view = getState().getGame().getView();
+
+		square.setSize(view.getWorldWidth(), view.getWorldHeight() * 2);
+		square.setSprite("square");
+		ZOrderControl z = new ZOrderControl();
+		z.setZOrder(ZOrder.FOREGROUND - 2);
+		square.addController(z);
+		square.setColor(Color.BLACK);
+		square.getColor().a = 0f;
 
 	}
 
@@ -430,26 +469,24 @@ public class Player extends DirectionEntity implements AnimationListener {
 		if (anim == null)
 			state.storeAnimation(DEMONLEGSSIDE, state.createGameAnimation(DEMONLEGSSIDE, speed));
 		anim = state.getAnimation(ANGELLEGS);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELLEGS, state.createGameAnimation(ANGELLEGS, speed));
 		anim = state.getAnimation(ANGELLEGSSIDE);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELLEGSSIDE, state.createGameAnimation(ANGELLEGSSIDE, speed));
 	}
 
-	private void createTransformAnimations(GameState state)
-	{
+	private void createTransformAnimations(GameState state) {
 		Animation<KyperSprite> anim = state.getAnimation(TRANSFORM);
 		if (anim == null) {
 			state.storeAnimation(TRANSFORM, state.createGameAnimation(TRANSFORM, 0.05f));
 		}
 	}
-		
 
 	public static void createPlayerAnimations(GameState state) {
 		float framespeed = .15f;
-		
-		//demon animations
+
+		// demon animations
 		Animation<KyperSprite> anim = state.getAnimation(DEMONWALKDOWN);
 		if (anim == null) {
 			state.storeAnimation(DEMONWALKDOWN, state.createGameAnimation(DEMONWALKDOWN, framespeed));
@@ -467,180 +504,176 @@ public class Player extends DirectionEntity implements AnimationListener {
 		if (anim == null) {
 			state.storeAnimation(DEMONATTACKSIDE, state.createGameAnimation(DEMONATTACKSIDE, framespeed));
 		}
-		
+
 		anim = state.getAnimation(DEMONATTACKUP);
-		if(anim == null)
-			state.storeAnimation(DEMONATTACKUP,state.createGameAnimation(DEMONATTACKUP, framespeed));
+		if (anim == null)
+			state.storeAnimation(DEMONATTACKUP, state.createGameAnimation(DEMONATTACKUP, framespeed));
 
 		anim = state.getAnimation(DEMONATTACKDOWN);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(DEMONATTACKDOWN, state.createGameAnimation(DEMONATTACKDOWN, framespeed));
-		
-		//angel animations
-		
+
+		// angel animations
+
 		anim = state.getAnimation(ANGELWALKDOWN);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELWALKDOWN, state.createGameAnimation(ANGELWALKDOWN, framespeed));
 
 		anim = state.getAnimation(ANGELWALKUP);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELWALKUP, state.createGameAnimation(ANGELWALKUP, framespeed));
 
 		anim = state.getAnimation(ANGELWALKSIDE);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELWALKSIDE, state.createGameAnimation(ANGELWALKSIDE, framespeed));
 
 		anim = state.getAnimation(ANGELATTACKSIDE);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELATTACKSIDE, state.createGameAnimation(ANGELATTACKSIDE, framespeed));
 
 		anim = state.getAnimation(ANGELATTACKUP);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELATTACKUP, state.createGameAnimation(ANGELATTACKUP, framespeed));
 
 		anim = state.getAnimation(ANGELATTACKDOWN);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(ANGELATTACKDOWN, state.createGameAnimation(ANGELATTACKDOWN, framespeed));
-		
-		//--player projectiles 
+
+		// --player projectiles
 		anim = state.getAnimation(HALOPROJECTILEV);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(HALOPROJECTILEV, state.createGameAnimation(HALOPROJECTILEV, .0333f));
-		
-		
+
 		anim = state.getAnimation(HALOPROJECTILEH);
-		if(anim == null)
+		if (anim == null)
 			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .0333f));
-		
+
 	}
 
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		if (transforming)
-		{
-			transformTime -= delta;
-			if (transformTime < 0)
-			{
-				setCurrentForm(targetForm);
-				transformTime = 0.75f;
-			}
-			getMove().setDirection(0, 0);
-			return;
-		}
-//		AnimationController animation = getAnimation();
-//		Vector2 vel = getVelocity();
-//		// TODO: for now it doesnt update animations if player is flying to tell it
-//		// apart from its grounded form . later we add some sort of shadow and gradually
-//		// increase the depth
-//		if (!getMove().isFlying())
-//			animation.setPlaySpeed(1f);
-//		else
-//			animation.setPlaySpeed(0f);
 
-		// TODO: Question - would it make more sense to put door collisions here?
-		// Or in the door object- just thinking doors only work with Players.
+		if (dying) {
+			LayerCamera cam = getGameLayer().getCamera();
+			Vector2 p = new Vector2(0,square.getHeight() * .5f);
+			p = cam.unproject(p);
+			square.setPosition(p.x,p.y);
+			deathElapsed+=delta;
+		} else {
 
-		Array<CollisionData> cols = getCollision().getCollisions();
-		for (int i = 0; i < cols.size; i++) {
-			CollisionData data = cols.get(i);
-			GameObject target = data.getTarget();
-
-			if (target instanceof Collectible) {
-				Collectible c = (Collectible) target;
-				if (!c.isCollected()) {
-
-					// do something with the id of the item collected
-					int itemID = c.getId();
-					if (itemID == Collectible.KEY) {
-						m_numKeys++;
-						System.out.println("Keys + 1");
-
-					}
-
-					System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
-
-					// collect the item so that it cannot be collected again
-					c.collect();
-
+			if (transforming) {
+				transformTime -= delta;
+				if (transformTime < 0) {
+					setCurrentForm(targetForm);
+					transformTime = 0.75f;
 				}
-
+				getMove().setDirection(0, 0);
+				return;
 			}
-		}
+			// AnimationController animation = getAnimation();
+			// Vector2 vel = getVelocity();
+			// // TODO: for now it doesnt update animations if player is flying to tell it
+			// // apart from its grounded form . later we add some sort of shadow and
+			// gradually
+			// // increase the depth
+			// if (!getMove().isFlying())
+			// animation.setPlaySpeed(1f);
+			// else
+			// animation.setPlaySpeed(0f);
 
-		//Handle robe physics
-		if (this.form == form.Angel)
-		{
-			MoveControl move = getMove();
-			float cxd = move.getXDir();
-			if (lastXDir != cxd)
-			{
-				if (cxd == 0)
-				{
-					legsOffsetXTarget = 0;
-					legsDeltaX = -lastXDir * 0.1f;
-					legsDeltaXFactor = 0.05f;
-				} else
-				{
-					legsOffsetXTarget = -5 * cxd;
-					legsDeltaX = -cxd * 0.2f;
-					legsDeltaXFactor = 0.05f;
-				}
-				legsBounceX = false;
-				lastXDir = cxd;
-			}
+			// TODO: Question - would it make more sense to put door collisions here?
+			// Or in the door object- just thinking doors only work with Players.
 
-			legsOffsetX += legsDeltaX;
-			if (legsOffsetXTarget >= 0)
-			{
-				if (legsOffsetX > legsOffsetXTarget)
-				{
-					if (legsBounceX == false)
-					{
-						legsBounceX = true;
-						legsOffsetXTarget -= 1;
-						if (legsOffsetXTarget < 1)
-						{
-							legsOffsetXTarget = 1;
-							legsOffsetX = legsOffsetXTarget;
-							legsDeltaXFactor = 0;
-							legsDeltaX = 0;
+			Array<CollisionData> cols = getCollision().getCollisions();
+			for (int i = 0; i < cols.size; i++) {
+				CollisionData data = cols.get(i);
+				GameObject target = data.getTarget();
+
+				if (target instanceof Collectible) {
+					Collectible c = (Collectible) target;
+					if (!c.isCollected()) {
+
+						// do something with the id of the item collected
+						int itemID = c.getId();
+						if (itemID == Collectible.KEY) {
+							m_numKeys++;
+							System.out.println("Keys + 1");
+
 						}
+
+						System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
+
+						// collect the item so that it cannot be collected again
+						c.collect();
+
 					}
-					legsDeltaX -= legsDeltaXFactor;
-				} else
-				{
-					legsBounceX = false;
-					legsDeltaX += legsDeltaXFactor;
-				}
-			} else if (legsOffsetXTarget < 0)
-			{
-				if (legsOffsetX < legsOffsetXTarget)
-				{
-					if (legsBounceX == false)
-					{
-						legsBounceX = true;
-						legsOffsetXTarget += 1;
-						if (legsOffsetXTarget > -1)
-						{
-							legsOffsetXTarget = -1;
-							legsOffsetX = legsOffsetXTarget;
-							legsDeltaXFactor = 0;
-							legsDeltaX = 0;
-						}
-					}
-					legsDeltaX += legsDeltaXFactor;
-				} else
-				{
-					legsBounceX = false;
-					legsDeltaX -= legsDeltaXFactor;
+
 				}
 			}
-			if (legsDeltaX < - 0.3f) legsDeltaX = -0.3f;
-			if (legsDeltaX > 0.3f) legsDeltaX = 0.3f;
 
-			dlegs.setPosition(legsX + legsOffsetX, legsY + legsOffsetY);
-			playerShadow.setPosition(20 + shadowOffset + legsOffsetX, legsOffsetY - 3);
+			// Handle robe physics
+			if (this.form == Form.Angel) {
+				MoveControl move = getMove();
+				float cxd = move.getXDir();
+				if (lastXDir != cxd) {
+					if (cxd == 0) {
+						legsOffsetXTarget = 0;
+						legsDeltaX = -lastXDir * 0.1f;
+						legsDeltaXFactor = 0.05f;
+					} else {
+						legsOffsetXTarget = -5 * cxd;
+						legsDeltaX = -cxd * 0.2f;
+						legsDeltaXFactor = 0.05f;
+					}
+					legsBounceX = false;
+					lastXDir = cxd;
+				}
+
+				legsOffsetX += legsDeltaX;
+				if (legsOffsetXTarget >= 0) {
+					if (legsOffsetX > legsOffsetXTarget) {
+						if (legsBounceX == false) {
+							legsBounceX = true;
+							legsOffsetXTarget -= 1;
+							if (legsOffsetXTarget < 1) {
+								legsOffsetXTarget = 1;
+								legsOffsetX = legsOffsetXTarget;
+								legsDeltaXFactor = 0;
+								legsDeltaX = 0;
+							}
+						}
+						legsDeltaX -= legsDeltaXFactor;
+					} else {
+						legsBounceX = false;
+						legsDeltaX += legsDeltaXFactor;
+					}
+				} else if (legsOffsetXTarget < 0) {
+					if (legsOffsetX < legsOffsetXTarget) {
+						if (legsBounceX == false) {
+							legsBounceX = true;
+							legsOffsetXTarget += 1;
+							if (legsOffsetXTarget > -1) {
+								legsOffsetXTarget = -1;
+								legsOffsetX = legsOffsetXTarget;
+								legsDeltaXFactor = 0;
+								legsDeltaX = 0;
+							}
+						}
+						legsDeltaX += legsDeltaXFactor;
+					} else {
+						legsBounceX = false;
+						legsDeltaX -= legsDeltaXFactor;
+					}
+				}
+				if (legsDeltaX < -0.3f)
+					legsDeltaX = -0.3f;
+				if (legsDeltaX > 0.3f)
+					legsDeltaX = 0.3f;
+
+				dlegs.setPosition(legsX + legsOffsetX, legsY + legsOffsetY);
+				playerShadow.setPosition(20 + shadowOffset + legsOffsetX, legsOffsetY - 3);
+			}
 		}
 	}
 
@@ -719,14 +752,16 @@ public class Player extends DirectionEntity implements AnimationListener {
 				default:
 					break;
 				}
-				
+
 				if (form != null) {
-					Projectile p = Projectile.get(HealthGroup.Angel,HealthGroup.Demon,HealthGroup.Neutral); // get a pooled projectile
+					Projectile p = Projectile.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral); // get a
+																												// pooled
+																												// projectile
 					p.setVelocity(0, 0);
 					p.setRotation(0);
 					float w = 0;
-					float h =0;
-					
+					float h = 0;
+
 					switch (getDirection()) {
 					case Right:
 						p.setPosition(getX() + getWidth() * 0.3f, getY() + getHeight() * .75f + getDepth());
@@ -735,7 +770,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 						p.setSize(63, 9);
 						w = p.getWidth();
 						h = p.getHeight();
-						p.setBounds(w*0.3f, h*0.15f, w*0.3f, h*0.6f);
+						p.setBounds(w * 0.3f, h * 0.15f, w * 0.3f, h * 0.6f);
 						break;
 					case Left:
 						p.setPosition(getX() + getWidth() * 0.1f, getY() + getHeight() * .75f + getDepth());
@@ -744,36 +779,37 @@ public class Player extends DirectionEntity implements AnimationListener {
 						p.setSize(63, 9);
 						w = p.getWidth();
 						h = p.getHeight();
-						p.setBounds(w*0.5f, h*0.15f, w*0.3f, h*0.6f);
+						p.setBounds(w * 0.5f, h * 0.15f, w * 0.3f, h * 0.6f);
 						break;
 					case Up:
 						p.setSize(52, 46);
-						p.setPosition(getX() + getWidth() * .5f - (p.getWidth()*.5f), getY() + getHeight() + getDepth() - p.getHeight());
+						p.setPosition(getX() + getWidth() * .5f - (p.getWidth() * .5f),
+								getY() + getHeight() + getDepth() - p.getHeight());
 						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
 						p.setFlip(false, false);
 						w = p.getWidth();
 						h = p.getHeight();
-						p.setBounds(w*0.2f, h*0.3f, w*0.6f, h*0.4f);
+						p.setBounds(w * 0.2f, h * 0.3f, w * 0.6f, h * 0.4f);
 						break;
 					case Down:
 						p.setSize(52, 46);
-						p.setPosition(getX() + getWidth() * .5f -(p.getWidth() *.5f), getY() + getDepth() + p.getHeight());
+						p.setPosition(getX() + getWidth() * .5f - (p.getWidth() * .5f),
+								getY() + getDepth() + p.getHeight());
 						p.getAnimation().setAnimation(HALOPROJECTILEV, PlayMode.NORMAL);
 						p.setFlip(false, true);
 						w = p.getWidth();
 						h = p.getHeight();
-						p.setBounds(w*0.2f, h*0.3f, w*0.6f, h*0.4f);
+						p.setBounds(w * 0.2f, h * 0.3f, w * 0.6f, h * 0.4f);
 						break;
 					default:
 						break;
 					}
-					
+
 					getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
-					
+
 					MoveControl pmove = p.getMove();
 
 					pmove.setMoveSpeed(projectileSpeed);
-
 
 					switch (getDirection()) {
 					case Right:
@@ -846,24 +882,22 @@ public class Player extends DirectionEntity implements AnimationListener {
 		};
 	}
 
-	public boolean isTransforming()
-	{
+	public boolean isTransforming() {
 		return transforming;
 	}
 
-	//animation listener
-	public void finished(String name, int playTime)
-	{
-		if (name == TRANSFORM)
-		{
-			if (transforming == false) return;
+	// animation listener
+	public void finished(String name, int playTime) {
+		if (name == TRANSFORM) {
+			if (transforming == false)
+				return;
 			transformSprite.setVisible(false);
 			setPreDrawChildren(true);
 			transforming = false;
 			transformTime = 0;
-			getMove().setDirection(0,0);
-			setVelocity(0,0);
-			//System.out.println("Finished");
+			getMove().setDirection(0, 0);
+			setVelocity(0, 0);
+			// System.out.println("Finished");
 		}
 	}
 }
