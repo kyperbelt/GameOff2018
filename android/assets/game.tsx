@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="669" tileheight="260" tilecount="35" columns="0">
+<tileset name="game" tilewidth="669" tileheight="260" tilecount="41" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -105,5 +105,23 @@
  </tile>
  <tile id="49">
   <image width="239" height="102" source="../../input_assets/death/youdied.png"/>
+ </tile>
+ <tile id="50">
+  <image width="231" height="69" source="../../input_assets/death/menu.png"/>
+ </tile>
+ <tile id="51">
+  <image width="304" height="103" source="../../input_assets/death/options.png"/>
+ </tile>
+ <tile id="52">
+  <image width="179" height="95" source="../../input_assets/death/play.png"/>
+ </tile>
+ <tile id="53">
+  <image width="182" height="101" source="../../input_assets/death/quit.png"/>
+ </tile>
+ <tile id="54">
+  <image width="293" height="94" source="../../input_assets/death/replay.png"/>
+ </tile>
+ <tile id="55">
+  <image width="47" height="48" source="../../input_assets/death/selector.png"/>
  </tile>
 </tileset>

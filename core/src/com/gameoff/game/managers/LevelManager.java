@@ -555,6 +555,7 @@ public class LevelManager extends StateManager {
 		}
 		
 		if(player.isRemoved()) {
+			player = null;
 			getState().getGame().setGameState("gameover");
 		}
 	}

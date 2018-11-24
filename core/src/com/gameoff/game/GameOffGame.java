@@ -63,7 +63,7 @@ public class GameOffGame extends KyperBoxGame {
 
 	@Override
 	public void initiate() {
-		DEBUG_LOGGING = true;
+		DEBUG_LOGGING = false;
 
 		ObjectFactory.createObjectGetters(this);
 		AiNodeFactory.createNodeDic(); // create the dictionary to load nodes from file

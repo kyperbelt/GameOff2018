@@ -77,7 +77,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	// deathstuff
 	private BasicGameObject square;
 	private boolean dying = false;
-	private float deathTime = 2f;
+	private float deathTime = 3f;
 	private float deathElapsed = 0;
 
 	public float projectileSpeed = 600;
@@ -422,11 +422,13 @@ public class Player extends DirectionEntity implements AnimationListener {
 					setPlayerState(PlayerState.Dying);
 					getGameLayer().addGameObject(square, GameOffGame.NULL_PROPERTIES);
 					square.clearActions();
-					square.addAction(Actions.fadeIn(deathTime * .5f));
+					square.addAction(Actions.fadeIn(deathTime * .33f));
 					getZOrder().setZOrder(ZOrder.FOREGROUND - 10);
 					getMove().setDirection(0, 0);
 					setVelocity(0, 0);
 					setPlayerState(PlayerState.Dying);
+					clearActions();
+					addAction(Actions.sequence(Actions.delay(deathTime  * .66f),Actions.fadeOut(deathTime * .33f)));
 					//getHealth().setInvulnerable(true);
 				}
 				return deathElapsed >= deathTime;
