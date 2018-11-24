@@ -450,7 +450,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 		Viewport view = getState().getGame().getView();
 
-		square.setSize(view.getWorldWidth(), view.getWorldHeight() * 2);
+		square.setSize(view.getWorldWidth()*2, view.getWorldHeight() * 2);
 		square.setSprite("square");
 		ZOrderControl z = new ZOrderControl();
 		z.setZOrder(ZOrder.FOREGROUND - 2);
