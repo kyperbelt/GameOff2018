@@ -167,8 +167,8 @@ public class CherubEnemy extends DirectionEntity {
 
     if (getWidth() == 0) {
       setSize(117, 96);
-      setCollisionBounds(20, 20, getWidth()-40, getHeight()-30);
     }
+    setCollisionBounds(20, 20, getWidth()-40, getHeight()-30);
 
     wings.setSprite("cherubwings_0");
     addChild(wings);

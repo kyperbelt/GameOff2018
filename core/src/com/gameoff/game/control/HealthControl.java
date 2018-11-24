@@ -69,7 +69,7 @@ public class HealthControl extends GameObjectController {
 	 * @param amount
 	 */
 	public void changeCurrentHealth(float amount) {
-		setCurrenHealth(getCurrentHealth() + amount);
+		setCurrentHealth(getCurrentHealth() + amount);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class HealthControl extends GameObjectController {
 	 * 
 	 * @param health
 	 */
-	public void setCurrenHealth(float health) {
+	public void setCurrentHealth(float health) {
 		boolean shouldDamage = false;
 		float lastHealth = this.health;
 		if (health < this.health) {

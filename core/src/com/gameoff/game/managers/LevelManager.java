@@ -22,6 +22,7 @@ import com.gameoff.game.objects.Wall;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
 import com.gameoff.game.objects.enemies.WormEnemy;
 import com.gameoff.game.objects.enemies.CherubEnemy;
+import com.gameoff.game.objects.enemies.SpiderBossEnemy;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -89,7 +90,6 @@ public class LevelManager extends StateManager {
 	public void randomPlaceObject(GameObject o, GameLayer layer, GameLevel level)
 	{
 		o.setPosition(m_roomWidthPixels/2, m_roomHeightPixels/2);
-		o.setBounds(0, 0, o.getWidth(), o.getHeight());
 		//while (true)
 		//{
 		//	float w = o.getWidth();
@@ -472,6 +472,14 @@ public class LevelManager extends StateManager {
 		enemy3.init(KyperBoxGame.NULL_PROPERTIES);
 		randomPlaceObject(enemy3, playground, level);
 		enemy3.setPosition(enemy3.getX()-250,enemy3.getY());
+
+		
+	  SpiderBossEnemy enemy4 = new SpiderBossEnemy();
+		playground.addGameObject(enemy4, KyperBoxGame.NULL_PROPERTIES);
+		enemy4.init(KyperBoxGame.NULL_PROPERTIES);
+		randomPlaceObject(enemy4, playground, level);
+		enemy4.setPosition(enemy4.getX()+250,enemy4.getY()-200);
+	
 
 		// Keys
 		if (r.getHasKey())

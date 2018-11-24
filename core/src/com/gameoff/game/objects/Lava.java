@@ -26,6 +26,7 @@ public class Lava extends Basic {
   static int masterID = 0;
   int m_id = 1;
   Random m_random = new Random();
+  boolean m_stopped = false;
 
   float m_lifeTime = 9999999;
   float m_maxLife = 999999;
@@ -239,6 +240,15 @@ public class Lava extends Basic {
         remove();
       } else
       {
+        if ((!m_stopped) && (getAnimation().getAnimationElapsed() > 2))
+        {
+          if (m_random.nextInt(10) > 6)
+          {
+            getAnimation().setPlaySpeed(0);
+            m_stopped = true;
+          }
+        }
+        
         if (m_maxSpawn > 0)
         {     
           if (m_spawnTime < 0)
