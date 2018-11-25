@@ -1,0 +1,41 @@
+
+overlay.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+KVF32
+  rotate: false
+  xy: 2, 223
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+health_0
+  rotate: false
+  xy: 2, 2
+  size: 81, 73
+  orig: 81, 73
+  offset: 0, 0
+  index: -1
+health_back
+  rotate: false
+  xy: 2, 77
+  size: 256, 144
+  orig: 256, 144
+  offset: 0, 0
+  index: -1
+health_overlay_0
+  rotate: false
+  xy: 516, 591
+  size: 256, 144
+  orig: 256, 144
+  offset: 0, 0
+  index: -1
+key
+  rotate: false
+  xy: 260, 200
+  size: 52, 21
+  orig: 52, 21
+  offset: 0, 0
+  index: -1

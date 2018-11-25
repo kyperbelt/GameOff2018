@@ -1,0 +1,60 @@
+{ 
+    "Sequence" :{
+        "properties" : {},
+        "children" : [
+{            "SetContextObject" :{
+                "properties" : {
+                    "objectName":{
+                        "value":"instructions",
+                        "type":"string"
+                    },
+                    "layerName":{
+                        "value":"playground",
+                        "type":"string"
+                    },
+                    "contextName":{
+                        "value":"spawn",
+                        "type":"string"
+                    }
+                },
+                "children" : []
+            }},
+
+{            "SpawnObjectRelative" :{
+                "properties" : {
+                    "objectType":{
+                        "value":"Fire",
+                        "type":"string"
+                    },
+                    "layerName":{
+                        "value":"playground",
+                        "type":"string"
+                    },
+                    "relativeObject":{
+                        "value":"spawn",
+                        "type":"string"
+                    },
+                    "x":{
+                        "value":"10",
+                        "type":"float"
+                    },
+                    "y":{
+                        "value":"10",
+                        "type":"float"
+                    }
+                },
+                "children" : []
+            }},
+
+{            "RemoveObject" :{
+                "properties" : {
+                    "contextName":{
+                        "value":"self",
+                        "type":"string"
+                    }
+                },
+                "children" : []
+            }}
+        ]
+    }
+}

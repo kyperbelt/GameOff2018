@@ -98,7 +98,7 @@ public class Projectile extends Attack {
 		return p;
 	}
 
-	public static void resetProjectiles() {
+	public static void freeAll() {
 		projectiles.freeAll(used);
 	}
 

@@ -1,0 +1,199 @@
+{
+	"composite": {
+		"Sequence": {
+			"properties": {}
+		},
+		"Selector": {
+			"properties": {}
+		},
+		"RandomSequence": {
+			"properties": {}
+		},
+		"RandomSelector": {
+			"properties": {}
+		},
+		"Parallel": {
+			"properties": {}
+		}
+
+	},
+	"supplement": {
+		"Invert": {
+			"properties": {}
+		},
+		"Success": {
+			"properties": {}
+		},
+		"Repeat": {
+			"properties": {
+				"count": {
+					"type": "int",
+					"value": "-1"
+				}
+			}
+		},
+		"RepeatUntilFail": {
+			"properties": {}
+		}
+	},
+	"leaf": {
+		"Test":{
+			"properties":{
+				"testText":{
+					"type":"string",
+					"value":"null"
+				}
+			}
+		},
+		"Wait": {
+			"properties": {
+				"time": {
+					"type": "float",
+					"value": "1"
+				}
+			}
+		},
+		"WaitRandom": {
+			"properties": {
+				"timeMin": {
+					"type": "float",
+					"value": "1"
+				},
+				"timeMax": {
+					"type": "float",
+					"value": "3"
+				}
+			}
+		},
+		"FindPlayerInRange":{
+			"properties":{
+				"range": {
+					"type": "float",
+					"value": "10"
+				}
+			}
+		},
+		"MoveToTarget":{
+			"properties":{
+				"target": {
+					"type": "string",
+					"value": "player"
+				}
+			}
+		},
+		"CheckDamagedState":{
+			"properties":{ }
+			
+		},
+		"SetContextObject":{
+			"properties":{
+				"objectName":{
+					"type" : "string",
+					"value" : "null"
+				},
+				"layerName":{
+					"type" : "string",
+					"value" : "null"
+				},
+				"contextName":{
+					"type" : "string",
+					"value" : "null"
+				}
+			}
+			
+		},
+		"RemoveObject":{
+			"properties":{ 
+				"contextName":{
+					"type": "string",
+					"value": "self"
+				}
+			}
+			
+		},
+		"UpdateDoor":{
+			"properties":{ 
+				"doorName":{
+					"type": "string",
+					"value": "All"
+				},
+				"closeDoor":{
+					"type": "boolean",
+					"value": "false"
+				}
+			}
+		},
+		"SpawnObject":{
+			"properties":{
+				"objectType":{
+					"type":"string",
+					"value":"BasicGameObject"
+				},
+				"layerName":{
+					"type":"string",
+					"value":"playground"
+				},
+				"x":{
+					"type":"float",
+					"value":"0"
+				},
+				"y":{
+					"type":"float",
+					"value":"0"
+				}
+			 }
+			
+		},
+		"StopMovement":{
+			"properties":{}
+		},
+		"CheckAxisMovement":{
+			"properties":{
+				"axis":{
+					"type":"string",
+					"value":"vertical"
+				},
+				"check":{
+					"type":"float",
+					"value":"0.01f"
+				}
+			}
+		},
+		"InvertAxisMovement":{
+			"properties":{
+				"axis":{
+					"type":"string",
+					"value":"vertical"
+				}
+			}
+		},
+		"SetRandomDirection":{
+			"properties":{}
+		},
+		"SpawnObjectRelative":{
+			"properties":{
+				"objectType":{
+					"type":"string",
+					"value":"BasicGameObject"
+				},
+				"layerName":{
+					"type":"string",
+					"value":"playground"
+				},
+				"relativeObject":{
+					"type":"string",
+					"value":"self"
+				},
+				"x":{
+					"type":"float",
+					"value":"0"
+				},
+				"y":{
+					"type":"float",
+					"value":"0"
+				}
+			 }
+		}
+
+	}
+}

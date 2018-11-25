@@ -79,7 +79,7 @@ public class MeleeAttack extends Attack{
 		return a;
 	}
 	
-	public static void resetMeleeAttacks() {
+	public static void freeAll() {
 		melees.freeAll(used);
 	}
 
