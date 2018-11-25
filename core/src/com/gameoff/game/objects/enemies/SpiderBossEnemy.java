@@ -20,6 +20,7 @@ import com.gameoff.game.control.StateControl.EntityState;
 import com.gameoff.game.control.StateControl.StateChangeListener;
 import com.gameoff.game.objects.DirectionEntity;
 import com.gameoff.game.objects.Projectile;
+import com.gameoff.game.objects.Fire;
 import com.kyperbox.controllers.AnimationController;
 import com.kyperbox.controllers.AnimationController.AnimationListener;
 import com.kyperbox.ai.BehaviorNode;
@@ -42,6 +43,7 @@ public class SpiderBossEnemy extends DirectionEntity {
   AiControl ai;
   int m_id = 0;
   Random m_random = new Random();
+  float m_doFireTime = 3;
 
   float damagedDuration = .2f;
   float damagedElapsed = 0;
@@ -97,7 +99,7 @@ public class SpiderBossEnemy extends DirectionEntity {
     public void onAttack() {
       //getAnimation().set("attack");
       //getAnimation().setListener(attackAnimationListener);
-      state.setState(EntityState.Attacking);
+      //state.setState(EntityState.Attacking);
       
       Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
       p.setVelocity(0, 0);
@@ -132,7 +134,7 @@ public class SpiderBossEnemy extends DirectionEntity {
     context.put(Context.SELF, this);
     ai = new AiControl(context, getExampleAi());
     getMove().setMoveSpeed(100);
-    getHealth().setHealthGroup(HealthGroup.Demon);
+    getHealth().setHealthGroup(HealthGroup.Boss);
     getHealth().setDamageListener(damageListener);
     getHealth().setMaxHealth(50f);
     getHealth().setCurrentHealth(50f); 
@@ -154,6 +156,35 @@ public class SpiderBossEnemy extends DirectionEntity {
 
   }
 
+  public void spawnFire()
+  {
+    for (int i=0; i < 4; i++)
+    {
+      Fire f = new Fire();
+      getGameLayer().addGameObject(f,null);
+      f.setLife(3);
+      f.setSpread(true);
+      f.setSpawnSpeed(1000);
+
+      float ox = 65;
+      float oy = 35;
+      if (i == 1)
+      {
+        ox = 95;
+        oy = 140;
+      } else if (i == 2)
+      {
+        ox = 356;
+        oy = 140;
+      } else if (i == 3)
+      {
+        ox = 400;
+        oy = 35;
+      }
+      f.setPosition(getX() + ox,getY() + oy);
+    }
+  }
+
   @Override
   public void init(MapProperties properties) {
     super.init(properties);
@@ -173,10 +204,10 @@ public class SpiderBossEnemy extends DirectionEntity {
     damageShader = getState().getShader("damageShader");
 
     if (getWidth() == 0) {
-      setSize(404, 300);
+      setSize(538, 400);
     }
 
-    setCollisionBounds(90,60,220,130);
+    setCollisionBounds(168,65,200,160);
 
     tail.setSprite("bosstail_0");
     addChild(tail);
@@ -214,8 +245,19 @@ public class SpiderBossEnemy extends DirectionEntity {
       damagedElapsed += delta;
     } else if ((state.getState() == EntityState.Idling) || (state.getState() == EntityState.Moving))
     {
+
       if (setClosestPlayerData())
         attack.attack();
+    }
+
+    if (state.getState() == EntityState.Moving)
+    {
+      m_doFireTime -= delta;
+      if (m_doFireTime < 0)
+      {
+        m_doFireTime = 1f;
+        spawnFire();
+      }
     }
 
     super.update(delta);
@@ -228,8 +270,10 @@ public class SpiderBossEnemy extends DirectionEntity {
       batch.setShader(damageShader);
       super.draw(batch, parentAlpha);
       batch.setShader(lastShader);
+      stinger.draw(batch,parentAlpha);
     } else {
       super.draw(batch, parentAlpha);
+      stinger.draw(batch,parentAlpha);
     }
   }
 
