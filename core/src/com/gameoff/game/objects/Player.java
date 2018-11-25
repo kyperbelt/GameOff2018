@@ -756,7 +756,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 				}
 
 				if (form != null) {
-					Projectile p = Projectile.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral); // get a
+					Projectile p = Projectile.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss); // get a
 																												// pooled
 																												// projectile
 					p.setVelocity(0, 0);
@@ -874,7 +874,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 					break;
 				}
 
-				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral);
+				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
 
 				setupMelee(m);
 

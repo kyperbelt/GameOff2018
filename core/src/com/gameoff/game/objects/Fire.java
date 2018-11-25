@@ -294,7 +294,7 @@ public class Fire extends Basic {
     if(cols.size > 0) {
         attack.attack();
     }
-
+    
     if (m_spread)
     {
       m_lifeTime -= delta;
