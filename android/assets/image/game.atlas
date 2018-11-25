@@ -543,6 +543,27 @@ bosstail_2
   orig: 538, 400
   offset: 0, 0
   index: -1
+bossweapon_0
+  rotate: false
+  xy: 2374, 2184
+  size: 12, 68
+  orig: 12, 68
+  offset: 0, 0
+  index: -1
+bossweapon_1
+  rotate: false
+  xy: 2374, 2114
+  size: 12, 68
+  orig: 12, 68
+  offset: 0, 0
+  index: -1
+bossweapon_2
+  rotate: false
+  xy: 742, 2988
+  size: 12, 68
+  orig: 12, 68
+  offset: 0, 0
+  index: -1
 cherub_0
   rotate: false
   xy: 630, 2334
@@ -1112,49 +1133,49 @@ map_door1
   index: -1
 map_door2
   rotate: false
-  xy: 2902, 3062
+  xy: 196, 2134
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_door3
   rotate: false
-  xy: 196, 2134
+  xy: 4076, 4071
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_empty
   rotate: false
-  xy: 4076, 4071
+  xy: 3450, 3416
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room
   rotate: false
-  xy: 3450, 3416
+  xy: 3328, 2372
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_current_icon
   rotate: false
-  xy: 3328, 2372
+  xy: 3742, 3398
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_room_visited
   rotate: false
-  xy: 3742, 3398
+  xy: 454, 1392
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
 map_start_icon
   rotate: false
-  xy: 454, 1392
+  xy: 3432, 2087
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
@@ -1168,7 +1189,7 @@ noregion
   index: -1
 painting
   rotate: false
-  xy: 742, 3041
+  xy: 2902, 3062
   size: 24, 15
   orig: 24, 15
   offset: 0, 0

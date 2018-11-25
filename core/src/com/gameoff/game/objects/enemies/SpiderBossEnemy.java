@@ -103,13 +103,12 @@ public class SpiderBossEnemy extends DirectionEntity {
       
       Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
       p.setVelocity(0, 0);
-      p.setPosition(getX() + getWidth() * 0.2f, getY() + getHeight() * .15f + getDepth());
-      p.getAnimation().setAnimation("cherublaser", PlayMode.LOOP);
+      p.setOrigin(0.5f,0.5f);
+      p.getAnimation().setAnimation("bossweapon", PlayMode.LOOP_PINGPONG);
       p.getAnimation().setPlaySpeed(1);
-      p.setSize(39,59);
+      p.setSize(12,68);
       float w = p.getWidth();
       float h = p.getHeight();
-
       p.setBounds(w*0.3f, h*0.15f, w*0.3f, h*0.6f);
  
       getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
@@ -119,7 +118,7 @@ public class SpiderBossEnemy extends DirectionEntity {
       m_vectorToPlayer.nor();
       pmove.setDirection(m_vectorToPlayer.x, m_vectorToPlayer.y);
       p.setRotation(m_vectorToPlayer.angle()-90);
-      
+      p.setPosition(getX() + 250, getY() + 250);
       if (m_facingRight)
       {
         p.setPosition(getX() + getWidth() * 0.35f, getY() + getHeight() * .1f + getDepth());
@@ -162,7 +161,7 @@ public class SpiderBossEnemy extends DirectionEntity {
     {
       Fire f = new Fire();
       getGameLayer().addGameObject(f,null);
-      f.setLife(3);
+      f.setLife(2);
       f.setSpread(true);
       f.setSpawnSpeed(1000);
 
@@ -255,7 +254,7 @@ public class SpiderBossEnemy extends DirectionEntity {
       m_doFireTime -= delta;
       if (m_doFireTime < 0)
       {
-        m_doFireTime = 1f;
+        m_doFireTime = 3f;
         spawnFire();
       }
     }
@@ -351,9 +350,9 @@ public class SpiderBossEnemy extends DirectionEntity {
     }
     stingerAnim.addAnimation("move", stingerAnimation);
 
-    Animation<KyperSprite> laser = getState().getAnimation("cherublaser");
+    Animation<KyperSprite> laser = getState().getAnimation("bossweapon");
     if (laser == null) {
-      getState().storeAnimation("cherublaser", getState().createGameAnimation("cherublaser", .05f));
+      getState().storeAnimation("bossweapon", getState().createGameAnimation("bossweapon", .05f));
     }
   }
 }

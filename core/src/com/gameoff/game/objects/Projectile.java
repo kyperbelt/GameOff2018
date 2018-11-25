@@ -7,6 +7,7 @@ import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
+import com.gameoff.game.ZOrder;
 
 public class Projectile extends Attack {
 
@@ -44,6 +45,7 @@ public class Projectile extends Attack {
 		setName("projectile");
 		getMove().setMoveSpeed(speed);
 		getMove().setPhysical(false);
+		getZOrder().setZOrder(ZOrder.PLAYER-1);
 		//setSprite("noregion");
 		//setSize(49, 7);
 		// must set the bounds of this object since it will have no bounds to begin with
