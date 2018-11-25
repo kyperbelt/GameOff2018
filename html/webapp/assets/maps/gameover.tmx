@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="55">
+ <properties>
+  <property name="atlas" value="image/death.atlas"/>
+ </properties>
+ <tileset firstgid="1" source="../game.tsx"/>
+ <objectgroup id="1" name="background" locked="1"/>
+ <objectgroup id="2" name="playground" locked="1"/>
+ <objectgroup id="3" name="foreground" locked="1">
+  <object id="50" name="youdied" type="BasicGameObject" gid="50" x="230" y="676" width="480" height="230">
+   <properties>
+    <property name="sprite" value="youdied"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="uiground">
+  <object id="51" name="replay" type="BasicGameObject" gid="55" x="320" y="800" width="293" height="94">
+   <properties>
+    <property name="sprite" value="replay"/>
+   </properties>
+  </object>
+  <object id="53" name="menu" type="BasicGameObject" gid="51" x="355" y="892" width="231" height="69">
+   <properties>
+    <property name="sprite" value="menu"/>
+   </properties>
+  </object>
+  <object id="54" name="selector" type="BasicGameObject" gid="56" x="256" y="768" width="47" height="48">
+   <properties>
+    <property name="sprite" value="selector"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="preload" locked="1">
+  <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>
+  <object id="44" x="-256" y="288" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
+  </object>
+  <object id="45" x="-384" y="288" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Sound</text>
+  </object>
+  <object id="46" x="-512" y="288" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Music</text>
+  </object>
+  <object id="47" x="-512" y="288" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Music</text>
+  </object>
+  <object id="48" x="-672" y="288" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Shadersa</text>
+  </object>
+ </objectgroup>
+</map>

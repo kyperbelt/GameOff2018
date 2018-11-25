@@ -8,11 +8,23 @@
  <objecttype name="BasicGameObject" color="#ff0000">
   <property name="sprite" type="string" default="NO_SPRITE_RENDERED"/>
  </objecttype>
+ <objecttype name="Collectible" color="#4ea693">
+  <property name="item_id" type="int" default="0"/>
+ </objecttype>
+ <objecttype name="Destructible" color="#550000">
+  <property name="DestroyAnimation" type="string"/>
+  <property name="health" type="float" default="10"/>
+  <property name="itemDrop" type="int" default="10"/>
+  <property name="sprite" type="string" default="noregion"/>
+ </objecttype>
+ <objecttype name="Fire" color="#a40f36"/>
  <objecttype name="Font" color="#55ff00">
   <property name="font_file" type="string" default=""/>
   <property name="markup" type="bool" default="false"/>
  </objecttype>
  <objecttype name="GameObject" color="#a0a0a4"/>
+ <objecttype name="Hazard" color="#ff007f"/>
+ <objecttype name="HealthBauble" color="#89a812"/>
  <objecttype name="Image" color="#ff00ff">
   <property name="image" type="string"/>
  </objecttype>
@@ -32,6 +44,7 @@
   <property name="text" type="string"/>
   <property name="wrap" type="bool" default="false"/>
  </objecttype>
+ <objecttype name="LavaBurst" color="#a41383"/>
  <objecttype name="NumberObject" color="#ff0000">
   <property name="place" type="int" default="0"/>
   <property name="value" type="int" default="0"/>
@@ -39,6 +52,7 @@
  <objecttype name="Particle" color="#55ff00">
   <property name="particle_file" type="string"/>
  </objecttype>
+ <objecttype name="Pit" color="#a4527d"/>
  <objecttype name="PlatformerObject" color="#ff0000">
   <property name="gravity" type="float" default="-12"/>
   <property name="max_jump_speed" type="float" default="600"/>
@@ -57,6 +71,7 @@
   <property name="step_size" type="float" default="0.01"/>
   <property name="vertical" type="bool" default="false"/>
  </objecttype>
+ <objecttype name="ProgressTexture" color="#ff00ff"/>
  <objecttype name="ScrollingBackground" color="#ff0000">
   <property name="absolute" type="bool" default="false"/>
   <property name="image" type="string"/>
@@ -70,6 +85,11 @@
  </objecttype>
  <objecttype name="ShaderObject" color="#ff0000">
   <property name="sprite" type="string"/>
+ </objecttype>
+ <objecttype name="SimpleEnemy" color="#aa5500"/>
+ <objecttype name="Spiker" color="#a4182d"/>
+ <objecttype name="SpikeWall" color="#a0a0a4">
+  <property name="direction" type="int" default="0"/>
  </objecttype>
  <objecttype name="Table" color="#ff00ff">
   <property name="background" type="string"/>
@@ -97,6 +117,12 @@
  <objecttype name="TilemapLayerObject" color="#ff0000">
   <property name="tile_layer" type="string"/>
  </objecttype>
+ <objecttype name="Trigger" color="#55007f">
+  <property name="persistent" type="bool" default="false"/>
+  <property name="triggerBehavior" type="string" default="NULL"/>
+ </objecttype>
  <objecttype name="Viewport" color="#0000ff"/>
- <objecttype name="Wall" color="#ff0000"/>
+ <objecttype name="Wall" color="#ff0000">
+  <property name="passable" type="bool" default="false"/>
+ </objecttype>
 </objecttypes>

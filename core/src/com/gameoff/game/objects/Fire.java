@@ -1,27 +1,72 @@
 package com.gameoff.game.objects;
 
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
+import com.gameoff.game.GameLevel;
+import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.AttackControl;
-import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
+import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
-import com.kyperbox.controllers.AnimationController;
-import com.gameoff.game.ZOrder;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.kyperbox.umisc.KyperSprite;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import java.util.Random;
-import com.gameoff.game.GameLevel;
 
 public class Fire extends Basic {
 	
+	// pool stuff
+	private static Pool<Fire> firepool = new Pool<Fire>(100) {
+		protected Fire newObject() {
+			return new Fire();
+		}; 
+	};
 	
+	private static Array<Fire> used = new Array<Fire>();
+	
+	public static Fire get() {
+		return get(HealthGroup.Angel,HealthGroup.Player,HealthGroup.Demon,HealthGroup.Neutral);
+	}
+	
+	public static Fire get(HealthGroup...groups) {
+		Fire f = firepool.obtain();
+		f.op = getOp();
+		f.damageGroup = groups;
+		used.add(f);
+		return f;
+	}
+	
+	/**
+	 * should call this once in levelmanager dispose
+	 */
+	public static void freeAll() {
+		firepool.freeAll(used);
+		used.clear();
+	}
+	//pool stuff -----
 
+	
+	// --op
+
+		static int OP = 0;
+		static int LAST = 0;
+
+		public static void updateOp() {
+			OP = OP == 0 ? 1 : 0;
+		}
+
+		private static int getOp() {
+			LAST = LAST == 0 ? 1 : 0;
+			return LAST;
+		}
+		
+		int op = 0;
+		// ----
+	
   AttackControl attack;
   Array<CollisionData> cols;
   static int masterID = 0;
@@ -146,19 +191,20 @@ public class Fire extends Basic {
     // Fire does not have health so we remove the health control so that systems
     // that interact with the health control do not affect it
     removeController(getHealth());
-
+    removeController(getMove());
+    
     addController(attack);
     setSprite("fire_0");
     getAnimation().set("fire", PlayMode.LOOP);
     getAnimation().setPlaySpeed(1.0f + m_random.nextFloat());
     setBounds(5,15,getWidth()-10,10);
-    removeController(getMove());
+    
   }
 
   public void spawnFire(int dir)
   {
     //0 to 3 for now
-    Fire f = new Fire();
+    Fire f = Fire.get();
 
     f.setLife(m_maxLife-m_decay);
     f.setSpread(true);
@@ -235,6 +281,10 @@ public class Fire extends Basic {
   @Override
   public void update(float delta) {
     super.update(delta);
+    
+    if(op != OP)
+		return;
+    
     cols = getCollision().getCollisions();
     if(cols.size > 0) {
         attack.attack();
@@ -279,6 +329,8 @@ public class Fire extends Basic {
   public void onRemove() {
     super.onRemove();
     removeController(attack);
+    used.removeValue(this, true);
+    firepool.free(this);
   }
 
   private void createAnimations() {

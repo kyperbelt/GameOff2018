@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="45">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="55">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
  </properties>
@@ -8,19 +8,35 @@
  <objectgroup id="2" name="playground"/>
  <objectgroup id="3" name="foreground"/>
  <objectgroup id="4" name="uiground">
-  <object id="43" name="playbutton" type="ImageButton" gid="2" x="560" y="800" width="163" height="50">
+  <object id="43" name="playbutton" type="ImageButton" gid="2" x="388" y="858.667" width="163" height="50">
    <properties>
     <property name="downImage" value="play_down"/>
     <property name="upImage" value="play"/>
    </properties>
   </object>
-  <object id="44" name="title" type="Image" gid="34" x="340" y="580" width="640" height="238">
+  <object id="44" name="title" type="BasicGameObject" gid="34" x="152" y="720" width="640" height="238">
    <properties>
     <property name="image" value="title"/>
+    <property name="sprite" value="title"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup id="5" name="preload" locked="1">
-  <object id="1" name="ScreenSize" type="Viewport" x="0" y="240" width="1280" height="720"/>
+  <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>
+  <object id="50" x="-448" y="256" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
+  </object>
+  <object id="51" x="-576" y="256" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Sound</text>
+  </object>
+  <object id="52" x="-704" y="256" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Music</text>
+  </object>
+  <object id="53" x="-704" y="256" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Music</text>
+  </object>
+  <object id="54" x="-864" y="256" width="96" height="32">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Shadersa</text>
+  </object>
  </objectgroup>
 </map>

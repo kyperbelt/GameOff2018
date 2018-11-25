@@ -1,0 +1,55 @@
+
+death.png
+size: 2048,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+menu
+  rotate: false
+  xy: 844, 36
+  size: 231, 69
+  orig: 231, 69
+  offset: 0, 0
+  index: -1
+options
+  rotate: false
+  xy: 2, 2
+  size: 304, 103
+  orig: 304, 103
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 1261, 10
+  size: 179, 95
+  orig: 179, 95
+  offset: 0, 0
+  index: -1
+quit
+  rotate: false
+  xy: 1077, 4
+  size: 182, 101
+  orig: 182, 101
+  offset: 0, 0
+  index: -1
+replay
+  rotate: false
+  xy: 308, 11
+  size: 293, 94
+  orig: 293, 94
+  offset: 0, 0
+  index: -1
+selector
+  rotate: false
+  xy: 1442, 57
+  size: 47, 48
+  orig: 47, 48
+  offset: 0, 0
+  index: -1
+youdied
+  rotate: false
+  xy: 603, 3
+  size: 239, 102
+  orig: 239, 102
+  offset: 0, 0
+  index: -1

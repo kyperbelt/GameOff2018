@@ -12,9 +12,11 @@ import com.gameoff.game.control.ZOrderControl;
 import com.gameoff.game.objects.BackgroundObject;
 import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.Door;
+import com.gameoff.game.objects.Fire;
 import com.gameoff.game.objects.ForegroundObject;
 import com.gameoff.game.objects.HealthBauble;
 import com.gameoff.game.objects.HudMap;
+import com.gameoff.game.objects.Lava;
 import com.gameoff.game.objects.MeleeAttack;
 import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.Projectile;
@@ -164,8 +166,9 @@ public class LevelManager extends StateManager {
 	@Override
 	public void dispose(GameState state) {
 		// reset all projectiles & melee attack pools
-		Projectile.resetProjectiles();
-		MeleeAttack.resetMeleeAttacks();
+		Projectile.freeAll();
+		MeleeAttack.freeAll();
+		Fire.freeAll();
 	}
 
 	@Override
@@ -566,6 +569,9 @@ public class LevelManager extends StateManager {
 			player = null;
 			getState().getGame().setGameState("gameover");
 		}
+		
+		Lava.updateOp();
+		Fire.updateOp();
 	}
 
 }

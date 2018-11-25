@@ -1,0 +1,30 @@
+{ 
+    "Sequence" :{
+        "properties" : {},
+        "children" : {
+            "UpdateDoor" :{
+                "properties" : {
+                    "doorName":{
+                        "value":"All",
+                        "type":"string"
+                    },
+                    "closeDoor":{
+                        "value":"true",
+                        "type":"string"
+                    }
+                },
+                "children" : {}
+            },
+
+            "RemoveObject" :{
+                "properties" : {
+                    "contextName":{
+                        "value":"self",
+                        "type":"string"
+                    }
+                },
+                "children" : {}
+            }
+        }
+    }
+}
