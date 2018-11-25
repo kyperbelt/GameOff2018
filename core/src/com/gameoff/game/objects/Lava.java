@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.kyperbox.umisc.KyperSprite;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import java.util.Random;
 import com.gameoff.game.GameLevel;
@@ -58,6 +59,7 @@ public class Lava extends Basic {
 	static int LAST = 0;
 
 	public static void updateOp() {
+		ld = Gdx.graphics.getDeltaTime();
 		OP = OP == 0 ? 1 : 0;
 	}
 
@@ -65,6 +67,8 @@ public class Lava extends Basic {
 		LAST = LAST == 0 ? 1 : 0;
 		return LAST;
 	}
+	
+	static float ld = 0;
 	
 	int op = 0;
 	// ----
@@ -263,7 +267,7 @@ public class Lava extends Basic {
 		
 		if(op != OP)
 			return;
-		
+		delta+=ld;
 		cols = getCollision().getCollisions();
 		if (cols.size > 0) {
 			attack.attack();

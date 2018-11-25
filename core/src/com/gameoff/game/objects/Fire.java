@@ -2,6 +2,7 @@ package com.gameoff.game.objects;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
@@ -56,6 +57,7 @@ public class Fire extends Basic {
 		static int LAST = 0;
 
 		public static void updateOp() {
+			ld = Gdx.graphics.getDeltaTime();
 			OP = OP == 0 ? 1 : 0;
 		}
 
@@ -63,6 +65,8 @@ public class Fire extends Basic {
 			LAST = LAST == 0 ? 1 : 0;
 			return LAST;
 		}
+		
+		static float ld = 0;
 		
 		int op = 0;
 		// ----
@@ -284,6 +288,7 @@ public class Fire extends Basic {
     
     if(op != OP)
 		return;
+    delta+=ld;
     
     cols = getCollision().getCollisions();
     if(cols.size > 0) {
