@@ -20,6 +20,8 @@ import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.umisc.CollisionUtils;
 import com.kyperbox.umisc.StringUtils;
+import com.kyperbox.umisc.KyperSprite;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Basic extends GameObject {
 	
@@ -154,6 +156,16 @@ public class Basic extends GameObject {
 	 */
 	public MoveControl getMove() {
 		return move;
+	}
+
+	protected void addAnimation(int id, String localName, String prefix, AnimationController anim, float fr)
+	{
+		String globalName = prefix + id;
+    Animation<KyperSprite> a = getState().getAnimation(globalName);
+    if (a == null) {
+      getState().storeAnimation(globalName, getState().createGameAnimation(prefix, fr));
+    }
+    anim.addAnimation(localName, globalName);
 	}
 
 	/**

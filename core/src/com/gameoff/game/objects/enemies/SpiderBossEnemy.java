@@ -50,15 +50,17 @@ public class SpiderBossEnemy extends DirectionEntity {
   ShaderProgram damageShader;
   private int m_masterID = 0;
   boolean m_facingRight = true;
-  float projectileSpeed = 600;
+  float projectileSpeed = 700;
   
   Action shake = BakedEffects.shake(.5f, 10,false,false);
 
   BasicGameObject tail;
   BasicGameObject shadow;
   BasicGameObject stinger;
+  BasicGameObject glow;
   AnimationController tailAnim;
   AnimationController stingerAnim;
+  AnimationController glowAnim;
 
   AnimationListener attackAnimationListener = new AnimationListener() {
     @Override
@@ -66,7 +68,9 @@ public class SpiderBossEnemy extends DirectionEntity {
       if (times >= 1) {
         getAnimation().setListener(null);
         setWalkAnimation(getDirection());
-      state.setState(EntityState.Idling);
+        shootLaser();
+        glow.setVisible(false);
+        state.setState(EntityState.Idling);
       }
     }
   };
@@ -97,33 +101,18 @@ public class SpiderBossEnemy extends DirectionEntity {
   AttackListener attackListener = new AttackListener() {
     @Override
     public void onAttack() {
-      //getAnimation().set("attack");
-      //getAnimation().setListener(attackAnimationListener);
-      //state.setState(EntityState.Attacking);
-      
-      Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
-      p.setVelocity(0, 0);
-      p.setOrigin(0.5f,0.5f);
-      p.getAnimation().setAnimation("bossweapon", PlayMode.LOOP_PINGPONG);
-      p.getAnimation().setPlaySpeed(1);
-      p.setSize(12,68);
-      float w = p.getWidth();
-      float h = p.getHeight();
-      p.setBounds(w*0.3f, h*0.15f, w*0.3f, h*0.6f);
- 
-      getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
-          
-      MoveControl pmove = p.getMove();
-      pmove.setMoveSpeed(projectileSpeed);
-      m_vectorToPlayer.nor();
-      pmove.setDirection(m_vectorToPlayer.x, m_vectorToPlayer.y);
-      p.setRotation(m_vectorToPlayer.angle()-90);
-      p.setPosition(getX() + 250, getY() + 250);
-      if (m_facingRight)
-      {
-        p.setPosition(getX() + getWidth() * 0.35f, getY() + getHeight() * .1f + getDepth());
-      }
-
+      System.out.println("Attack called!!!");
+      state.setState(EntityState.Attacking);
+      getAnimation().set("attacka");
+      getAnimation().setListener(attackAnimationListener);
+      tailAnim.set("middle", PlayMode.LOOP);
+      stingerAnim.set("middle", PlayMode.LOOP);
+      tailAnim.setPlaySpeed(1);
+      stingerAnim.setPlaySpeed(1);
+      glow.setVisible(true);
+      glowAnim.set("attacka");
+      glowAnim.setPlaySpeed(1);
+      getMove().setDirection(0,0);
     }
   };
 
@@ -142,6 +131,8 @@ public class SpiderBossEnemy extends DirectionEntity {
     m_masterID++;
     tail =  new BasicGameObject();
     stinger = new BasicGameObject();
+    glow = new BasicGameObject();
+    glow.setVisible(false);
     shadow = new BasicGameObject();
     shadow.setSprite("player_shadow");
     shadow.setSize(100,50);
@@ -149,10 +140,48 @@ public class SpiderBossEnemy extends DirectionEntity {
 
     attack = new AttackControl(null);
     attack.setAttackListener(attackListener);
-    attack.setCooldown(5);
+    attack.setCooldown(7);
 
     setPlayerFindRange(1200);
 
+    tailAnim = new AnimationController();
+    stingerAnim = new AnimationController();
+    glowAnim = new AnimationController();
+
+  }
+
+
+  private void shootLaser()
+  { 
+    Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
+    p.setVelocity(0, 0);
+    p.setRotation(0);
+    p.setSize(23,110);
+    float w = p.getWidth();
+    float h = p.getHeight();
+    p.setBounds(w*0.35f, h*0.35f, w*0.3f, h*0.3f);
+    getGameLayer().addGameObject(p, KyperBoxGame.NULL_PROPERTIES);
+    p.getAnimation().setAnimation("bossweapon", PlayMode.LOOP_PINGPONG);
+    p.getAnimation().setPlaySpeed(1);
+    p.setSprite("bossweapon_0");
+        
+    MoveControl pmove = p.getMove();
+    pmove.setMoveSpeed(projectileSpeed);
+    m_vectorToPlayer.nor();
+    float angle = m_vectorToPlayer.angle()-90;
+    pmove.setDirection(m_vectorToPlayer.x, m_vectorToPlayer.y);
+    p.setRotation(angle);
+
+    float cx = p.getWidth()/2;
+    float cy = p.getHeight()/2;
+
+    float co = (float)Math.cos(Math.toRadians(angle));
+    float so = (float)Math.sin(Math.toRadians(angle));
+
+    float sx = cx*co - cy*so;
+    float sy = cy*co + cx*co; 
+
+    p.setPosition(getX() + 231 - cx + sx, getY() + 236  - cy + sy);
   }
 
   public void spawnFire()
@@ -191,10 +220,9 @@ public class SpiderBossEnemy extends DirectionEntity {
     addController(ai);
     addController(attack);
 
-    tailAnim = new AnimationController();
     tail.addController(tailAnim);
-    stingerAnim = new AnimationController();
     stinger.addController(stingerAnim);
+    glow.addController(glowAnim);
 
     createAnimations();
     getMove().setFlying(true);
@@ -208,17 +236,28 @@ public class SpiderBossEnemy extends DirectionEntity {
 
     setCollisionBounds(168,65,200,160);
 
-    tail.setSprite("bosstail_0");
+    tail.setSprite("bosstailm_0");
     addChild(tail);
     tail.setSize(getWidth(),getHeight());
     tail.setPosition(0,0);
     tail.setIgnoreCollision(true);
+    tailAnim.setPlaySpeed(1);
+    tailAnim.set("middle",PlayMode.NORMAL);
 
-    stinger.setSprite("bossstinger_0");
+    stinger.setSprite("bossstingerm_0");
     addChild(stinger);
     stinger.setSize(getWidth(),getHeight());
     stinger.setPosition(0,0);
     stinger.setIgnoreCollision(true);
+    stingerAnim.setPlaySpeed(1);
+    stingerAnim.set("middle",PlayMode.NORMAL);
+
+    glow.setSprite("bosswglow_0");
+    addChild(glow);
+    glow.setSize(120,146);
+    glow.setPosition(188,143);
+    glow.setIgnoreCollision(true);
+    glow.setVisible(false);
 
     getDirectionControl().setDirectionListener(new DirectionChangeListener() {
       @Override
@@ -246,7 +285,9 @@ public class SpiderBossEnemy extends DirectionEntity {
     {
 
       if (setClosestPlayerData())
+      {
         attack.attack();
+      }
     }
 
     if (state.getState() == EntityState.Moving)
@@ -270,30 +311,29 @@ public class SpiderBossEnemy extends DirectionEntity {
       super.draw(batch, parentAlpha);
       batch.setShader(lastShader);
       stinger.draw(batch,parentAlpha);
+      if (glow.isVisible()) glow.draw(batch, parentAlpha);
     } else {
       super.draw(batch, parentAlpha);
       stinger.draw(batch,parentAlpha);
+      if (glow.isVisible()) glow.draw(batch, parentAlpha);
     }
   }
 
   public void setWalkAnimation(Direction newDirection)
   {
+    getAnimation().set("move", PlayMode.LOOP);
     switch (newDirection) {
       case Left:
-      case Up:
-      case Down:
-        getAnimation().set("move", PlayMode.LOOP);
-        tailAnim.set("move", PlayMode.LOOP_PINGPONG);
-        stingerAnim.set("move", PlayMode.LOOP_PINGPONG);
+        tailAnim.set("movel", PlayMode.NORMAL);
+        stingerAnim.set("movel", PlayMode.NORMAL);
         //setFlip(true,false);
         //tail.setFlip(true,false);
         //shadow.setPosition(27,-20);
         m_facingRight = false;
         break;
       case Right:
-        getAnimation().set("move", PlayMode.LOOP);
-        tailAnim.set("move", PlayMode.LOOP_PINGPONG);
-        stingerAnim.set("move", PlayMode.LOOP_PINGPONG);
+        tailAnim.set("mover", PlayMode.NORMAL);
+        stingerAnim.set("mover", PlayMode.NORMAL);
         //setFlip(false,false);
         //tail.setFlip(false,false);
         //shadow.setPosition(43,-20);
@@ -315,44 +355,20 @@ public class SpiderBossEnemy extends DirectionEntity {
 
   private void createAnimations() {
 
-    String moveAnimation = "boss" + m_id;
+    addAnimation(m_id, "move", "boss", getAnimation(), 0.1f);
+    addAnimation(m_id, "attacka", "bossattacka", getAnimation(), 0.3f);
 
-    Animation<KyperSprite> moveRight = getState().getAnimation(moveAnimation);
-    if (moveRight == null) {
-      getState().storeAnimation(moveAnimation, getState().createGameAnimation("boss", .1f));
-    }
-    getAnimation().addAnimation("move", moveAnimation);
+    addAnimation(m_id, "middle", "bosstailm", tailAnim, 5f);
+    addAnimation(m_id, "movel", "bosstaill", tailAnim, 0.25f);
+    addAnimation(m_id, "mover", "bosstailr", tailAnim, 0.25f);
 
-   /*
-   String attackAnimation1 = "cherubattack" + m_id;
+    addAnimation(m_id, "middle", "bossstingerm", stingerAnim, 5f);
+    addAnimation(m_id, "movel", "bossstingerl", stingerAnim, 0.25f);
+    addAnimation(m_id, "mover", "bossstingerr", stingerAnim, 0.25f);
 
-   moveRight = getState().getAnimation(attackAnimation1);
+    addAnimation(m_id, "bossweapon", "bossweapon", getAnimation(), 0.04f);
 
-    if (moveRight == null) {
-      getState().storeAnimation(attackAnimation1, getState().createGameAnimation("cherubattack", 0.1f));
-    }
+    addAnimation(m_id, "attacka", "bosswglow", glowAnim, 0.05f);
 
-    getAnimation().addAnimation("attack", attackAnimation1);
-    */
-
-    String wingAnimation = "bosstail" + m_id;
-
-    Animation<KyperSprite> wingA = getState().getAnimation(wingAnimation);
-    if (wingA == null) {
-      getState().storeAnimation(wingAnimation, getState().createGameAnimation("bosstail", .25f));
-    }
-    tailAnim.addAnimation("move", wingAnimation);
-
-    String stingerAnimation = "bossstinger" + m_id;
-    Animation<KyperSprite> stingA = getState().getAnimation(stingerAnimation);
-    if (stingA == null) {
-      getState().storeAnimation(stingerAnimation, getState().createGameAnimation("bossstinger", .25f));
-    }
-    stingerAnim.addAnimation("move", stingerAnimation);
-
-    Animation<KyperSprite> laser = getState().getAnimation("bossweapon");
-    if (laser == null) {
-      getState().storeAnimation("bossweapon", getState().createGameAnimation("bossweapon", .05f));
-    }
   }
 }
