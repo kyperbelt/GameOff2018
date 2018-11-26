@@ -86,6 +86,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	// --animation literals end <--
 
 	public int m_numKeys = 0;
+	public int m_numSouls = 0;
 
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
@@ -594,13 +595,19 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 				if (target instanceof Collectible) {
 					Collectible c = (Collectible) target;
-					if (!c.isCollected()) {
+					if (!c.isCollected() && c.isCollectible()) {
 
 						// do something with the id of the item collected
 						int itemID = c.getId();
 						if (itemID == Collectible.KEY) {
 							m_numKeys++;
 							System.out.println("Keys + 1");
+
+						}
+						
+						if (itemID == Collectible.SOUL) {
+							m_numSouls++;
+							System.out.println("Souls + 1");
 
 						}
 
@@ -841,6 +848,19 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public boolean useKey() {
 		if (m_numKeys > 0) {
 			m_numKeys--;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * try and use the specified amount of souls- returns false if not enough souls
+	 * @param amount
+	 * @return
+	 */
+	public boolean useSoul(int amount) {
+		if (m_numKeys-amount >= 0) {
+			m_numKeys-=amount;
 			return true;
 		}
 		return false;

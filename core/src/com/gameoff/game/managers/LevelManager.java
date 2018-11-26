@@ -56,6 +56,7 @@ public class LevelManager extends StateManager {
 	// test player for now
 	Player player;
 	int overlayKeyAmount; //amount of keys that are shown to the overlay
+	int overlaySoulAmount;//amount of souls in overlay
 
 	// layer systems we will use for playground layer
 	QuadTree quad;// collisionSystem
@@ -488,9 +489,8 @@ public class LevelManager extends StateManager {
 		if (r.getHasKey())
 		{
 			//should place a key
-			Collectible c = new Collectible();
+			Collectible c = Collectible.get(Collectible.KEY);
 			c.init(KyperBoxGame.NULL_PROPERTIES);
-			c.setId(Collectible.KEY);
 			playground.addGameObject(c, KyperBoxGame.NULL_PROPERTIES);
 			randomPlaceObject(c, playground, level);
 		}
@@ -515,6 +515,7 @@ public class LevelManager extends StateManager {
 			@Override
 			public void run() {
 				overlayManager.setKeyLabelText(":"+overlayKeyAmount);
+				overlayManager.setSoulLabelText(""+overlaySoulAmount);
 				overlayManager.getHealth().setProgress(player.getHealth().getHealthPercentage(), false);
 			}
 		});
@@ -551,6 +552,12 @@ public class LevelManager extends StateManager {
 			boolean pulse = player.m_numKeys > overlayKeyAmount;
 			overlayKeyAmount = player.m_numKeys;
 			overlayManager.updateKeys(overlayKeyAmount,pulse);
+		}
+		
+		if(overlaySoulAmount!=player.m_numSouls) {
+			boolean pulse = player.m_numSouls > overlaySoulAmount;
+			overlaySoulAmount = player.m_numSouls;
+			overlayManager.updateSouls(overlaySoulAmount,pulse);
 		}
 		
 		HealthControl health = player.getHealth();

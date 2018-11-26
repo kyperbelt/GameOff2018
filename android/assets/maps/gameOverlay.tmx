@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="57">
+<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="64">
  <properties>
   <property name="atlas" value="image/overlay.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
  <objectgroup id="1" name="background" locked="1"/>
  <objectgroup id="2" name="playground" locked="1"/>
- <objectgroup id="3" name="foreground" locked="1"/>
+ <objectgroup id="3" name="foreground"/>
  <objectgroup id="4" name="uiground">
   <object id="51" name="key" type="Image" gid="40" x="18.9274" y="467.081" width="43.0237" height="24.5706" rotation="334.603">
    <properties>
     <property name="image" value="key"/>
    </properties>
   </object>
-  <object id="52" name="keyLabel" type="Label" x="65" y="431.333" width="142.667" height="42.6667">
+  <object id="52" name="keyLabel" type="Label" x="66.6667" y="432" width="142.667" height="42.6667">
    <properties>
     <property name="font" value="uifont"/>
     <property name="text" value="X"/>
    </properties>
   </object>
   <object id="56" name="health" type="HealthBauble" gid="49" x="-75.8024" y="960" width="384" height="224"/>
+  <object id="62" name="soulLabel" type="Label" x="814.333" y="897.666" width="142.667" height="42.6667">
+   <properties>
+    <property name="font" value="uifont"/>
+    <property name="text" value="0"/>
+   </properties>
+  </object>
+  <object id="63" name="soul" type="BasicGameObject" gid="57" x="853" y="888.667" width="56" height="77.3333">
+   <properties>
+    <property name="sprite" value="soul_0"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="preload" locked="1">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>

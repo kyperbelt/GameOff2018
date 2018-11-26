@@ -340,7 +340,7 @@ public class Fire extends Basic {
 
   private void createAnimations() {
     
-    String fireAnimationName = "fire" + m_id;
+    String fireAnimationName = "fire";
     Animation<KyperSprite> spikeA = getState().getAnimation(fireAnimationName);
     if (spikeA == null) {
       getState().storeAnimation(fireAnimationName, getState().createGameAnimation("fire", .1f));
