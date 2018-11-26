@@ -322,7 +322,7 @@ public class Lava extends Basic {
 	}
 
 	private void createAnimations() {
-		String fireAnimationName = "lava" + m_id;
+		String fireAnimationName = "lava";
 		Animation<KyperSprite> spikeA = getState().getAnimation(fireAnimationName);
 		if (spikeA == null) {
 			getState().storeAnimation(fireAnimationName, getState().createGameAnimation("lavatile", .1f));
