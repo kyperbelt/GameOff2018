@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.gameoff.game.GameLevel;
+import com.gameoff.game.Inputs;
 import com.kyperbox.GameState;
+import com.kyperbox.input.GameInput;
 import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.BakedEffects;
@@ -20,12 +22,16 @@ public class TitleMenuManager extends StateManager {
 		public void clicked(InputEvent event, float x, float y) {
 			Actor a = event.getListenerActor();
 			if (a == play) {
-				GameLevel l = GameLevel.generateLevel(1, 9, 6, 6);
-				GameLevel.setCurrentLevel(l); //set singleton
-				getState().getGame().setGameState("room_"+l.getCurrentRoom().getCode());
+				playGame();
 			}
 		};
 	};
+	
+	public void playGame() {
+		GameLevel l = GameLevel.generateLevel(1, 9, 6, 6);
+		GameLevel.setCurrentLevel(l); //set singleton
+		getState().getGame().setGameState("room_"+l.getCurrentRoom().getCode());
+	}
 
 	/**
 	 * use this to add the layersystems. This gets called before init and before any
@@ -67,7 +73,11 @@ public class TitleMenuManager extends StateManager {
 
 	@Override
 	public void update(GameState state, float delta) {
-
+		
+		GameInput input = state.getInput();
+		if(input.inputJustPressed(Inputs.ATTACK)) {
+			playGame();
+		}
 	}
 
 }

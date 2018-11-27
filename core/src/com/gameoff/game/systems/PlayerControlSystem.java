@@ -77,7 +77,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 
 				if (control.getState() != PlayerState.Damaged) {
 
-					if (move != null && control.getState() != PlayerState.Dying) {
+					if (move != null && !control.isDying()) {
 
 						if (input.inputJustPressed(maps.transform)) {
 							if (move.isFlying()) {

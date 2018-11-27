@@ -34,6 +34,7 @@ import com.kyperbox.KyperBoxGame;
 import com.badlogic.gdx.math.Vector2;
 
 public class CherubEnemy extends DirectionEntity {
+	
 
   StateControl state;
   AttackControl attack;

@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.control.MoveControl;
+import com.gameoff.game.objects.Basic;
+import com.gameoff.game.objects.Player;
 import com.kyperbox.controllers.CollisionController;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
@@ -68,6 +70,8 @@ public class MoveSystem extends ControlSpecificSystem{
 						CollisionData cd = coldata.get(j);
 						GameObject target = cd.getTarget();
 						MoveControl target_move = target.getController(MoveControl.class);
+						
+						boolean collided = false;
 
 						if(!move.isPhysical() || (target_move==null || !target_move.isPhysical()))
 							continue;
@@ -87,6 +91,7 @@ public class MoveSystem extends ControlSpecificSystem{
 								o.setX(target.getBoundsX() - (o.getBoundsRaw().x + o.getBoundsRaw().width));
 								vel.x = 0;
 							}
+							collided = true;
 							
 						} else
 						// handle y axis
@@ -99,6 +104,15 @@ public class MoveSystem extends ControlSpecificSystem{
 							} else if (vel.y > 0 && o.getBoundsY() < target.getBoundsY()) { // going up
 								o.setY(target.getBoundsY() - (o.getBoundsRaw().y + o.getBoundsRaw().height) - 1);
 								vel.y = 0;
+							}
+							collided = true;
+						}
+						
+						
+						if(collided) {
+							if(o instanceof Player && target instanceof Basic) {
+								Player p = (Player) o;
+								p.collidedWith((Basic) target);
 							}
 						}
 					}

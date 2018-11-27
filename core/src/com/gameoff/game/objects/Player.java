@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -20,6 +23,11 @@ import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
 import com.gameoff.game.control.ZOrderControl;
+import com.gameoff.game.objects.enemies.CherubEnemy;
+import com.gameoff.game.objects.enemies.ContactDamage;
+import com.gameoff.game.objects.enemies.ScorpionEnemy;
+import com.gameoff.game.objects.enemies.SimpleEnemy;
+import com.gameoff.game.objects.enemies.WormEnemy;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
@@ -74,6 +82,30 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
 	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
 
+	//damage stuff
+	private static final float MINPUSHBACK = 20;
+	private static final float MAXPUSHBACK = 100;
+	private float damageDuration = 1.5f;
+	private float damageElapsed = 0;
+	
+	private Action a_setIdling = new Action() {
+		@Override
+		public boolean act(float delta) {
+			setPlayerState(PlayerState.Idling);
+			return true;
+		}
+	};
+	
+	private Action a_removeInvulnerable = new Action() {
+		@Override
+		public boolean act(float delta) {
+			getHealth().setInvulnerable(false);
+			return true;
+		}
+	};
+	
+	private float pushbackAngle = 0f;
+	
 	// deathstuff
 	private BasicGameObject square;
 	private boolean dying = false;
@@ -81,6 +113,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private float deathElapsed = 0;
 
 	public float projectileSpeed = 600;
+	
+	public boolean isDying() {return dying;}
 
 	Form targetForm;
 	// --animation literals end <--
@@ -409,8 +443,31 @@ public class Player extends DirectionEntity implements AnimationListener {
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
 			public void damaged(float amount) {
-				System.out.println(StringUtils.format("%s damaged - amount[%s] - currentHealth[%s]", getName(), amount,
-						getHealth().getCurrentHealth()));
+				if(getHealth().shouldDie())
+					return;
+				clearActions();
+				getHealth().setInvulnerable(true);
+				float dst = MathUtils.random(MINPUSHBACK,MAXPUSHBACK);
+				float x = MathUtils.cos(pushbackAngle) * dst;
+				float y = MathUtils.sin(pushbackAngle) * dst;
+				
+				int fr = 4;
+				float frr = fr * 2f;
+				
+				getMove().setDirection(0, 0);
+				setVelocity(0, 0);
+				
+				addAction(Actions.sequence(
+						Actions.parallel(
+								Actions.repeat(fr,Actions.sequence(Actions.fadeOut(damageDuration / frr),Actions.fadeIn(damageDuration / frr))),
+								Actions.sequence(
+										Actions.moveTo(getX()+x, getY()+y,(dst / MAXPUSHBACK) * (damageDuration * .3f),Interpolation.linear),
+										a_setIdling
+										)
+								)
+						,Actions.alpha(1f),a_removeInvulnerable));
+				
+				setPlayerState(PlayerState.Damaged);
 			}
 		});
 
@@ -902,6 +959,26 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 			}
 		};
+	}
+	
+	public void collidedWith(Basic object) {
+		
+		float dx = object.getCollisionCenter().x - getCollisionCenter().x;
+		float dy = object.getCollisionCenter().y - getCollisionCenter().y;
+		pushbackAngle = MathUtils.atan2(dy, dx) - MathUtils.PI;
+		
+		if(object instanceof SimpleEnemy) {
+			getHealth().changeCurrentHealth(-ContactDamage.SIMPLE);
+		}
+		if(object instanceof WormEnemy) {
+			getHealth().changeCurrentHealth(-ContactDamage.WORM);
+		}
+		if(object instanceof CherubEnemy) {
+			getHealth().changeCurrentHealth(-ContactDamage.CHERUB);
+		}
+		if(object instanceof ScorpionEnemy) {
+			getHealth().changeCurrentHealth(-ContactDamage.SCORPION);
+		}
 	}
 
 	public boolean isTransforming() {

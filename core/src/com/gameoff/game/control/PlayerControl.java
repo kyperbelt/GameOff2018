@@ -46,6 +46,13 @@ public class PlayerControl extends GameObjectController {
 		}
 		return PlayerState.Idling;
 	}
+	
+	public boolean isDying() {
+		if(playerObject!=null) {
+			return playerObject.isDying();
+		}
+		return false;
+	}
 
 	@Override
 	public void init(GameObject object) {
