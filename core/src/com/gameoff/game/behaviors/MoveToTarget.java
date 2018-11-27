@@ -9,6 +9,9 @@ import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.NodeState;
 import com.kyperbox.controllers.CollisionController;
 import com.kyperbox.objects.GameObject;
+import com.gameoff.game.control.StateControl;
+import com.gameoff.game.control.StateControl.EntityState;
+import com.gameoff.game.control.StateControl.StateChangeListener;
 
 /**
  * moves to the target with the given name in the context. It will fail if no
@@ -49,6 +52,13 @@ public class MoveToTarget extends BehaviorNode {
 		if (self != null && move != null) {
 			Vector2 position = self.getCollisionCenter();
 
+			//This probably shouldn't go here...
+			StateControl stateControl = self.getController(StateControl.class);
+			if (stateControl != null)
+			{
+				if ((stateControl.getState() != EntityState.Idling) && (stateControl.getState() != EntityState.Moving))
+					return NodeState.Success;
+			}
 
 			float dx = 0;
 			float dy = 0;

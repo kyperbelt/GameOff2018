@@ -42,7 +42,6 @@ public class Basic extends GameObject {
 	Circle rangeCir;
 	float range = 0;
 	
-	
 	public Basic() {
 		collision = new CollisionController();
 		animation = new AnimationController();

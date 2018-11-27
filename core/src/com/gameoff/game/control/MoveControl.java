@@ -7,10 +7,12 @@ import com.kyperbox.objects.GameObjectController;
 public class MoveControl extends GameObjectController {
 
 	float moveSpeed = 0;
+	float jumpSpeed = 0;
 	float xDirection = 0;
 	float yDirection = 0;
 
 	boolean flying = false;
+	boolean jumping = false;
 	boolean passable = false;
 	boolean physical = true;
 
@@ -30,6 +32,16 @@ public class MoveControl extends GameObjectController {
 	 */
 	public boolean isFlying() {
 		return flying;
+	}
+
+	public void setJumping(boolean jumping)
+	{
+		this.jumping = jumping;
+	}
+
+	public boolean isJumping()
+	{
+		return jumping;
 	}
 
 	/**
@@ -62,10 +74,15 @@ public class MoveControl extends GameObjectController {
 
 	public void setMoveSpeed(float moveSpeed) {
 		this.moveSpeed = moveSpeed;
+		this.jumpSpeed = 12 * moveSpeed;
 	}
 
 	public float getMoveSpeed() {
 		return moveSpeed;
+	}
+
+	public float getJumpSpeed() {
+		return jumpSpeed;
 	}
 
 	public void setXDir(float xDirection) {

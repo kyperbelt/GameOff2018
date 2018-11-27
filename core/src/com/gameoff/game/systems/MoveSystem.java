@@ -49,10 +49,18 @@ public class MoveSystem extends ControlSpecificSystem{
 			Vector2 vel = o.getVelocity();
 			
 			if(move != null) {
-				vel.x = move.getMoveSpeed() * move.getXDir();
-				vel.y = move.getMoveSpeed() * move.getYDir();
-				vel.limit(move.getMoveSpeed());
-				
+				if (move.isJumping())
+				{
+					vel.x = move.getJumpSpeed() * move.getXDir();
+					vel.y = move.getJumpSpeed() * move.getYDir();
+					vel.limit(move.getJumpSpeed());
+				} else
+				{
+					vel.x = move.getMoveSpeed() * move.getXDir();
+					vel.y = move.getMoveSpeed() * move.getYDir();
+					vel.limit(move.getMoveSpeed());					
+				}
+
 				if(collision!=null) {
 					Array<CollisionData> coldata = collision.getCollisions(delta);
 					
@@ -60,13 +68,13 @@ public class MoveSystem extends ControlSpecificSystem{
 						CollisionData cd = coldata.get(j);
 						GameObject target = cd.getTarget();
 						MoveControl target_move = target.getController(MoveControl.class);
-					
-						
+
 						if(!move.isPhysical() || (target_move==null || !target_move.isPhysical()))
 							continue;
 						
 						if(move.isFlying() && (target_move==null || target_move.isPassable()))
 							continue;
+
 						Rectangle overlap = cd.getOverlapBox();
 						if (overlap.width < overlap.height) {
 
