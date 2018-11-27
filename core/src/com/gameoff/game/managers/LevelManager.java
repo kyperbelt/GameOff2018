@@ -68,6 +68,7 @@ public class LevelManager extends StateManager {
 	ParallaxMapper paralax;
 	OutOfBoundsSystem bounds;
 	AiSystem ai;
+	SpiderBossEnemy boss = null;
 	
 	public int m_roomWidthPixels, m_roomHeightPixels;
 	
@@ -479,6 +480,7 @@ public class LevelManager extends StateManager {
 		playground.addGameObject(enemy4, KyperBoxGame.NULL_PROPERTIES);
 		randomPlaceObject(enemy4, playground, level);
 		enemy4.setPosition(enemy4.getX()+250,enemy4.getY()-200);
+		boss = enemy4;
 	
 
 		// Keys
@@ -571,6 +573,10 @@ public class LevelManager extends StateManager {
 		if(player.isRemoved()) {
 			player = null;
 			getState().getGame().setGameState("gameover");
+		}
+
+		if (boss.isRemoved()) {
+			getState().getGame().setGameState("victory");
 		}
 		
 		Lava.updateOp();

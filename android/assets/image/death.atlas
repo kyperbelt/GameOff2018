@@ -20,14 +20,14 @@ options
   index: -1
 play
   rotate: false
-  xy: 1261, 10
+  xy: 1476, 10
   size: 179, 95
   orig: 179, 95
   offset: 0, 0
   index: -1
 quit
   rotate: false
-  xy: 1077, 4
+  xy: 1292, 4
   size: 182, 101
   orig: 182, 101
   offset: 0, 0
@@ -41,9 +41,16 @@ replay
   index: -1
 selector
   rotate: false
-  xy: 1442, 57
+  xy: 1657, 57
   size: 47, 48
   orig: 47, 48
+  offset: 0, 0
+  index: -1
+victory
+  rotate: false
+  xy: 1077, 33
+  size: 213, 72
+  orig: 213, 72
   offset: 0, 0
   index: -1
 youdied
