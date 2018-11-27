@@ -54,7 +54,7 @@ public class LevelManager extends StateManager {
 	private int entryPoint;
 
 	// test player for now
-	Player player;
+	public Player player;
 	int overlayKeyAmount; //amount of keys that are shown to the overlay
 	int overlaySoulAmount;//amount of souls in overlay
 
@@ -175,9 +175,7 @@ public class LevelManager extends StateManager {
 
 	@Override
 	public void init(GameState state) {
-
 		
-		died = false;
 		
 		System.out.println("LevelManager::init called. State=" + state.getName());
 		// When this is called, TMX is loaded, objects created, etc.
@@ -577,19 +575,26 @@ public class LevelManager extends StateManager {
 		}
 		
 		if(player.isRemoved()) {
-			player = null;
+			resetGame();
 			getState().getGame().setGameState("gameover");
 		}
 
 		if (boss != null)
 		{
 			if (boss.isRemoved()) {
+				resetGame();
 				getState().getGame().setGameState("victory");
 			}
 		}
 		
 		Lava.updateOp();
 		Fire.updateOp();
+	}
+	
+	public void resetGame() {
+		player = null;
+		boss = null;
+		died = false;
 	}
 
 }
