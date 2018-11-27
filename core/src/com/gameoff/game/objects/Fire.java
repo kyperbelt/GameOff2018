@@ -82,7 +82,7 @@ public class Fire extends Basic {
   boolean m_spread = false;
   float m_spawnTime = 2.0f;
   float m_spawnSpeed = 2.0f;
-  int m_spawnStyle = 1;  //0 is slower and random, 1 is spreads out fast, 2 - single direction
+  int m_spawnStyle = 1;  //0 is slower and random, 1 is spreads out fast, 2 - direction
   int m_directionsBitFlags = 0;
   boolean m_randomPositioning = true;
   float m_decay = 0.1f;
@@ -122,15 +122,7 @@ public class Fire extends Basic {
     this(HealthGroup.Angel,HealthGroup.Player,HealthGroup.Demon,HealthGroup.Neutral);
     setSize(64,88);
     setBounds(5,15,getWidth()-10,10);
-
-    setSpawnSpeed(0.2f);
-    setSpread(true);
-    setLife(5.0f);
-    setDecay(0.05f);
-    setSpawnStyle(2);
-    setDirectionBitFlags(false,true,true,true);
-    setRandomPositioning(false);
-    setMaxSpawn(1);
+    setSpread(false);
   }
 
   public void setMaxSpawn(int max)
@@ -202,6 +194,21 @@ public class Fire extends Basic {
     getAnimation().set("fire", PlayMode.LOOP);
     getAnimation().setPlaySpeed(1.0f + m_random.nextFloat());
     setBounds(5,15,getWidth()-10,10);
+
+    if (properties != null)
+    {
+      m_directionsBitFlags = properties.get("spawnDir", 0, Integer.class);
+      if (m_directionsBitFlags > 0)
+      {
+        setLife(3);
+        setSpread(true);
+        setSpawnStyle(2);
+        setSpawnSpeed(0.25f);
+        setMaxSpawn(1);
+        setDecay(0);
+        setRandomPositioning(false);
+      }
+    }
     
   }
 
@@ -226,10 +233,10 @@ public class Fire extends Basic {
       f1 = 10;
     
 
-    if (dir == 0)
+    if (dir == 2)
     {
       f.setPosition(getX() - 10 + f1, getY() - 50 - f2);
-    } else if (dir == 2)
+    } else if (dir == 0)
     {
       f.setPosition(getX() - 10 + f1, getY() + 50 + f2);
     } else if (dir == 1)
@@ -241,7 +248,7 @@ public class Fire extends Basic {
     }
 
     getGameLayer().addGameObject(f,null);
-    f.setBounds(5,0,f.getWidth()-10,64);
+    f.setBounds(5,5,f.getWidth()-10,54);
     f.getCollision().getCollisions(f,0.005f);
     f.getCollision().getCollisions(f,0.005f);
     removeFireIfNotValid(f);

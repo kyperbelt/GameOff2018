@@ -192,7 +192,8 @@ public class LevelManager extends StateManager {
 		floor_tiles.addController(floorZOrder);
 		TilemapLayerObject wall_tiles = (TilemapLayerObject) playground.getGameObject("wall_tiles");
 		ZOrderControl wallZOrder = new ZOrderControl();
-		wallZOrder.setZOrder(ZOrder.PLAYER+1);
+		//wallZOrder.setZOrder(ZOrder.PLAYER+1);
+		wallZOrder.setZOrder(ZOrder.BACKGROUND-1);
 		wall_tiles.addController(wallZOrder);
 		if (player == null) {
 			GameObject pspawn = playground.getGameObject("playerSpawn");
@@ -318,7 +319,6 @@ public class LevelManager extends StateManager {
 
 		
 			int dc = r.getDoor(dir);
-			System.out.println("LevelManager::init door[" + dir + "]=" + dc);
 			int rot = -90 * dir;
 			// change below to getSize of sprite somehow
 			float dw = 219;
@@ -461,27 +461,33 @@ public class LevelManager extends StateManager {
 
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
-		WormEnemy enemy = new WormEnemy();
-		playground.addGameObject(enemy, KyperBoxGame.NULL_PROPERTIES);
-		randomPlaceObject(enemy, playground, level);
 
-		ScorpionEnemy enemy2 = new ScorpionEnemy();
-		playground.addGameObject(enemy2, KyperBoxGame.NULL_PROPERTIES);
-		randomPlaceObject(enemy2, playground, level);
-		enemy2.setPosition(enemy2.getX()+150,enemy2.getY());
+		if (r.getCode() > 0)
+		{
+			WormEnemy enemy = new WormEnemy();
+			playground.addGameObject(enemy, KyperBoxGame.NULL_PROPERTIES);
+			randomPlaceObject(enemy, playground, level);
 
-		CherubEnemy enemy3 = new CherubEnemy();
-		playground.addGameObject(enemy3, KyperBoxGame.NULL_PROPERTIES);
-		randomPlaceObject(enemy3, playground, level);
-		enemy3.setPosition(enemy3.getX()-250,enemy3.getY());
+			ScorpionEnemy enemy2 = new ScorpionEnemy();
+			playground.addGameObject(enemy2, KyperBoxGame.NULL_PROPERTIES);
+			randomPlaceObject(enemy2, playground, level);
+			enemy2.setPosition(enemy2.getX()+150,enemy2.getY());
 
-		
-	  SpiderBossEnemy enemy4 = new SpiderBossEnemy();
-		playground.addGameObject(enemy4, KyperBoxGame.NULL_PROPERTIES);
-		randomPlaceObject(enemy4, playground, level);
-		enemy4.setPosition(enemy4.getX()+250,enemy4.getY()-200);
-		boss = enemy4;
-	
+			CherubEnemy enemy3 = new CherubEnemy();
+			playground.addGameObject(enemy3, KyperBoxGame.NULL_PROPERTIES);
+			randomPlaceObject(enemy3, playground, level);
+			enemy3.setPosition(enemy3.getX()-250,enemy3.getY());
+		}
+
+		if (r.getIsBoss())
+		{
+		  SpiderBossEnemy enemy4 = new SpiderBossEnemy();
+			playground.addGameObject(enemy4, KyperBoxGame.NULL_PROPERTIES);
+			randomPlaceObject(enemy4, playground, level);
+			enemy4.setPosition(enemy4.getX()+250,enemy4.getY()-200);
+			boss = enemy4;
+		}
+
 
 		// Keys
 		if (r.getHasKey())
@@ -575,8 +581,11 @@ public class LevelManager extends StateManager {
 			getState().getGame().setGameState("gameover");
 		}
 
-		if (boss.isRemoved()) {
-			getState().getGame().setGameState("victory");
+		if (boss != null)
+		{
+			if (boss.isRemoved()) {
+				getState().getGame().setGameState("victory");
+			}
 		}
 		
 		Lava.updateOp();
