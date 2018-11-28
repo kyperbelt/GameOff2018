@@ -121,6 +121,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 	public int m_numKeys = 0;
 	public int m_numSouls = 0;
+	
+	
+	public float soulDrainRate = .5f; //amount of souls drained per second while in angel form
+	public float soulDrain = 0f; //used to calculate the amount of soul drained into whole numbers
 
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
