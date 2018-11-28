@@ -72,6 +72,12 @@ public class HealthControl extends GameObjectController {
 		setCurrentHealth(getCurrentHealth() + amount);
 	}
 
+	public void changeHealthNoListener(float amount)
+	{
+		health += amount;
+		this.health = MathUtils.clamp(health, 0, max);
+	}
+	
 	/**
 	 * set the current health of the control being invulnerable causes health to not
 	 * lower

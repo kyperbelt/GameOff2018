@@ -29,6 +29,11 @@ public class Projectile extends Attack {
 	
 	Array<GameObject> attacked = new Array<GameObject>();
 	
+	public void setDamage(float d)
+	{
+		damage = d;
+	}
+	
 	public void setRemoveOnHit(boolean removeOnHit) {
 		this.removeOnHit = removeOnHit;
 	}
@@ -57,7 +62,6 @@ public class Projectile extends Attack {
 	public void update(float delta) {
 		super.update(delta);
 		
-		
 		boolean somethingHit = false;
 		Array<CollisionData> colData = getCollision().getCollisions();
 		for (int i = 0; i < colData.size; i++) {
@@ -66,6 +70,7 @@ public class Projectile extends Attack {
 			HealthControl health = target.getController(HealthControl.class);
 			
 			if(health!=null) {
+
 				HealthGroup group = health.getHealthGroup();
 				if(!attacked.contains(target, true) && damages(group)) {
 					health.changeCurrentHealth(-damage);

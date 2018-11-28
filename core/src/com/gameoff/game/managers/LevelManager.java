@@ -460,7 +460,7 @@ public class LevelManager extends StateManager {
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
 
-		if (r.getCode() > 0)
+		if ((r.getCode() > 0) && (r.getCode() < 40))
 		{
 			WormEnemy enemy = new WormEnemy();
 			playground.addGameObject(enemy, KyperBoxGame.NULL_PROPERTIES);

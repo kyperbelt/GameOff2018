@@ -43,18 +43,18 @@ public class SpiderBossEnemy extends DirectionEntity {
   AiControl ai;
   int m_id = 0;
   Random m_random = new Random();
-  float m_doFireTime = 3;
-  float bossSpeed = 100;
+  float m_doFireTime = 2;
+  float bossSpeed = 120;
   float shadowX = 215;
   float shadowY = 60;
 
-
-  float damagedDuration = .2f;
+  float damagedDuration = .015f;
   float damagedElapsed = 0;
   ShaderProgram damageShader;
   private int m_masterID = 0;
   boolean m_facingRight = true;
-  float projectileSpeed = 700;
+  float projectileSpeed = 750;
+  float regProjectileSpeed = 750;
   
   Action shake = BakedEffects.shake(.5f, 10,false,false);
 
@@ -70,6 +70,14 @@ public class SpiderBossEnemy extends DirectionEntity {
   float m_jumpDuration = 0.75f;
   float m_height = 0;
 
+  float m_boostCooldown = 10;
+  float m_boostTimer = 0;
+
+  float m_laserYOff = 70;
+  float m_laserXOff = -40;
+
+  float m_laserCooldown = 1.5f;
+
 
   AnimationListener attackAnimationListener = new AnimationListener() {
     @Override
@@ -77,7 +85,14 @@ public class SpiderBossEnemy extends DirectionEntity {
       if (times >= 1) {
         getAnimation().setListener(null);
         setWalkAnimation(getDirection());
-        shootLaser();
+        int r = m_random.nextInt(20);
+        if (r > 16)
+          shootMassiveLaser();
+        else if (r > 10)
+          shootTripleLaser();
+        else
+          shootSingleLaser();
+
         glow.setVisible(false);
         state.setState(EntityState.Idling);
       }
@@ -133,8 +148,8 @@ public class SpiderBossEnemy extends DirectionEntity {
     getMove().setMoveSpeed(bossSpeed);
     getHealth().setHealthGroup(HealthGroup.Boss);
     getHealth().setDamageListener(damageListener);
-    getHealth().setMaxHealth(50f);
-    getHealth().setCurrentHealth(50f); 
+    getHealth().setMaxHealth(100f);
+    getHealth().setCurrentHealth(100f); 
     state.setStateChangeListener(stateListener);
     m_id = m_masterID;
     m_masterID++;
@@ -149,9 +164,10 @@ public class SpiderBossEnemy extends DirectionEntity {
 
     attack = new AttackControl(null);
     attack.setAttackListener(attackListener);
-    attack.setCooldown(7);
+    attack.setCooldown(5f);
+    attack.setDamage(2);
 
-    setPlayerFindRange(1200);
+    setPlayerFindRange(2000);
 
     tailAnim = new AnimationController();
     stingerAnim = new AnimationController();
@@ -159,12 +175,13 @@ public class SpiderBossEnemy extends DirectionEntity {
 
   }
 
-
-  private void shootLaser()
+  private void shootLaser(float angleToPlayer)
   { 
     Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
+    p.setDamage(2);
     p.setVelocity(0, 0);
     p.setRotation(0);
+    p.setFlip(false,false);
     p.setSize(23,110);
     float w = p.getWidth();
     float h = p.getHeight();
@@ -176,9 +193,10 @@ public class SpiderBossEnemy extends DirectionEntity {
         
     MoveControl pmove = p.getMove();
     pmove.setMoveSpeed(projectileSpeed);
-    m_vectorToPlayer.nor();
-    float angle = m_vectorToPlayer.angle()-90;
-    pmove.setDirection(m_vectorToPlayer.x, m_vectorToPlayer.y);
+    float angle = angleToPlayer-90;
+    Vector2 vec = new Vector2(1,0);
+    vec.setAngle(angleToPlayer);
+    pmove.setDirection(vec.x, vec.y);
     p.setRotation(angle);
 
     float cx = p.getWidth()/2;
@@ -193,13 +211,50 @@ public class SpiderBossEnemy extends DirectionEntity {
     p.setPosition(getX() + 231 - cx + sx, getY() + 236  - cy + sy);
   }
 
+  private void adjustLaserAngle()
+  {
+    m_vectorToPlayer.set(m_vectorToPlayer.x - m_laserXOff, m_vectorToPlayer.y - m_laserYOff);
+  }
+
+  private void shootSingleLaser()
+  {
+    projectileSpeed = regProjectileSpeed + 50;
+    adjustLaserAngle();
+    shootLaser(m_vectorToPlayer.angle());
+  }
+
+  private void shootTripleLaser()
+  {
+    projectileSpeed = regProjectileSpeed;
+    adjustLaserAngle();
+    shootLaser(m_vectorToPlayer.angle());
+    shootLaser(m_vectorToPlayer.angle()+20);
+    shootLaser(m_vectorToPlayer.angle()-20);
+  }
+
+  private void shootMassiveLaser()
+  {
+    projectileSpeed = regProjectileSpeed-150;
+    adjustLaserAngle();
+    shootLaser(m_vectorToPlayer.angle());
+    shootLaser(m_vectorToPlayer.angle()+20);
+    shootLaser(m_vectorToPlayer.angle()-20);
+    shootLaser(m_vectorToPlayer.angle()+40);
+    shootLaser(m_vectorToPlayer.angle()-40);
+    shootLaser(m_vectorToPlayer.angle()+60);
+    shootLaser(m_vectorToPlayer.angle()-60);
+    shootLaser(m_vectorToPlayer.angle()+80);
+    shootLaser(m_vectorToPlayer.angle()-80);
+    projectileSpeed = regProjectileSpeed;
+  }
+
   public void spawnFire()
   {
     for (int i=0; i < 4; i++)
     {
       Fire f = new Fire();
       getGameLayer().addGameObject(f,null);
-      f.setLife(2);
+      f.setLife(10);
       f.setSpread(true);
       f.setSpawnSpeed(1000);
 
@@ -287,33 +342,34 @@ public class SpiderBossEnemy extends DirectionEntity {
   public void pickTargetFall()
   {
     //change location to target landing on player
-    setPlayerFindRange(2400);
+    setPlayerFindRange(3000);
     if (setClosestPlayerData())
       setPosition(getX() + m_vectorToPlayer.x, getY() + m_vectorToPlayer.y - m_height);
   }
 
   public void dazed()
   {
+    getHealth().setInvulnerable(false);
     state.setState(EntityState.Dazed);
     getAnimation().set("dazed", PlayMode.LOOP_PINGPONG);
-    m_jumpTimer = 3f;
+    m_jumpTimer = 2.0f;
   }
 
   public void jump()
   {
-    if (m_jumpCooldown < 0)
-    {
-      state.setState(EntityState.Jumping);
-      getAnimation().set("jump", PlayMode.NORMAL);
-      getMove().setDirection(0,1);
-      getMove().setJumping(true);
-      getMove().setPhysical(false);
-      m_jumpTimer = m_jumpDuration;
-      m_jumpCooldown = 10;
-      m_height = 0;
-      shadow.setVisible(true);
-      shadow.setScale(2.2f);
-    } 
+    getHealth().setInvulnerable(true);
+    getMove().setMoveSpeed(bossSpeed);
+    m_boostTimer = -1;
+    state.setState(EntityState.Jumping);
+    getAnimation().set("jump", PlayMode.NORMAL);
+    getMove().setDirection(0,1);
+    getMove().setJumping(true);
+    getMove().setPhysical(false);
+    m_jumpTimer = m_jumpDuration;
+    m_jumpCooldown = 20;
+    m_height = 0;
+    shadow.setVisible(true);
+    shadow.setScale(2.2f);
   }
 
   @Override
@@ -328,26 +384,53 @@ public class SpiderBossEnemy extends DirectionEntity {
       damagedElapsed += delta;
     } else if ((state.getState() == EntityState.Idling) || (state.getState() == EntityState.Moving))
     {
+      shadow.setVisible(false);
+      m_boostCooldown -= delta;
+      if (m_boostTimer > 0)
+      {
+        m_boostTimer -= delta;
+        if (m_boostTimer < 0)
+        {
+          getMove().setMoveSpeed(bossSpeed);
+        }
+      }
+
+      if (m_boostCooldown < 0)
+      {
+        //do boost
+        m_boostTimer = 2f;
+        m_boostCooldown = 10 + m_random.nextFloat()*7;
+        getMove().setMoveSpeed(bossSpeed*2.1f);
+      }
 
       int r = m_random.nextInt(100);
-      if (r > 95)
+      if ((m_jumpCooldown < 0) && (r > 90))
+      {
+          jump();
+      } else
       {
         if (setClosestPlayerData())
         {
-          attack.attack();
+          if (attack.attack())
+          {
+            if (m_random.nextInt(20) > 3)
+            {
+              attack.updateCooldown(0.4f);
+            } else
+            {
+              attack.updateCooldown(m_laserCooldown + m_random.nextFloat()*2f);
+            }
+          }
         }
-      } else if (r > 60)
-      {
-          jump();
       }
     }
 
-    if (state.getState() == EntityState.Moving)
+    if ((state.getState() == EntityState.Idling) || (state.getState() == EntityState.Moving))
     {
       m_doFireTime -= delta;
       if (m_doFireTime < 0)
       {
-        m_doFireTime = 3f;
+        m_doFireTime = 2f;
         spawnFire();
       }
     }
@@ -389,7 +472,14 @@ public class SpiderBossEnemy extends DirectionEntity {
     {
       if (getAnimation().isAnimationFinished())
       {
-        dazed();
+        getHealth().setInvulnerable(false);
+        if (m_random.nextInt(10) > 7)
+        {
+          jump();
+        } else
+        {
+          dazed();
+        }
       }
     } else if (state.getState() == EntityState.Dazed)
     {
@@ -450,7 +540,7 @@ public class SpiderBossEnemy extends DirectionEntity {
   }
 
   private BehaviorNode getExampleAi() {
-    return BehaviorTree.generateRoot(Gdx.files.internal("behavior/simpleEnemy.btree"));
+    return BehaviorTree.generateRoot(Gdx.files.internal("behavior/boss.btree"));
   }
 
   private void createAnimations() {

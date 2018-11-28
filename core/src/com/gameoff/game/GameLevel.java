@@ -342,6 +342,8 @@ public class GameLevel {
     // now place boss
     Room bossRoom = level.getRoomWithNeighbors(1,200, true);
     bossRoom.setIsBoss();
+    bossRoom.m_roomCode = 40;
+    level.m_currentRoom = bossRoom; //delete this line
 
     //TODO: parameterize as well, so can tweak difficulty with parameters easily
 

@@ -28,6 +28,7 @@ import com.gameoff.game.objects.enemies.ContactDamage;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
 import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.gameoff.game.objects.enemies.WormEnemy;
+import com.gameoff.game.objects.enemies.SpiderBossEnemy;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
@@ -87,6 +88,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private static final float MAXPUSHBACK = 100;
 	private float damageDuration = 1.5f;
 	private float damageElapsed = 0;
+	private float m_damageMultiplier = 0f;
+	private float m_weaponDamageMultiplier = 1f;
 	
 	private Action a_setIdling = new Action() {
 		@Override
@@ -112,7 +115,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private float deathTime = 3f;
 	private float deathElapsed = 0;
 
-	public float projectileSpeed = 600;
+	public float projectileSpeed = 650;
 	
 	public boolean isDying() {return dying;}
 
@@ -159,8 +162,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	float lastXDir = 0;
 	float lastYDir = 0;
 
-	float angelSpeed = 270;
-	float demonSpeed = 180;
+	float angelSpeed = 320;
+	float demonSpeed = 230;
 
 	PlayerControl control;
 	AttackControl attack;
@@ -169,6 +172,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	AttackListener basicProjectile;
 	float basicMeleeCD = .75f;
 	AttackListener basicMelee;
+	MeleeAttack melee;
 
 	float transformTime = 0;
 	boolean transforming = false;
@@ -447,8 +451,22 @@ public class Player extends DirectionEntity implements AnimationListener {
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
 			public void damaged(float amount) {
+
+				float dmg = amount * m_damageMultiplier;
+				if (form == Form.Angel)
+				{
+					//double damage when angel!
+					getHealth().changeHealthNoListener(-amount);
+					dmg += amount * m_damageMultiplier;
+				}
+
+				//add back health if you have the shield
+				getHealth().changeHealthNoListener(dmg);
+				//System.out.println("added dmg back: " + dmg);
+
 				if(getHealth().shouldDie())
 					return;
+
 				clearActions();
 				getHealth().setInvulnerable(true);
 				float dst = MathUtils.random(MINPUSHBACK,MAXPUSHBACK);
@@ -663,13 +681,21 @@ public class Player extends DirectionEntity implements AnimationListener {
 						if (itemID == Collectible.KEY) {
 							m_numKeys++;
 							System.out.println("Keys + 1");
-
-						}
-						
-						if (itemID == Collectible.SOUL) {
+						} else if (itemID == Collectible.HEART)
+						{
+							getHealth().changeCurrentHealth(3);
+							System.out.println("Health + 3");
+						} else if (itemID == Collectible.SHIELD)
+						{
+							activateHalfDamage();
+							System.out.println("SHIELD got!");
+						} else if (itemID == Collectible.SWORD)
+						{
+							activateWeaponDoubleDamage();
+							System.out.println("SWORD got!");
+						}else if (itemID == Collectible.SOUL) {
 							m_numSouls++;
 							System.out.println("Souls + 1");
-
 						}
 
 						System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
@@ -754,6 +780,18 @@ public class Player extends DirectionEntity implements AnimationListener {
 		}
 	}
 
+	public void activateHalfDamage()
+	{
+		//picked up shield, now you take half damage when hit
+		m_damageMultiplier = 0.5f;
+	}
+
+	public void activateWeaponDoubleDamage()
+	{
+		m_weaponDamageMultiplier = 2f;
+		melee.setDamage(m_weaponDamageMultiplier*2);
+	}
+
 	// melee attack
 
 	private void setupMelee(MeleeAttack melee) {
@@ -829,6 +867,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 																												// projectile
 					p.setVelocity(0, 0);
 					p.setRotation(0);
+					p.setDamage(1 * m_weaponDamageMultiplier);
 					float w = 0;
 					float h = 0;
 
@@ -955,11 +994,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 					break;
 				}
 
-				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
+				melee = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
+				setupMelee(melee);
+				melee.setDamage(m_weaponDamageMultiplier*2);
 
-				setupMelee(m);
-
-				getGameLayer().addGameObject(m, KyperBoxGame.NULL_PROPERTIES);
+				getGameLayer().addGameObject(melee, KyperBoxGame.NULL_PROPERTIES);
 
 			}
 		};
@@ -973,15 +1012,14 @@ public class Player extends DirectionEntity implements AnimationListener {
 		
 		if(object instanceof SimpleEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SIMPLE);
-		}
-		if(object instanceof WormEnemy) {
+		} else if(object instanceof WormEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.WORM);
-		}
-		if(object instanceof CherubEnemy) {
+		} else if(object instanceof CherubEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.CHERUB);
-		}
-		if(object instanceof ScorpionEnemy) {
+		} else if(object instanceof ScorpionEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SCORPION);
+		} else if (object instanceof SpiderBossEnemy) {
+			getHealth().changeCurrentHealth(-ContactDamage.BOSS);
 		}
 	}
 
