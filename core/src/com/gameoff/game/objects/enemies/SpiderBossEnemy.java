@@ -178,6 +178,7 @@ public class SpiderBossEnemy extends DirectionEntity {
   private void shootLaser(float angleToPlayer)
   { 
     Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
+    p.setDamage(2);
     p.setVelocity(0, 0);
     p.setRotation(0);
     p.setFlip(false,false);

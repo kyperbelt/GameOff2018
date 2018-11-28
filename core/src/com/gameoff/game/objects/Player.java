@@ -88,6 +88,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private static final float MAXPUSHBACK = 100;
 	private float damageDuration = 1.5f;
 	private float damageElapsed = 0;
+	private float m_damageMultiplier = 0f;
+	private float m_weaponDamageMultiplier = 1f;
 	
 	private Action a_setIdling = new Action() {
 		@Override
@@ -166,6 +168,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	AttackListener basicProjectile;
 	float basicMeleeCD = .75f;
 	AttackListener basicMelee;
+	MeleeAttack melee;
 
 	float transformTime = 0;
 	boolean transforming = false;
@@ -445,11 +448,17 @@ public class Player extends DirectionEntity implements AnimationListener {
 			@Override
 			public void damaged(float amount) {
 
+				float dmg = amount * m_damageMultiplier;
 				if (form == Form.Angel)
 				{
 					//double damage when angel!
 					getHealth().changeHealthNoListener(-amount);
+					dmg += amount * m_damageMultiplier;
 				}
+
+				//add back health if you have the shield
+				getHealth().changeHealthNoListener(dmg);
+				//System.out.println("added dmg back: " + dmg);
 
 				if(getHealth().shouldDie())
 					return;
@@ -668,13 +677,21 @@ public class Player extends DirectionEntity implements AnimationListener {
 						if (itemID == Collectible.KEY) {
 							m_numKeys++;
 							System.out.println("Keys + 1");
-
-						}
-						
-						if (itemID == Collectible.SOUL) {
+						} else if (itemID == Collectible.HEART)
+						{
+							getHealth().changeCurrentHealth(3);
+							System.out.println("Health + 3");
+						} else if (itemID == Collectible.SHIELD)
+						{
+							activateHalfDamage();
+							System.out.println("SHIELD got!");
+						} else if (itemID == Collectible.SWORD)
+						{
+							activateWeaponDoubleDamage();
+							System.out.println("SWORD got!");
+						}else if (itemID == Collectible.SOUL) {
 							m_numSouls++;
 							System.out.println("Souls + 1");
-
 						}
 
 						System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
@@ -759,6 +776,18 @@ public class Player extends DirectionEntity implements AnimationListener {
 		}
 	}
 
+	public void activateHalfDamage()
+	{
+		//picked up shield, now you take half damage when hit
+		m_damageMultiplier = 0.5f;
+	}
+
+	public void activateWeaponDoubleDamage()
+	{
+		m_weaponDamageMultiplier = 2f;
+		melee.setDamage(m_weaponDamageMultiplier*2);
+	}
+
 	// melee attack
 
 	private void setupMelee(MeleeAttack melee) {
@@ -834,6 +863,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 																												// projectile
 					p.setVelocity(0, 0);
 					p.setRotation(0);
+					p.setDamage(1 * m_weaponDamageMultiplier);
 					float w = 0;
 					float h = 0;
 
@@ -960,11 +990,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 					break;
 				}
 
-				MeleeAttack m = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
+				melee = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
+				setupMelee(melee);
+				melee.setDamage(m_weaponDamageMultiplier*2);
 
-				setupMelee(m);
-
-				getGameLayer().addGameObject(m, KyperBoxGame.NULL_PROPERTIES);
+				getGameLayer().addGameObject(melee, KyperBoxGame.NULL_PROPERTIES);
 
 			}
 		};

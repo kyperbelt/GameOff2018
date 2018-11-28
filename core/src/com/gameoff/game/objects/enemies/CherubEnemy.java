@@ -100,6 +100,7 @@ public class CherubEnemy extends DirectionEntity {
       
       Projectile p = Projectile.get(HealthGroup.Player); // get a pooled projectile
       p.setVelocity(0, 0);
+      p.setDamage(1f);
       p.setPosition(getX() + getWidth() * 0.2f, getY() + getHeight() * .15f + getDepth());
       p.getAnimation().setAnimation("cherublaser", PlayMode.LOOP);
       p.getAnimation().setPlaySpeed(1);

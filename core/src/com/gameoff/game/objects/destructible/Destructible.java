@@ -33,13 +33,12 @@ public class Destructible extends Basic {
 				destroyed = true;
 
 				// drop item here
+				if (drop >= 0)
 				{
 					Collectible item = Collectible.get(drop);
 					Vector2 center = getCollisionCenter();
 					item.setPosition(center.x, center.y);
 					getGameLayer().addGameObject(item, KyperBoxGame.NULL_PROPERTIES);
-
-					
 				}
 				// ---end drop item
 				getAnimation().setListener(null);

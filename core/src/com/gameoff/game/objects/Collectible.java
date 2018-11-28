@@ -43,6 +43,9 @@ public class Collectible extends Basic {
 
 	// collectible ids
 	public static final int KEY = 0;
+	public static final int HEART = 1;
+	public static final int SHIELD = 2;
+	public static final int SWORD = 3;
 	public static final int SOUL = 10;
 
 	// ---collectible id end
@@ -132,6 +135,42 @@ public class Collectible extends Basic {
 				setSize(sprite.getWidth(), sprite.getHeight());
 				setCollisionBounds(0, 0, sprite.getWidth(), sprite.getHeight());
 				setSprite("key");
+				break;
+			case HEART:
+				Sprite heart = getState().getGameSprite("heart_0");
+				setSize(heart.getWidth(), heart.getHeight());
+				Animation<KyperSprite> ha = state.getAnimation("heart");
+				if (ha == null)
+					state.storeAnimation("heart", state.createGameAnimation("heart", .17f));
+
+				anim.setAnimation("heart", PlayMode.LOOP);
+				addController(anim);
+				animationName = "heart";
+				setCollisionBounds(0, 0, heart.getWidth(), heart.getHeight());
+				break;
+			case SHIELD:
+				Sprite shield = getState().getGameSprite("shield_0");
+				setSize(shield.getWidth(), shield.getHeight());
+				Animation<KyperSprite> sa = state.getAnimation("shield");
+				if (sa == null)
+					state.storeAnimation("shield", state.createGameAnimation("shield", .17f));
+
+				anim.setAnimation("shield", PlayMode.LOOP);
+				addController(anim);
+				animationName = "shield";
+				setCollisionBounds(0, 0, shield.getWidth(), shield.getHeight());
+				break;
+			case SWORD:
+				Sprite sword = getState().getGameSprite("sword_0");
+				setSize(sword.getWidth(), sword.getHeight());
+				Animation<KyperSprite> ssa = state.getAnimation("sword");
+				if (ssa == null)
+					state.storeAnimation("sword", state.createGameAnimation("sword", .17f));
+
+				anim.setAnimation("sword", PlayMode.LOOP);
+				addController(anim);
+				animationName = "sword";
+				setCollisionBounds(0, 0, sword.getWidth(), sword.getHeight());
 				break;
 			case SOUL:
 				Sprite soul = getState().getGameSprite("soul_0");

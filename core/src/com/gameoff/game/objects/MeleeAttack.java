@@ -61,6 +61,11 @@ public class MeleeAttack extends Attack{
 			remove();
 		}
 	}
+
+	public void setDamage(float d)
+	{
+		damage = d;
+	}
 	
 	@Override
 	public void onRemove() {
