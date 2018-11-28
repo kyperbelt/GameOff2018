@@ -112,7 +112,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private float deathTime = 3f;
 	private float deathElapsed = 0;
 
-	public float projectileSpeed = 600;
+	public float projectileSpeed = 650;
 	
 	public boolean isDying() {return dying;}
 
@@ -155,8 +155,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	float lastXDir = 0;
 	float lastYDir = 0;
 
-	float angelSpeed = 270;
-	float demonSpeed = 180;
+	float angelSpeed = 320;
+	float demonSpeed = 230;
 
 	PlayerControl control;
 	AttackControl attack;
@@ -443,8 +443,16 @@ public class Player extends DirectionEntity implements AnimationListener {
 		getHealth().setDamageListener(new DamageListener() {
 			@Override
 			public void damaged(float amount) {
+
+				if (form == Form.Angel)
+				{
+					//double damage when angel!
+					getHealth().changeHealthNoListener(-amount);
+				}
+
 				if(getHealth().shouldDie())
 					return;
+
 				clearActions();
 				getHealth().setInvulnerable(true);
 				float dst = MathUtils.random(MINPUSHBACK,MAXPUSHBACK);

@@ -74,7 +74,7 @@ public class MoveControl extends GameObjectController {
 
 	public void setMoveSpeed(float moveSpeed) {
 		this.moveSpeed = moveSpeed;
-		this.jumpSpeed = 12 * moveSpeed;
+		this.jumpSpeed = 14 * moveSpeed;
 	}
 
 	public float getMoveSpeed() {

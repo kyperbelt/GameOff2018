@@ -50,9 +50,15 @@ public class AttackControl extends GameObjectController{
 	public void resetCooldown() {
 		nelapsed = cooldown;
 	}
+
+	public void updateCooldown(float cd)
+	{
+		cooldown = cd;
+	}
 	
 	public void setCooldown(float cooldown) {
 		this.cooldown = cooldown;
+
 		resetCooldown();
 	}
 	
@@ -60,14 +66,17 @@ public class AttackControl extends GameObjectController{
 		return cooldown;
 	}
 	
-	public void attack() {
+	public boolean attack() {
 		//if we have not met the cooldown 
 		//then we simply dont attaack
 		if(nelapsed < cooldown)
-			return;
+			return false;
+
 		if(listener != null)
 			listener.onAttack();
+
 		nelapsed = 0;
+		return true;
 	}
 	
 	public void setAttackListener(AttackListener listener) {

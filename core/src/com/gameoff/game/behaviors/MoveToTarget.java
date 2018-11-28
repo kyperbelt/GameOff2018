@@ -56,7 +56,7 @@ public class MoveToTarget extends BehaviorNode {
 			StateControl stateControl = self.getController(StateControl.class);
 			if (stateControl != null)
 			{
-				if ((stateControl.getState() != EntityState.Idling) && (stateControl.getState() != EntityState.Moving))
+				if ((stateControl.getState() != EntityState.Idling) && (stateControl.getState() != EntityState.Moving) && (stateControl.getState() != EntityState.Attacking))
 					return NodeState.Success;
 			}
 

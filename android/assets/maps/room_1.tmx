@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="135">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="137">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
  </properties>
@@ -212,7 +212,7 @@
  </objectgroup>
  <objectgroup name="foreground" locked="1"/>
  <objectgroup name="uiground" locked="1"/>
- <objectgroup name="preload" visible="0" locked="1">
+ <objectgroup name="preload" locked="1">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="0" width="960" height="540"/>
   <object id="56" x="-480" y="256" width="96" height="32">
    <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
@@ -228,6 +228,11 @@
   </object>
   <object id="60" x="-896" y="256" width="96" height="32">
    <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Shadersa</text>
+  </object>
+  <object id="136" name="damageShader" type="Shader" x="1792" y="1786" width="32" height="32">
+   <properties>
+    <property name="shader_name" value="damaged"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
