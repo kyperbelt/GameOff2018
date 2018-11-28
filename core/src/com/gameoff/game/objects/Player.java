@@ -28,6 +28,7 @@ import com.gameoff.game.objects.enemies.ContactDamage;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
 import com.gameoff.game.objects.enemies.SimpleEnemy;
 import com.gameoff.game.objects.enemies.WormEnemy;
+import com.gameoff.game.objects.enemies.SpiderBossEnemy;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
@@ -977,15 +978,14 @@ public class Player extends DirectionEntity implements AnimationListener {
 		
 		if(object instanceof SimpleEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SIMPLE);
-		}
-		if(object instanceof WormEnemy) {
+		} else if(object instanceof WormEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.WORM);
-		}
-		if(object instanceof CherubEnemy) {
+		} else if(object instanceof CherubEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.CHERUB);
-		}
-		if(object instanceof ScorpionEnemy) {
+		} else if(object instanceof ScorpionEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SCORPION);
+		} else if (object instanceof SpiderBossEnemy) {
+			getHealth().changeCurrentHealth(-ContactDamage.BOSS);
 		}
 	}
 
