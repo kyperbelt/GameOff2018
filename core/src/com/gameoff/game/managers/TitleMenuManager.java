@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.gameoff.game.GameLevel;
 import com.gameoff.game.Inputs;
 import com.kyperbox.GameState;
+import com.kyperbox.SoundManager;
 import com.kyperbox.input.GameInput;
 import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.GameObject;
@@ -52,7 +53,12 @@ public class TitleMenuManager extends StateManager {
 	 */
 	@Override
 	public void init(GameState state) {
+		state.playMusic(SoundManager.MUSIC,"bgmusic", true);
 
+		state.getSoundManager().changeVolume(SoundManager.MUSIC, .2f);
+		
+		
+		
 		play = (ImageButton) state.getUiLayer().getActor("playbutton");
 		play.addListener(listener);
 		play.setOrigin(Align.center);

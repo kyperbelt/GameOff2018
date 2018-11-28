@@ -47,6 +47,9 @@
   <property name="wrap" type="bool" default="false"/>
  </objecttype>
  <objecttype name="LavaBurst" color="#a41383"/>
+ <objecttype name="Music" color="#00ff7f">
+  <property name="file" type="string"/>
+ </objecttype>
  <objecttype name="NumberObject" color="#ff0000">
   <property name="place" type="int" default="0"/>
   <property name="value" type="int" default="0"/>
@@ -89,6 +92,9 @@
   <property name="sprite" type="string"/>
  </objecttype>
  <objecttype name="SimpleEnemy" color="#aa5500"/>
+ <objecttype name="Sound" color="#55ff00">
+  <property name="file" type="string"/>
+ </objecttype>
  <objecttype name="Spiker" color="#a4182d"/>
  <objecttype name="SpikeWall" color="#a0a0a4">
   <property name="direction" type="int" default="0"/>

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.gameoff.game.Context;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.control.AiControl;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.MoveControl;
@@ -99,9 +100,19 @@ public class SpiderBossEnemy extends DirectionEntity {
     }
   };
 
+  long lastDamageSound = -1;
   DamageListener damageListener=new DamageListener(){
+  
+  @Override public void damaged(float amount){
 
-  @Override public void damaged(float amount){state.setState(EntityState.Damaged);damagedElapsed=0;}};
+	  if(state.getState() != EntityState.Damaged) {
+		  if(lastDamageSound != -1)
+			  getState().stopSound(Sounds.BossDamaged, lastDamageSound);
+		  lastDamageSound = getState().playSound(Sounds.BossDamaged);
+	  }
+	  state.setState(EntityState.Damaged);
+	  damagedElapsed=0;
+  }};
 
   StateChangeListener stateListener = new StateChangeListener() {
 
@@ -122,6 +133,7 @@ public class SpiderBossEnemy extends DirectionEntity {
 
   //Array<CollisionData> cols;
   
+  long lastAttackSound = -1;
   AttackListener attackListener = new AttackListener() {
     @Override
     public void onAttack() {
@@ -137,6 +149,11 @@ public class SpiderBossEnemy extends DirectionEntity {
       glowAnim.set("attacka");
       glowAnim.setPlaySpeed(1);
       getMove().setDirection(0,0);
+      
+      
+      if(lastAttackSound!=-1) 
+    	  getState().stopSound(Sounds.BossLaser, lastAttackSound);
+      lastAttackSound = getState().playSound(Sounds.BossLaser);
     }
   };
 
@@ -252,7 +269,7 @@ public class SpiderBossEnemy extends DirectionEntity {
   {
     for (int i=0; i < 4; i++)
     {
-      Fire f = new Fire();
+      Fire f = Fire.get();
       getGameLayer().addGameObject(f,null);
       f.setLife(10);
       f.setSpread(true);
@@ -370,6 +387,8 @@ public class SpiderBossEnemy extends DirectionEntity {
     m_height = 0;
     shadow.setVisible(true);
     shadow.setScale(2.2f);
+    getState().playSound(Sounds.BossJump);
+    
   }
 
   @Override
@@ -463,6 +482,7 @@ public class SpiderBossEnemy extends DirectionEntity {
         getMove().setDirection(0,0);
         getMove().setPhysical(true);
         getMove().setJumping(false);
+        getState().playSound(Sounds.BossLand);
         m_jumpTimer = 0;
       } else
       {

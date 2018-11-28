@@ -73,7 +73,7 @@ public class LevelManager extends StateManager {
 	public int m_roomWidthPixels, m_roomHeightPixels;
 	
 	OverlayManager overlayManager;
-	boolean died = false;
+	public boolean died = false;
 
 	/**
 	 * set the entry point into new room
@@ -84,7 +84,7 @@ public class LevelManager extends StateManager {
 	 */
 	public void setEntryPoint(int entryPoint) {
 		this.entryPoint = entryPoint;
-		ai = new AiSystem();
+		ai = new AiSystem(this);
 	}
 
 	public LevelManager() {

@@ -2,6 +2,7 @@ package com.gameoff.game.systems;
 
 import com.badlogic.gdx.utils.Array;
 import com.gameoff.game.Inputs;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.DirectionControl;
 import com.gameoff.game.control.MoveControl;
@@ -70,8 +71,9 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 				getLayer().getState().error(StringUtils.format(MAPS_NOT_FOUND, id));
 			}
 
-			//Can't move or do anything while transforming
-			if (control.isTransforming()) return;
+			// Can't move or do anything while transforming
+			if (control.isTransforming())
+				return;
 
 			if (maps != null) {
 
@@ -79,7 +81,8 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 
 					if (move != null && !control.isDying()) {
 
-						if (input.inputJustPressed(maps.transform)) {
+						if (!control.isTransforming() && input.inputJustPressed(maps.transform)) {
+							getLayer().getState().playSound(Sounds.Transform);
 							if (move.isFlying()) {
 								control.setForm(Form.Demon);
 							} else {
@@ -87,7 +90,6 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 								control.setForm(Form.Angel);
 							}
 						}
-						
 
 						if (input.inputJustPressed(maps.attack)) {
 							if (attack != null) {
@@ -100,27 +102,26 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 								attack.attack();
 								control.setState(PlayerState.Attacking);
 							}
-						}else if(control.getState()==PlayerState.Attacking) {
+						} else if (control.getState() == PlayerState.Attacking) {
 							control.setState(PlayerState.Idling);
 						}
-						
 
 						float x = 0;
 						float y = 0;
 						float threshold = .2f;
 
-						x -= input.inputValue(maps.left) < threshold ? 0f:input.inputValue(maps.left) ;
-						x += input.inputValue(maps.right) < threshold ? 0f:input.inputValue(maps.right) ;
+						x -= input.inputValue(maps.left) < threshold ? 0f : input.inputValue(maps.left);
+						x += input.inputValue(maps.right) < threshold ? 0f : input.inputValue(maps.right);
 
-						y += input.inputValue(maps.up) < threshold ? 0f:input.inputValue(maps.up) ;
-						y -= input.inputValue(maps.down) < threshold ? 0f:input.inputValue(maps.down) ;
+						y += input.inputValue(maps.up) < threshold ? 0f : input.inputValue(maps.up);
+						y -= input.inputValue(maps.down) < threshold ? 0f : input.inputValue(maps.down);
 
 						if ((x != 0 || y != 0) && control.getState() == PlayerState.Idling)
 							control.setState(PlayerState.Moving);
 						else if (x == 0 && y == 0) {
 							control.setState(PlayerState.Idling);
 						}
-						
+
 						move.setDirection(x, y);
 
 						if (direction != null && control.getState() != PlayerState.Attacking) {

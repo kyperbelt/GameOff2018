@@ -20,35 +20,34 @@ public class PlayerControl extends GameObjectController {
 	}
 
 	public void setForm(Form form) {
-		if (playerObject.isTransforming() == false)
-		{
-			if (playerObject != null) {
+
+		if (playerObject != null) {
+			if (playerObject.isTransforming() == false) {
 				playerObject.transformTo(form);
-				//playerObject.setCurrentForm(form);
+				// playerObject.setCurrentForm(form);
 			}
 		}
 	}
 
-	public boolean isTransforming()
-	{
+	public boolean isTransforming() {
 		return playerObject.isTransforming();
 	}
-	
+
 	public void setState(PlayerState state) {
-		if(playerObject != null) {
+		if (playerObject != null) {
 			playerObject.setPlayerState(state);
 		}
 	}
-	
+
 	public PlayerState getState() {
-		if(playerObject != null) {
+		if (playerObject != null) {
 			return playerObject.getPlayerState();
 		}
 		return PlayerState.Idling;
 	}
-	
+
 	public boolean isDying() {
-		if(playerObject!=null) {
+		if (playerObject != null) {
 			return playerObject.isDying();
 		}
 		return false;
@@ -56,7 +55,7 @@ public class PlayerControl extends GameObjectController {
 
 	@Override
 	public void init(GameObject object) {
-		this.playerObject = object instanceof Player ? (Player)object : null;
+		this.playerObject = object instanceof Player ? (Player) object : null;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gameoff.game.GameOffGame;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
@@ -466,7 +467,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 				if(getHealth().shouldDie())
 					return;
-
+				
+				getState().playSound(Sounds.PlayerDamaged);
+				
 				clearActions();
 				getHealth().setInvulnerable(true);
 				float dst = MathUtils.random(MINPUSHBACK,MAXPUSHBACK);
@@ -509,6 +512,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 					setPlayerState(PlayerState.Dying);
 					clearActions();
 					addAction(Actions.sequence(Actions.delay(deathTime  * .66f),Actions.fadeOut(deathTime * .33f)));
+					//getState().getSoundManager().stopSounds();
 					//getHealth().setInvulnerable(true);
 				}
 				return deathElapsed >= deathTime;
@@ -833,12 +837,17 @@ public class Player extends DirectionEntity implements AnimationListener {
 		}
 	}
 
+	long lastShoot = -1;
 	// attack listeners
 	private void setupBasicProjectile() {
 
 		basicProjectile = new AttackListener() {
 			@Override
 			public void onAttack() {
+				
+				if(lastShoot!=-1)
+					getState().stopSound(Sounds.AngelShoot, lastShoot);
+				lastShoot = getState().playSound(Sounds.AngelShoot);
 
 				switch (getDirection()) {
 				case Down:
