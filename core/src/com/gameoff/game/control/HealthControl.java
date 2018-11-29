@@ -121,7 +121,7 @@ public class HealthControl extends GameObjectController {
 	 */
 	public void setMaxHealth(float max) {
 		this.max = Math.max(0f, max);
-		//setCurrenHealth(max);
+		setCurrentHealth(max);
 	}
 
 	/**

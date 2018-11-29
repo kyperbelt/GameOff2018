@@ -342,8 +342,7 @@ public class GameLevel {
     // now place boss
     Room bossRoom = level.getRoomWithNeighbors(1,200, true);
     bossRoom.setIsBoss();
-    bossRoom.m_roomCode = 40;
-    level.m_currentRoom = bossRoom; //delete this line
+    bossRoom.m_roomCode = 60;
 
     //TODO: parameterize as well, so can tweak difficulty with parameters easily
 
@@ -359,42 +358,36 @@ public class GameLevel {
     // if not boss room, place special item in locked room, and trap
     // now place boss
 
-    int numDoorsLocked = level.nextInt(10);
-
-    if (numDoorsLocked > 7) 
-      numDoorsLocked = 2;
-    else
-      numDoorsLocked = 1;
-
     int actualDoorsLocked = 0;
 
-    for (int lc = 0; lc < numDoorsLocked; lc++)
+    while (actualDoorsLocked < 1)
     {
-      Room lockRoom = level.getRoomWithNeighbors(1,150,false);
+      Room lockRoom = level.getRoomWithNeighbors(1,500,false);
       if (lockRoom != null)
       {
 
         //Randomly place special/valuable
         //items in this room as it's locked
-        if ((level.nextInt(10) > 2) && (lockRoom.getIsBoss() == false))
+        if ((lockRoom.getIsBoss() == false) && (lockRoom != level.m_currentRoom))
         {
           lockRoom.setHasSpecial();
-        }
-
-        //as room only has one neighbor
-        //we find that neighbor and lock the door facing
-        //this room
-        for (int d = 0; d < 4; d++)
-        {
-          if (lockRoom.getDoor(d) > 0)
+          lockRoom.m_roomCode = 50;
+          //as room only has one neighbor
+          //we find that neighbor and lock the door facing
+          //this room
+          for (int d = 0; d < 4; d++)
           {
-            Room nr = level.getNeighborRoom(lockRoom, d);
-            d += 2;
-            if (d > 3) d -= 4;
-            nr.setDoor(d,3); // 3 is locked!
-            actualDoorsLocked++;
-            break;
+            if (lockRoom.getDoor(d) > 0)
+            {
+              Room nr = level.getNeighborRoom(lockRoom, d);
+              d += 2;
+              if (d > 3) d -= 4;
+              nr.setDoor(d,3); // 3 is locked!
+              actualDoorsLocked++;
+              break;
+            }
           }
+          //level.m_currentRoom = lockRoom; //delete this line
         }
       }
     }

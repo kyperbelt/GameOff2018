@@ -20,6 +20,7 @@ public class DeathSystem extends ControlSpecificSystem {
 			HealthControl health = o.getController(HealthControl.class);
 			
 			//check if this object should die
+			//TODO: Got a NULL POINTER EXCEPTION on line below...seems weird!
 			if(health.shouldDie()) {
 				//attempt to die
 				health.setDead(health.attemptDeath(delta));

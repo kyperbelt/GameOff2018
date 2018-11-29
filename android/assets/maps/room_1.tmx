@@ -2,6 +2,7 @@
 <map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="137">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
+  <property name="preload" value="room_0.tmx"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
  <tileset firstgid="60" source="../HorrorGameTiles.tsx"/>

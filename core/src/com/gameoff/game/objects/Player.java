@@ -40,6 +40,7 @@ import com.kyperbox.objects.GameLayer.LayerCamera;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.StringUtils;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Player extends DirectionEntity implements AnimationListener {
 
@@ -636,6 +637,20 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 	}
 
+	public void showMessage(String msg, float duration)
+	{
+		BasicGameObject o = new BasicGameObject();
+		Sprite mo = getState().getGameSprite(msg);
+		o.setSprite(msg);
+		o.setSize(mo.getWidth(), mo.getHeight());
+    o.setPosition((960 - mo.getWidth())/2, 430);
+    getState().getForegroundLayer().addGameObject(o, KyperBoxGame.NULL_PROPERTIES);
+    o.clearActions();
+		o.addAction(Actions.sequence(Actions.parallel(Actions.moveBy(0, 30, duration), Actions.fadeOut(duration)),
+				Actions.removeActor()
+		));
+	}
+
 	@Override
 	public void update(float delta) {
 		super.update(delta);
@@ -688,14 +703,17 @@ public class Player extends DirectionEntity implements AnimationListener {
 						} else if (itemID == Collectible.HEART)
 						{
 							getHealth().changeCurrentHealth(3);
+							showMessage("healthmessage",2f);
 							System.out.println("Health + 3");
 						} else if (itemID == Collectible.SHIELD)
 						{
 							activateHalfDamage();
+							showMessage("defensemessage",4f);
 							System.out.println("SHIELD got!");
 						} else if (itemID == Collectible.SWORD)
 						{
 							activateWeaponDoubleDamage();
+							showMessage("attackmessage", 4f);
 							System.out.println("SWORD got!");
 						}else if (itemID == Collectible.SOUL) {
 							m_numSouls++;
@@ -793,7 +811,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public void activateWeaponDoubleDamage()
 	{
 		m_weaponDamageMultiplier = 2f;
-		melee.setDamage(m_weaponDamageMultiplier*2);
+		if (melee != null)
+			melee.setDamage(m_weaponDamageMultiplier*2);
 	}
 
 	// melee attack

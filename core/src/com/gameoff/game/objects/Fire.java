@@ -197,17 +197,20 @@ public class Fire extends Basic {
 
     if (properties != null)
     {
+      float sl = properties.get("spawnLife", 4f, Float.class);
+      float sp = properties.get("spawnSpeed", 0.15f, Float.class);
       m_directionsBitFlags = properties.get("spawnDir", 0, Integer.class);
       if (m_directionsBitFlags > 0)
       {
-        setLife(3);
+        setLife(sl);
         setSpread(true);
         setSpawnStyle(2);
-        setSpawnSpeed(0.25f);
+        setSpawnSpeed(sp);
         setMaxSpawn(1);
         setDecay(0);
         setRandomPositioning(false);
       }
+
     }
     
   }

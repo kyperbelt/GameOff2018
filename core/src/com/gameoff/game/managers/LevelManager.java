@@ -418,7 +418,7 @@ public class LevelManager extends StateManager {
 
 					d.getDoorMat().setRotation(rot);
 					if (dir == 0)
-						d.getDoorMat().setPosition(x+30,y-5);
+						d.getDoorMat().setPosition(x+30,y-10);
 					else if (dir == 2)
 						d.getDoorMat().setPosition(x+30,y+dh);
 					else if (dir == 1)
