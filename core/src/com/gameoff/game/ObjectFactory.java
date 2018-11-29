@@ -2,6 +2,7 @@ package com.gameoff.game;
 
 import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.Fire;
+import com.gameoff.game.objects.enemies.*;
 import com.gameoff.game.objects.Hazard;
 import com.gameoff.game.objects.HealthBauble;
 import com.gameoff.game.objects.LavaPit;
@@ -126,6 +127,56 @@ public class ObjectFactory {
 				return new HealthBauble();
 			}
 		});
+
+		game.registerGameObject("Scorpion", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new ScorpionEnemy(0);
+			}
+		});
+
+		game.registerGameObject("ScorpionBig", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new ScorpionEnemy(1);
+			}
+		});
+
+		game.registerGameObject("Worm", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new WormEnemy(0);
+			}
+		});
+
+		game.registerGameObject("WormBig", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new WormEnemy(1);
+			}
+		});
+
+		game.registerGameObject("Cherub", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new CherubEnemy(0);
+			}
+		});
+
+		game.registerGameObject("CherubRapid", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new CherubEnemy(1);
+			}
+		});
+
+		game.registerGameObject("CherubFast", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new CherubEnemy(2);
+			}
+		});
+
 	}
 	
 }

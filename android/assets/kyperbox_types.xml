@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
+ <objecttype name="CherubFast" color="#a0a0a4"/>
  <objecttype name="Assets" color="#00ff00">
   <property name="Atlases" type="string"/>
   <property name="Musics" type="string"/>
@@ -8,6 +9,8 @@
  <objecttype name="BasicGameObject" color="#ff0000">
   <property name="sprite" type="string" default="NO_SPRITE_RENDERED"/>
  </objecttype>
+ <objecttype name="Cherub" color="#a0a0a4"/>
+ <objecttype name="CherubRapid" color="#a0a0a4"/>
  <objecttype name="Collectible" color="#4ea693">
   <property name="item_id" type="int" default="0"/>
  </objecttype>
@@ -77,6 +80,8 @@
   <property name="vertical" type="bool" default="false"/>
  </objecttype>
  <objecttype name="ProgressTexture" color="#ff00ff"/>
+ <objecttype name="Scorpion" color="#a0a0a4"/>
+ <objecttype name="ScorpionBig" color="#a0a0a4"/>
  <objecttype name="ScrollingBackground" color="#ff0000">
   <property name="absolute" type="bool" default="false"/>
   <property name="image" type="string"/>
@@ -133,4 +138,6 @@
  <objecttype name="Wall" color="#ff0000">
   <property name="passable" type="bool" default="false"/>
  </objecttype>
+ <objecttype name="Worm" color="#a0a0a4"/>
+ <objecttype name="WormBig" color="#a0a0a4"/>
 </objecttypes>

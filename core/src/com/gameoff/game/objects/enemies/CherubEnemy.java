@@ -43,8 +43,9 @@ public class CherubEnemy extends DirectionEntity {
   AiControl ai;
   int m_id = 0;
   Random m_random = new Random();
+  float moveSpeed = 150;
 
-  float damagedDuration = .2f;
+  float damagedDuration = .1f;
   float damagedElapsed = 0;
   ShaderProgram damageShader;
   private int m_masterID = 0;
@@ -126,12 +127,12 @@ public class CherubEnemy extends DirectionEntity {
     }
   };
 
-  public CherubEnemy() {
+  public CherubEnemy(int code) {
     state = new StateControl(EntityState.Moving);
     context = new UserData(getClass().getSimpleName() + "_Context");
     context.put(Context.SELF, this);
     ai = new AiControl(context, getExampleAi());
-    getMove().setMoveSpeed(150);
+    getMove().setMoveSpeed(moveSpeed);
     getHealth().setHealthGroup(HealthGroup.Angel);
     getHealth().setDamageListener(damageListener);
     state.setStateChangeListener(stateListener);
@@ -145,9 +146,20 @@ public class CherubEnemy extends DirectionEntity {
 
     attack = new AttackControl(null);
     attack.setAttackListener(attackListener);
-		attack.setCooldown(5);
+    if (code == 0)
+		  attack.setCooldown(5);
+    else if (code == 1)
+    {
+      attack.setCooldown(2.5f);
+      moveSpeed = 175;
+    }
+    else if (code == 2)
+    {
+      attack.setCooldown(3f);
+      moveSpeed = 200;
+    }
 
-    setPlayerFindRange(1200);
+    setPlayerFindRange(1400);
 
   }
 

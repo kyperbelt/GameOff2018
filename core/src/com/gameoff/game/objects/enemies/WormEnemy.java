@@ -32,6 +32,11 @@ public class WormEnemy extends DirectionEntity {
   int m_id = 0;
   Random m_random = new Random();
 
+  float sw = 91;
+  float sh = 58;
+  float hp = 2;
+  float moveSpeed = 300;
+
   float damagedDuration = .2f;
   float damagedElapsed = 0;
   ShaderProgram damageShader;
@@ -60,7 +65,8 @@ public class WormEnemy extends DirectionEntity {
     }
   };
 
-  public WormEnemy() {
+  // 0 small, 1 = big
+  public WormEnemy(int code) {
     state = new StateControl(EntityState.Moving);
     context = new UserData(getClass().getSimpleName() + "_Context");
     context.put(Context.SELF, this);
@@ -71,6 +77,14 @@ public class WormEnemy extends DirectionEntity {
     state.setStateChangeListener(stateListener);
     m_id = m_masterID;
     m_masterID++;
+
+    if (code == 1)
+    {
+      sw = 152;
+      sh = 96;
+      hp = 4;
+      moveSpeed = moveSpeed - 50;
+    }
   }
 
   @Override
@@ -82,10 +96,10 @@ public class WormEnemy extends DirectionEntity {
 
     damageShader = getState().getShader("damageShader");
 
-    if (getWidth() == 0) {
-      setSize(152, 96);
-      setCollisionBounds(20, 10, getWidth()-40, getHeight()-20);
-    }
+    setSize(sw, sh);
+    setCollisionBounds(30, 10, getWidth()-60, getHeight()-20);
+    getHealth().setMaxHealth(hp);
+    getMove().setMoveSpeed(moveSpeed);
 
     getDirectionControl().setDirectionListener(new DirectionChangeListener() {
       @Override

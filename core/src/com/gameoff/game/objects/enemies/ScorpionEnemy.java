@@ -38,7 +38,13 @@ public class ScorpionEnemy extends DirectionEntity {
   BasicGameObject shadow;
   AnimationController shadowAnim;
 
-  float damagedDuration = .2f;
+  //set up for small
+  float moveSpeed = 135;
+  float sw = 42;
+  float sh = 62;
+  float hp = 1;
+
+  float damagedDuration = .1f;
   float damagedElapsed = 0;
   ShaderProgram damageShader;
   
@@ -65,12 +71,11 @@ public class ScorpionEnemy extends DirectionEntity {
     }
   };
 
-  public ScorpionEnemy() {
+  public ScorpionEnemy(int code) {
     state = new StateControl(EntityState.Moving);
     context = new UserData(getClass().getSimpleName() + "_Context");
     context.put(Context.SELF, this);
     ai = new AiControl(context, getExampleAi());
-    getMove().setMoveSpeed(80);
     getHealth().setHealthGroup(HealthGroup.Demon);
     getHealth().setDamageListener(damageListener);
     state.setStateChangeListener(stateListener);
@@ -79,6 +84,14 @@ public class ScorpionEnemy extends DirectionEntity {
     shadow = new BasicGameObject();
     shadow.setName("scorpshadow");
     setPreDrawChildren(true);
+    if (code == 1)
+    {
+      //big one
+      moveSpeed = 90;
+      sw = 83;
+      sh = 124;
+      hp = 5;
+    }
     //shadow.setSprite("shadowscorp_0");
   }
 
@@ -98,16 +111,20 @@ public class ScorpionEnemy extends DirectionEntity {
     createAnimations();
 
     damageShader = getState().getShader("damageShader");
+    getHealth().setMaxHealth(hp);
 
-    if (getWidth() == 0) {
-      setSize(42, 62);
+
+    getMove().setMoveSpeed(moveSpeed);
+    setSize(sw,sh);
+    if (sw < 70)
       setCollisionBounds(10, 10, getWidth()-20, getHeight()-25);
-    }
+    else
+      setCollisionBounds(15, 15, getWidth()-30, getHeight()-30);
 
     shadow.setSprite("shadowscorp_0");
     addChild(shadow);
-    shadow.setSize(42,62);
-    shadow.setPosition(0,-20);
+    shadow.setSize(sw,sh);
+    shadow.setPosition(0,-25);
 
     getAnimation().set("move");
     shadowAnim.set("shadow");

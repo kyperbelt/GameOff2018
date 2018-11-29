@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="669" tileheight="260" tilecount="44" columns="0">
+<tileset name="game" tilewidth="669" tileheight="260" tilecount="49" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -132,5 +132,20 @@
  </tile>
  <tile id="58">
   <image width="216" height="235" source="../../input_assets/game/pit.png"/>
+ </tile>
+ <tile id="59">
+  <image width="83" height="124" source="../../input_assets/game/scorpion_0.png"/>
+ </tile>
+ <tile id="60">
+  <image width="42" height="62" source="../../input_assets/game/scorpion_small.png"/>
+ </tile>
+ <tile id="61">
+  <image width="152" height="96" source="../../input_assets/game/worm_0.png"/>
+ </tile>
+ <tile id="62">
+  <image width="91" height="58" source="../../input_assets/game/wormsmall.png"/>
+ </tile>
+ <tile id="63">
+  <image width="117" height="96" source="../../input_assets/game/cherub_0.png"/>
  </tile>
 </tileset>

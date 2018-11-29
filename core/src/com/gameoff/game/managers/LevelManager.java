@@ -460,6 +460,7 @@ public class LevelManager extends StateManager {
 		// TODO: Spawn Enemies
 		// Place enemies based on TMX Spawn Objects?
 
+		/*
 		if ((r.getCode() > 0) && (r.getCode() < 40))
 		{
 			WormEnemy enemy = new WormEnemy();
@@ -476,13 +477,14 @@ public class LevelManager extends StateManager {
 			randomPlaceObject(enemy3, playground, level);
 			enemy3.setPosition(enemy3.getX()-250,enemy3.getY());
 		}
+		*/
 
 		if (r.getIsBoss())
 		{
 		  SpiderBossEnemy enemy4 = new SpiderBossEnemy();
 			playground.addGameObject(enemy4, KyperBoxGame.NULL_PROPERTIES);
 			randomPlaceObject(enemy4, playground, level);
-			enemy4.setPosition(enemy4.getX()+250,enemy4.getY()-200);
+			enemy4.setPosition(enemy4.getX(),enemy4.getY());
 			boss = enemy4;
 		}
 
