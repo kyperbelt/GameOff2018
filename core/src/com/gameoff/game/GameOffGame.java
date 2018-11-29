@@ -79,6 +79,9 @@ public class GameOffGame extends KyperBoxGame {
 		registerGameState("room_2", "room_2.tmx", levelmanager);
 		registerGameState("room_3", "room_3.tmx", levelmanager);
 		registerGameState("room_4", "room_4.tmx", levelmanager);
+		registerGameState("room_10", "room_10.tmx", levelmanager);
+		registerGameState("room_20", "room_20.tmx", levelmanager);
+		registerGameState("room_30", "room_30.tmx", levelmanager);
 		registerGameState("room_50", "room_50.tmx", levelmanager);
 		registerGameState("room_60", "room_60.tmx", levelmanager);
 		registerGameState("gameOverlay", "gameOverlay.tmx", new OverlayManager());
