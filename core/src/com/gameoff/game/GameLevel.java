@@ -304,7 +304,7 @@ public class GameLevel {
         maxNeighbors = 2;
       }
       r = level.getEmptyRoomWithNeighbors(maxNeighbors);
-      r.m_roomCode = 1; //todo - should be random here - this is the room template
+      r.m_roomCode = level.nextInt(4) + 1;
     }
 
     //now have rooms in array

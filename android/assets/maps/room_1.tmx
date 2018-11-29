@@ -59,42 +59,6 @@
     <property name="direction" type="int" value="3"/>
    </properties>
   </object>
-  <object id="100" name="skull_test" type="Destructible" gid="39" x="2057" y="507" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="itemDrop" type="int" value="0"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="101" name="skull_test" type="Destructible" gid="39" x="2057" y="429" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="itemDrop" type="int" value="0"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="102" name="skull_test" type="Destructible" gid="39" x="2057" y="349" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="itemDrop" type="int" value="0"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="103" name="skull_test" type="Destructible" gid="39" x="2057" y="591" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="itemDrop" type="int" value="0"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
   <object id="106" name="SpikerA" type="Spiker" gid="42" x="1618" y="1545" width="180" height="86"/>
   <object id="107" name="SpikerA" type="Spiker" gid="42" x="1182" y="553" width="180" height="86"/>
   <object id="112" name="skull_test" type="Destructible" gid="39" x="737" y="743" width="183" height="125">
