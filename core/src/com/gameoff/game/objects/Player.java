@@ -164,13 +164,13 @@ public class Player extends DirectionEntity implements AnimationListener {
 	float lastXDir = 0;
 	float lastYDir = 0;
 
-	float angelSpeed = 320;
-	float demonSpeed = 230;
+	float angelSpeed = 325;
+	float demonSpeed = 260;
 
 	PlayerControl control;
 	AttackControl attack;
 	// attack listeners
-	float basicProjectileCD = .35f;
+	float basicProjectileCD = .3f;
 	AttackListener basicProjectile;
 	float basicMeleeCD = .75f;
 	AttackListener basicMelee;
