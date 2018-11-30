@@ -12,16 +12,19 @@ import com.kyperbox.GameState;
 import com.kyperbox.SoundManager;
 import com.kyperbox.input.GameInput;
 import com.kyperbox.managers.StateManager;
-import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.objects.*;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-public class TitleScreenManager extends StateManager {
+public class IntroScreenManager extends StateManager {
 
-  BasicGameObject title;
+  BasicGameObject text;
+  int m_frame = 1;
+  float m_time = 0;
   
   public void playGame() {
-    getState().getGame().setGameState("instructions");
+    getState().getGame().setGameState("title");
   }
 
   /**
@@ -46,14 +49,11 @@ public class TitleScreenManager extends StateManager {
     state.playMusic(SoundManager.MUSIC,"bgmusic", true);
 
     state.getSoundManager().changeVolume(SoundManager.MUSIC, .2f);
+    text = (BasicGameObject)state.getForegroundLayer().getGameObject("textImage");
+    text.clearActions();
+    text.setColor(1,1,1,0);
+    text.addAction(Actions.sequence(Actions.fadeIn(1.5f), Actions.delay(1.6f), Actions.fadeOut(1.5f)));
 
-    title = (BasicGameObject)state.getForegroundLayer().getGameObject("TitleArt");
-    title.clearActions();
-    title.setColor(1,1,1,0);
-    title.addAction(Actions.fadeIn(1.5f));
-
-    
-    
     /*
     play = (ImageButton) state.getUiLayer().getActor("playbutton");
     play.addListener(listener);
@@ -76,10 +76,24 @@ public class TitleScreenManager extends StateManager {
 
   @Override
   public void update(GameState state, float delta) {
-    
     GameInput input = state.getInput();
     if ((input.inputJustPressed(Inputs.ATTACK)) || (input.inputJustPressed(Inputs.TRANSFORM))) {
       playGame();
+    }
+
+    m_time += delta;
+    if (m_time > 5.0f)
+    {
+      m_frame++;
+      if (m_frame < 5)
+      {
+        text.setSprite("intro"+ m_frame);
+        text.addAction(Actions.sequence(Actions.fadeIn(1f), Actions.delay(3f), Actions.fadeOut(1f)));
+        m_time = 0;
+      } else
+      {
+        playGame();
+      }
     }
   }
 

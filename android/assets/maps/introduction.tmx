@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="59">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="60">
  <properties>
   <property name="atlas" value="image/death.atlas"/>
  </properties>
@@ -7,9 +7,9 @@
  <objectgroup name="background" locked="1"/>
  <objectgroup name="playground" locked="1"/>
  <objectgroup name="foreground">
-  <object id="58" name="TitleArt" type="BasicGameObject" gid="70" x="1" y="957" width="960" height="540">
+  <object id="59" name="textImage" type="BasicGameObject" gid="71" x="221" y="674" width="543" height="81">
    <properties>
-    <property name="sprite" value="titlescreen"/>
+    <property name="sprite" value="intro1"/>
    </properties>
   </object>
  </objectgroup>

@@ -13,6 +13,7 @@ import com.gameoff.game.managers.InstructionsManager;
 import com.gameoff.game.managers.OverlayManager;
 import com.gameoff.game.managers.VictoryManager;
 import com.gameoff.game.managers.TitleScreenManager;
+import com.gameoff.game.managers.IntroScreenManager;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.console.CommandRunnable;
@@ -73,6 +74,7 @@ public class GameOffGame extends KyperBoxGame {
 		// register game states (tmx maps with the template setup)
 		registerGameState("title", "testmenu.tmx", new TitleScreenManager());
 		registerGameState("instructions", "instructions.tmx", new InstructionsManager());
+		registerGameState("intro", "introduction.tmx", new IntroScreenManager());
 		// registerGameState("level", "testlevel.tmx", new LevelManager());
 		levelmanager = new LevelManager();
 
@@ -90,7 +92,7 @@ public class GameOffGame extends KyperBoxGame {
 		registerGameState("gameover", "gameover.tmx", new GameOverManager());
 		registerGameState("victory", "victory.tmx", new VictoryManager());
 
-		setGameState("title");
+		setGameState("intro");
 
 		// setup input
 		Inputs.registerInputs(getInput());
