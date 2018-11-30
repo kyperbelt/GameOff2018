@@ -52,6 +52,10 @@ public class PlayerControl extends GameObjectController {
 		}
 		return false;
 	}
+	
+	public Player getPlayer() {
+		return playerObject;
+	}
 
 	@Override
 	public void init(GameObject object) {

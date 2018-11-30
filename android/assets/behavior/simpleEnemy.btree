@@ -29,7 +29,7 @@
 {                                    "FindPlayerInRange" :{
                                         "properties" : {
                                             "range":{
-                                                "value":"600",
+                                                "value":"1000",
                                                 "type":"float"
                                             }
                                         },

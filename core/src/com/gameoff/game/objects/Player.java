@@ -1,14 +1,17 @@
 package com.gameoff.game.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gameoff.game.GameOffGame;
@@ -28,8 +31,8 @@ import com.gameoff.game.objects.enemies.CherubEnemy;
 import com.gameoff.game.objects.enemies.ContactDamage;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
 import com.gameoff.game.objects.enemies.SimpleEnemy;
-import com.gameoff.game.objects.enemies.WormEnemy;
 import com.gameoff.game.objects.enemies.SpiderBossEnemy;
+import com.gameoff.game.objects.enemies.WormEnemy;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController;
@@ -40,7 +43,6 @@ import com.kyperbox.objects.GameLayer.LayerCamera;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.StringUtils;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Player extends DirectionEntity implements AnimationListener {
 
@@ -85,6 +87,12 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
 	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
 
+	
+	//-- attacks
+	public static final String MELEE_ATTACK = "slash";
+	
+	public static float MELEE_LIFE = .2f;
+	public static int MELEE_FRAMES = 4;
 	//damage stuff
 	private static final float MINPUSHBACK = 20;
 	private static final float MAXPUSHBACK = 100;
@@ -128,8 +136,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public int m_numSouls = 0;
 	
 	
+	public float angelFormMin = 10;
 	public float soulDrainRate = .5f; //amount of souls drained per second while in angel form
-	public float soulDrain = 0f; //used to calculate the amount of soul drained into whole numbers
+	public float soulDrainElapsed = 0f; //used to calculate the amount of soul drained into whole numbers
 
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
@@ -236,6 +245,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 	}
 
 	public void transformTo(Form form) {
+		if(form == Form.Angel) {
+			m_numSouls--;
+		}
 		transformSprite.setVisible(true);
 		transformAnim.setAnimation(TRANSFORM, PlayMode.NORMAL);
 		transformAnim.setPlayMode(PlayMode.NORMAL);
@@ -634,6 +646,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 		anim = state.getAnimation(HALOPROJECTILEH);
 		if (anim == null)
 			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .0333f));
+		
+		anim = state.getAnimation(MELEE_ATTACK);
+		if(anim == null)
+				state.storeAnimation(MELEE_ATTACK,state.createGameAnimation(MELEE_ATTACK, MELEE_LIFE/MELEE_FRAMES));
 
 	}
 
@@ -730,8 +746,22 @@ public class Player extends DirectionEntity implements AnimationListener {
 				}
 			}
 
-			// Handle robe physics
+			// Handle robe physics -- and angel stuff
 			if (this.form == Form.Angel) {
+				
+				//handle soul drain
+				soulDrainElapsed+=delta;
+				float soulDrained = soulDrainElapsed * soulDrainRate;
+				if(soulDrained >= 1) {
+					soulDrainElapsed-=1;
+					if(!useSoul(1)) {
+						setCurrentForm(Form.Demon);
+						soulDrainElapsed = 0;
+					}
+					
+				}
+					
+				
 				MoveControl move = getMove();
 				float cxd = move.getXDir();
 				if (lastXDir != cxd) {
@@ -823,28 +853,39 @@ public class Player extends DirectionEntity implements AnimationListener {
 	}
 
 	private void setMeleeBounds(MeleeAttack melee) {
+
+		melee.setSize(getHeight() * .75f, getHeight() * 2f);
+		melee.setBounds(0, 0, getHeight() * .75f, getHeight() * 2f);
+		melee.setFlip(false, false);
+		melee.setOrigin(Align.center);
+		
 		switch (getDirection()) {
 		case Up:
+			melee.rotateBy(90);
+			melee.setFlip(false, getFlipX());
+			break;
 		case Down:
-			melee.setSize(getHeight() * 2f, getHeight() * .75f);
-			melee.setBounds(0, 0, getHeight() * 2f, getHeight() * .75f);
+			melee.rotateBy(-90);
+			melee.setFlip(false, getFlipX());
 			break;
 		case Left:
+			melee.setFlip(true, true);
+			break;
 		case Right:
-			melee.setSize(getHeight() * .75f, getHeight() * 2f);
-			melee.setBounds(0, 0, getHeight() * .75f, getHeight() * 2f);
+			melee.setFlip(false, true);
 			break;
 		}
 	}
 
 	private void setMeleePos(MeleeAttack melee) {
+		float d = Gdx.graphics.getDeltaTime();
 		Vector2 center = getCollisionCenter();
 		switch (getDirection()) {
 		case Up:
-			melee.setPosition(center.x - melee.getWidth() * .5f, center.y + getBoundsRaw().height * .5f);
+			melee.setPosition(center.x - melee.getWidth() * .5f , center.y + getVelocity().y * .09f);
 			break;
 		case Down:
-			melee.setPosition(center.x - melee.getWidth() * .5f, getY() + getBoundsRaw().y - melee.getHeight());
+			melee.setPosition(center.x - melee.getWidth() * .5f, center.y - (-getVelocity().y * .09f) - (melee.getHeight() * .95f) );
 			break;
 		case Left:
 			melee.setPosition(center.x - getBoundsRaw().width * .5f - melee.getWidth(),
@@ -987,8 +1028,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	 * @return
 	 */
 	public boolean useSoul(int amount) {
-		if (m_numKeys-amount >= 0) {
-			m_numKeys-=amount;
+		if (m_numSouls-amount >= 0) {
+			m_numSouls-=amount;
 			return true;
 		}
 		return false;
@@ -1023,6 +1064,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 				}
 
 				melee = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
+				melee.lifetime = MELEE_LIFE;
+				melee.getAnimation().setAnimation(MELEE_ATTACK,PlayMode.NORMAL);
 				setupMelee(melee);
 				melee.setDamage(m_weaponDamageMultiplier*2);
 

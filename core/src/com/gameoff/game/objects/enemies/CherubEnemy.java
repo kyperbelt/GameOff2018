@@ -1,7 +1,10 @@
 package com.gameoff.game.objects.enemies;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
@@ -9,31 +12,29 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.gameoff.game.Context;
 import com.gameoff.game.control.AiControl;
 import com.gameoff.game.control.AttackControl;
-import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
 import com.gameoff.game.control.HealthControl.HealthGroup;
+import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.StateControl;
 import com.gameoff.game.control.StateControl.EntityState;
 import com.gameoff.game.control.StateControl.StateChangeListener;
+import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.DirectionEntity;
 import com.gameoff.game.objects.Projectile;
-import com.kyperbox.controllers.AnimationController;
-import com.kyperbox.controllers.AnimationController.AnimationListener;
+import com.kyperbox.KyperBoxGame;
 import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.BehaviorTree;
+import com.kyperbox.controllers.AnimationController;
+import com.kyperbox.controllers.AnimationController.AnimationListener;
+import com.kyperbox.objects.BasicGameObject;
 import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.UserData;
-import java.util.Random;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.kyperbox.objects.BasicGameObject;
-import com.kyperbox.KyperBoxGame;
-import com.badlogic.gdx.math.Vector2;
 
-public class CherubEnemy extends DirectionEntity {
+public class CherubEnemy extends DirectionEntity{
 	
 
   StateControl state;
@@ -143,7 +144,7 @@ public class CherubEnemy extends DirectionEntity {
     shadow.setSprite("player_shadow");
     shadow.setSize(40,24);
     setPreDrawChildren(true);
-
+    maxItemDrop(4);
     attack = new AttackControl(null);
     attack.setAttackListener(attackListener);
     if (code == 0)
@@ -152,14 +153,21 @@ public class CherubEnemy extends DirectionEntity {
     {
       attack.setCooldown(2.5f);
       moveSpeed = 175;
+      maxItemDrop(6);
     }
     else if (code == 2)
     {
+      maxItemDrop(8);
       attack.setCooldown(3f);
       moveSpeed = 200;
     }
 
     setPlayerFindRange(1400);
+    
+    
+    
+    getDropTable().addDrop(Collectible.SOUL, 5f);
+    getDropTable().addDrop(Collectible.HEART, .5f);
 
   }
 

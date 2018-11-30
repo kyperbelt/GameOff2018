@@ -80,6 +80,7 @@ public class MeleeAttack extends Attack{
 	public static MeleeAttack get(HealthGroup...damageGroup) {
 		MeleeAttack a = melees.obtain();
 		a.setDamageGroup(damageGroup);
+		a.setRotation(0);
 		used.add(a);
 		return a;
 	}

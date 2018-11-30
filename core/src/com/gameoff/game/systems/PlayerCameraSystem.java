@@ -19,6 +19,8 @@ public class PlayerCameraSystem extends ControlSpecificSystem {
 	Rectangle worldBounds;
 	float m_panFactor = 2.0f;
 	boolean m_speedPan = false;
+	
+	
 
 	Vector2 campos;
 	Vector2 futurePos;

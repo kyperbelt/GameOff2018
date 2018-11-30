@@ -6,63 +6,77 @@ filter: Nearest,Nearest
 repeat: none
 KVF32
   rotate: false
-  xy: 2, 273
+  xy: 2, 328
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 health_0
   rotate: false
-  xy: 2, 52
+  xy: 516, 621
   size: 81, 73
   orig: 81, 73
   offset: 0, 0
   index: -1
 health_back
   rotate: false
-  xy: 2, 127
+  xy: 2, 182
   size: 256, 144
   orig: 256, 144
   offset: 0, 0
   index: -1
 health_overlay_0
   rotate: false
-  xy: 516, 641
+  xy: 516, 696
   size: 256, 144
   orig: 256, 144
   offset: 0, 0
   index: -1
 key
   rotate: false
-  xy: 85, 104
+  xy: 516, 598
   size: 52, 21
   orig: 52, 21
   offset: 0, 0
   index: -1
+soulMeter
+  rotate: false
+  xy: 2, 52
+  size: 32, 128
+  orig: 32, 128
+  offset: 0, 0
+  index: -1
+soulMeter_back
+  rotate: false
+  xy: 260, 198
+  size: 32, 128
+  orig: 32, 128
+  offset: 0, 0
+  index: -1
 soul_0
   rotate: false
-  xy: 260, 223
+  xy: 774, 792
   size: 29, 48
   orig: 29, 48
   offset: 0, 0
   index: -1
 soul_1
   rotate: false
-  xy: 516, 591
+  xy: 2, 2
   size: 29, 48
   orig: 29, 48
   offset: 0, 0
   index: -1
 soul_2
   rotate: false
-  xy: 774, 737
+  xy: 36, 132
   size: 29, 48
   orig: 29, 48
   offset: 0, 0
   index: -1
 soul_3
   rotate: false
-  xy: 2, 2
+  xy: 294, 278
   size: 29, 48
   orig: 29, 48
   offset: 0, 0

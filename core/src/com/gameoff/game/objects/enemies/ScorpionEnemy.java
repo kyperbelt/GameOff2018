@@ -15,7 +15,9 @@ import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.StateControl;
 import com.gameoff.game.control.StateControl.EntityState;
 import com.gameoff.game.control.StateControl.StateChangeListener;
+import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.DirectionEntity;
+import com.gameoff.game.objects.composition.Lootable;
 import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.BehaviorTree;
 import com.kyperbox.umisc.BakedEffects;
@@ -84,6 +86,7 @@ public class ScorpionEnemy extends DirectionEntity {
     shadow = new BasicGameObject();
     shadow.setName("scorpshadow");
     setPreDrawChildren(true);
+    maxItemDrop(2);
     if (code == 1)
     {
       //big one
@@ -91,8 +94,16 @@ public class ScorpionEnemy extends DirectionEntity {
       sw = 83;
       sh = 124;
       hp = 5;
+      maxItemDrop(4);
     }
     //shadow.setSprite("shadowscorp_0");
+    
+    //drop table
+    
+    getDropTable().addDrop(Collectible.SOUL, 4f);
+    getDropTable().addDrop(Collectible.HEART, .5f);
+    
+    //getDropTable().addDrop(Collectible.SHIELD, .2f);
   }
 
   @Override
@@ -224,4 +235,5 @@ public class ScorpionEnemy extends DirectionEntity {
     shadowAnim.addAnimation("shadow", shadowAnimationName);
 
   }
+
 }

@@ -42,6 +42,8 @@ public class Collectible extends Basic {
 	// ---
 
 	// collectible ids
+	public static final int NONE = -1; //no collectible
+	
 	public static final int KEY = 0;
 	public static final int HEART = 1;
 	public static final int SHIELD = 2;

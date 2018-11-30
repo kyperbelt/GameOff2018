@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="64">
+<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="65">
  <properties>
   <property name="atlas" value="image/overlay.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
  <objectgroup id="1" name="background" locked="1"/>
  <objectgroup id="2" name="playground" locked="1"/>
- <objectgroup id="3" name="foreground"/>
+ <objectgroup id="3" name="foreground" locked="1"/>
  <objectgroup id="4" name="uiground">
   <object id="51" name="key" type="Image" gid="40" x="18.9274" y="467.081" width="43.0237" height="24.5706" rotation="334.603">
    <properties>
@@ -31,6 +31,7 @@
     <property name="sprite" value="soul_0"/>
    </properties>
   </object>
+  <object id="64" name="soulMeter" type="SoulMeter" gid="65" x="864" y="802" width="31" height="244"/>
  </objectgroup>
  <objectgroup id="5" name="preload" locked="1">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>

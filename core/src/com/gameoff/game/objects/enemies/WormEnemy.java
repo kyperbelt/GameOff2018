@@ -1,5 +1,7 @@
 package com.gameoff.game.objects.enemies;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -15,15 +17,15 @@ import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.StateControl;
 import com.gameoff.game.control.StateControl.EntityState;
 import com.gameoff.game.control.StateControl.StateChangeListener;
+import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.DirectionEntity;
 import com.kyperbox.ai.BehaviorNode;
 import com.kyperbox.ai.BehaviorTree;
 import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.UserData;
-import java.util.Random;
 
-public class WormEnemy extends DirectionEntity {
+public class WormEnemy extends DirectionEntity{
 
   StateControl state;
   String animation;
@@ -84,7 +86,11 @@ public class WormEnemy extends DirectionEntity {
       sh = 96;
       hp = 4;
       moveSpeed = moveSpeed - 50;
+      maxItemDrop(5);
     }
+    
+    getDropTable().addDrop(Collectible.SOUL, 3f);
+    getDropTable().addDrop(Collectible.HEART,1f);
   }
 
   @Override

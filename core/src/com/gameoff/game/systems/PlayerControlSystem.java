@@ -5,13 +5,13 @@ import com.gameoff.game.Inputs;
 import com.gameoff.game.Sounds;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.DirectionControl;
+import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.MoveControl;
 import com.gameoff.game.control.PlayerControl;
-import com.gameoff.game.control.DirectionControl.Direction;
+import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.Player.Form;
 import com.gameoff.game.objects.Player.PlayerState;
 import com.kyperbox.input.GameInput;
-import com.kyperbox.input.InputDefaults;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.systems.ControlSpecificSystem;
 import com.kyperbox.umisc.StringUtils;
@@ -57,7 +57,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		for (int i = 0; i < objects.size; i++) {
 			GameObject o = objects.get(i);
 			PlayerControl control = o.getController(PlayerControl.class);
-
+			Player player = control.getPlayer();
 			MoveControl move = o.getController(MoveControl.class);
 			AttackControl attack = o.getController(AttackControl.class);
 			DirectionControl direction = o.getController(DirectionControl.class);
@@ -76,19 +76,25 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 				return;
 
 			if (maps != null) {
-
+				
 				if (control.getState() != PlayerState.Damaged) {
 
 					if (move != null && !control.isDying()) {
 
-						if (!control.isTransforming() && input.inputJustPressed(maps.transform)) {
-							getLayer().getState().playSound(Sounds.Transform);
+						if (!control.isTransforming() && input.inputJustPressed(maps.transform) ) {
+							
+							boolean transformed = false;
+							
 							if (move.isFlying()) {
 								control.setForm(Form.Demon);
-							} else {
-
+								transformed = true;
+							} else if(player.m_numSouls >= player.angelFormMin){
 								control.setForm(Form.Angel);
+								transformed = true;
 							}
+							
+							if(transformed)
+								getLayer().getState().playSound(Sounds.Transform);
 						}
 
 						if (input.inputJustPressed(maps.attack)) {

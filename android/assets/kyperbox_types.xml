@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
- <objecttype name="CherubFast" color="#a0a0a4"/>
  <objecttype name="Assets" color="#00ff00">
   <property name="Atlases" type="string"/>
   <property name="Musics" type="string"/>
@@ -10,6 +9,7 @@
   <property name="sprite" type="string" default="NO_SPRITE_RENDERED"/>
  </objecttype>
  <objecttype name="Cherub" color="#a0a0a4"/>
+ <objecttype name="CherubFast" color="#a0a0a4"/>
  <objecttype name="CherubRapid" color="#a0a0a4"/>
  <objecttype name="Collectible" color="#4ea693">
   <property name="item_id" type="int" default="0"/>
@@ -97,6 +97,7 @@
   <property name="sprite" type="string"/>
  </objecttype>
  <objecttype name="SimpleEnemy" color="#aa5500"/>
+ <objecttype name="SoulMeter" color="#55ffff"/>
  <objecttype name="Sound" color="#55ff00">
   <property name="file" type="string"/>
  </objecttype>

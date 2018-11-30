@@ -1530,6 +1530,34 @@ skull_break_1
   orig: 183, 125
   offset: 0, 0
   index: -1
+slash_0
+  rotate: false
+  xy: 2330, 1491
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+slash_1
+  rotate: false
+  xy: 2228, 1457
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+slash_2
+  rotate: false
+  xy: 2262, 1457
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+slash_3
+  rotate: false
+  xy: 2296, 1457
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 soul_0
   rotate: false
   xy: 601, 878
@@ -1658,7 +1686,7 @@ spikewall_w_overlay
   index: -1
 square
   rotate: false
-  xy: 2330, 1491
+  xy: 2330, 1457
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

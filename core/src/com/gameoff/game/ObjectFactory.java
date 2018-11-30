@@ -9,6 +9,7 @@ import com.gameoff.game.objects.LavaPit;
 import com.gameoff.game.objects.Pit;
 import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.ProgressTexture;
+import com.gameoff.game.objects.SoulMeter;
 import com.gameoff.game.objects.SpikeWall;
 import com.gameoff.game.objects.Spiker;
 import com.gameoff.game.objects.Trigger;
@@ -174,6 +175,13 @@ public class ObjectFactory {
 			@Override
 			public GameObject getGameObject() {
 				return new CherubEnemy(2);
+			}
+		});
+		
+		game.registerGameObject("SoulMeter", new IGameObjectGetter() {
+			@Override
+			public GameObject getGameObject() {
+				return new SoulMeter();
 			}
 		});
 

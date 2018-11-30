@@ -21,6 +21,7 @@ import com.gameoff.game.objects.MeleeAttack;
 import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.Projectile;
 import com.gameoff.game.objects.Wall;
+import com.gameoff.game.objects.Player.Form;
 import com.gameoff.game.objects.enemies.ScorpionEnemy;
 import com.gameoff.game.objects.enemies.WormEnemy;
 import com.gameoff.game.objects.enemies.CherubEnemy;
@@ -494,7 +495,6 @@ public class LevelManager extends StateManager {
 		{
 			//should place a key
 			Collectible c = Collectible.get(Collectible.KEY);
-			c.init(KyperBoxGame.NULL_PROPERTIES);
 			playground.addGameObject(c, KyperBoxGame.NULL_PROPERTIES);
 			randomPlaceObject(c, playground, level);
 		}
@@ -521,6 +521,11 @@ public class LevelManager extends StateManager {
 				overlayManager.setKeyLabelText(":"+overlayKeyAmount);
 				overlayManager.setSoulLabelText(""+overlaySoulAmount);
 				overlayManager.getHealth().setProgress(player.getHealth().getHealthPercentage(), false);
+				if(player.getCurrentForm() == Form.Angel) {
+					overlayManager.showSoulMeter(false);
+				}else {
+					overlayManager.hideSoulMeter(false);
+				}
 			}
 		});
 
@@ -562,6 +567,17 @@ public class LevelManager extends StateManager {
 			boolean pulse = player.m_numSouls > overlaySoulAmount;
 			overlaySoulAmount = player.m_numSouls;
 			overlayManager.updateSouls(overlaySoulAmount,pulse);
+			
+		}
+		
+		if(player.getCurrentForm() == Form.Angel) {
+			
+			if(!overlayManager.isSoulMeterVisible()) {
+				overlayManager.setNewSoulMax(player.m_numSouls);
+			}
+			
+		}else if(overlayManager.isSoulMeterVisible()){
+			overlayManager.hideSoulMeter(true);
 		}
 		
 		HealthControl health = player.getHealth();
@@ -588,6 +604,8 @@ public class LevelManager extends StateManager {
 				getState().getGame().setGameState("victory");
 			}
 		}
+		
+		
 		
 		Lava.updateOp();
 		Fire.updateOp();
