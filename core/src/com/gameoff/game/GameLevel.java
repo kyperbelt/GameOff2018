@@ -314,7 +314,9 @@ public class GameLevel {
         //within 1 of start
         //update nextInt() below with max of room number, so if we get all the rooms
         //up to 9 done, put a 9 in there!
-        r.m_roomCode = level.nextInt(4) + 1;
+        //r.m_roomCode = level.nextInt(4) + 1;
+        r.m_roomCode = 60;
+        r.setIsBoss();
       } else if (distFromStart < 2.05f)
       {
         //as add 10 level rooms increase nextInt below
@@ -370,7 +372,6 @@ public class GameLevel {
     Room bossRoom = level.getRoomWithNeighbors(1,200, true);
     bossRoom.setIsBoss();
     bossRoom.m_roomCode = 60 + level.nextInt(0); //change 0 if add more boss room designs!
-
     //TODO: parameterize as well, so can tweak difficulty with parameters easily
 
     //We may decide only a few room templates make sense for the boss battle

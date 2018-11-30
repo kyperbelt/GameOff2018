@@ -46,6 +46,8 @@ import com.kyperbox.umisc.StringUtils;
 
 public class Player extends DirectionEntity implements AnimationListener {
 
+	boolean player_debug = false;
+
 	public static float WIDTH = 144 * .5f;
 	public static float HEIGHT = 160 * .5f;
 
@@ -200,8 +202,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 	float lastXDir = 0;
 	float lastYDir = 0;
 
-	float angelSpeed = 325;
-	float demonSpeed = 260;
+	float angelSpeed = 330;
+	float demonSpeed = 285;
 
 	PlayerControl control;
 	AttackControl attack;
@@ -531,6 +533,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			@Override
 			public void damaged(float amount) {
 
+
 				float dmg = amount * m_damageMultiplier;
 				if (form == Form.Angel) {
 					// take double damage when angel!
@@ -538,8 +541,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 					dmg = amount * m_damageMultiplier * 2;
 				}
 
+				if (player_debug) dmg = amount * 2;
+
 				// add back health if you have the shield
-				getHealth().changeHealthNoListener(dmg);
+				getHealth().changeHealthNoListener(dmg);					
+
 				// System.out.println("added dmg back: " + dmg);
 
 				if (getHealth().shouldDie())
@@ -803,7 +809,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 					setCurrentForm(targetForm);
 					transformTime = 0.75f;
 				}
-				getMove().setDirection(0, 0);
+				//getMove().setDirection(0, 0);
 				return;
 			}
 			// AnimationController animation = getAnimation();
@@ -1317,6 +1323,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 		float dx = object.getCollisionCenter().x - getCollisionCenter().x;
 		float dy = object.getCollisionCenter().y - getCollisionCenter().y;
 		pushbackAngle = MathUtils.atan2(dy, dx) - MathUtils.PI;
+
+		if (player_debug) return;
 
 		if (object instanceof SimpleEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SIMPLE);

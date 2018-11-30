@@ -74,8 +74,8 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 			}
 
 			// Can't move or do anything while transforming
-			if (control.isTransforming())
-				return;
+			//if (control.isTransforming())
+			//	return;
 
 			if (maps != null) {
 

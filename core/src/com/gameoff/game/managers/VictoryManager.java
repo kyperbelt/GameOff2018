@@ -14,6 +14,7 @@ import com.kyperbox.SoundManager;
 public class VictoryManager extends StateManager {
 
   BasicGameObject title;
+  float delay = 2.5f;
 
   @Override
   public void addLayerSystems(GameState state) {
@@ -35,6 +36,9 @@ public class VictoryManager extends StateManager {
   public void update(GameState state, float delta) {
     
     GameInput input = state.getInput();
+    delay -= delta;
+    if (delay > 0) return;
+
     if ((input.inputJustPressed(Inputs.ATTACK)) || (input.inputJustPressed(Inputs.TRANSFORM))) {
       getState().getGame().setGameState("title");
     }
