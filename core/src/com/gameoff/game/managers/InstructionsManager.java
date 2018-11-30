@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 public class InstructionsManager extends StateManager {
 
   BasicGameObject character;
+  BasicGameObject details;
   float m_time = 0f;
   int m_introState = 0;
   AnimationController anim;
@@ -57,6 +58,7 @@ public class InstructionsManager extends StateManager {
     state.playMusic(SoundManager.MUSIC,"bgmusic", true);
 
     state.getSoundManager().changeVolume(SoundManager.MUSIC, .2f);
+    details = (BasicGameObject) state.getForegroundLayer().getActor("player_details");
     character = (BasicGameObject) state.getForegroundLayer().getActor("character");
     
     anim = new AnimationController();
@@ -111,21 +113,23 @@ public class InstructionsManager extends StateManager {
     m_time += delta;
     if (m_introState == 0)
     {
-      if (m_time > 2f)
+      if (m_time > 2.5f)
       {
         anim.set("dtoa", PlayMode.NORMAL);
         anim.setPlaySpeed(1f);
         m_introState = 1;
         m_time = 0f;
+        details.setSprite("angeldetails");
       }     
     } else if (m_introState == 1)
     {
-      if (m_time > 2)
+      if (m_time > 2.5f)
       {
         anim.set("atod", PlayMode.NORMAL);
         anim.setPlaySpeed(1f);
         m_introState = 0;
-        m_time = 0f;  
+        m_time = 0f; 
+        details.setSprite("demondetails"); 
       }    
     }
 
