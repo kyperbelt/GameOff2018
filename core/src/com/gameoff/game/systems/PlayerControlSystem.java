@@ -30,6 +30,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		public String attack;
 		public String interact;
 		public String dash;
+		public String special;
 
 	}
 
@@ -47,6 +48,7 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 		p1.attack = Inputs.ATTACK;
 		p1.interact = Inputs.INTERACT;
 		p1.dash = Inputs.DASH;
+		p1.special = Inputs.SPECIAL;
 
 		controls.add(p1);
 	}
@@ -76,25 +78,33 @@ public class PlayerControlSystem extends ControlSpecificSystem {
 				return;
 
 			if (maps != null) {
-				
+
 				if (control.getState() != PlayerState.Damaged) {
 
 					if (move != null && !control.isDying()) {
 
-						if (!control.isTransforming() && input.inputJustPressed(maps.transform) ) {
-							
+						if (!control.isTransforming() && input.inputJustPressed(maps.transform)) {
+
 							boolean transformed = false;
-							
+
 							if (move.isFlying()) {
 								control.setForm(Form.Demon);
 								transformed = true;
-							} else if(player.m_numSouls >= player.angelFormMin){
+							} else if (player.m_numSouls >= player.angelFormMin) {
 								control.setForm(Form.Angel);
 								transformed = true;
 							}
-							
-							if(transformed)
+
+							if (transformed)
 								getLayer().getState().playSound(Sounds.Transform);
+						}
+
+						if (input.inputJustPressed(maps.special)) {
+							if (player.getCurrentForm() == Form.Angel) {
+								player.setAngelShieldActive(!player.isAngelShieldActive());
+							}else {
+								player.setDemonFlameActive(!player.isDemonFlameActive());
+							}
 						}
 
 						if (input.inputJustPressed(maps.attack)) {

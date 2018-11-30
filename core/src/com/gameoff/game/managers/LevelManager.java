@@ -604,12 +604,11 @@ public class LevelManager extends StateManager {
 			overlayManager.updateSouls(overlaySoulAmount,pulse);
 		}
 		
-		if(player.getCurrentForm() == Form.Angel) {
+		if(player.isSoulDraining()) {
 			
 			if(!overlayManager.isSoulMeterVisible()) {
 				overlayManager.setNewSoulMax(player.m_numSouls);
 			}
-			
 		}else if(overlayManager.isSoulMeterVisible()){
 			overlayManager.hideSoulMeter(true);
 		}

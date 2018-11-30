@@ -102,6 +102,7 @@ public class GameOffGame extends KyperBoxGame {
 		getInput().addInputMapping(Inputs.RIGHT, new KeyboardMapping(Keys.RIGHT));
 		getInput().addInputMapping(Inputs.TRANSFORM, new KeyboardMapping(Keys.SPACE));
 		getInput().addInputMapping(Inputs.ATTACK, new KeyboardMapping(Keys.F));
+		getInput().addInputMapping(Inputs.SPECIAL, new KeyboardMapping(Keys.G));
 		getInput().addInputMapping(Inputs.ATTACK, new KeyboardMapping(Keys.ENTER));
 		getInput().addInputMapping(Inputs.MENU, new KeyboardMapping(Keys.ESCAPE));
 

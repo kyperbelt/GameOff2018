@@ -83,24 +83,31 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public static final String DEMONATTACKDOWN = DEMON + SEP + ATTACKDOWN;
 	public static final String TRANSFORM = "transform";
 
+	public static final String HEADFLAMESTART = "headFlame_start";
+	public static final String HEADFLAME = "headFlame";
+
+	public static final String DEMONFLAME = "demonFlame";
+	public static final String DEMONFLAMESIDE = "demonFlame_side";
+
+	public static final String ANGELSHIELD = "angelShield";
+
 	// -projectiles
 	public static final String HALOPROJECTILEV = "halo_projectile_vertical";
 	public static final String HALOPROJECTILEH = "halo_projectile_horizontal";
 
-	
-	//-- attacks
+	// -- attacks
 	public static final String MELEE_ATTACK = "slash";
-	
+
 	public static float MELEE_LIFE = .2f;
 	public static int MELEE_FRAMES = 4;
-	//damage stuff
+	// damage stuff
 	private static final float MINPUSHBACK = 20;
 	private static final float MAXPUSHBACK = 100;
 	private float damageDuration = 1.5f;
 	private float damageElapsed = 0;
-	private float m_damageMultiplier = 0f; //reduces damage
+	private float m_damageMultiplier = 0f; // reduces damage
 	private float m_weaponDamageMultiplier = 1f;
-	
+
 	private Action a_setIdling = new Action() {
 		@Override
 		public boolean act(float delta) {
@@ -108,7 +115,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			return true;
 		}
 	};
-	
+
 	private Action a_removeInvulnerable = new Action() {
 		@Override
 		public boolean act(float delta) {
@@ -116,9 +123,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 			return true;
 		}
 	};
-	
+
 	private float pushbackAngle = 0f;
-	
+
 	// deathstuff
 	private BasicGameObject square;
 	private boolean dying = false;
@@ -126,19 +133,24 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private float deathElapsed = 0;
 
 	public float projectileSpeed = 650;
-	
-	public boolean isDying() {return dying;}
+
+	public boolean isDying() {
+		return dying;
+	}
 
 	Form targetForm;
 	// --animation literals end <--
 
 	public int m_numKeys = 0;
 	public int m_numSouls = 20;
-	
-	
-	public float angelFormMin = 10;
-	public float soulDrainRate = .5f; //amount of souls drained per second while in angel form
-	public float soulDrainElapsed = 0f; //used to calculate the amount of soul drained into whole numbers
+
+	public float angelDrainRate = .5f; // .5 souls per second at 1 soul per 2 seconds
+	public float angelShieldDrainRate = 1f; // 1 soul per second
+	public float demonFlameDrainRate = 1f; // 1 soul per second
+
+	public float angelFormMin = 1;
+	public float soulDrainRate = 0f; // amount of souls drained per second
+	public float soulDrainElapsed = 0f; // used to calculate the amount of soul drained into whole numbers
 
 	public enum PlayerState {
 		Idling, Moving, Dashing, Attacking, Damaged, Dying
@@ -149,6 +161,21 @@ public class Player extends DirectionEntity implements AnimationListener {
 	}
 
 	float baseDepth = HEIGHT * .13f; // base depth of torso
+
+	// headFlame
+	BasicGameObject headFlame;
+	ZOrderControl headFlameZorder;
+	AnimationController headFlameAnim;
+
+	// demonFlame
+	BasicGameObject demonFlame;
+	ZOrderControl demonFlameZOrder;
+	AnimationController demonFlameAnim;
+
+	// angelShield
+	BasicGameObject angelShield;
+	ZOrderControl angelShieldZorder;
+	AnimationController angelShieldAnim;
 
 	// demonlegs
 	BasicGameObject dlegs;
@@ -187,6 +214,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 	float transformTime = 0;
 	boolean transforming = false;
+	
+	boolean isDemonFlameActive = false;
+	boolean isAngelShieldActive = false;
 
 	AnimationListener attackAnimationListener = new AnimationListener() {
 		@Override
@@ -218,6 +248,24 @@ public class Player extends DirectionEntity implements AnimationListener {
 		setupBasicProjectile();
 		setUpBasicMelee();
 
+		headFlame = new BasicGameObject();
+		headFlame.setName("headFlame");
+		headFlameAnim = new AnimationController();
+		headFlameZorder = new ZOrderControl();
+		headFlameZorder.setZOrder(ZOrder.PLAYER - 1);
+
+		demonFlame = new BasicGameObject();
+		demonFlame.setName("demonFlame");
+		demonFlameAnim = new AnimationController();
+		demonFlameZOrder = new ZOrderControl();
+		demonFlameZOrder.setZOrder(ZOrder.PLAYER + 1);
+
+		angelShield = new BasicGameObject();
+		angelShield.setName("angelShield");
+		angelShieldAnim = new AnimationController();
+		angelShieldZorder = new ZOrderControl();
+		angelShieldZorder.setZOrder(ZOrder.PLAYER - 1);
+
 		dlegs = new BasicGameObject();
 		dlegs.setName(DEMON + LEGS + id);
 		dlegsAnim = new AnimationController();
@@ -245,7 +293,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	}
 
 	public void transformTo(Form form) {
-		if(form == Form.Angel) {
+		if (form == Form.Angel) {
 			m_numSouls--;
 		}
 		transformSprite.setVisible(true);
@@ -265,7 +313,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 		this.form = form;
 		switch (form) {
 		case Demon:
-
+			soulDrainRate = Math.max(0f,soulDrainRate - angelDrainRate);
 			getMove().setFlying(false);
 			setDepth(baseDepth);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
@@ -281,6 +329,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			dlegs.setPosition(legsX, legsY);
 			break;
 		case Angel:
+			soulDrainRate+=angelDrainRate;
 			getMove().setFlying(true);
 			/// float depthDiff = (baseDepth + getBoundsRaw().height * .5f)-baseDepth;
 			setDepth(baseDepth + getBoundsRaw().height * .5f);
@@ -326,6 +375,14 @@ public class Player extends DirectionEntity implements AnimationListener {
 			this.state = state;
 
 		}
+	}
+
+	@Override
+	public void onRemove() {
+		super.onRemove();
+		addHeadFlame(false);
+		addDemonFlame(false);
+		setAngelShieldActive(false);
 	}
 
 	public PlayerState getPlayerState() {
@@ -403,7 +460,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	@Override
 	public void init(MapProperties properties) {
 		super.init(properties);
-
+		soulDrainRate = 0;
 		playerShadow.setVisible(false);
 		playerShadow.setPosition(20, -3);
 		addChild(playerShadow);
@@ -428,6 +485,14 @@ public class Player extends DirectionEntity implements AnimationListener {
 		addChild(transformSprite);
 		transformSprite.setSize(400, 225);
 		transformSprite.setVisible(false);
+
+		// headflame
+		// addHeadFlame(true);
+
+		// demonflame
+		// addDemonFlame(true);
+
+		// angelShield
 
 		setPlayerState(PlayerState.Idling);
 
@@ -467,45 +532,45 @@ public class Player extends DirectionEntity implements AnimationListener {
 			public void damaged(float amount) {
 
 				float dmg = amount * m_damageMultiplier;
-				if (form == Form.Angel)
-				{
-					//take triple damage when angel!
+				if (form == Form.Angel) {
+					// take triple damage when angel!
 					getHealth().changeHealthNoListener(-amount);
 					getHealth().changeHealthNoListener(-amount);
 					dmg = amount * m_damageMultiplier * 3;
 				}
 
-				//add back health if you have the shield
+				// add back health if you have the shield
 				getHealth().changeHealthNoListener(dmg);
-				//System.out.println("added dmg back: " + dmg);
+				// System.out.println("added dmg back: " + dmg);
 
-				if(getHealth().shouldDie())
+				if (getHealth().shouldDie())
 					return;
-				
+
 				getState().playSound(Sounds.PlayerDamaged);
-				
+
 				clearActions();
 				getHealth().setInvulnerable(true);
-				float dst = MathUtils.random(MINPUSHBACK,MAXPUSHBACK);
+				float dst = MathUtils.random(MINPUSHBACK, MAXPUSHBACK);
 				float x = MathUtils.cos(pushbackAngle) * dst;
 				float y = MathUtils.sin(pushbackAngle) * dst;
-				
+
 				int fr = 4;
 				float frr = fr * 2f;
-				
+
 				getMove().setDirection(0, 0);
 				setVelocity(0, 0);
-				
-				addAction(Actions.sequence(
-						Actions.parallel(
-								Actions.repeat(fr,Actions.sequence(Actions.fadeOut(damageDuration / frr),Actions.fadeIn(damageDuration / frr))),
+
+				addAction(
+						Actions.sequence(Actions.parallel(
+								Actions.repeat(fr,
+										Actions.sequence(Actions.fadeOut(damageDuration / frr),
+												Actions.fadeIn(damageDuration / frr))),
 								Actions.sequence(
-										Actions.moveTo(getX()+x, getY()+y,(dst / MAXPUSHBACK) * (damageDuration * .3f),Interpolation.linear),
-										a_setIdling
-										)
-								)
-						,Actions.alpha(1f),a_removeInvulnerable));
-				
+										Actions.moveTo(getX() + x, getY() + y,
+												(dst / MAXPUSHBACK) * (damageDuration * .3f), Interpolation.linear),
+										a_setIdling)),
+								Actions.alpha(1f), a_removeInvulnerable));
+
 				setPlayerState(PlayerState.Damaged);
 			}
 		});
@@ -525,9 +590,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 					setVelocity(0, 0);
 					setPlayerState(PlayerState.Dying);
 					clearActions();
-					addAction(Actions.sequence(Actions.delay(deathTime  * .66f),Actions.fadeOut(deathTime * .33f)));
-					//getState().getSoundManager().stopSounds();
-					//getHealth().setInvulnerable(true);
+					addAction(Actions.sequence(Actions.delay(deathTime * .66f), Actions.fadeOut(deathTime * .33f)));
+					// getState().getSoundManager().stopSounds();
+					// getHealth().setInvulnerable(true);
 				}
 				return deathElapsed >= deathTime;
 			}
@@ -537,6 +602,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 			@Override
 			public void directionChanged(Direction lastDirection, Direction newDirection) {
 
+				if (!demonFlame.isRemoved())
+					setDemonFlameDir(newDirection);
 				// System.out.println("currentState = " + state.name() + " newdir=" +
 				// newDirection.name());
 				if (state == PlayerState.Moving) {
@@ -550,7 +617,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 		Viewport view = getState().getGame().getView();
 
-		square.setSize(view.getWorldWidth()*2, view.getWorldHeight() * 2);
+		square.setSize(view.getWorldWidth() * 2, view.getWorldHeight() * 2);
 		square.setSprite("square");
 		ZOrderControl z = new ZOrderControl();
 		z.setZOrder(ZOrder.FOREGROUND - 2);
@@ -558,6 +625,39 @@ public class Player extends DirectionEntity implements AnimationListener {
 		square.setColor(Color.BLACK);
 		square.getColor().a = 0f;
 
+	}
+
+	public void addHeadFlame(boolean add) {
+		if (add) {
+
+			Sprite s = getState().getGameSprite("headFlame_0");
+
+			headFlame.setSize(s.getWidth() * .5f, s.getHeight() * .5f);
+
+			headFlameAnim.setAnimation(HEADFLAMESTART, PlayMode.NORMAL);
+			headFlameAnim.setListener(new AnimationListener() {
+				@Override
+				public void finished(String animation, int times) {
+					if (times == 1) {
+
+						headFlameAnim.setListener(null);
+						headFlameAnim.setAnimation(HEADFLAME, PlayMode.LOOP);
+					}
+				}
+			});
+
+			headFlame.addController(headFlameAnim);
+			headFlame.addController(headFlameZorder);
+
+			Vector2 center = getCollisionCenter();
+			headFlame.setPosition(getWidth() * .5f - headFlame.getWidth() * .5f, getHeight() * .95f);
+
+			addChild(headFlame);
+		} else {
+			headFlame.removeController(headFlameAnim);
+			headFlame.removeController(headFlameZorder);
+			headFlame.remove();
+		}
 	}
 
 	private void createLegAnimations(GameState state) {
@@ -647,25 +747,43 @@ public class Player extends DirectionEntity implements AnimationListener {
 		anim = state.getAnimation(HALOPROJECTILEH);
 		if (anim == null)
 			state.storeAnimation(HALOPROJECTILEH, state.createGameAnimation(HALOPROJECTILEH, .0333f));
-		
+
 		anim = state.getAnimation(MELEE_ATTACK);
-		if(anim == null)
-				state.storeAnimation(MELEE_ATTACK,state.createGameAnimation(MELEE_ATTACK, MELEE_LIFE/MELEE_FRAMES));
+		if (anim == null)
+			state.storeAnimation(MELEE_ATTACK, state.createGameAnimation(MELEE_ATTACK, MELEE_LIFE / MELEE_FRAMES));
+
+		anim = state.getAnimation(DEMONFLAMESIDE);
+		if (anim == null)
+			state.storeAnimation(DEMONFLAMESIDE, state.createGameAnimation(DEMONFLAMESIDE, .16f));
+
+		anim = state.getAnimation(DEMONFLAME);
+		if (anim == null)
+			state.storeAnimation(DEMONFLAME, state.createGameAnimation(DEMONFLAME, .16f));
+
+		anim = state.getAnimation(ANGELSHIELD);
+		if (anim == null)
+			state.storeAnimation(ANGELSHIELD, state.createGameAnimation(ANGELSHIELD, .16f));
+
+		anim = state.getAnimation(HEADFLAMESTART);
+		if (anim == null)
+			state.storeAnimation(HEADFLAMESTART, state.createGameAnimation(HEADFLAMESTART, .16f));
+
+		anim = state.getAnimation(HEADFLAME);
+		if (anim == null)
+			state.storeAnimation(HEADFLAME, state.createGameAnimation(HEADFLAME, .16f));
 
 	}
 
-	public void showMessage(String msg, float duration)
-	{
+	public void showMessage(String msg, float duration) {
 		BasicGameObject o = new BasicGameObject();
 		Sprite mo = getState().getGameSprite(msg);
 		o.setSprite(msg);
 		o.setSize(mo.getWidth(), mo.getHeight());
-    o.setPosition((960 - mo.getWidth())/2, 430);
-    getState().getForegroundLayer().addGameObject(o, KyperBoxGame.NULL_PROPERTIES);
-    o.clearActions();
+		o.setPosition((960 - mo.getWidth()) / 2, 430);
+		getState().getForegroundLayer().addGameObject(o, KyperBoxGame.NULL_PROPERTIES);
+		o.clearActions();
 		o.addAction(Actions.sequence(Actions.parallel(Actions.moveBy(0, 30, duration), Actions.fadeOut(duration)),
-				Actions.removeActor()
-		));
+				Actions.removeActor()));
 	}
 
 	@Override
@@ -674,10 +792,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 		if (dying) {
 			LayerCamera cam = getGameLayer().getCamera();
-			Vector2 p = new Vector2(0,square.getHeight() * .5f);
+			Vector2 p = new Vector2(0, square.getHeight() * .5f);
 			p = cam.unproject(p);
-			square.setPosition(p.x,p.y);
-			deathElapsed+=delta;
+			square.setPosition(p.x, p.y);
+			deathElapsed += delta;
 		} else {
 
 			if (transforming) {
@@ -717,22 +835,19 @@ public class Player extends DirectionEntity implements AnimationListener {
 						if (itemID == Collectible.KEY) {
 							m_numKeys++;
 							System.out.println("Keys + 1");
-						} else if (itemID == Collectible.HEART)
-						{
+						} else if (itemID == Collectible.HEART) {
 							getHealth().changeCurrentHealth(3);
-							showMessage("healthmessage",2f);
+							showMessage("healthmessage", 2f);
 							System.out.println("Health + 3");
-						} else if (itemID == Collectible.SHIELD)
-						{
+						} else if (itemID == Collectible.SHIELD) {
 							activateHalfDamage();
-							showMessage("defensemessage",4f);
+							showMessage("defensemessage", 4f);
 							System.out.println("SHIELD got!");
-						} else if (itemID == Collectible.SWORD)
-						{
+						} else if (itemID == Collectible.SWORD) {
 							activateWeaponDoubleDamage();
 							showMessage("attackmessage", 4f);
 							System.out.println("SWORD got!");
-						}else if (itemID == Collectible.SOUL) {
+						} else if (itemID == Collectible.SOUL) {
 							m_numSouls++;
 							System.out.println("Souls + 1");
 						}
@@ -747,22 +862,39 @@ public class Player extends DirectionEntity implements AnimationListener {
 				}
 			}
 
+			// handle soul drain
+			{
+				if (isSoulDraining()) {
+					System.out.println(StringUtils.format("draining %s souls per second",soulDrainRate));
+					soulDrainElapsed += delta;
+					float soulDrained = soulDrainElapsed * soulDrainRate;
+					if (soulDrained >= 1) {
+						soulDrainElapsed -= 1;
+						if (!useSoul(1)) {
+							
+							if(isAngelShieldActive)
+								setAngelShieldActive(false);
+							
+							if(isDemonFlameActive)
+								setDemonFlameActive(false);
+							
+							if(getCurrentForm() == Form.Angel) {
+								setAngelShieldActive(false);
+								transformTo(Form.Demon);
+							}
+							soulDrainElapsed = 0;
+						}
+
+					}
+				}else {soulDrainElapsed = 0f;}
+			}
+
 			// Handle robe physics -- and angel stuff
 			if (this.form == Form.Angel) {
 				
-				//handle soul drain
-				soulDrainElapsed+=delta;
-				float soulDrained = soulDrainElapsed * soulDrainRate;
-				if(soulDrained >= 1) {
-					soulDrainElapsed-=1;
-					if(!useSoul(1)) {
-						setCurrentForm(Form.Demon);
-						soulDrainElapsed = 0;
-					}
-					
-				}
-					
-				
+				if(isDemonFlameActive)
+					setDemonFlameActive(false);
+
 				MoveControl move = getMove();
 				float cxd = move.getXDir();
 				if (lastXDir != cxd) {
@@ -822,7 +954,100 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 				dlegs.setPosition(legsX + legsOffsetX, legsY + legsOffsetY);
 				playerShadow.setPosition(20 + shadowOffset + legsOffsetX, legsOffsetY - 3);
+
+				if (!angelShield.isRemoved()) {
+					Vector2 center = getCollisionCenter();
+					angelShield.setPosition(center.x - angelShield.getWidth() * .5f,
+							center.y - angelShield.getHeight() * .4f);
+
+					angelShield.getColor().a = getColor().a;
+				}
+			} else {
+				
+				if(isAngelShieldActive)
+					setAngelShieldActive(false);
+
+				if (!demonFlame.isRemoved()) {
+					demonFlame.setPosition(getX() + getWidth() * .5f - demonFlame.getWidth() * .5f,
+							getY() - getHeight() * .5f);
+					demonFlame.getColor().a = getColor().a;
+				}
 			}
+		}
+	}
+	
+	public boolean isSoulDraining() {
+		return soulDrainRate > 0f;
+	}
+
+	public void addAngelShield(boolean add) {
+		if (add) {
+
+			Sprite s = getState().getGameSprite("angelShield_0");
+
+			angelShield.setSize(getWidth()*1.7f , getHeight()*2.2f);
+
+			angelShieldAnim.setAnimation(ANGELSHIELD, PlayMode.LOOP);
+
+			angelShield.addController(angelShieldAnim);
+			angelShield.addController(angelShieldZorder);
+
+			Vector2 center = getCollisionCenter();
+			angelShield.setPosition(center.x - angelShield.getWidth() * .5f, center.y);
+
+			getGameLayer().addGameObject(angelShield, GameOffGame.NULL_PROPERTIES);
+		} else {
+			angelShield.removeController(angelShieldAnim);
+			angelShield.removeController(angelShieldZorder);
+			angelShield.remove();
+		}
+	}
+
+	/**
+	 * add the surrounding demon flame to the player
+	 */
+	public void addDemonFlame(boolean add) {
+		if (add) {
+
+			Sprite s = getState().getGameSprite("demonFlame_0");
+
+			demonFlame.setSize(s.getRegionWidth() * .6f, s.getRegionHeight() * .6f);
+
+			demonFlame.addController(demonFlameAnim);
+			demonFlame.addController(demonFlameZOrder);
+
+			setDemonFlameDir(getDirection());
+
+			Vector2 center = getCollisionCenter();
+			demonFlame.setPosition(getX() + getWidth() * .5f - demonFlame.getWidth() * .5f, getY() - getHeight() * .5f);
+
+			getGameLayer().addGameObject(demonFlame, GameOffGame.NULL_PROPERTIES);
+		} else {
+			demonFlame.removeController(demonFlameAnim);
+			demonFlame.removeController(demonFlameZOrder);
+			demonFlame.remove();
+		}
+	}
+
+	public void setDemonFlameDir(Direction dir) {
+
+		switch (dir) {
+		case Up:
+			demonFlame.setFlip(getFlipX(), false);
+			demonFlameAnim.setAnimation(DEMONFLAME, PlayMode.LOOP);
+			break;
+		case Down:
+			demonFlame.setFlip(getFlipX(), false);
+			demonFlameAnim.setAnimation(DEMONFLAME, PlayMode.LOOP);
+			break;
+		case Left:
+			demonFlameAnim.setAnimation(DEMONFLAMESIDE, PlayMode.LOOP);
+			demonFlame.setFlip(false, false);
+			break;
+		case Right:
+			demonFlameAnim.setAnimation(DEMONFLAMESIDE, PlayMode.LOOP);
+			demonFlame.setFlip(true, false);
+			break;
 		}
 	}
 
@@ -833,17 +1058,15 @@ public class Player extends DirectionEntity implements AnimationListener {
 		}
 	}
 
-	public void activateHalfDamage()
-	{
-		//picked up shield, now you take half damage when hit
+	public void activateHalfDamage() {
+		// picked up shield, now you take half damage when hit
 		m_damageMultiplier = 0.5f;
 	}
 
-	public void activateWeaponDoubleDamage()
-	{
+	public void activateWeaponDoubleDamage() {
 		m_weaponDamageMultiplier = 2f;
 		if (melee != null)
-			melee.setDamage(m_weaponDamageMultiplier*3);
+			melee.setDamage(m_weaponDamageMultiplier * 3);
 	}
 
 	// melee attack
@@ -859,7 +1082,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 		melee.setBounds(0, 0, getHeight() * .75f, getHeight() * 2f);
 		melee.setFlip(false, false);
 		melee.setOrigin(Align.center);
-		
+
 		switch (getDirection()) {
 		case Up:
 			melee.rotateBy(90);
@@ -883,10 +1106,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 		Vector2 center = getCollisionCenter();
 		switch (getDirection()) {
 		case Up:
-			melee.setPosition(center.x - melee.getWidth() * .5f , center.y + getVelocity().y * .09f);
+			melee.setPosition(center.x - melee.getWidth() * .5f, center.y + getVelocity().y * .09f);
 			break;
 		case Down:
-			melee.setPosition(center.x - melee.getWidth() * .5f, center.y - (-getVelocity().y * .09f) - (melee.getHeight() * .95f) );
+			melee.setPosition(center.x - melee.getWidth() * .5f,
+					center.y - (-getVelocity().y * .09f) - (melee.getHeight() * .95f));
 			break;
 		case Left:
 			melee.setPosition(center.x - getBoundsRaw().width * .5f - melee.getWidth(),
@@ -899,14 +1123,15 @@ public class Player extends DirectionEntity implements AnimationListener {
 	}
 
 	long lastShoot = -1;
+
 	// attack listeners
 	private void setupBasicProjectile() {
 
 		basicProjectile = new AttackListener() {
 			@Override
 			public void onAttack() {
-				
-				if(lastShoot!=-1)
+
+				if (lastShoot != -1)
 					getState().stopSound(Sounds.AngelShoot, lastShoot);
 				lastShoot = getState().playSound(Sounds.AngelShoot);
 
@@ -932,9 +1157,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 				}
 
 				if (form != null) {
-					Projectile p = Projectile.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss); // get a
-																												// pooled
-																												// projectile
+					Projectile p = Projectile.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral,
+							HealthGroup.Boss); // get a
+					// pooled
+					// projectile
 					p.setVelocity(0, 0);
 					p.setRotation(0);
 					p.setDamage(1 * m_weaponDamageMultiplier);
@@ -1022,15 +1248,16 @@ public class Player extends DirectionEntity implements AnimationListener {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * try and use the specified amount of souls- returns false if not enough souls
+	 * 
 	 * @param amount
 	 * @return
 	 */
 	public boolean useSoul(int amount) {
-		if (m_numSouls-amount >= 0) {
-			m_numSouls-=amount;
+		if (m_numSouls - amount >= 0) {
+			m_numSouls -= amount;
 			return true;
 		}
 		return false;
@@ -1066,33 +1293,89 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 				melee = MeleeAttack.get(HealthGroup.Angel, HealthGroup.Demon, HealthGroup.Neutral, HealthGroup.Boss);
 				melee.lifetime = MELEE_LIFE;
-				melee.getAnimation().setAnimation(MELEE_ATTACK,PlayMode.NORMAL);
+				melee.getAnimation().setAnimation(MELEE_ATTACK, PlayMode.NORMAL);
 				setupMelee(melee);
-				melee.setDamage(m_weaponDamageMultiplier*3);
+				melee.setDamage(m_weaponDamageMultiplier * 3);
 
 				getGameLayer().addGameObject(melee, KyperBoxGame.NULL_PROPERTIES);
 
 			}
 		};
 	}
-	
+
 	public void collidedWith(Basic object) {
-		
+
 		float dx = object.getCollisionCenter().x - getCollisionCenter().x;
 		float dy = object.getCollisionCenter().y - getCollisionCenter().y;
 		pushbackAngle = MathUtils.atan2(dy, dx) - MathUtils.PI;
-		
-		if(object instanceof SimpleEnemy) {
+
+		if (object instanceof SimpleEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SIMPLE);
-		} else if(object instanceof WormEnemy) {
+		} else if (object instanceof WormEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.WORM);
-		} else if(object instanceof CherubEnemy) {
+		} else if (object instanceof CherubEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.CHERUB);
-		} else if(object instanceof ScorpionEnemy) {
+		} else if (object instanceof ScorpionEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SCORPION);
 		} else if (object instanceof SpiderBossEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.BOSS);
 		}
+	}
+	
+	/**
+	 * returns true if the method was successful in activating or deactivating
+	 * the angel shield
+	 * @param activate
+	 * @return
+	 */
+	public boolean setAngelShieldActive(boolean activate) {
+		if(activate) {
+			if(getCurrentForm()!=Form.Angel)
+				return false;
+			if(m_numSouls >= 1) {
+				isAngelShieldActive = true;
+				soulDrainRate+=angelShieldDrainRate;
+				addAngelShield(true);
+				getHealth().setInvulnerable(true);
+				return true;
+			}
+			return false;
+		}else {
+			isAngelShieldActive = false;
+			soulDrainRate = Math.max(0f,soulDrainRate - angelShieldDrainRate);
+			addAngelShield(false);
+			getHealth().setInvulnerable(false);
+		}
+	
+		return true;
+	}
+	
+	public boolean setDemonFlameActive(boolean activate) {
+		if(activate) {
+			if(getCurrentForm()!=Form.Demon)
+				return false;
+			if(m_numSouls >= 1) {
+				isDemonFlameActive = true;
+				soulDrainRate+=demonFlameDrainRate;
+				addDemonFlame(true);
+				return true;
+			}
+			return false;
+		}else {
+			isDemonFlameActive = false;
+			soulDrainRate = Math.max(0f,soulDrainRate - demonFlameDrainRate);
+			addDemonFlame(false);
+		}
+	
+		return true;
+	}
+	
+	public boolean isAngelShieldActive() {
+		return isAngelShieldActive;
+	}
+	
+	public boolean isDemonFlameActive() {
+		return isDemonFlameActive;
 	}
 
 	public boolean isTransforming() {

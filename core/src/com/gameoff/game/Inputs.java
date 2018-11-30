@@ -14,6 +14,7 @@ public class Inputs {
 	public static final String TRANSFORM = "transform";
 	public static final String DASH = "dash";
 	public static final String INTERACT = "interact";
+	public static final String SPECIAL = "special";
 	
 	
 	public static final String MENU = "menu";
@@ -30,6 +31,7 @@ public class Inputs {
 		input.registerInput(TRANSFORM);
 		input.registerInput(DASH);
 		input.registerInput(INTERACT);
+		input.registerInput(SPECIAL);
 		
 		input.registerInput(MENU);
 	}
