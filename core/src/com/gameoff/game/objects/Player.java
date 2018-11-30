@@ -133,7 +133,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	// --animation literals end <--
 
 	public int m_numKeys = 0;
-	public int m_numSouls = 0;
+	public int m_numSouls = 20;
 	
 	
 	public float angelFormMin = 10;

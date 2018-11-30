@@ -56,7 +56,7 @@ public class LevelManager extends StateManager {
 	// test player for now
 	public Player player;
 	int overlayKeyAmount; //amount of keys that are shown to the overlay
-	int overlaySoulAmount;//amount of souls in overlay
+	int overlaySoulAmount = 20;//amount of souls in overlay
 
 	// layer systems we will use for playground layer
 	QuadTree quad;// collisionSystem
@@ -598,7 +598,6 @@ public class LevelManager extends StateManager {
 			boolean pulse = player.m_numSouls > overlaySoulAmount;
 			overlaySoulAmount = player.m_numSouls;
 			overlayManager.updateSouls(overlaySoulAmount,pulse);
-			
 		}
 		
 		if(player.getCurrentForm() == Form.Angel) {
