@@ -193,6 +193,11 @@ public class LevelManager extends StateManager {
 		//wallZOrder.setZOrder(ZOrder.PLAYER+1);
 		wallZOrder.setZOrder(ZOrder.BACKGROUND-1);
 		wall_tiles.addController(wallZOrder);
+
+		KyperBoxGame game = state.getGame();
+		GameLevel level = GameLevel.getCurrentLevel();
+		Room r = level.getCurrentRoom();
+
 		if (player == null) {
 			GameObject pspawn = playground.getGameObject("playerSpawn");
 
@@ -223,25 +228,28 @@ public class LevelManager extends StateManager {
 			float x = 0;
 			float y = 0;
 
+			float cf = 0;
+			if (r.getVisited() == false) cf = 70;
+
 			switch (entryPoint) {
 			case NORTH:
 				GameObject north = playground.getGameObject("north");
 				x = north.getX();
-				y = north.getY();
+				y = north.getY() - cf;
 				break;
 			case EAST:
 				GameObject east = playground.getGameObject("east");
-				x = east.getX();
+				x = east.getX() -cf;
 				y = east.getY();
 				break;
 			case SOUTH:
 				GameObject south = playground.getGameObject("south");
 				x = south.getX();
-				y = south.getY();
+				y = south.getY() + cf;
 				break;
 			case WEST:
 				GameObject west = playground.getGameObject("west");
-				x = west.getX();
+				x = west.getX() + cf;
 				y = west.getY();
 				break;
 			}
@@ -254,10 +262,7 @@ public class LevelManager extends StateManager {
 		player.onRemove();
 		playground.addGameObject(player, KyperBoxGame.NULL_PROPERTIES);
 
-		KyperBoxGame game = state.getGame();
-		GameLevel level = GameLevel.getCurrentLevel();
-		Room r = level.getCurrentRoom();
-		System.out.println("LevelManager::init current room " + r.getX() + ", " + r.getY());
+		//System.out.println("LevelManager::init current room " + r.getX() + ", " + r.getY());
 
 		r.roomWidthPixels = m_roomWidthPixels;
 		r.roomHeightPixels = m_roomHeightPixels;
