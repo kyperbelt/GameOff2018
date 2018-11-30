@@ -534,6 +534,10 @@ public class LevelManager extends StateManager {
 		 r.numberEnemies = ec;
 		 //System.out.println("Number Enemies START!!!: " + GameLevel.getCurrentLevel().getCurrentRoom().numberEnemies);
 
+		 if (r.getVisited())
+		 {
+		 	r.setRevisit(true);
+		 }
 		//Place HUD
 		GameLayer flayer = state.getForegroundLayer();
 		HudMap mapHud = new HudMap(level);

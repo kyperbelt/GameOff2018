@@ -17,6 +17,7 @@ public class Room {
   boolean m_showMapDetails = false;
   public int roomWidthPixels, roomHeightPixels;
   public int numberEnemies = 0;
+  boolean m_revisit = false;
 
   //means a key will be place in this room
   public boolean m_hasKey = false;
@@ -81,6 +82,16 @@ public class Room {
   public boolean getVisited()
   {
     return m_visited;
+  }
+
+  public boolean isRevisit()
+  {
+    return m_revisit;
+  }
+
+  public void setRevisit(boolean b)
+  {
+    m_revisit = b;
   }
 
   public void setVisited(boolean v)

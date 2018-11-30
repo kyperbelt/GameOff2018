@@ -33,7 +33,7 @@ public class Destructible extends Basic {
 			if (times >= 1) {
 				destroyed = true;
 
-				if (((drop < 2)  || (drop == 10)) && (GameLevel.getCurrentLevel().getCurrentRoom().getVisited()))
+				if (((drop < 2)  || (drop == 10)) && (GameLevel.getCurrentLevel().getCurrentRoom().isRevisit()))
 				{
 					//don't drop hearts, souls or keys if room already visited
 					return;
