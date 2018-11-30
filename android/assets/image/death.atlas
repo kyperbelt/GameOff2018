@@ -6,231 +6,245 @@ filter: Nearest,Nearest
 repeat: none
 angeldetails
   rotate: false
-  xy: 2012, 200
+  xy: 2012, 110
   size: 341, 100
   orig: 341, 100
   offset: 0, 0
   index: -1
 demondetails
   rotate: false
-  xy: 2012, 98
+  xy: 2012, 8
   size: 341, 100
   orig: 341, 100
   offset: 0, 0
   index: -1
+endmessage
+  rotate: false
+  xy: 2012, 212
+  size: 494, 76
+  orig: 494, 76
+  offset: 0, 0
+  index: -1
+fightagain
+  rotate: false
+  xy: 2888, 417
+  size: 289, 42
+  orig: 289, 42
+  offset: 0, 0
+  index: -1
 instructions
   rotate: false
-  xy: 2, 468
+  xy: 2, 456
   size: 960, 540
   orig: 960, 540
   offset: 0, 0
   index: -1
 intro1
   rotate: false
-  xy: 2888, 473
+  xy: 2888, 461
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 intro2
   rotate: false
-  xy: 2012, 385
+  xy: 2012, 373
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 intro3
   rotate: false
-  xy: 3433, 473
+  xy: 3433, 461
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 intro4
   rotate: false
-  xy: 2012, 302
+  xy: 2012, 290
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 introplayer_0
   rotate: false
-  xy: 2, 241
+  xy: 2, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_1
   rotate: false
-  xy: 2888, 783
+  xy: 2888, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_2
   rotate: false
-  xy: 2, 14
+  xy: 2, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_3
   rotate: false
-  xy: 404, 241
+  xy: 404, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_4
   rotate: false
-  xy: 2888, 556
+  xy: 2888, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_5
   rotate: false
-  xy: 3290, 783
+  xy: 3290, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_6
   rotate: false
-  xy: 404, 14
+  xy: 404, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_7
   rotate: false
-  xy: 806, 241
+  xy: 806, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_0
   rotate: false
-  xy: 3290, 556
+  xy: 3290, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_1
   rotate: false
-  xy: 3692, 783
+  xy: 3692, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_2
   rotate: false
-  xy: 806, 14
+  xy: 806, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_3
   rotate: false
-  xy: 1208, 241
+  xy: 1208, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_4
   rotate: false
-  xy: 3692, 556
+  xy: 3692, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_5
   rotate: false
-  xy: 1208, 14
+  xy: 1208, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_6
   rotate: false
-  xy: 1610, 241
+  xy: 1610, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_7
   rotate: false
-  xy: 1610, 14
+  xy: 1610, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 menu
   rotate: false
-  xy: 2355, 127
+  xy: 3420, 390
   size: 231, 69
   orig: 231, 69
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 2557, 363
+  xy: 2557, 351
   size: 304, 103
   orig: 304, 103
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 2596, 163
+  xy: 2355, 12
   size: 179, 95
   orig: 179, 95
   offset: 0, 0
   index: -1
 quit
   rotate: false
-  xy: 2596, 260
+  xy: 2355, 109
   size: 182, 101
   orig: 182, 101
   offset: 0, 0
   index: -1
 replay
   rotate: false
-  xy: 2012, 2
+  xy: 2557, 255
   size: 293, 94
   orig: 293, 94
   offset: 0, 0
   index: -1
 selector
   rotate: false
-  xy: 3978, 506
+  xy: 2508, 240
   size: 47, 48
   orig: 47, 48
   offset: 0, 0
   index: -1
 titlescreen
   rotate: false
-  xy: 964, 468
+  xy: 964, 456
   size: 960, 540
   orig: 960, 540
   offset: 0, 0
   index: -1
 victory
   rotate: false
-  xy: 2355, 53
+  xy: 3653, 387
   size: 213, 72
   orig: 213, 72
   offset: 0, 0
   index: -1
 victoryscreen
   rotate: false
-  xy: 1926, 468
+  xy: 1926, 456
   size: 960, 540
   orig: 960, 540
   offset: 0, 0
   index: -1
 youdied
   rotate: false
-  xy: 2355, 198
+  xy: 3179, 357
   size: 239, 102
   orig: 239, 102
   offset: 0, 0

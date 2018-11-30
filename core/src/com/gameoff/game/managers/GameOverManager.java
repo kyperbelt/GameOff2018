@@ -11,20 +11,22 @@ import com.kyperbox.objects.GameLayer;
 
 public class GameOverManager extends StateManager {
 
+	/*
 	BasicGameObject youdied;
-
 	BasicGameObject menu, replay;
 	BasicGameObject selector;
 
 	int selected = 0;
-
 	Array<BasicGameObject> menuItems;
+	*/
 
+
+	/*
 	public GameOverManager() {
 
 		menuItems = new Array<BasicGameObject>();
 
-	}
+	}*/
 
 	@Override
 	public void addLayerSystems(GameState state) {
@@ -33,6 +35,7 @@ public class GameOverManager extends StateManager {
 
 	@Override
 	public void init(GameState state) {
+		/*
 		menuItems.clear();
 		GameLayer ui = state.getUiLayer();
 
@@ -55,8 +58,21 @@ public class GameOverManager extends StateManager {
 		float bobTime = 2f;
 		youdied.addAction(Actions.sequence(Actions.moveBy(0, bobAmount * .5f, bobTime * .5f), Actions.repeat(-1,
 				Actions.sequence(Actions.moveBy(0, -bobAmount, bobTime), Actions.moveBy(0, bobAmount, bobTime)))));
+		*/
+
+		BasicGameObject text = (BasicGameObject)state.getForegroundLayer().getGameObject("endmessage");
+    text.clearActions();
+    text.setColor(1,1,1,0);
+    text.addAction(Actions.fadeIn(0.75f));
+
+    text = (BasicGameObject)state.getForegroundLayer().getGameObject("fightagain");
+    text.clearActions();
+    text.setColor(1,1,1,0);
+    text.addAction(Actions.sequence(Actions.delay(1.0f), Actions.fadeIn(0.75f)));
+
 	}
 
+	/*
 	public void setSelectedIndex(int index) {
 		selected = index;
 		BasicGameObject so = menuItems.get(index);
@@ -82,11 +98,16 @@ public class GameOverManager extends StateManager {
 	boolean upJustPressed = false;
 	boolean downPressed = false;
 	boolean downJustPressed = false;
+	*/
 
 	@Override
 	public void update(GameState state, float delta) {
 
 		GameInput input = state.getInput();
+    if((input.inputJustPressed(Inputs.ATTACK)) || (input.inputJustPressed(Inputs.TRANSFORM))) {
+      goToMenu();
+    }
+		/*
 		float threshold = .2f;
 		float inputUp = input.inputValue(Inputs.UP);
 		float inputDown = input.inputValue(Inputs.DOWN);
@@ -121,10 +142,11 @@ public class GameOverManager extends StateManager {
 				goToMenu();
 			}
 		}
+		*/
 	}
 	
 	public void goToMenu() {
-		getState().getGame().setGameState("title");
+		getState().getGame().setGameState("instructions");
 	}
 
 	@Override

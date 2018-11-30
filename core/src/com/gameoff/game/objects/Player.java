@@ -533,10 +533,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 				float dmg = amount * m_damageMultiplier;
 				if (form == Form.Angel) {
-					// take triple damage when angel!
+					// take double damage when angel!
 					getHealth().changeHealthNoListener(-amount);
-					getHealth().changeHealthNoListener(-amount);
-					dmg = amount * m_damageMultiplier * 3;
+					dmg = amount * m_damageMultiplier * 2;
 				}
 
 				// add back health if you have the shield
@@ -858,7 +857,17 @@ public class Player extends DirectionEntity implements AnimationListener {
 						c.collect();
 
 					}
-
+				} else if (this.form != Form.Angel) 
+				{
+					//instant death!
+				  if (target instanceof Pit)
+				  {
+					  if (target.getCollisionBounds().contains(getCollisionBounds()))
+					  {
+					  	//TODO:Sound
+					  	getHealth().changeCurrentHealth(-100);
+					  }
+				  }
 				}
 			}
 
@@ -1066,7 +1075,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	public void activateWeaponDoubleDamage() {
 		m_weaponDamageMultiplier = 2f;
 		if (melee != null)
-			melee.setDamage(m_weaponDamageMultiplier * 3);
+			melee.setDamage(m_weaponDamageMultiplier * 2);
 	}
 
 	// melee attack
@@ -1295,7 +1304,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 				melee.lifetime = MELEE_LIFE;
 				melee.getAnimation().setAnimation(MELEE_ATTACK, PlayMode.NORMAL);
 				setupMelee(melee);
-				melee.setDamage(m_weaponDamageMultiplier * 3);
+				melee.setDamage(m_weaponDamageMultiplier * 2);
 
 				getGameLayer().addGameObject(melee, KyperBoxGame.NULL_PROPERTIES);
 

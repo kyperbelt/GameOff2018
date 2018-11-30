@@ -106,7 +106,7 @@ public class InstructionsManager extends StateManager {
   public void update(GameState state, float delta) {
     
     GameInput input = state.getInput();
-    if(input.inputJustPressed(Inputs.ATTACK)) {
+    if((input.inputJustPressed(Inputs.ATTACK)) || (input.inputJustPressed(Inputs.TRANSFORM))) {
       playGame();
     }
 
