@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="960" tileheight="540" tilecount="52" columns="0">
+<tileset name="game" tilewidth="960" tileheight="540" tilecount="54" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -156,5 +156,11 @@
  </tile>
  <tile id="66">
   <image width="960" height="540" source="../../input_assets/death/instructions.png"/>
+ </tile>
+ <tile id="67">
+  <image width="341" height="100" source="../../input_assets/death/angeldetails.png"/>
+ </tile>
+ <tile id="68">
+  <image width="341" height="100" source="../../input_assets/death/demondetails.png"/>
  </tile>
 </tileset>

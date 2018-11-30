@@ -4,6 +4,20 @@ size: 4096,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+angeldetails
+  rotate: false
+  xy: 3376, 896
+  size: 341, 100
+  orig: 341, 100
+  offset: 0, 0
+  index: -1
+demondetails
+  rotate: false
+  xy: 3376, 794
+  size: 341, 100
+  orig: 341, 100
+  offset: 0, 0
+  index: -1
 instructions
   rotate: false
   xy: 2, 456
@@ -132,49 +146,49 @@ menu
   index: -1
 options
   rotate: false
-  xy: 3376, 893
+  xy: 3719, 893
   size: 304, 103
   orig: 304, 103
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 3376, 523
+  xy: 806, 256
   size: 179, 95
   orig: 179, 95
   offset: 0, 0
   index: -1
 quit
   rotate: false
-  xy: 3376, 620
+  xy: 806, 353
   size: 182, 101
   orig: 182, 101
   offset: 0, 0
   index: -1
 replay
   rotate: false
-  xy: 3376, 797
+  xy: 3376, 698
   size: 293, 94
   orig: 293, 94
   offset: 0, 0
   index: -1
 selector
   rotate: false
-  xy: 806, 406
+  xy: 4025, 948
   size: 47, 48
   orig: 47, 48
   offset: 0, 0
   index: -1
 victory
   rotate: false
-  xy: 3376, 723
+  xy: 3719, 819
   size: 213, 72
   orig: 213, 72
   offset: 0, 0
   index: -1
 youdied
   rotate: false
-  xy: 3682, 894
+  xy: 3376, 594
   size: 239, 102
   orig: 239, 102
   offset: 0, 0
