@@ -13,12 +13,12 @@
     <property name="sprite" value="instructions"/>
    </properties>
   </object>
-  <object id="60" name="character" type="BasicGameObject" gid="66" x="70" y="730" width="400" height="225">
+  <object id="60" name="character" type="BasicGameObject" gid="66" x="70" y="750" width="400" height="225">
    <properties>
     <property name="sprite" value="introplayer_0"/>
    </properties>
   </object>
-  <object id="62" name="player_details" type="BasicGameObject" gid="69" x="74" y="825" width="341" height="100">
+  <object id="62" name="player_details" type="BasicGameObject" gid="69" x="74" y="845" width="341" height="100">
    <properties>
     <property name="sprite" value="demondetails"/>
    </properties>
