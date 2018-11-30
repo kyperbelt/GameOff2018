@@ -98,7 +98,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private static final float MAXPUSHBACK = 100;
 	private float damageDuration = 1.5f;
 	private float damageElapsed = 0;
-	private float m_damageMultiplier = 0f;
+	private float m_damageMultiplier = 0f; //reduces damage
 	private float m_weaponDamageMultiplier = 1f;
 	
 	private Action a_setIdling = new Action() {
@@ -469,9 +469,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 				float dmg = amount * m_damageMultiplier;
 				if (form == Form.Angel)
 				{
-					//double damage when angel!
+					//take triple damage when angel!
 					getHealth().changeHealthNoListener(-amount);
-					dmg += amount * m_damageMultiplier;
+					getHealth().changeHealthNoListener(-amount);
+					dmg = amount * m_damageMultiplier * 3;
 				}
 
 				//add back health if you have the shield
@@ -842,7 +843,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 	{
 		m_weaponDamageMultiplier = 2f;
 		if (melee != null)
-			melee.setDamage(m_weaponDamageMultiplier*2);
+			melee.setDamage(m_weaponDamageMultiplier*3);
 	}
 
 	// melee attack
@@ -1067,7 +1068,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 				melee.lifetime = MELEE_LIFE;
 				melee.getAnimation().setAnimation(MELEE_ATTACK,PlayMode.NORMAL);
 				setupMelee(melee);
-				melee.setDamage(m_weaponDamageMultiplier*2);
+				melee.setDamage(m_weaponDamageMultiplier*3);
 
 				getGameLayer().addGameObject(melee, KyperBoxGame.NULL_PROPERTIES);
 

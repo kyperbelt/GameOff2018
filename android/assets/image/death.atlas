@@ -6,14 +6,14 @@ filter: Nearest,Nearest
 repeat: none
 angeldetails
   rotate: false
-  xy: 3376, 896
+  xy: 3376, 730
   size: 341, 100
   orig: 341, 100
   offset: 0, 0
   index: -1
 demondetails
   rotate: false
-  xy: 3376, 794
+  xy: 3376, 628
   size: 341, 100
   orig: 341, 100
   offset: 0, 0
@@ -23,6 +23,34 @@ instructions
   xy: 2, 456
   size: 960, 540
   orig: 960, 540
+  offset: 0, 0
+  index: -1
+intro1
+  rotate: false
+  xy: 964, 461
+  size: 543, 81
+  orig: 543, 81
+  offset: 0, 0
+  index: -1
+intro2
+  rotate: false
+  xy: 3376, 915
+  size: 543, 81
+  orig: 543, 81
+  offset: 0, 0
+  index: -1
+intro3
+  rotate: false
+  xy: 1509, 461
+  size: 543, 81
+  orig: 543, 81
+  offset: 0, 0
+  index: -1
+intro4
+  rotate: false
+  xy: 3376, 832
+  size: 543, 81
+  orig: 543, 81
   offset: 0, 0
   index: -1
 introplayer_0
@@ -139,56 +167,56 @@ introplayera_7
   index: -1
 menu
   rotate: false
-  xy: 964, 473
+  xy: 2590, 473
   size: 231, 69
   orig: 231, 69
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 3719, 893
+  xy: 3376, 523
   size: 304, 103
   orig: 304, 103
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 806, 256
+  xy: 3719, 632
   size: 179, 95
   orig: 179, 95
   offset: 0, 0
   index: -1
 quit
   rotate: false
-  xy: 806, 353
+  xy: 3719, 729
   size: 182, 101
   orig: 182, 101
   offset: 0, 0
   index: -1
 replay
   rotate: false
-  xy: 3376, 698
+  xy: 2054, 448
   size: 293, 94
   orig: 293, 94
   offset: 0, 0
   index: -1
 selector
   rotate: false
-  xy: 4025, 948
+  xy: 3921, 948
   size: 47, 48
   orig: 47, 48
   offset: 0, 0
   index: -1
 victory
   rotate: false
-  xy: 3719, 819
+  xy: 2823, 470
   size: 213, 72
   orig: 213, 72
   offset: 0, 0
   index: -1
 youdied
   rotate: false
-  xy: 3376, 594
+  xy: 2349, 440
   size: 239, 102
   orig: 239, 102
   offset: 0, 0
