@@ -1,5 +1,6 @@
 package com.gameoff.game;
 import java.util.Random;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * The main class with logic for dynamically creating
@@ -44,6 +45,7 @@ public class GameLevel {
 
   public int nextInt(int bounds)
   {
+    if (bounds == 0) return 0;
     return m_random.nextInt(bounds);
   }
 
@@ -299,12 +301,37 @@ public class GameLevel {
     for (int rc = 0; rc < numRooms; rc++)
     {
       int maxNeighbors = 1;
-      if (level.nextInt(100) > 85)
+      if (level.nextInt(100) > 88)
       {
         maxNeighbors = 2;
       }
       r = level.getEmptyRoomWithNeighbors(maxNeighbors);
-      r.m_roomCode = level.nextInt(4) + 1;
+      Vector2 dist = new Vector2(r.m_X - level.m_currentRoom.m_X, r.m_Y - level.m_currentRoom.m_Y);
+      float distFromStart = dist.len();
+      if (distFromStart < 1.05f)
+      {
+        //easy rooms between 1 and 9
+        //within 1 of start
+        //update nextInt() below with max of room number, so if we get all the rooms
+        //up to 9 done, put a 9 in there!
+        r.m_roomCode = level.nextInt(4) + 1;
+      } else if (distFromStart < 2.05f)
+      {
+        //as add 10 level rooms increase nextInt below
+        //10 to 19 medium rooms
+        r.m_roomCode = level.nextInt(0) + 10;
+      } else if (distFromStart < 3.1f)
+      {
+        //rooms 20 to 34 - mediumish hard rooms
+        // so up to 14
+        r.m_roomCode = level.nextInt(0) + 20;
+      } else
+      {
+        // 35 to 49
+        // so up to 14
+        r.m_roomCode = level.nextInt(0) + 35;
+      }
+
     }
 
     //now have rooms in array
@@ -342,7 +369,7 @@ public class GameLevel {
     // now place boss
     Room bossRoom = level.getRoomWithNeighbors(1,200, true);
     bossRoom.setIsBoss();
-    bossRoom.m_roomCode = 60;
+    bossRoom.m_roomCode = 60 + level.nextInt(0); //change 0 if add more boss room designs!
 
     //TODO: parameterize as well, so can tweak difficulty with parameters easily
 
@@ -371,7 +398,7 @@ public class GameLevel {
         if ((lockRoom.getIsBoss() == false) && (lockRoom != level.m_currentRoom))
         {
           lockRoom.setHasSpecial();
-          lockRoom.m_roomCode = 50;
+          lockRoom.m_roomCode = 50 + level.nextInt(0); // change if add more special rooms
           //as room only has one neighbor
           //we find that neighbor and lock the door facing
           //this room
