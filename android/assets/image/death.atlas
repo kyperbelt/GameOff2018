@@ -6,14 +6,14 @@ filter: Nearest,Nearest
 repeat: none
 angeldetails
   rotate: false
-  xy: 3376, 730
+  xy: 3534, 730
   size: 341, 100
   orig: 341, 100
   offset: 0, 0
   index: -1
 demondetails
   rotate: false
-  xy: 3376, 628
+  xy: 3534, 628
   size: 341, 100
   orig: 341, 100
   offset: 0, 0
@@ -27,28 +27,28 @@ instructions
   index: -1
 intro1
   rotate: false
-  xy: 964, 461
+  xy: 1926, 461
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 intro2
   rotate: false
-  xy: 3376, 915
+  xy: 3534, 915
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 intro3
   rotate: false
-  xy: 1509, 461
+  xy: 2471, 461
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
   index: -1
 intro4
   rotate: false
-  xy: 3376, 832
+  xy: 3534, 832
   size: 543, 81
   orig: 543, 81
   offset: 0, 0
@@ -62,7 +62,7 @@ introplayer_0
   index: -1
 introplayer_1
   rotate: false
-  xy: 964, 771
+  xy: 1926, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
@@ -83,14 +83,14 @@ introplayer_3
   index: -1
 introplayer_4
   rotate: false
-  xy: 964, 544
+  xy: 1926, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayer_5
   rotate: false
-  xy: 1366, 771
+  xy: 2328, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
@@ -104,119 +104,126 @@ introplayer_6
   index: -1
 introplayer_7
   rotate: false
-  xy: 1366, 544
+  xy: 806, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_0
   rotate: false
-  xy: 1768, 771
+  xy: 2328, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_1
   rotate: false
-  xy: 1768, 544
+  xy: 2730, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_2
   rotate: false
-  xy: 2170, 771
+  xy: 806, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_3
   rotate: false
-  xy: 2170, 544
+  xy: 1208, 229
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_4
   rotate: false
-  xy: 2572, 771
+  xy: 2730, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_5
   rotate: false
-  xy: 2572, 544
+  xy: 3132, 771
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_6
   rotate: false
-  xy: 2974, 771
+  xy: 1208, 2
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 introplayera_7
   rotate: false
-  xy: 2974, 544
+  xy: 3132, 544
   size: 400, 225
   orig: 400, 225
   offset: 0, 0
   index: -1
 menu
   rotate: false
-  xy: 2590, 473
+  xy: 3016, 473
   size: 231, 69
   orig: 231, 69
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 3376, 523
+  xy: 1610, 351
   size: 304, 103
   orig: 304, 103
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 3719, 632
+  xy: 1610, 54
   size: 179, 95
   orig: 179, 95
   offset: 0, 0
   index: -1
 quit
   rotate: false
-  xy: 3719, 729
+  xy: 3877, 729
   size: 182, 101
   orig: 182, 101
   offset: 0, 0
   index: -1
 replay
   rotate: false
-  xy: 2054, 448
+  xy: 1610, 255
   size: 293, 94
   orig: 293, 94
   offset: 0, 0
   index: -1
 selector
   rotate: false
-  xy: 3921, 948
+  xy: 1851, 205
   size: 47, 48
   orig: 47, 48
   offset: 0, 0
   index: -1
+titlescreen
+  rotate: false
+  xy: 964, 456
+  size: 960, 540
+  orig: 960, 540
+  offset: 0, 0
+  index: -1
 victory
   rotate: false
-  xy: 2823, 470
+  xy: 3534, 554
   size: 213, 72
   orig: 213, 72
   offset: 0, 0
   index: -1
 youdied
   rotate: false
-  xy: 2349, 440
+  xy: 1610, 151
   size: 239, 102
   orig: 239, 102
   offset: 0, 0

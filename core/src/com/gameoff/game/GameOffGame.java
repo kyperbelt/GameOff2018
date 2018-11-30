@@ -12,7 +12,7 @@ import com.gameoff.game.managers.LevelManager;
 import com.gameoff.game.managers.InstructionsManager;
 import com.gameoff.game.managers.OverlayManager;
 import com.gameoff.game.managers.VictoryManager;
-import com.gameoff.game.managers.TitleMenuManager;
+import com.gameoff.game.managers.TitleScreenManager;
 import com.kyperbox.GameState;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.console.CommandRunnable;
@@ -71,7 +71,7 @@ public class GameOffGame extends KyperBoxGame {
 		AiNodeFactory.createNodeDic(); // create the dictionary to load nodes from file
 
 		// register game states (tmx maps with the template setup)
-		registerGameState("title", "testmenu.tmx", new TitleMenuManager());
+		registerGameState("title", "testmenu.tmx", new TitleScreenManager());
 		registerGameState("instructions", "instructions.tmx", new InstructionsManager());
 		// registerGameState("level", "testlevel.tmx", new LevelManager());
 		levelmanager = new LevelManager();

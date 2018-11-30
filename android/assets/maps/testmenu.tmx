@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="56">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="57">
  <properties>
-  <property name="atlas" value="image/game.atlas"/>
+  <property name="atlas" value="image/death.atlas"/>
  </properties>
  <tileset firstgid="1" source="../game.tsx"/>
- <objectgroup id="1" name="background"/>
- <objectgroup id="2" name="playground"/>
- <objectgroup id="3" name="foreground"/>
- <objectgroup id="4" name="uiground">
-  <object id="43" name="playbutton" type="ImageButton" gid="2" x="388" y="858.667" width="163" height="50">
+ <objectgroup name="background"/>
+ <objectgroup name="playground"/>
+ <objectgroup name="foreground"/>
+ <objectgroup name="uiground">
+  <object id="56" name="TitleArt" type="BasicGameObject" gid="70" x="0" y="956" width="960" height="540">
    <properties>
-    <property name="downImage" value="play_down"/>
-    <property name="upImage" value="play"/>
-   </properties>
-  </object>
-  <object id="44" name="title" type="BasicGameObject" gid="34" x="152" y="720" width="640" height="238">
-   <properties>
-    <property name="image" value="title"/>
-    <property name="sprite" value="title"/>
+    <property name="sprite" value="titlescreen"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="5" name="preload">
+ <objectgroup name="preload">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="416" width="960" height="540"/>
   <object id="50" x="-448" y="256" width="96" height="32">
    <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
