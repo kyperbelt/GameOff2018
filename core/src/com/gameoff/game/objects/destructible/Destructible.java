@@ -13,6 +13,7 @@ import com.kyperbox.KyperBoxGame;
 import com.kyperbox.controllers.AnimationController.AnimationListener;
 import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.umisc.KyperSprite;
+import com.gameoff.game.*;
 
 public class Destructible extends Basic {
 
@@ -31,6 +32,12 @@ public class Destructible extends Basic {
 		public void finished(String animation, int times) {
 			if (times >= 1) {
 				destroyed = true;
+
+				if ((drop < 2) && (GameLevel.getCurrentLevel().getCurrentRoom().getVisited()))
+				{
+					//don't drop hearts or keys if room already visited
+					return;
+				}
 
 				// drop item here
 				if (drop >= 0)
