@@ -1,61 +1,180 @@
 
 death.png
-size: 2048,128
+size: 4096,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+instructions
+  rotate: false
+  xy: 2, 456
+  size: 960, 540
+  orig: 960, 540
+  offset: 0, 0
+  index: -1
+introplayer_0
+  rotate: false
+  xy: 2, 229
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_1
+  rotate: false
+  xy: 964, 771
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_2
+  rotate: false
+  xy: 2, 2
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_3
+  rotate: false
+  xy: 404, 229
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_4
+  rotate: false
+  xy: 964, 544
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_5
+  rotate: false
+  xy: 1366, 771
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_6
+  rotate: false
+  xy: 404, 2
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayer_7
+  rotate: false
+  xy: 1366, 544
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_0
+  rotate: false
+  xy: 1768, 771
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_1
+  rotate: false
+  xy: 1768, 544
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_2
+  rotate: false
+  xy: 2170, 771
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_3
+  rotate: false
+  xy: 2170, 544
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_4
+  rotate: false
+  xy: 2572, 771
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_5
+  rotate: false
+  xy: 2572, 544
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_6
+  rotate: false
+  xy: 2974, 771
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
+introplayera_7
+  rotate: false
+  xy: 2974, 544
+  size: 400, 225
+  orig: 400, 225
+  offset: 0, 0
+  index: -1
 menu
   rotate: false
-  xy: 844, 36
+  xy: 964, 473
   size: 231, 69
   orig: 231, 69
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 2, 2
+  xy: 3376, 893
   size: 304, 103
   orig: 304, 103
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 1476, 10
+  xy: 3376, 523
   size: 179, 95
   orig: 179, 95
   offset: 0, 0
   index: -1
 quit
   rotate: false
-  xy: 1292, 4
+  xy: 3376, 620
   size: 182, 101
   orig: 182, 101
   offset: 0, 0
   index: -1
 replay
   rotate: false
-  xy: 308, 11
+  xy: 3376, 797
   size: 293, 94
   orig: 293, 94
   offset: 0, 0
   index: -1
 selector
   rotate: false
-  xy: 1657, 57
+  xy: 806, 406
   size: 47, 48
   orig: 47, 48
   offset: 0, 0
   index: -1
 victory
   rotate: false
-  xy: 1077, 33
+  xy: 3376, 723
   size: 213, 72
   orig: 213, 72
   offset: 0, 0
   index: -1
 youdied
   rotate: false
-  xy: 603, 3
+  xy: 3682, 894
   size: 239, 102
   orig: 239, 102
   offset: 0, 0
