@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gameoff.game.managers.GameOverManager;
 import com.gameoff.game.managers.LevelManager;
+import com.gameoff.game.managers.InstructionsManager;
 import com.gameoff.game.managers.OverlayManager;
 import com.gameoff.game.managers.VictoryManager;
 import com.gameoff.game.managers.TitleMenuManager;
@@ -71,6 +72,7 @@ public class GameOffGame extends KyperBoxGame {
 
 		// register game states (tmx maps with the template setup)
 		registerGameState("title", "testmenu.tmx", new TitleMenuManager());
+		registerGameState("instructions", "instructions.tmx", new InstructionsManager());
 		// registerGameState("level", "testlevel.tmx", new LevelManager());
 		levelmanager = new LevelManager();
 

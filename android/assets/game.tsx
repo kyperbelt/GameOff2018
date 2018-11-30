@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="game" tilewidth="669" tileheight="260" tilecount="50" columns="0">
+<tileset name="game" tilewidth="960" tileheight="540" tilecount="52" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="163" height="50" source="../../input_assets/game/play_down.png"/>
@@ -150,5 +150,11 @@
  </tile>
  <tile id="64">
   <image width="32" height="128" source="../../input_assets/overlay/soulMeter.png"/>
+ </tile>
+ <tile id="65">
+  <image width="400" height="225" source="../../input_assets/game/introplayer_0.png"/>
+ </tile>
+ <tile id="66">
+  <image width="960" height="540" source="../../input_assets/death/instructions.png"/>
  </tile>
 </tileset>
