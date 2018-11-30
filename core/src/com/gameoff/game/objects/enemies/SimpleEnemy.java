@@ -22,7 +22,7 @@ import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.UserData;
 
-public class SimpleEnemy extends DirectionEntity {
+public class SimpleEnemy extends EnemyEntity {
 
 	StateControl state;
 	String animation;

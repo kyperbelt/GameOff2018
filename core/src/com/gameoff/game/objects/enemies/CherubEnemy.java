@@ -34,7 +34,7 @@ import com.kyperbox.umisc.BakedEffects;
 import com.kyperbox.umisc.KyperSprite;
 import com.kyperbox.umisc.UserData;
 
-public class CherubEnemy extends DirectionEntity{
+public class CherubEnemy extends EnemyEntity{
 	
 
   StateControl state;

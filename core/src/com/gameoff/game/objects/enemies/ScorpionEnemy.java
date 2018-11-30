@@ -29,7 +29,7 @@ import com.kyperbox.controllers.AnimationController;
 import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.ZOrderControl;
 
-public class ScorpionEnemy extends DirectionEntity {
+public class ScorpionEnemy extends EnemyEntity {
 
   StateControl state;
   String animation;

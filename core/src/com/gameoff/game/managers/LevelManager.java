@@ -22,10 +22,7 @@ import com.gameoff.game.objects.Player;
 import com.gameoff.game.objects.Projectile;
 import com.gameoff.game.objects.Wall;
 import com.gameoff.game.objects.Player.Form;
-import com.gameoff.game.objects.enemies.ScorpionEnemy;
-import com.gameoff.game.objects.enemies.WormEnemy;
-import com.gameoff.game.objects.enemies.CherubEnemy;
-import com.gameoff.game.objects.enemies.SpiderBossEnemy;
+import com.gameoff.game.objects.enemies.*;
 import com.gameoff.game.systems.AiSystem;
 import com.gameoff.game.systems.DeathSystem;
 import com.gameoff.game.systems.MoveSystem;
@@ -42,6 +39,8 @@ import com.kyperbox.objects.GameObject;
 import com.kyperbox.objects.TilemapLayerObject;
 import com.kyperbox.systems.ParallaxMapper;
 import com.kyperbox.systems.QuadTree;
+import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class LevelManager extends StateManager {
 
@@ -335,6 +334,10 @@ public class LevelManager extends StateManager {
 				d.setSize(dw, dh);
 				d.setRotation(rot);
 				playground.addGameObject(d, null);
+				if (r.getVisited() == false)
+				{
+					d.close();
+				}
 
 				ForegroundObject o = new ForegroundObject();
 				o.setSprite("door_over");
@@ -502,6 +505,29 @@ public class LevelManager extends StateManager {
 
 		//Place bosses based on Room data
 
+
+
+		//remove all enemies if already visited, otherwise count them and set this.
+		 SnapshotArray<Actor> array = playground.getChildren();
+		 int ec = 0; //enemyCount
+		 Actor[] items = array.begin();
+		 for (int i = 0, n = array.size; i < n; i++) {
+        Actor item = items[i];
+        if (item instanceof EnemyEntity)
+        {
+        	if (r.getVisited())
+        	{
+        		EnemyEntity e = (EnemyEntity)item;
+        		e.remove();
+        	} else
+        	{
+        		ec++;
+        	}
+        }
+		 }
+		 array.end();
+		 r.numberEnemies = ec;
+		 //System.out.println("Number Enemies START!!!: " + GameLevel.getCurrentLevel().getCurrentRoom().numberEnemies);
 
 		//Place HUD
 		GameLayer flayer = state.getForegroundLayer();

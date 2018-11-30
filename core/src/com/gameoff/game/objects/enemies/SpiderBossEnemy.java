@@ -35,7 +35,7 @@ import com.kyperbox.objects.BasicGameObject;
 import com.kyperbox.KyperBoxGame;
 import com.badlogic.gdx.math.Vector2;
 
-public class SpiderBossEnemy extends DirectionEntity {
+public class SpiderBossEnemy extends EnemyEntity {
 
   StateControl state;
   AttackControl attack;
