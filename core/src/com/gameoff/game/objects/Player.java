@@ -122,7 +122,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 	private Action a_removeInvulnerable = new Action() {
 		@Override
 		public boolean act(float delta) {
-			getHealth().setInvulnerable(false);
+			if (isAngelShieldActive == false)
+			{
+					getHealth().setInvulnerable(false);
+			}
 			return true;
 		}
 	};
