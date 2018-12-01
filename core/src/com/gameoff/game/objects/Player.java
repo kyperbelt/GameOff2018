@@ -217,9 +217,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 	PlayerControl control;
 	AttackControl attack;
 	// attack listeners
-	float basicProjectileCD = .35f;
+	float basicProjectileCD = .2f;
 	AttackListener basicProjectile;
-	float basicMeleeCD = .5f;
+	float basicMeleeCD = .4f;
 	AttackListener basicMelee;
 	MeleeAttack melee;
 

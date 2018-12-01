@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="207">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="222">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
   <property name="preload" value="room_0.tmx"/>
@@ -32,22 +32,22 @@
   <object id="76" name="west" type="BasicGameObject" x="112" y="912" width="32" height="96"/>
   <object id="77" name="north" type="BasicGameObject" x="1396" y="128" width="96" height="32"/>
   <object id="78" name="south" type="BasicGameObject" x="1396" y="1792" width="96" height="32"/>
-  <object id="187" name="Pit" type="Pit" x="360" y="368" width="2164" height="1168"/>
+  <object id="187" name="Pit" type="Pit" x="360" y="368" width="2164" height="1188"/>
   <object id="188" name="Cherub" type="CherubFast" gid="64" x="1698" y="1012" width="117" height="96"/>
   <object id="189" name="Cherub" type="CherubFast" gid="64" x="1126" y="1016" width="117" height="96"/>
   <object id="190" name="Scorpion" type="ScorpionBig" gid="60" x="1427" y="698" width="83" height="124"/>
   <object id="191" name="Scorpion" type="ScorpionBig" gid="60" x="1447" y="1274" width="83" height="124"/>
   <object id="192" name="Scorpion" type="ScorpionBig" gid="60" x="707" y="1030" width="83" height="124"/>
   <object id="193" name="Scorpion" type="ScorpionBig" gid="60" x="2155" y="1030" width="83" height="124"/>
-  <object id="194" name="Fire" type="Fire" gid="47" x="2572" y="308" width="64" height="88">
+  <object id="194" name="Fire" type="Fire" gid="47" x="2572" y="524" width="64" height="88">
    <properties>
-    <property name="spawnDir" type="int" value="12"/>
+    <property name="spawnDir" type="int" value="4"/>
     <property name="spawnSpeed" type="float" value="0.10000000000000001"/>
    </properties>
   </object>
-  <object id="195" name="Fire" type="Fire" gid="47" x="256" y="1660" width="64" height="88">
+  <object id="195" name="Fire" type="Fire" gid="47" x="240" y="1456" width="64" height="88">
    <properties>
-    <property name="spawnDir" type="int" value="3"/>
+    <property name="spawnDir" type="int" value="1"/>
     <property name="spawnSpeed" type="float" value="0.10000000000000001"/>
    </properties>
   </object>
@@ -55,25 +55,145 @@
   <object id="198" name="Scorp" type="Scorpion" gid="61" x="1979" y="705" width="42" height="62"/>
   <object id="199" name="Scorp" type="Scorpion" gid="61" x="1971" y="1221" width="42" height="62"/>
   <object id="200" name="Scorp" type="Scorpion" gid="61" x="971" y="1253" width="42" height="62"/>
-  <object id="201" name="Fire" type="Fire" gid="47" x="2568" y="1676" width="64" height="88">
+  <object id="201" name="Fire" type="Fire" gid="47" x="2336" y="1676" width="64" height="88">
    <properties>
-    <property name="spawnDir" type="int" value="9"/>
+    <property name="spawnDir" type="int" value="8"/>
     <property name="spawnSpeed" type="float" value="0.10000000000000001"/>
    </properties>
   </object>
-  <object id="202" name="Fire" type="Fire" gid="47" x="244" y="304" width="64" height="88">
+  <object id="202" name="Fire" type="Fire" gid="47" x="512" y="304" width="64" height="88">
    <properties>
-    <property name="spawnDir" type="int" value="6"/>
+    <property name="spawnDir" type="int" value="2"/>
     <property name="spawnSpeed" type="float" value="0.10000000000000001"/>
    </properties>
   </object>
   <object id="203" name="Cherub" type="CherubRapid" gid="64" x="1430" y="896" width="117" height="96"/>
   <object id="204" name="Scorp" type="Scorpion" gid="61" x="2347" y="517" width="42" height="62"/>
   <object id="206" name="Scorp" type="Scorpion" gid="61" x="2355" y="1417" width="42" height="62"/>
+  <object id="210" name="skull_test" type="Destructible" gid="39" x="2517" y="468" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="211" name="skull_test" type="Destructible" gid="39" x="2359" y="348" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="212" name="skull_test" type="Destructible" gid="39" x="2509" y="344" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="213" name="skull_test" type="Destructible" gid="39" x="2513" y="1566" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="214" name="skull_test" type="Destructible" gid="39" x="2385" y="1702" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="215" name="skull_test" type="Destructible" gid="39" x="2509" y="1702" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="216" name="skull_test" type="Destructible" gid="39" x="185" y="1690" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="217" name="skull_test" type="Destructible" gid="39" x="181" y="1590" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="218" name="skull_test" type="Destructible" gid="39" x="285" y="1694" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="219" name="skull_test" type="Destructible" gid="39" x="201" y="466" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="1"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="220" name="skull_test" type="Destructible" gid="39" x="209" y="354" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="221" name="skull_test" type="Destructible" gid="39" x="317" y="346" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="foreground" locked="1"/>
  <objectgroup name="uiground" locked="1"/>
- <objectgroup name="preload">
+ <objectgroup name="preload" locked="1">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="0" width="960" height="540"/>
   <object id="56" x="-480" y="256" width="96" height="32">
    <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
