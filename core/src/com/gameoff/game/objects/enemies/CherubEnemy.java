@@ -169,6 +169,8 @@ public class CherubEnemy extends EnemyEntity{
     
     getDropTable().addDrop(Collectible.SOUL, 5f);
     getDropTable().addDrop(Collectible.HEART, .5f);
+    getDropTable().addDrop(Collectible.SHIELD, .05f);
+    getDropTable().addDrop(Collectible.SWORD, .05f);
 
   }
 

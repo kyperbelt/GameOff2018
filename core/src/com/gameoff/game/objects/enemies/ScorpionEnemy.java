@@ -106,7 +106,8 @@ public class ScorpionEnemy extends EnemyEntity {
     getDropTable().addDrop(Collectible.SOUL, 4f);
     getDropTable().addDrop(Collectible.HEART, .5f);
     
-    //getDropTable().addDrop(Collectible.SHIELD, .2f);
+    getDropTable().addDrop(Collectible.SHIELD, .02f);
+    getDropTable().addDrop(Collectible.SWORD, .02f);
   }
 
   @Override

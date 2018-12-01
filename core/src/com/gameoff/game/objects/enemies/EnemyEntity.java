@@ -34,7 +34,7 @@ public class EnemyEntity extends DirectionEntity{
         for(int i = 0; i < 4; i++)
         {
           Door d = (Door) layer.getGameObject("Door" + i);
-          if (d != null)
+          if (d != null && d.m_keyHole==null)
           {
             d.open();
             //System.out.println("***** Open all doors");

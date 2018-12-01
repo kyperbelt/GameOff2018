@@ -18,8 +18,8 @@ import com.kyperbox.umisc.KyperSprite;
 public class Door extends Basic {
   int m_code = 0;
   String m_aName = "do";
-  BasicGameObject m_keyHole = null;
-  DoorMat m_doorMat = null;
+  public BasicGameObject m_keyHole = null;
+  public DoorMat m_doorMat = null;
 
   // 0 = no door, 1 = open, 2 = closed, 3 = closed and locked
   public Door(int doorCode, GameState state) {
