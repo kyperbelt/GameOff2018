@@ -38,7 +38,7 @@ public class WormEnemy extends EnemyEntity{
   float sw = 91;
   float sh = 58;
   float hp = 2;
-  float moveSpeed = 300;
+  float moveSpeed = 230;
 
   float damagedDuration = .2f;
   float damagedElapsed = 0;
@@ -74,7 +74,8 @@ public class WormEnemy extends EnemyEntity{
     context = new UserData(getClass().getSimpleName() + "_Context");
     context.put(Context.SELF, this);
     ai = new AiControl(context, getExampleAi());
-    getMove().setMoveSpeed(250);
+    moveSpeed = 230;
+    getMove().setMoveSpeed(moveSpeed);
     getHealth().setHealthGroup(HealthGroup.Demon);
     getHealth().setDamageListener(damageListener);
     state.setStateChangeListener(stateListener);
@@ -86,7 +87,7 @@ public class WormEnemy extends EnemyEntity{
       sw = 152;
       sh = 96;
       hp = 4;
-      moveSpeed = moveSpeed - 50;
+      moveSpeed = moveSpeed - 40;
       maxItemDrop(5);
     }
     

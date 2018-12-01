@@ -545,6 +545,13 @@ public class Player extends DirectionEntity implements AnimationListener {
 			@Override
 			public void damaged(float amount) {
 
+				if (ContactDamage.BOSS < 1)
+				{
+					//if boss is dying don't take any damage!!!
+					getHealth().changeHealthNoListener(amount);
+					return;
+				}
+
 				float dmg = amount * m_damageMultiplier;
 				if (form == Form.Angel) {
 					// take double damage when angel!

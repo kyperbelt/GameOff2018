@@ -15,6 +15,7 @@ import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
 import com.gameoff.game.control.HealthControl.DamageListener;
+import com.gameoff.game.control.HealthControl.DeathListener;
 import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.gameoff.game.control.StateControl;
 import com.gameoff.game.control.StateControl.EntityState;
@@ -48,6 +49,8 @@ public class SpiderBossEnemy extends EnemyEntity {
   float bossSpeed = 120;
   float shadowX = 215;
   float shadowY = 60;
+  float m_dyingTime = 0;
+  boolean m_dying = false;
 
   float damagedDuration = .015f;
   float damagedElapsed = 0;
@@ -63,9 +66,13 @@ public class SpiderBossEnemy extends EnemyEntity {
   BasicGameObject shadow;
   BasicGameObject stinger;
   BasicGameObject glow;
+  BasicGameObject death;
+
   AnimationController tailAnim;
   AnimationController stingerAnim;
   AnimationController glowAnim;
+  AnimationController deathAnim;
+
   float m_jumpTimer = 0;
   float m_jumpCooldown = 5f;
   float m_jumpDuration = 0.75f;
@@ -165,8 +172,23 @@ public class SpiderBossEnemy extends EnemyEntity {
     getMove().setMoveSpeed(bossSpeed);
     getHealth().setHealthGroup(HealthGroup.Boss);
     getHealth().setDamageListener(damageListener);
-    getHealth().setMaxHealth(100f);
-    getHealth().setCurrentHealth(100f); 
+
+    getHealth().setDeathListener(new DeathListener() {
+      @Override
+      public boolean die(float delta) {
+        if (m_dying) return true;
+        getAnimation().setPlaySpeed(0);
+        deathAnim.setPlaySpeed(1);
+        deathAnim.set("death", PlayMode.NORMAL);
+        death.setVisible(true);
+        getHealth().setInvulnerable(true);
+        m_dyingTime = 3f;
+        m_dying = true;
+        ContactDamage.BOSS = 0f;
+        return true;
+      }
+    });
+
     state.setStateChangeListener(stateListener);
     m_id = m_masterID;
     m_masterID++;
@@ -179,6 +201,12 @@ public class SpiderBossEnemy extends EnemyEntity {
     shadow.setSize(100,50);
     setPreDrawChildren(true);
 
+    death  = new BasicGameObject();
+    death.setSprite("bossdeath_0");
+    death.setSize(500,418);
+    death.setVisible(false);
+    death.setPosition(0,0);
+
     attack = new AttackControl(null);
     attack.setAttackListener(attackListener);
     attack.setCooldown(5f);
@@ -189,6 +217,7 @@ public class SpiderBossEnemy extends EnemyEntity {
     tailAnim = new AnimationController();
     stingerAnim = new AnimationController();
     glowAnim = new AnimationController();
+    deathAnim = new AnimationController();
 
   }
 
@@ -304,6 +333,7 @@ public class SpiderBossEnemy extends EnemyEntity {
     tail.addController(tailAnim);
     stinger.addController(stingerAnim);
     glow.addController(glowAnim);
+    death.addController(deathAnim);
 
     createAnimations();
     getMove().setFlying(false);
@@ -342,6 +372,12 @@ public class SpiderBossEnemy extends EnemyEntity {
     glow.setIgnoreCollision(true);
     glow.setVisible(false);
 
+    death.setSprite("bossdeath_0");
+    death.setSize(500,418);
+    death.setVisible(false);
+    death.setPosition(25,-20);
+    addChild(death);
+
     getDirectionControl().setDirectionListener(new DirectionChangeListener() {
       @Override
       public void directionChanged(Direction lastDirection, Direction newDirection) {
@@ -354,6 +390,11 @@ public class SpiderBossEnemy extends EnemyEntity {
     getDirectionControl().setDirection(Direction.Right);
     shadow.setPosition(shadowX,shadowY);
     shadow.setVisible(false); //shadow only visible when jumping
+
+    getHealth().setMaxHealth(125f);
+    getHealth().setCurrentHealth(125f); 
+    //getHealth().setMaxHealth(3f);
+    //getHealth().setCurrentHealth(3f); 
   }
 
   public void pickTargetFall()
@@ -395,6 +436,27 @@ public class SpiderBossEnemy extends EnemyEntity {
   public void update(float delta) {
 
     m_jumpCooldown -= delta;
+
+    if (m_dying)
+    {
+      getMove().setDirection(0,0);
+      setVelocity(0,0);
+      m_dyingTime -= delta;
+      if (m_dyingTime < 2.0f)
+      {
+        this.setColor(1,1,1,0);
+        stinger.setVisible(false);
+        glow.setVisible(false);
+      }
+
+      if (m_dyingTime < 0)
+      {
+        this.remove();
+        death.setVisible(false);
+      }
+
+      return;
+    }
 
     if (state.getState() == EntityState.Damaged) {
       if (damagedElapsed >= damagedDuration) {
@@ -520,13 +582,16 @@ public class SpiderBossEnemy extends EnemyEntity {
       ShaderProgram lastShader = batch.getShader();
       batch.setShader(damageShader);
       super.draw(batch, parentAlpha);
+      if (stinger.isVisible()) stinger.draw(batch,parentAlpha);
       batch.setShader(lastShader);
-      stinger.draw(batch,parentAlpha);
       if (glow.isVisible()) glow.draw(batch, parentAlpha);
+      if (death.isVisible()) death.draw(batch, 1);
+
     } else {
       super.draw(batch, parentAlpha);
-      stinger.draw(batch,parentAlpha);
+      if (stinger.isVisible()) stinger.draw(batch,parentAlpha);
       if (glow.isVisible()) glow.draw(batch, parentAlpha);
+      if (death.isVisible()) death.draw(batch, 1);
     }
   }
 
@@ -581,6 +646,8 @@ public class SpiderBossEnemy extends EnemyEntity {
     addAnimation(m_id, "bossweapon", "bossweapon", getAnimation(), 0.04f);
 
     addAnimation(m_id, "attacka", "bosswglow", glowAnim, 0.05f);
+
+    addAnimation(m_id, "death", "bossdeath", deathAnim, 0.25f);
 
   }
 }

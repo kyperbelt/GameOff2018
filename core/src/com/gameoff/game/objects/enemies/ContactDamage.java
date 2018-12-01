@@ -6,6 +6,6 @@ public class ContactDamage {
 	public static final float SIMPLE = 1f;
 	public static final float WORM = 2f;
 	public static final float SCORPION = 3f;
-  public static final float BOSS = 4f;
+  public static float BOSS = 4f;
 
 }

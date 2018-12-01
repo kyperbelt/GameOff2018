@@ -7,6 +7,7 @@ import com.gameoff.game.objects.Collectible;
 import com.gameoff.game.objects.composition.Lootable;
 import com.kyperbox.KyperBoxGame;
 import com.kyperbox.objects.GameObject;
+import com.gameoff.game.objects.enemies.SpiderBossEnemy;
 import com.kyperbox.systems.ControlSpecificSystem;
 import com.kyperbox.umisc.StringUtils;
 
@@ -21,14 +22,20 @@ public class DeathSystem extends ControlSpecificSystem {
 		for (int i = objects.size - 1; i >= 0; i--) {
 			GameObject o = objects.get(i);
 			HealthControl health = o.getController(HealthControl.class);
+			
 			if(health == null)
 				continue;
-			//check if this object should die
-			//TODO: Got a NULL POINTER EXCEPTION on line below...seems weird!
-			if(health.shouldDie()) {
-				//attempt to die
-				health.setDead(health.attemptDeath(delta));
+
+			if (health.isDead() == false)
+			{
+				if(health.shouldDie()) {
+					//attempt to die
+					health.setDead(health.attemptDeath(delta));
+				}
 			}
+
+			if (o instanceof SpiderBossEnemy)
+					continue;
 			
 			//if the object is dead then remove it
 			if(health.isDead()) {
