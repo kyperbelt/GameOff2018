@@ -9,6 +9,7 @@ import com.gameoff.game.control.HealthControl.HealthGroup;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.controllers.AnimationController;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.ZOrder;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -99,6 +100,7 @@ public class Spiker extends Basic {
         m_time = 0;
         m_state = 10;
         getAnimation().set("spike" + m_mode,PlayMode.NORMAL);
+        getState().playSound(Sounds.SpikesOut);
       }
     } else if (m_state == 10)
     {
@@ -112,6 +114,7 @@ public class Spiker extends Basic {
         m_time = 0;
         m_state = 20;
         getAnimation().set("spike" + m_mode,PlayMode.REVERSED);
+        getState().playSound(Sounds.SpikesIn);
       }
     } else if (m_state == 20)
     {

@@ -18,6 +18,7 @@ import com.gameoff.game.GameOffGame;
 import com.gameoff.game.Sounds;
 import com.gameoff.game.ZOrder;
 import com.gameoff.game.control.AttackControl;
+import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
@@ -148,7 +149,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 	public float angelDrainRate = .5f; // .5 souls per second at 1 soul per 2 seconds
 	public float angelShieldDrainRate = 1f; // 1 soul per second
-	public float demonFlameDrainRate = 1f; // 1 soul per second
+	public float demonFlameDrainRate = 3f; // 1 soul per second
 
 	public float angelFormMin = 1;
 	public float soulDrainRate = 0f; // amount of souls drained per second
@@ -173,6 +174,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 	BasicGameObject demonFlame;
 	ZOrderControl demonFlameZOrder;
 	AnimationController demonFlameAnim;
+	BasicGameObject flameCheck;
+	float flameRate = 1f; // burn enemies every second
+	float flameElapsed = 0; // elapsed time till next burn
+	float flameDamage = 1; // damage the flame does to enemies
+	float flameRadius = 300; // the distance at which the flame is effective
 
 	// angelShield
 	BasicGameObject angelShield;
@@ -216,7 +222,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 	float transformTime = 0;
 	boolean transforming = false;
-	
+
 	boolean isDemonFlameActive = false;
 	boolean isAngelShieldActive = false;
 
@@ -261,6 +267,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 		demonFlameAnim = new AnimationController();
 		demonFlameZOrder = new ZOrderControl();
 		demonFlameZOrder.setZOrder(ZOrder.PLAYER + 1);
+		flameCheck = new BasicGameObject();
+		flameCheck.setSize(flameRadius * 2f, flameRadius * 2f);
+		flameCheck.setCollisionBounds(0, 0, flameCheck.getWidth(), flameCheck.getHeight());
 
 		angelShield = new BasicGameObject();
 		angelShield.setName("angelShield");
@@ -315,7 +324,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 		this.form = form;
 		switch (form) {
 		case Demon:
-			soulDrainRate = Math.max(0f,soulDrainRate - angelDrainRate);
+			soulDrainRate = Math.max(0f, soulDrainRate - angelDrainRate);
 			getMove().setFlying(false);
 			setDepth(baseDepth);
 			setCollisionBounds(getBoundsRaw().x, getDepth(), getBoundsRaw().width, getBoundsRaw().height);
@@ -331,7 +340,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 			dlegs.setPosition(legsX, legsY);
 			break;
 		case Angel:
-			soulDrainRate+=angelDrainRate;
+			soulDrainRate += angelDrainRate;
 			getMove().setFlying(true);
 			/// float depthDiff = (baseDepth + getBoundsRaw().height * .5f)-baseDepth;
 			setDepth(baseDepth + getBoundsRaw().height * .5f);
@@ -533,7 +542,6 @@ public class Player extends DirectionEntity implements AnimationListener {
 			@Override
 			public void damaged(float amount) {
 
-
 				float dmg = amount * m_damageMultiplier;
 				if (form == Form.Angel) {
 					// take double damage when angel!
@@ -541,10 +549,11 @@ public class Player extends DirectionEntity implements AnimationListener {
 					dmg = amount * m_damageMultiplier * 2;
 				}
 
-				if (player_debug) dmg = amount * 2;
+				if (player_debug)
+					dmg = amount * 2;
 
 				// add back health if you have the shield
-				getHealth().changeHealthNoListener(dmg);					
+				getHealth().changeHealthNoListener(dmg);
 
 				// System.out.println("added dmg back: " + dmg);
 
@@ -809,7 +818,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 					setCurrentForm(targetForm);
 					transformTime = 0.75f;
 				}
-				//getMove().setDirection(0, 0);
+				// getMove().setDirection(0, 0);
 				return;
 			}
 			// AnimationController animation = getAnimation();
@@ -855,6 +864,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 						} else if (itemID == Collectible.SOUL) {
 							m_numSouls++;
 							System.out.println("Souls + 1");
+							getState().playSound(Sounds.PickupSoul);
 						}
 
 						System.out.println(StringUtils.format("%s collected itemId[%s]", getName(), itemID));
@@ -863,37 +873,34 @@ public class Player extends DirectionEntity implements AnimationListener {
 						c.collect();
 
 					}
-				} else if (this.form != Form.Angel) 
-				{
-					//instant death!
-				  if (target instanceof Pit)
-				  {
-					  if (target.getCollisionBounds().contains(getCollisionBounds()))
-					  {
-					  	//TODO:Sound
-					  	getHealth().changeCurrentHealth(-100);
-					  }
-				  }
+				} else if (this.form != Form.Angel) {
+					// instant death!
+					if (target instanceof Pit) {
+						if (target.getCollisionBounds().contains(getCollisionBounds())) {
+							// TODO:Sound
+							getHealth().changeCurrentHealth(-100);
+						}
+					}
 				}
 			}
 
 			// handle soul drain
 			{
 				if (isSoulDraining()) {
-					System.out.println(StringUtils.format("draining %s souls per second",soulDrainRate));
+					//System.out.println(StringUtils.format("draining %s souls per second", soulDrainRate));
 					soulDrainElapsed += delta;
 					float soulDrained = soulDrainElapsed * soulDrainRate;
 					if (soulDrained >= 1) {
 						soulDrainElapsed -= 1;
 						if (!useSoul(1)) {
-							
-							if(isAngelShieldActive)
+
+							if (isAngelShieldActive)
 								setAngelShieldActive(false);
-							
-							if(isDemonFlameActive)
+
+							if (isDemonFlameActive)
 								setDemonFlameActive(false);
-							
-							if(getCurrentForm() == Form.Angel) {
+
+							if (getCurrentForm() == Form.Angel) {
 								setAngelShieldActive(false);
 								transformTo(Form.Demon);
 							}
@@ -901,13 +908,15 @@ public class Player extends DirectionEntity implements AnimationListener {
 						}
 
 					}
-				}else {soulDrainElapsed = 0f;}
+				} else {
+					soulDrainElapsed = 0f;
+				}
 			}
 
 			// Handle robe physics -- and angel stuff
 			if (this.form == Form.Angel) {
-				
-				if(isDemonFlameActive)
+
+				if (isDemonFlameActive)
 					setDemonFlameActive(false);
 
 				MoveControl move = getMove();
@@ -978,19 +987,50 @@ public class Player extends DirectionEntity implements AnimationListener {
 					angelShield.getColor().a = getColor().a;
 				}
 			} else {
-				
-				if(isAngelShieldActive)
+				Vector2 center = getCollisionCenter();
+
+				if (isAngelShieldActive)
 					setAngelShieldActive(false);
 
 				if (!demonFlame.isRemoved()) {
 					demonFlame.setPosition(getX() + getWidth() * .5f - demonFlame.getWidth() * .5f,
 							getY() - getHeight() * .5f);
 					demonFlame.getColor().a = getColor().a;
+
+					flameCheck.setPosition(center.x - flameCheck.getWidth() * .5f,
+							center.y - flameCheck.getHeight() * .5f);
+
+					flameElapsed += delta;
+
+					if (flameElapsed >= flameRate) {
+						flameElapsed = 0;
+						Array<CollisionData> cd = getCollision().getCollisions(flameCheck, 0);
+						
+						System.out.println("searching For Target");
+						for (int i = 0; i < cd.size; i++) {
+
+							GameObject target = cd.get(i).getTarget();
+							if(target == this)
+								continue;
+							
+							float dst = center.dst(target.getCollisionCenter());
+							System.out.println("targetFound");
+							if (dst < flameRadius) {
+								HealthControl thealth = target.getController(HealthControl.class);
+								if(thealth!=null) {
+									thealth.changeCurrentHealth(-flameDamage);
+								}
+							}
+
+						}
+					}
+
 				}
 			}
 		}
+
 	}
-	
+
 	public boolean isSoulDraining() {
 		return soulDrainRate > 0f;
 	}
@@ -1000,7 +1040,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 
 			Sprite s = getState().getGameSprite("angelShield_0");
 
-			angelShield.setSize(getWidth()*1.7f , getHeight()*2.2f);
+			angelShield.setSize(getWidth() * 1.7f, getHeight() * 2.2f);
 
 			angelShieldAnim.setAnimation(ANGELSHIELD, PlayMode.LOOP);
 
@@ -1312,6 +1352,9 @@ public class Player extends DirectionEntity implements AnimationListener {
 				setupMelee(melee);
 				melee.setDamage(m_weaponDamageMultiplier * 2);
 
+				
+				
+				getState().playSound(Sounds.Slash);
 				getGameLayer().addGameObject(melee, KyperBoxGame.NULL_PROPERTIES);
 
 			}
@@ -1324,7 +1367,8 @@ public class Player extends DirectionEntity implements AnimationListener {
 		float dy = object.getCollisionCenter().y - getCollisionCenter().y;
 		pushbackAngle = MathUtils.atan2(dy, dx) - MathUtils.PI;
 
-		if (player_debug) return;
+		if (player_debug)
+			return;
 
 		if (object instanceof SimpleEnemy) {
 			getHealth().changeCurrentHealth(-ContactDamage.SIMPLE);
@@ -1338,59 +1382,64 @@ public class Player extends DirectionEntity implements AnimationListener {
 			getHealth().changeCurrentHealth(-ContactDamage.BOSS);
 		}
 	}
-	
+
 	/**
-	 * returns true if the method was successful in activating or deactivating
-	 * the angel shield
+	 * returns true if the method was successful in activating or deactivating the
+	 * angel shield
+	 * 
 	 * @param activate
 	 * @return
 	 */
 	public boolean setAngelShieldActive(boolean activate) {
-		if(activate) {
-			if(getCurrentForm()!=Form.Angel)
+		if (activate) {
+			if (getCurrentForm() != Form.Angel)
 				return false;
-			if(m_numSouls >= 1) {
+			if (m_numSouls >= 1) {
 				isAngelShieldActive = true;
-				soulDrainRate+=angelShieldDrainRate;
+				soulDrainRate += angelShieldDrainRate;
 				addAngelShield(true);
 				getHealth().setInvulnerable(true);
 				return true;
 			}
 			return false;
-		}else {
+		} else {
 			isAngelShieldActive = false;
-			soulDrainRate = Math.max(0f,soulDrainRate - angelShieldDrainRate);
+			soulDrainRate = Math.max(0f, soulDrainRate - angelShieldDrainRate);
 			addAngelShield(false);
 			getHealth().setInvulnerable(false);
 		}
-	
+
 		return true;
 	}
-	
+
+	long fireSound = 0L;
 	public boolean setDemonFlameActive(boolean activate) {
-		if(activate) {
-			if(getCurrentForm()!=Form.Demon)
+		if (activate) {
+			if (getCurrentForm() != Form.Demon)
 				return false;
-			if(m_numSouls >= 1) {
+			if (m_numSouls >= 1) {
 				isDemonFlameActive = true;
-				soulDrainRate+=demonFlameDrainRate;
+				soulDrainRate += demonFlameDrainRate;
 				addDemonFlame(true);
+				flameElapsed = 0;
+				fireSound = getState().playSound(Sounds.Fire, true);
 				return true;
 			}
 			return false;
-		}else {
+		} else {
+			getState().stopSound(Sounds.Fire,fireSound);
 			isDemonFlameActive = false;
-			soulDrainRate = Math.max(0f,soulDrainRate - demonFlameDrainRate);
+			soulDrainRate = Math.max(0f, soulDrainRate - demonFlameDrainRate);
 			addDemonFlame(false);
 		}
-	
+
 		return true;
 	}
-	
+
 	public boolean isAngelShieldActive() {
 		return isAngelShieldActive;
 	}
-	
+
 	public boolean isDemonFlameActive() {
 		return isDemonFlameActive;
 	}

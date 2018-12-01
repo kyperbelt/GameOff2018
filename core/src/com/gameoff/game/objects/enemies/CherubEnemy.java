@@ -72,7 +72,7 @@ public class CherubEnemy extends EnemyEntity{
 
   DamageListener damageListener=new DamageListener(){
 
-  @Override public void damaged(float amount){state.setState(EntityState.Damaged);damagedElapsed=0;}};
+  @Override public void damaged(float amount){state.setState(EntityState.Damaged);damagedElapsed=0;hit();}};
 
   StateChangeListener stateListener = new StateChangeListener() {
 

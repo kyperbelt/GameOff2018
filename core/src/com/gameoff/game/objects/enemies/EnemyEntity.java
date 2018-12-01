@@ -1,16 +1,10 @@
 package com.gameoff.game.objects.enemies;
 
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.math.MathUtils;
-import com.gameoff.game.control.DirectionControl;
-import com.gameoff.game.objects.*;
-import com.gameoff.game.control.DirectionControl.Direction;
-import com.gameoff.game.objects.composition.DropTable;
-import com.gameoff.game.objects.composition.Lootable;
+import com.gameoff.game.GameLevel;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.objects.DirectionEntity;
-import com.gameoff.game.*;
+import com.gameoff.game.objects.Door;
 import com.kyperbox.GameState;
-import com.kyperbox.managers.StateManager;
 import com.kyperbox.objects.GameLayer;
 
 /**
@@ -18,6 +12,10 @@ import com.kyperbox.objects.GameLayer;
  *
  */
 public class EnemyEntity extends DirectionEntity{
+	
+	public void hit() {
+		getState().playSound(Sounds.DemonHit);
+	}
 
   @Override
   public void onRemove() {

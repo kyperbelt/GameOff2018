@@ -74,6 +74,8 @@ public class HealthControl extends GameObjectController {
 
 	public void changeHealthNoListener(float amount)
 	{
+		if(health+amount < health && invulnerable)
+			return;
 		health += amount;
 		this.health = MathUtils.clamp(health, 0, max);
 	}
