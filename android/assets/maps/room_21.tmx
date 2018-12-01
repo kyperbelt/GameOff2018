@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="194">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="90" height="60" tilewidth="32" tileheight="32" infinite="0" nextobjectid="193">
  <properties>
   <property name="atlas" value="image/game.atlas"/>
   <property name="preload" value="room_0.tmx"/>
@@ -36,16 +36,54 @@
   <object id="157" name="Pit" type="Pit" x="1344" y="828" width="108" height="140"/>
   <object id="158" name="LavaTrap" type="LavaBurst" gid="48" x="1273" y="953" width="247" height="103"/>
   <object id="159" name="Scorp" type="Scorpion" gid="61" x="643" y="1457" width="42" height="62"/>
+  <object id="160" name="Scorp" type="Scorpion" gid="61" x="927" y="1461" width="42" height="62"/>
+  <object id="161" name="Scorp" type="Scorpion" gid="61" x="1143" y="1501" width="42" height="62"/>
+  <object id="162" name="Scorp" type="Scorpion" gid="61" x="1419" y="1489" width="42" height="62"/>
+  <object id="163" name="Scorp" type="Scorpion" gid="61" x="1595" y="1469" width="42" height="62"/>
+  <object id="164" name="Scorp" type="Scorpion" gid="61" x="1831" y="1481" width="42" height="62"/>
   <object id="165" name="Scorp" type="Scorpion" gid="61" x="2071" y="1489" width="42" height="62"/>
   <object id="166" name="Scorp" type="Scorpion" gid="61" x="2247" y="1493" width="42" height="62"/>
   <object id="167" name="Scorp" type="Scorpion" gid="61" x="2439" y="1421" width="42" height="62"/>
+  <object id="168" name="Scorp" type="Scorpion" gid="61" x="2463" y="469" width="42" height="62"/>
+  <object id="169" name="Scorp" type="Scorpion" gid="61" x="2227" y="373" width="42" height="62"/>
+  <object id="170" name="Scorp" type="Scorpion" gid="61" x="1959" y="393" width="42" height="62"/>
+  <object id="171" name="Scorp" type="Scorpion" gid="61" x="1635" y="361" width="42" height="62"/>
+  <object id="172" name="Scorp" type="Scorpion" gid="61" x="1403" y="369" width="42" height="62"/>
+  <object id="173" name="Scorp" type="Scorpion" gid="61" x="1167" y="389" width="42" height="62"/>
   <object id="174" name="Scorp" type="Scorpion" gid="61" x="1039" y="541" width="42" height="62"/>
+  <object id="175" name="Scorp" type="Scorpion" gid="61" x="695" y="601" width="42" height="62"/>
+  <object id="176" name="Scorp" type="Scorpion" gid="61" x="515" y="709" width="42" height="62"/>
+  <object id="177" name="Scorp" type="Scorpion" gid="61" x="815" y="845" width="42" height="62"/>
+  <object id="178" name="Scorp" type="Scorpion" gid="61" x="515" y="1021" width="42" height="62"/>
+  <object id="179" name="Scorp" type="Scorpion" gid="61" x="383" y="877" width="42" height="62"/>
+  <object id="180" name="Scorp" type="Scorpion" gid="61" x="783" y="1101" width="42" height="62"/>
   <object id="181" name="Scorp" type="Scorpion" gid="61" x="1079" y="1101" width="42" height="62"/>
   <object id="182" name="Scorp" type="Scorpion" gid="61" x="1759" y="1101" width="42" height="62"/>
   <object id="183" name="Scorp" type="Scorpion" gid="61" x="1955" y="829" width="42" height="62"/>
+  <object id="184" name="Scorp" type="Scorpion" gid="61" x="1403" y="557" width="42" height="62"/>
   <object id="185" name="Scorp" type="Scorpion" gid="61" x="1775" y="601" width="42" height="62"/>
   <object id="186" name="Pit" type="Pit" x="2180" y="680" width="252" height="624"/>
-  <object id="187" name="skull_heart" type="Destructible" gid="39" x="713" y="1494" width="183" height="125">
+  <object id="188" name="skull_test" type="Destructible" gid="39" x="2005" y="783" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="189" name="skull_test" type="Destructible" gid="39" x="2011" y="913" width="183" height="125">
+   <properties>
+    <property name="DestroyAnimation" value="skull_break"/>
+    <property name="boundX" type="float" value="0.69999999999999996"/>
+    <property name="boundY" type="float" value="0.5"/>
+    <property name="health" type="float" value="3"/>
+    <property name="itemDrop" type="int" value="10"/>
+    <property name="sprite" value="skull"/>
+   </properties>
+  </object>
+  <object id="190" name="skull_test" type="Destructible" gid="39" x="2011" y="1040" width="183" height="125">
    <properties>
     <property name="DestroyAnimation" value="skull_break"/>
     <property name="boundX" type="float" value="0.69999999999999996"/>
@@ -55,7 +93,7 @@
     <property name="sprite" value="skull"/>
    </properties>
   </object>
-  <object id="188" name="skull_soul" type="Destructible" gid="39" x="2253" y="1618" width="183" height="125">
+  <object id="191" name="skull_test" type="Destructible" gid="39" x="2012" y="1159" width="183" height="125">
    <properties>
     <property name="DestroyAnimation" value="skull_break"/>
     <property name="boundX" type="float" value="0.69999999999999996"/>
@@ -65,47 +103,7 @@
     <property name="sprite" value="skull"/>
    </properties>
   </object>
-  <object id="189" name="skull_heart" type="Destructible" gid="39" x="2249" y="526" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="health" type="float" value="3"/>
-    <property name="itemDrop" type="int" value="1"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="190" name="skull_soul" type="Destructible" gid="39" x="2173" y="1622" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="health" type="float" value="3"/>
-    <property name="itemDrop" type="int" value="10"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="191" name="skull_soul" type="Destructible" gid="39" x="2093" y="1626" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="health" type="float" value="3"/>
-    <property name="itemDrop" type="int" value="10"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="192" name="skull_soul" type="Destructible" gid="39" x="713" y="542" width="183" height="125">
-   <properties>
-    <property name="DestroyAnimation" value="skull_break"/>
-    <property name="boundX" type="float" value="0.69999999999999996"/>
-    <property name="boundY" type="float" value="0.5"/>
-    <property name="health" type="float" value="3"/>
-    <property name="itemDrop" type="int" value="10"/>
-    <property name="sprite" value="skull"/>
-   </properties>
-  </object>
-  <object id="193" name="skull_soul" type="Destructible" gid="39" x="273" y="1622" width="183" height="125">
+  <object id="192" name="skull_test" type="Destructible" gid="39" x="2015" y="1283" width="183" height="125">
    <properties>
     <property name="DestroyAnimation" value="skull_break"/>
     <property name="boundX" type="float" value="0.69999999999999996"/>

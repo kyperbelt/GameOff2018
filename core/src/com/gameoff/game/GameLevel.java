@@ -321,17 +321,17 @@ public class GameLevel {
       {
         //as add 10 level rooms increase nextInt below
         //10 to 19 medium rooms
-        r.m_roomCode = level.nextInt(0) + 10;
+        r.m_roomCode = level.nextInt(1) + 10;
       } else if (distFromStart < 3.1f)
       {
         //rooms 20 to 34 - mediumish hard rooms
         // so up to 14
-        r.m_roomCode = level.nextInt(0) + 20;
+        r.m_roomCode = level.nextInt(2) + 20;
       } else
       {
         // 35 to 49
         // so up to 14
-        r.m_roomCode = level.nextInt(0) + 35;
+        r.m_roomCode = level.nextInt(1) + 35;
       }
 
     }
