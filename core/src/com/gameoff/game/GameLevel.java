@@ -314,9 +314,9 @@ public class GameLevel {
         //within 1 of start
         //update nextInt() below with max of room number, so if we get all the rooms
         //up to 9 done, put a 9 in there!
-        //r.m_roomCode = level.nextInt(4) + 1;
-        r.m_roomCode = 60;
-        r.setIsBoss();
+        r.m_roomCode = level.nextInt(4) + 1;
+        //r.m_roomCode = 60;
+        //r.setIsBoss();
       } else if (distFromStart < 2.05f)
       {
         //as add 10 level rooms increase nextInt below

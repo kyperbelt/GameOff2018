@@ -31,7 +31,7 @@ public class InstructionsManager extends StateManager {
   AnimationController anim;
   
   public void playGame() {
-    GameLevel l = GameLevel.generateLevel(1, 9, 6, 6);
+    GameLevel l = GameLevel.generateLevel(1, 8, 6, 6);
     GameLevel.setCurrentLevel(l); //set singleton
     getState().getGame().setGameState("room_"+l.getCurrentRoom().getCode());
   }
