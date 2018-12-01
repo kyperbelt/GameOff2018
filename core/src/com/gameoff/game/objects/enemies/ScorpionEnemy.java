@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.gameoff.game.Context;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.control.AiControl;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
@@ -54,7 +55,9 @@ public class ScorpionEnemy extends EnemyEntity {
 
   DamageListener damageListener=new DamageListener(){
 
-  @Override public void damaged(float amount){state.setState(EntityState.Damaged);damagedElapsed=0;hit();}};
+  @Override public void damaged(float amount){state.setState(EntityState.Damaged);damagedElapsed=0;hit();
+  
+  }};
 
   StateChangeListener stateListener = new StateChangeListener() {
 
@@ -208,8 +211,10 @@ public class ScorpionEnemy extends EnemyEntity {
   @Override
   public void onRemove() {
     super.onRemove();
+    getState().playSound(Sounds.ScorpionDie);
     removeController(state);
     removeController(ai);
+    
   }
 
   private BehaviorNode getExampleAi() {

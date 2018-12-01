@@ -14,6 +14,11 @@ public class Sounds {
 	public static final String Fire = "fire";
 	public static final String Slash = "slash";
 	public static final String PickupSoul = "pickupSoul";
+	public static final String PickupHealth = "pickupHealth";
+	public static final String PickupPowerup = "pickupPowerup";
+	public static final String DoorsOpened = "doorsOpened";
+	public static final String ObjectDestroyed = "objectDestroyed";
+	
 	
 	//boss
 	public static final String BossJump = "bossJump";
@@ -24,6 +29,11 @@ public class Sounds {
 	public static final String SpikesIn = "spikesIn";
 	public static final String SpikesOut = "spikesOut";
 	public static final String DemonHit = "demonHit";
+	
+	//enenemies
+	public static final String CherubDie = "cherubDie";
+	public static final String WormDie = "wormDie";
+	public static final String ScorpionDie = "scorpionDie";
 	
 
 }

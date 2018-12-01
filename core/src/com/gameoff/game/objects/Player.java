@@ -236,7 +236,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 				getAnimation().setListener(null);
 				setWalkAnimation(getDirection(), getCurrentForm());
 
-				System.out.println("times=" + times);
+				//System.out.println("times=" + times);
 				setPlayerState(PlayerState.Idling);
 			}
 		}
@@ -851,7 +851,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 						int itemID = c.getId();
 						if (itemID == Collectible.KEY) {
 							m_numKeys++;
-							System.out.println("Keys + 1");
+//							System.out.println("Keys + 1");
 						} else if (itemID == Collectible.HEART) {
 							getHealth().changeCurrentHealth(3);
 							showMessage("healthmessage", 2f);
@@ -863,10 +863,10 @@ public class Player extends DirectionEntity implements AnimationListener {
 						} else if (itemID == Collectible.SWORD) {
 							activateWeaponDoubleDamage();
 							showMessage("attackmessage", 4f);
-							System.out.println("SWORD got!");
+//							System.out.println("SWORD got!");
 						} else if (itemID == Collectible.SOUL) {
 							m_numSouls++;
-							System.out.println("Souls + 1");
+//							System.out.println("Souls + 1");
 							getState().playSound(Sounds.PickupSoul);
 						}
 
@@ -1009,7 +1009,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 						flameElapsed = 0;
 						Array<CollisionData> cd = getCollision().getCollisions(flameCheck, 0);
 						
-						System.out.println("searching For Target");
+//						System.out.println("searching For Target");
 						for (int i = 0; i < cd.size; i++) {
 
 							GameObject target = cd.get(i).getTarget();
@@ -1017,7 +1017,7 @@ public class Player extends DirectionEntity implements AnimationListener {
 								continue;
 							
 							float dst = center.dst(target.getCollisionCenter());
-							System.out.println("targetFound");
+//							System.out.println("targetFound");
 							if (dst < flameRadius) {
 								HealthControl thealth = target.getController(HealthControl.class);
 								if(thealth!=null) {

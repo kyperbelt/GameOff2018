@@ -26,6 +26,8 @@ public class EnemyEntity extends DirectionEntity{
       GameLevel.getCurrentLevel().getCurrentRoom().numberEnemies--;
       if (GameLevel.getCurrentLevel().getCurrentRoom().numberEnemies < 1)
       {
+    	  
+    	getState().playSound(Sounds.DoorsOpened);
         //all enemies killed.
         GameState state = getState();
         GameLayer layer = state.getPlaygroundLayer();

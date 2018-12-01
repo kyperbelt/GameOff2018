@@ -6,6 +6,7 @@ import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.HealthControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
 import com.gameoff.game.control.HealthControl.HealthGroup;
+import com.gameoff.game.managers.LevelManager;
 import com.kyperbox.controllers.CollisionController.CollisionData;
 import com.kyperbox.objects.GameObject;
 import com.kyperbox.controllers.AnimationController;
@@ -20,159 +21,154 @@ import java.util.Random;
 
 public class Spiker extends Basic {
 
-  AttackControl attack;
-  Array<CollisionData> cols;
-  boolean m_spikesOut = true;
-  float m_time = 0;
-  float m_pauseNone = 1.0f;
-  int m_state = 0;
-  int m_id = 1;
-  String m_mode = "A";
-  Random m_random = new Random();
+	AttackControl attack;
+	Array<CollisionData> cols;
+	boolean m_spikesOut = true;
+	float m_time = 0;
+	float m_pauseNone = 1.0f;
+	int m_state = 0;
+	int m_id = 1;
+	String m_mode = "A";
+	Random m_random = new Random();
+	LevelManager lm;
+	public static final float SNDST = 400; // sound sistance
 
-  AttackListener hazardListener = new AttackListener() {
-    @Override
-    public void onAttack() {
-      for (int i = 0; i < cols.size; i++) {
-        GameObject target = cols.get(i).getTarget();
-        HealthControl health = target.getController(HealthControl.class);
-        if(health!=null) {
-          for (int j = 0; j < damageGroup.length; j++) {
-            if(damageGroup[j] == health.getHealthGroup()) {
-              health.changeCurrentHealth(-attack.getDamage()*attack.getDamageMult());
-            }
-          }
-        }
-      }
-    }
-  };
-  
-  HealthGroup[] damageGroup;
+	AttackListener hazardListener = new AttackListener() {
+		@Override
+		public void onAttack() {
+			for (int i = 0; i < cols.size; i++) {
+				GameObject target = cols.get(i).getTarget();
+				HealthControl health = target.getController(HealthControl.class);
+				if (health != null) {
+					for (int j = 0; j < damageGroup.length; j++) {
+						if (damageGroup[j] == health.getHealthGroup()) {
+							health.changeCurrentHealth(-attack.getDamage() * attack.getDamageMult());
+						}
+					}
+				}
+			}
+		}
+	};
 
-  public Spiker(HealthGroup... damageGroup) {
-    this.damageGroup = damageGroup;
-    getMove().setPhysical(false);
-    attack = new AttackControl(1f,1f,hazardListener);
-    getZOrder().setZOrder(ZOrder.PLAYER);
-    setYOffset(40);
-    m_id = m_random.nextInt(9999999);
-  }
-  
-  public Spiker() {
-    this(HealthGroup.Angel,HealthGroup.Player,HealthGroup.Demon,HealthGroup.Neutral);
-  }
+	HealthGroup[] damageGroup;
 
-  @Override
-  public void init(MapProperties properties) {
-    super.init(properties);
-    createAnimations();
+	public Spiker(HealthGroup... damageGroup) {
+		this.damageGroup = damageGroup;
+		getMove().setPhysical(false);
+		attack = new AttackControl(1f, 1f, hazardListener);
+		getZOrder().setZOrder(ZOrder.PLAYER);
+		setYOffset(40);
+		m_id = m_random.nextInt(9999999);
+	}
 
-    // hazard does not have health so we remove the health control so that systems
-    // that interact with the health control do not affect it
-    removeController(getHealth());
-    addController(attack);
-    setSprite("spiker_red_0");
-    m_mode = "A";
-    m_spikesOut = false;
-    m_time = 0;
-    m_state = 0;
+	public Spiker() {
+		this(HealthGroup.Angel, HealthGroup.Player, HealthGroup.Demon, HealthGroup.Neutral);
+	}
 
-    
-    Wall o = new Wall();
-    o.setSize(44,45);
-    o.setPosition(getX() + 68, getY()+30);
-    this.getGameLayer().addGameObject(o, null);
-  
-  ;
-}
-  
-  
-  @Override
-  public void update(float delta) {
-    super.update(delta);
+	@Override
+	public void init(MapProperties properties) {
+		super.init(properties);
+		createAnimations();
 
-    m_time += delta;
+		// hazard does not have health so we remove the health control so that systems
+		// that interact with the health control do not affect it
+		removeController(getHealth());
+		addController(attack);
+		setSprite("spiker_red_0");
+		m_mode = "A";
+		m_spikesOut = false;
+		m_time = 0;
+		m_state = 0;
 
-    if (m_state == 0)
-    {
-      if (m_time > m_pauseNone)
-      {
-        m_time = 0;
-        m_state = 10;
-        getAnimation().set("spike" + m_mode,PlayMode.NORMAL);
-        getState().playSound(Sounds.SpikesOut);
-      }
-    } else if (m_state == 10)
-    {
-      if (m_time > 0.25f)
-      {
-        m_spikesOut = true;
-      }
+		Wall o = new Wall();
+		o.setSize(44, 45);
+		o.setPosition(getX() + 68, getY() + 30);
+		this.getGameLayer().addGameObject(o, null);
 
-      if (m_time > 0.5f)
-      {
-        m_time = 0;
-        m_state = 20;
-        getAnimation().set("spike" + m_mode,PlayMode.REVERSED);
-        getState().playSound(Sounds.SpikesIn);
-      }
-    } else if (m_state == 20)
-    {
-      if (m_time > 0.1f)
-      {
-        m_spikesOut = false;
-      }
+		lm = (LevelManager) getState().getManager();
 
-      if (m_time > 0.5f)
-      {
-        m_time = 0;
-        m_state = 0;
-        if (m_mode == "A") 
-        {
-          m_mode = "B";
-        } else
-        {
-          m_mode = "A";
-        }
-        m_pauseNone = 1.0f + m_random.nextFloat()*3f;
-      }
-    }
+		;
+	}
 
-    if (m_spikesOut)
-    {
-      cols = getCollision().getCollisions();
-      if(cols.size > 0) {
-          attack.attack();
-      }
-    }
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		float dst = SNDST + 1;
+		if (lm != null && lm.player != null)
+			dst = getCollisionCenter().dst(lm.player.getCollisionCenter());
 
-    cols = null;//null out because col data is pooled
-  }
+		m_time += delta;
 
-  @Override
-  public void onRemove() {
-    super.onRemove();
-    removeController(attack);
-  }
+		if (m_state == 0) {
+			if (m_time > m_pauseNone) {
+				m_time = 0;
+				m_state = 10;
+				getAnimation().set("spike" + m_mode, PlayMode.NORMAL);
+				if (dst < SNDST)
+					getState().playSound(Sounds.SpikesOut);
+			}
+		} else if (m_state == 10) {
+			if (m_time > 0.25f) {
+				m_spikesOut = true;
+			}
 
-  private void createAnimations() {
+			if (m_time > 0.5f) {
+				m_time = 0;
+				m_state = 20;
+				getAnimation().set("spike" + m_mode, PlayMode.REVERSED);
+				if (dst < SNDST)
+					getState().playSound(Sounds.SpikesIn);
+			}
+		} else if (m_state == 20) {
+			if (m_time > 0.1f) {
+				m_spikesOut = false;
+			}
 
-    String spikeAnimationNameA = "spikerA" + m_id;
-    String spikeAnimationNameB = "spikerB" + m_id;
-    Animation<KyperSprite> spikeA = getState().getAnimation(spikeAnimationNameA);
-    if (spikeA == null) {
-      getState().storeAnimation(spikeAnimationNameA, getState().createGameAnimation("spiker_redA", .1f));
-    }
+			if (m_time > 0.5f) {
+				m_time = 0;
+				m_state = 0;
+				if (m_mode == "A") {
+					m_mode = "B";
+				} else {
+					m_mode = "A";
+				}
+				m_pauseNone = 1.0f + m_random.nextFloat() * 3f;
+			}
+		}
 
-    Animation<KyperSprite> spikeB = getState().getAnimation(spikeAnimationNameB);
-    if (spikeB== null) {
-      getState().storeAnimation(spikeAnimationNameB, getState().createGameAnimation("spiker_redB", .1f));
-    }
+		if (m_spikesOut) {
+			cols = getCollision().getCollisions();
+			if (cols.size > 0) {
+				attack.attack();
+			}
+		}
 
-    getAnimation().addAnimation("spikeA", spikeAnimationNameA);
-    getAnimation().addAnimation("spikeB", spikeAnimationNameB);
+		cols = null;// null out because col data is pooled
+	}
 
-  }
+	@Override
+	public void onRemove() {
+		super.onRemove();
+		removeController(attack);
+	}
 
+	private void createAnimations() {
+
+		String spikeAnimationNameA = "spikerA" + m_id;
+		String spikeAnimationNameB = "spikerB" + m_id;
+		Animation<KyperSprite> spikeA = getState().getAnimation(spikeAnimationNameA);
+		if (spikeA == null) {
+			getState().storeAnimation(spikeAnimationNameA, getState().createGameAnimation("spiker_redA", .1f));
+		}
+
+		Animation<KyperSprite> spikeB = getState().getAnimation(spikeAnimationNameB);
+		if (spikeB == null) {
+			getState().storeAnimation(spikeAnimationNameB, getState().createGameAnimation("spiker_redB", .1f));
+		}
+
+		getAnimation().addAnimation("spikeA", spikeAnimationNameA);
+		getAnimation().addAnimation("spikeB", spikeAnimationNameB);
+
+	}
 
 }

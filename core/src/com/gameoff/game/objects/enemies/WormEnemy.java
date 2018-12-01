@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.gameoff.game.Context;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.control.AiControl;
 import com.gameoff.game.control.DirectionControl.Direction;
 import com.gameoff.game.control.DirectionControl.DirectionChangeListener;
@@ -155,6 +156,7 @@ public class WormEnemy extends EnemyEntity{
   @Override
   public void onRemove() {
     super.onRemove();
+    getState().playSound(Sounds.WormDie);
     removeController(state);
     removeController(ai);
   }

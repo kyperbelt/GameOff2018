@@ -70,6 +70,7 @@ public class Destructible extends Basic {
 						getAnimation().set(destroyAnimation);
 						getAnimation().setListener(alistener);
 						animationPlaying = true;
+						getState().playSound(Sounds.ObjectDestroyed);
 					}
 				} else {
 					destroyed = true;
@@ -83,6 +84,7 @@ public class Destructible extends Basic {
 			public void damaged(float amount) {
 				clearActions();
 				shake.restart();
+				getState().playSound(Sounds.DemonHit);
 				addAction(shake);
 			}
 		});

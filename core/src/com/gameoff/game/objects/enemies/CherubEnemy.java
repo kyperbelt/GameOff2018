@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.gameoff.game.Context;
+import com.gameoff.game.Sounds;
 import com.gameoff.game.control.AiControl;
 import com.gameoff.game.control.AttackControl;
 import com.gameoff.game.control.AttackControl.AttackListener;
@@ -264,6 +265,7 @@ public class CherubEnemy extends EnemyEntity{
   @Override
   public void onRemove() {
     super.onRemove();
+    getState().playSound(Sounds.CherubDie);
     removeController(state);
     removeController(ai);
   }
