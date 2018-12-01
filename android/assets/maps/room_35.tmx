@@ -67,13 +67,13 @@
     <property name="spawnSpeed" type="float" value="0.10000000000000001"/>
    </properties>
   </object>
-  <object id="203" name="Cherub" type="CherubRapi" gid="64" x="1430" y="896" width="117" height="96"/>
+  <object id="203" name="Cherub" type="CherubRapid" gid="64" x="1430" y="896" width="117" height="96"/>
   <object id="204" name="Scorp" type="Scorpion" gid="61" x="2347" y="517" width="42" height="62"/>
   <object id="206" name="Scorp" type="Scorpion" gid="61" x="2355" y="1417" width="42" height="62"/>
  </objectgroup>
  <objectgroup name="foreground" locked="1"/>
  <objectgroup name="uiground" locked="1"/>
- <objectgroup name="preload" locked="1">
+ <objectgroup name="preload">
   <object id="1" name="ScreenSize" type="Viewport" x="0" y="0" width="960" height="540"/>
   <object id="56" x="-480" y="256" width="96" height="32">
    <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Fonts</text>
